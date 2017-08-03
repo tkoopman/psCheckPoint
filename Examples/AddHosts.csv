@@ -1,0 +1,6 @@
+name,ip-address,color,tags,groups
+TestHost1,1.1.1.1,red,TestTag1,
+TestHost2,1.1.1.2,black,TestTag2,TestGroup1
+TestHost3,1.1.1.3,Red,TestTag1;TestTag2;TestTag3;TestTag4,
+TestHost4,1.1.1.4,,,
+TestHost4,1.1.1.3,,,
