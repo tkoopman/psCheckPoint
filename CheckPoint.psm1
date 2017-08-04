@@ -5,8 +5,6 @@
 
  .Description
   Runs Check Point Web API Call.
-  Make sure you run the following first:
-    [System.Net.ServicePointManager]::ServerCertificateValidationCallback = { $True }
 
  .Parameter Session
   Session object returned by Invoke-CPLogin command
@@ -32,14 +30,43 @@ function APICall {
 	
 	$jsonPayload = $Payload | ConvertTo-Json
 	
+    Write-Debug @"
+Calling "$($Session.URI)/$($Command)"
+---Payload Start---
+$($jsonPayload -replace '"password":\s*"(.*)"', '"password":  "***"')
+---Payload End---
+"@
+
 	try {
-        Invoke-RestMethod -Uri "$($Session.URI)/$($Command)" -Method Post -ContentType "application/json" -Headers $Headers -Body $jsonPayload
+        $Result = Invoke-RestMethod -Uri "$($Session.URI)/$($Command)" -Method Post -ContentType "application/json" -Headers $Headers -Body $jsonPayload -Verbose:$false
+    } catch [System.Net.WebException] {
+        $e = $_
+        if ($e.Exception.Response) {
+            $streamReader = [System.IO.StreamReader]::new($_.Exception.Response.GetResponseStream())
+            $Result = $streamReader.ReadToEnd() | ConvertFrom-Json
+            $streamReader.Close()
+        } else {
+            if ($e.Exception.Message.Contains("Could not establish trust relationship")) {
+                $host.ui.WriteErrorLine.invoke(@"
+$($e.Exception.Message)
+You may need to run the following command first to allow self-signed certificates:
+    [System.Net.ServicePointManager]::ServerCertificateValidationCallback = { $True }
+"@)
+            } else {
+                Write-Error $e.Exception
+            }
+        }
     } catch {
-        $streamReader = [System.IO.StreamReader]::new($_.Exception.Response.GetResponseStream())
-        $ErrResp = $streamReader.ReadToEnd() | ConvertFrom-Json
-        $streamReader.Close()
-        $ErrResp
+        Write-Error "$($_.Exception)"
     }
+    
+    Write-Debug @"
+---Result Start---
+$($Result)
+---Result End---
+"@
+    
+    $Result
 }
 
 <# 
@@ -160,13 +187,19 @@ function AddArrayPayload {
 #>
 function isSuccessful {
     param (
-		[Parameter(Mandatory=$true)] $Result,
+		$Result,
 		[switch] $SuppressOutput,
         [ValidateSet("TRUE","Result","None")] [string] $OnSuccessOutput = "TRUE",
         [ValidateSet("FALSE","Result","None")] [string] $OnFailureOutput = "FALSE"
 	)
-
-    if ($Result.code) {
+    if (-Not $Result) {
+        switch ($OnFailureOutput) 
+        {
+            "FALSE" { $FALSE }
+            "Result" { $Result }
+            default { }
+        }
+    } elseif ($Result.code) {
         # Error found
         if (-Not $SuppressOutput) {
             $host.ui.WriteErrorLine.invoke("[$($Result.code)] $($Result.message)")
@@ -250,7 +283,10 @@ function Invoke-CPLogin {
 	
 	$Result = APICall -Session @{URI=$WebAPIURI} -Command 'login' -Payload $Payload
     if (isSuccessful -Result $Result) {
+        Write-Verbose "Login successfull"
 	    @{URI=$WebAPIURI; 'x-chkp-sid'=$Result.sid}
+    } else {
+        Write-Verbose "Login failed."
     }
 }
 
@@ -267,7 +303,11 @@ function Invoke-CPLogout {
 		[Parameter(Mandatory=$true)] $Session
 	)
 	$Result = APICall -Session $Session -Command 'logout'
-    isSuccessful -Result $Result -OnSuccessOutput None -OnFailureOutput None
+    if (isSuccessful -Result $Result) {
+        Write-Verbose "Logout successfull"
+    } else {
+        Write-Verbose "Logout failed."
+    }
 }
 
 <# 
@@ -286,7 +326,11 @@ function Invoke-CPContinueSessionInSmartconsole {
 		[Parameter(Mandatory=$true)] $Session
 	)
 	$Result = APICall -Session $Session -Command 'continue-session-in-smartconsole'
-    isSuccessful -Result $Result -OnSuccessOutput None -OnFailureOutput None
+    if (isSuccessful -Result $Result) {
+        Write-Verbose "Successfull"
+    } else {
+        Write-Verbose "Failed."
+    }
 }
 
 <# 
@@ -302,7 +346,11 @@ function Invoke-CPPublish {
 		[Parameter(Mandatory=$true)] $Session
 	)
 	$Result = APICall -Session $Session -Command 'publish'
-    isSuccessful -Result $Result -OnSuccessOutput None -OnFailureOutput None
+    if (isSuccessful -Result $Result) {
+        Write-Verbose "Publish Successfull"
+    } else {
+        Write-Verbose "Publish Failed."
+    }
 }
 
 <# 
@@ -318,7 +366,11 @@ function Invoke-CPDiscard {
 		[Parameter(Mandatory=$true)] $Session
 	)
 	$Result = APICall -Session $Session -Command 'discard'
-    isSuccessful -Result $Result -OnSuccessOutput None -OnFailureOutput None
+    if (isSuccessful -Result $Result) {
+        Write-Verbose "Discard Successfull"
+    } else {
+        Write-Verbose "Discard Failed."
+    }
 }
 ### END OF SESSION MANAGEMENT FUNCTIONS ###
 
@@ -390,7 +442,13 @@ function Add-CPHost {
 		AddSwitchPayload -Payload $Payload -Name 'ignore-warnings' -Value  $IgnoreWarnings
 		
 		$Result = APICall -Session $Session -Command 'add-host' -Payload $Payload
-        isSuccessful -Result $Result -OnSuccessOutput Result -OnFailureOutput Result
+        if (isSuccessful -Result $Result) {
+            Write-Verbose "Added host $($Name)"
+            $Result
+        } else {
+            Write-Verbose "Failed to add host $($Name)"
+            $Result
+        }
 	}
 	End {}
 }
@@ -426,7 +484,12 @@ function Remove-CPHost {
 		AddSwitchPayload -Payload $Payload -Name 'ignore-warnings' -Value $IgnoreWarnings
 		
 		$Result = APICall -Session $Session -Command 'delete-host' -Payload $Payload
-        isSuccessful -Result $Result -OnSuccessOutput None -OnFailureOutput Result
+        if (isSuccessful -Result $Result) {
+            Write-Verbose "Deleted host $($Name)$($UID)"
+        } else {
+            Write-Verbose "Failed to delete host $($Name)$($UID)"
+            $Result
+        }
 	}
 	End {}
 }
@@ -499,7 +562,13 @@ function Add-CPNetwork {
 		AddSwitchPayload -Payload $Payload -Name 'ignore-warnings' -Value  $IgnoreWarnings
 		
 		$Result = APICall -Session $Session -Command 'add-network' -Payload $Payload
-        isSuccessful -Result $Result -OnSuccessOutput Result -OnFailureOutput Result
+        if (isSuccessful -Result $Result) {
+            Write-Verbose "Added network $($Name)"
+            $Result
+        } else {
+            Write-Verbose "Failed to add network $($Name)"
+            $Result
+        }
 	}
 	End {}
 }
@@ -535,7 +604,12 @@ function Remove-CPNetwork {
 		AddSwitchPayload -Payload $Payload -Name 'ignore-warnings' -Value $IgnoreWarnings
 		
 		$Result = APICall -Session $Session -Command 'delete-network' -Payload $Payload
-        isSuccessful -Result $Result -OnSuccessOutput None -OnFailureOutput Result
+        if (isSuccessful -Result $Result) {
+            Write-Verbose "Deleted network $($Name)$($UID)"
+        } else {
+            Write-Verbose "Failed to delete network $($Name)$($UID)"
+            $Result
+        }
 	}
 	End {}
 }
@@ -600,7 +674,13 @@ function Add-CPGroup {
 		AddSwitchPayload -Payload $Payload -Name 'ignore-warnings' -Value  $IgnoreWarnings
 		
 		$Result = APICall -Session $Session -Command 'add-group' -Payload $Payload
-        isSuccessful -Result $Result -OnSuccessOutput Result -OnFailureOutput Result
+        if (isSuccessful -Result $Result) {
+            Write-Verbose "Added group $($Name)"
+            $Result
+        } else {
+            Write-Verbose "Failed to add group $($Name)"
+            $Result
+        }
 	}
 	End {}
 }
@@ -636,7 +716,13 @@ function Remove-CPGroup {
 		AddSwitchPayload -Payload $Payload -Name 'ignore-warnings' -Value $IgnoreWarnings
 		
 		$Result = APICall -Session $Session -Command 'delete-group' -Payload $Payload
-        isSuccessful -Result $Result -OnSuccessOutput None -OnFailureOutput Result
+        if (isSuccessful -Result $Result) {
+            Write-Verbose "Deleted group $($Name)$($UID)"
+            $Result
+        } else {
+            Write-Verbose "Failed to delete group $($Name)$($UID)"
+            $Result
+        }
 	}
 	End {}
 }
