@@ -15,15 +15,15 @@ Write-Host "Logging in. You will be prompted for creds"
 $Session = Invoke-CPLogin
 
 Write-Host "Importing Groups"
-$Groups = Import-Excel -WorkSheetname Groups   -Path .\Import.xlsx  | Add-CPGroup   -Session $Session
+$Groups = Import-Excel -WorkSheetname Groups   -Path .\Import.xlsx  | Add-CPGroup   -Session $Session -Verbose
 Write-Host "Imported $($($Groups | measure).Count) Groups"
 
 Write-Host "Importing Hosts"
-$Hosts = Import-Excel -WorkSheetname Hosts    -Path .\Import.xlsx  | Add-CPHost    -Session $Session
+$Hosts = Import-Excel -WorkSheetname Hosts    -Path .\Import.xlsx  | Add-CPHost    -Session $Session -Verbose
 Write-Host "Imported $($($Hosts | measure).Count) Hosts"
 
 Write-Host "Importing Networks"
-$Networks = Import-Excel -WorkSheetname Networks -Path .\Import.xlsx  | Add-CPNetwork -Session $Session
+$Networks = Import-Excel -WorkSheetname Networks -Path .\Import.xlsx  | Add-CPNetwork -Session $Session -Verbose
 Write-Host "Imported $($($Networks | measure).Count) Networks"
 
 Write-Host "Logout and allow session to continue from SmartConsole."
