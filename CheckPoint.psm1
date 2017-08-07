@@ -165,6 +165,56 @@ function AddArrayPayload {
 
 <# 
  .Synopsis
+  Adds string value to Payload only if not blank.
+
+ .Parameter Payload
+  Current Payload hashtable to add identifier to
+  
+ .Parameter Name
+  Name of parameter to be added
+  
+ .Parameter Value
+  String value to add
+#>
+function AddStringPayload {
+	param (
+		[Parameter(Mandatory=$true)] [hashtable] $Payload,
+		[Parameter(Mandatory=$true)] [string]    $Name,
+		                             [string]    $Value
+	)
+	
+	if ($Value) {
+        $Payload.$Name = $Value
+	}
+}
+
+<# 
+ .Synopsis
+  Adds string value to Payload only if not blank.
+
+ .Parameter Payload
+  Current Payload hashtable to add identifier to
+  
+ .Parameter Name
+  Name of parameter to be added
+  
+ .Parameter Value
+  Int value to add
+#>
+function AddIntPayload {
+	param (
+		[Parameter(Mandatory=$true)] [hashtable] $Payload,
+		[Parameter(Mandatory=$true)] [string]    $Name,
+		                             [int]       $Value
+	)
+	
+	if ($Value) {
+        $Payload.$Name = $Value
+	}
+}
+
+<# 
+ .Synopsis
   Checks if Result for errors and displays all errors and warnings.
 
  .Parameter Result
@@ -383,13 +433,19 @@ function Invoke-CPDiscard {
  .Parameter Session
   Session object from Invoke-CPLogin
 
- .Parameter name
+ .Parameter Name
   Object name. Should be unique in domain.
  
- .Parameter ipaddress
-  IPv4 or IPv6 address.
+ .Parameter IpAddress
+  IPv4 or IPv6 address. If both addresses are required use ipv4-address and ipv6-address fields explicitly.
 
- .Parameter color
+ .Parameter Ipv4Address
+  IPv4 address.
+
+ .Parameter Ipv6Address
+  IPv6 address.
+
+ .Parameter Color
   Color of the object. Should be one of existing colors.
   
  .Parameter Comments
@@ -403,6 +459,11 @@ function Invoke-CPDiscard {
  
  .Parameter IgnoreWarnings
   Apply changes ignoring warnings.
+
+ .Parameter SetIfExists
+  If another object with the same identifier already exists, it will be updated.
+  The command behaviour will be the same as if originally a set command was called.
+  Pay attention that original object's fields will be overwritten by the fields provided in the request payload!
   
  .Example
  Import-Csv .\AddHosts.csv | Add-CPHost -Session $Session
@@ -412,7 +473,9 @@ function Add-CPHost {
 	param(
 		[Parameter(Mandatory=$true)] $Session,
 		[parameter(ValueFromPipelineByPropertyName, Mandatory=$true)] [string] $Name,
-		[parameter(ValueFromPipelineByPropertyName, Mandatory=$true)] [alias("ip-address")] [string] $IpAddress,
+		[parameter(ValueFromPipelineByPropertyName)] [alias("ip-address")] [string] $IpAddress,
+        [parameter(ValueFromPipelineByPropertyName)] [alias("ipv4-address")] [string] $Ipv4Address,
+        [parameter(ValueFromPipelineByPropertyName)] [alias("ipv6-address")] [string] $Ipv6Address,
 		[parameter(ValueFromPipelineByPropertyName)] [string] $Comments,
 		[parameter(ValueFromPipelineByPropertyName)] [string[]] $Tags,
 		[parameter(ValueFromPipelineByPropertyName)] [string[]] $Groups,
@@ -428,7 +491,8 @@ function Add-CPHost {
 				"medium slate blue", "medium violet red", "navy blue", "olive drab",
 				"orange", "red", "sienna", "yellow", "")]
 			[string] $Color = "black",
-		[switch] $IgnoreWarnings
+		[switch] $IgnoreWarnings,
+        [switch] $SetIfExists
 	)
 	Begin {}
 	Process {
@@ -436,10 +500,14 @@ function Add-CPHost {
 			$Color = "black"
 		}
 		
-		$Payload = @{name=$Name;'ip-address'=$IpAddress;color=$Color;comments=$Comments}
+		$Payload = @{name=$Name;color=$Color;comments=$Comments}
+        AddStringPayload -Payload $Payload -Name 'ip-address'      -Value $IpAddress
+        AddStringPayload -Payload $Payload -Name 'ipv4-address'    -Value $Ipv4Address
+        AddStringPayload -Payload $Payload -Name 'ipv6-address'    -Value $Ipv6Address
         AddArrayPayload  -Payload $Payload -Name tags              -Values $Tags
         AddArrayPayload  -Payload $Payload -Name groups            -Values $Groups
 		AddSwitchPayload -Payload $Payload -Name 'ignore-warnings' -Value  $IgnoreWarnings
+        AddSwitchPayload -Payload $Payload -Name 'set-if-exists'   -Value  $SetIfExists
 		
 		$Result = APICall -Session $Session -Command 'add-host' -Payload $Payload
         if (isSuccessful -Result $Result) {
@@ -447,7 +515,6 @@ function Add-CPHost {
             $Result
         } else {
             Write-Verbose "Failed to add host $($Name)"
-            $Result
         }
 	}
 	End {}
@@ -518,10 +585,28 @@ function Remove-CPHost {
   Collection of group identifiers. Groups must already exist.
   
  .Parameter Subnet
-  IPv4 or IPv6 network address.
+  IPv4 or IPv6 network address. 
+  If both addresses are required use subnet4 and subnet6 fields explicitly.
 
  .Parameter MaskLength
-  IPv4 or IPv6 network mask length.
+  IPv4 or IPv6 network mask length. 
+  If both masks are required use mask-length4 and mask-length6 fields explicitly. 
+  Instead of IPv4 mask length it is possible to specify IPv4 mask itself in subnet-mask field.
+
+ .Parameter SubnetMask
+  IPv4 network mask.
+
+ .Parameter Subnet4
+  IPv4 network address.
+
+ .Parameter MaskLength4
+  IPv4 network mask length.
+
+ .Parameter Subnet6
+  IPv6 network address.
+
+ .Parameter MaskLength6
+  IPv6 network mask length.
  
  .Parameter IgnoreWarnings
   Apply changes ignoring warnings.
@@ -531,8 +616,13 @@ function Add-CPNetwork {
 	param(
 		[Parameter(Mandatory=$true)] $Session,
 		[parameter(ValueFromPipelineByPropertyName, Mandatory=$true)] [string] $Name,
-        [parameter(ValueFromPipelineByPropertyName, Mandatory=$true)] [string] $Subnet,
-        [parameter(ValueFromPipelineByPropertyName, Mandatory=$true)] [int] $MaskLength,
+        [parameter(ValueFromPipelineByPropertyName)] [string] $Subnet,
+        [parameter(ValueFromPipelineByPropertyName)] [int] $MaskLength,
+        [parameter(ValueFromPipelineByPropertyName)] [string] $SubnetMask,
+        [parameter(ValueFromPipelineByPropertyName)] [string] $Subnet4,
+        [parameter(ValueFromPipelineByPropertyName)] [int] $MaskLength4,
+        [parameter(ValueFromPipelineByPropertyName)] [string] $Subnet6,
+        [parameter(ValueFromPipelineByPropertyName)] [int] $MaskLength6,
 		[parameter(ValueFromPipelineByPropertyName)] [string] $Comments,
 		[parameter(ValueFromPipelineByPropertyName)] [string[]] $Tags,
 		[parameter(ValueFromPipelineByPropertyName)] [string[]] $Groups,
@@ -548,7 +638,8 @@ function Add-CPNetwork {
 				"medium slate blue", "medium violet red", "navy blue", "olive drab",
 				"orange", "red", "sienna", "yellow", "")]
 			[string] $Color = "black",
-		[switch] $IgnoreWarnings
+		[switch] $IgnoreWarnings,
+        [switch] $SetIfExists
 	)
 	Begin {}
 	Process {
@@ -556,10 +647,18 @@ function Add-CPNetwork {
 			$Color = "black"
 		}
 		
-		$Payload = @{name=$Name;subnet=$Subnet;'mask-length'=$MaskLength;color=$Color;comments=$Comments}
+		$Payload = @{name=$Name;color=$Color;comments=$Comments}
+        AddStringPayload -Payload $Payload -Name subnet            -Value $Subnet
+        AddIntPayload    -Payload $Payload -Name 'mask-length'     -Value $MaskLength
+        AddStringPayload -Payload $Payload -Name 'subnet-mask'     -Value $SubnetMask
+        AddStringPayload -Payload $Payload -Name subnet4           -Value $Subnet4
+        AddIntPayload    -Payload $Payload -Name 'mask-length4'    -Value $MaskLength4
+        AddStringPayload -Payload $Payload -Name subnet6           -Value $Subnet6
+        AddIntPayload    -Payload $Payload -Name 'mask-length6'    -Value $MaskLength6
         AddArrayPayload  -Payload $Payload -Name tags              -Values $Tags
         AddArrayPayload  -Payload $Payload -Name groups            -Values $Groups
 		AddSwitchPayload -Payload $Payload -Name 'ignore-warnings' -Value  $IgnoreWarnings
+        AddSwitchPayload -Payload $Payload -Name 'set-if-exists'   -Value  $SetIfExists
 		
 		$Result = APICall -Session $Session -Command 'add-network' -Payload $Payload
         if (isSuccessful -Result $Result) {
@@ -567,7 +666,6 @@ function Add-CPNetwork {
             $Result
         } else {
             Write-Verbose "Failed to add network $($Name)"
-            $Result
         }
 	}
 	End {}
@@ -679,7 +777,6 @@ function Add-CPGroup {
             $Result
         } else {
             Write-Verbose "Failed to add group $($Name)"
-            $Result
         }
 	}
 	End {}
