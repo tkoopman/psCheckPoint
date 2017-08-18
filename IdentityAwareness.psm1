@@ -242,3 +242,5 @@ You may need to run the following command first to allow self-signed certificate
 	
 	$Result
 }
+
+export-modulemember -function "AddIdentity"
