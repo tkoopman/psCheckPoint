@@ -50,7 +50,7 @@ $($jsonPayload -replace '"password":\s*"(.*)"', '"password":  "***"')
                 $host.ui.WriteErrorLine.invoke(@"
 $($e.Exception.Message)
 You may need to run the following command first to allow self-signed certificates:
-    [System.Net.ServicePointManager]::ServerCertificateValidationCallback = { $True }
+    [System.Net.ServicePointManager]::ServerCertificateValidationCallback = { `$True }
 "@)
             } else {
                 Write-Error $e.Exception
