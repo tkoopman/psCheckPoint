@@ -1,9 +1,9 @@
 function AddIdentity {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]                                    [string]   $Gateway,
-        [Parameter(Mandatory=$true)]                                    [string]   $SharedSecret,
-        [Parameter(ValueFromPipelineByPropertyName, Mandatory=$true)]   [string]   $IPAddress,
+        [Parameter(Mandatory = $true)]                                  [string]   $Gateway,
+        [Parameter(Mandatory = $true)]                                  [string]   $SharedSecret,
+        [Parameter(ValueFromPipelineByPropertyName, Mandatory = $true)] [string]   $IPAddress,
         [Parameter(ValueFromPipelineByPropertyName)]                    [string]   $User,
         [Parameter(ValueFromPipelineByPropertyName)]                    [string]   $Machine,
         [Parameter(ValueFromPipelineByPropertyName)]                    [string]   $Domain,
@@ -16,14 +16,14 @@ function AddIdentity {
         [Parameter(ValueFromPipelineByPropertyName)]                    [string[]] $Roles,
         [Parameter(ValueFromPipelineByPropertyName)]                    [string]   $MachineOS,
         [Parameter(ValueFromPipelineByPropertyName)]                    [string]   $HostType,
-                                                                        [int]      $BatchSize = 10
+        [int]      $BatchSize = 10
     )
     
     Begin {
         $_Batch = New-Object System.Collections.Generic.List[System.Object]
     }
     Process {
-        $Payload = @{'ip-address'=$IPAddress}
+        $Payload = @{'ip-address' = $IPAddress}
         AddStringPayload -Payload $Payload -Name user                   -Value $User
         AddStringPayload -Payload $Payload -Name machine                -Value $Machine
         AddStringPayload -Payload $Payload -Name domain                 -Value $Domain
@@ -43,7 +43,7 @@ function AddIdentity {
         } else {
             $_Batch.Add($Payload)
             if ($_Batch.Count -ge $BatchSize) {
-                $Payload = @{'shared-secret'=$SharedSecret; requests=$($_Batch.ToArray())}
+                $Payload = @{'shared-secret' = $SharedSecret; requests = $($_Batch.ToArray())}
                 $Results = APICall-AddIdentity -Gateway $Gateway -Payload $Payload
                 ForEach ($Result in $Results.responses) {
                     $Result
@@ -55,7 +55,7 @@ function AddIdentity {
     }
     End {
         if ($_Batch.Count -ge 1) {
-            $Payload = @{'shared-secret'=$SharedSecret; requests=$($_Batch.ToArray())}
+            $Payload = @{'shared-secret' = $SharedSecret; requests = $($_Batch.ToArray())}
             $Results = APICall-AddIdentity -Gateway $Gateway -Payload $Payload
             ForEach ($Result in $Results.responses) {
                 $Result
@@ -85,9 +85,9 @@ function AddIdentity {
 #>
 function AddSwitchPayload {
     param (
-        [Parameter(Mandatory=$true)] [hashtable] $Payload,
-        [Parameter(Mandatory=$true)] [string]    $Name,
-        [Parameter(Mandatory=$true)] [bool]      $Value,
+        [Parameter(Mandatory = $true)] [hashtable] $Payload,
+        [Parameter(Mandatory = $true)] [string]    $Name,
+        [Parameter(Mandatory = $true)] [bool]      $Value,
         [switch] $Force
     )
     
@@ -116,9 +116,9 @@ function AddSwitchPayload {
 #>
 function AddArrayPayload {
     param (
-        [Parameter(Mandatory=$true)] [hashtable] $Payload,
-        [Parameter(Mandatory=$true)] [string]    $Name,
-                                     [string[]]  $Values,
+        [Parameter(Mandatory = $true)] [hashtable] $Payload,
+        [Parameter(Mandatory = $true)] [string]    $Name,
+        [string[]]  $Values,
         [switch] $Force
     )
     
@@ -147,9 +147,9 @@ function AddArrayPayload {
 #>
 function AddStringPayload {
     param (
-        [Parameter(Mandatory=$true)] [hashtable] $Payload,
-        [Parameter(Mandatory=$true)] [string]    $Name,
-                                     [string]    $Value
+        [Parameter(Mandatory = $true)] [hashtable] $Payload,
+        [Parameter(Mandatory = $true)] [string]    $Name,
+        [string]    $Value
     )
     
     if ($Value) {
@@ -172,9 +172,9 @@ function AddStringPayload {
 #>
 function AddIntPayload {
     param (
-        [Parameter(Mandatory=$true)] [hashtable] $Payload,
-        [Parameter(Mandatory=$true)] [string]    $Name,
-                                     [int]       $Value
+        [Parameter(Mandatory = $true)] [hashtable] $Payload,
+        [Parameter(Mandatory = $true)] [string]    $Name,
+        [int]       $Value
     )
     
     if ($Value) {
@@ -200,7 +200,7 @@ function AddIntPayload {
 #>
 function APICall-AddIdentity {
     param (
-        [Parameter(Mandatory=$true)] [string] $Gateway,
+        [Parameter(Mandatory = $true)] [string] $Gateway,
         [hashtable] $Payload = @{}
     )
 

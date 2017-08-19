@@ -16,19 +16,19 @@
   Hashtable of parameters to pass to the call.
 #>
 function APICall {
-	param (
-		[Parameter(Mandatory=$true)] [hashtable] $Session,
-		[Parameter(Mandatory=$true)] [string] $Command,
-		[hashtable] $Payload = @{}
-	)
+    param (
+        [Parameter(Mandatory = $true)]  [hashtable] $Session,
+        [Parameter(Mandatory = $true)]  [string]    $Command,
+        [hashtable] $Payload = @{}
+    )
 	
-	if ($Session.'x-chkp-sid') {
-		$Headers = @{'x-chkp-sid'=$Session.'x-chkp-sid'}
-	} else {
-		$Headers = @{}
-	}
+    if ($Session.'x-chkp-sid') {
+        $Headers = @{'x-chkp-sid' = $Session.'x-chkp-sid'}
+    } else {
+        $Headers = @{}
+    }
 	
-	$jsonPayload = $Payload | ConvertTo-Json
+    $jsonPayload = $Payload | ConvertTo-Json
 	
     Write-Debug @"
 Calling "$($Session.URI)/$($Command)"
@@ -37,7 +37,7 @@ $($jsonPayload -replace '"password":\s*"(.*)"', '"password":  "***"')
 ---Payload End---
 "@
 
-	try {
+    try {
         $Result = Invoke-RestMethod -Uri "$($Session.URI)/$($Command)" -Method Post -ContentType "application/json" -Headers $Headers -Body $jsonPayload -Verbose:$false
     } catch [System.Net.WebException] {
         $e = $_
@@ -83,16 +83,16 @@ $($Result)
   Object name. Ignored if UID is provided.
 #>
 function AddIdentifier {
-	param (
-		[Parameter(Mandatory=$true)] [hashtable] $Payload,
-		[string] $UID,
-		[string] $Name
-	)
-	if ($uid) {
-		$Payload.uid = $UID
-	} else {
-		$Payload.name = $Name
-	}
+    param (
+        [Parameter(Mandatory = $true)]  [hashtable] $Payload,
+        [string]    $UID,
+        [string]    $Name
+    )
+    if ($uid) {
+        $Payload.uid = $UID
+    } else {
+        $Payload.name = $Name
+    }
 }
 
 <# 
@@ -115,18 +115,18 @@ function AddIdentifier {
   Forces parameter to be added even if it is false. Use if the Web API default is True.
 #>
 function AddSwitchPayload {
-	param (
-		[Parameter(Mandatory=$true)] [hashtable] $Payload,
-		[Parameter(Mandatory=$true)] [string]    $Name,
-		[Parameter(Mandatory=$true)] [bool]      $Value,
-		[switch] $Force
-	)
+    param (
+        [Parameter(Mandatory = $true)]  [hashtable] $Payload,
+        [Parameter(Mandatory = $true)]  [string]    $Name,
+        [Parameter(Mandatory = $true)]  [bool]      $Value,
+        [switch]    $Force
+    )
 	
-	if ($Value) {
-		$Payload.$Name = "true"
-	} elseif ($Force) {
-		$Payload.$Name = "false"
-	}
+    if ($Value) {
+        $Payload.$Name = "true"
+    } elseif ($Force) {
+        $Payload.$Name = "false"
+    }
 }
 
 <# 
@@ -146,21 +146,21 @@ function AddSwitchPayload {
   Forces parameter to be added even if it is false. Use if the Web API default is True.
 #>
 function AddArrayPayload {
-	param (
-		[Parameter(Mandatory=$true)] [hashtable] $Payload,
-		[Parameter(Mandatory=$true)] [string]    $Name,
-		                             [string[]]  $Values,
-		[switch] $Force
-	)
+    param (
+        [Parameter(Mandatory = $true)]  [hashtable] $Payload,
+        [Parameter(Mandatory = $true)]  [string]    $Name,
+        [string[]]  $Values,
+        [switch]    $Force
+    )
 	
-	if ($Values.Count -gt 0) {
-		if ($Values.Count -eq 1) {
-			$Values = $Values.split(@(",", ";"), [System.StringSplitOptions]::RemoveEmptyEntries)
-		}
+    if ($Values.Count -gt 0) {
+        if ($Values.Count -eq 1) {
+            $Values = $Values.split(@(",", ";"), [System.StringSplitOptions]::RemoveEmptyEntries)
+        }
         $Payload.$Name = $Values
-	} elseif ($Force) {
-		$Payload.$Name = @()
-	}
+    } elseif ($Force) {
+        $Payload.$Name = @()
+    }
 }
 
 <# 
@@ -177,15 +177,15 @@ function AddArrayPayload {
   String value to add
 #>
 function AddStringPayload {
-	param (
-		[Parameter(Mandatory=$true)] [hashtable] $Payload,
-		[Parameter(Mandatory=$true)] [string]    $Name,
-		                             [string]    $Value
-	)
+    param (
+        [Parameter(Mandatory = $true)]  [hashtable] $Payload,
+        [Parameter(Mandatory = $true)]  [string]    $Name,
+        [string]    $Value
+    )
 	
-	if ($Value) {
+    if ($Value) {
         $Payload.$Name = $Value
-	}
+    }
 }
 
 <# 
@@ -202,15 +202,15 @@ function AddStringPayload {
   Int value to add
 #>
 function AddIntPayload {
-	param (
-		[Parameter(Mandatory=$true)] [hashtable] $Payload,
-		[Parameter(Mandatory=$true)] [string]    $Name,
-		                             [int]       $Value
-	)
+    param (
+        [Parameter(Mandatory = $true)]  [hashtable] $Payload,
+        [Parameter(Mandatory = $true)]  [string]    $Name,
+        [int]       $Value
+    )
 	
-	if ($Value) {
+    if ($Value) {
         $Payload.$Name = $Value
-	}
+    }
 }
 
 <# 
@@ -237,14 +237,13 @@ function AddIntPayload {
 #>
 function isSuccessful {
     param (
-		$Result,
-		[switch] $SuppressOutput,
-        [ValidateSet("TRUE","Result","None")] [string] $OnSuccessOutput = "TRUE",
-        [ValidateSet("FALSE","Result","None")] [string] $OnFailureOutput = "FALSE"
-	)
+        [Parameter(Mandatory = $true)]              [hashtable] $Result,
+        [ValidateSet("TRUE", "Result", "None")]     [string]    $OnSuccessOutput = "TRUE",
+        [ValidateSet("FALSE", "Result", "None")]    [string]    $OnFailureOutput = "FALSE",
+        [switch]    $SuppressOutput
+    )
     if (-Not $Result) {
-        switch ($OnFailureOutput) 
-        {
+        switch ($OnFailureOutput) {
             "FALSE" { $FALSE }
             "Result" { $Result }
             default { }
@@ -269,15 +268,13 @@ function isSuccessful {
                 }
             }
         }
-        switch ($OnFailureOutput) 
-        {
+        switch ($OnFailureOutput) {
             "FALSE" { $FALSE }
             "Result" { $Result }
             default { }
         }
     } else {
-        switch ($OnSuccessOutput) 
-        {
+        switch ($OnSuccessOutput) {
             "TRUE" { $TRUE }
             "Result" { $Result }
             default { }
@@ -315,26 +312,26 @@ function isSuccessful {
   Session object containing URI & Check Point Session ID
 #>
 function Invoke-CPLogin {
-	[CmdletBinding()]
-	param(
-		[Parameter(Mandatory=$true)] [string] $ManagmentServer,
-		[int] $ManagementPort = 443,
-		[Parameter(Mandatory=$true)] [System.Management.Automation.PSCredential] $Credentials,
-		[switch] $ReadOnly,
-		[switch] $ContinueLastSession,
-		[string] $Domain
-	)
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]  [string]    $ManagmentServer,
+        [Parameter(Mandatory = $true)]  [System.Management.Automation.PSCredential] $Credentials,
+        [int]       $ManagementPort = 443,
+        [switch]    $ReadOnly,
+        [switch]    $ContinueLastSession,
+        [string]    $Domain
+    )
 	
-	$WebAPIURI = "https://" + $ManagmentServer + ":" + $ManagementPort + "/web_api"
-	$Payload = @{user=$Credentials.GetNetworkCredential().Username;password=$Credentials.GetNetworkCredential().Password;domain=$Domain}
+    $WebAPIURI = "https://" + $ManagmentServer + ":" + $ManagementPort + "/web_api"
+    $Payload = @{user = $Credentials.GetNetworkCredential().Username; password = $Credentials.GetNetworkCredential().Password; domain = $Domain}
 	
-	AddSwitchPayload -Payload $Payload  -Name 'read-only' -Value $ReadOnly
-	AddSwitchPayload -Payload $Payload -Name 'continue-last-session' -Value $ContinueLastSession
+    AddSwitchPayload -Payload $Payload  -Name 'read-only' -Value $ReadOnly
+    AddSwitchPayload -Payload $Payload -Name 'continue-last-session' -Value $ContinueLastSession
 	
-	$Result = APICall -Session @{URI=$WebAPIURI} -Command 'login' -Payload $Payload
+    $Result = APICall -Session @{URI = $WebAPIURI} -Command 'login' -Payload $Payload
     if (isSuccessful -Result $Result) {
         Write-Verbose "Login successfull"
-	    @{URI=$WebAPIURI; 'x-chkp-sid'=$Result.sid}
+        @{URI = $WebAPIURI; 'x-chkp-sid' = $Result.sid}
     } else {
         Write-Verbose "Login failed."
     }
@@ -348,11 +345,11 @@ function Invoke-CPLogin {
   Session object from Invoke-CPLogin
 #>
 function Invoke-CPLogout {
-	[CmdletBinding()]
-	param(
-		[Parameter(Mandatory=$true)] $Session
-	)
-	$Result = APICall -Session $Session -Command 'logout'
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]  [hashtable] $Session
+    )
+    $Result = APICall -Session $Session -Command 'logout'
     if (isSuccessful -Result $Result) {
         Write-Verbose "Logout successfull"
     } else {
@@ -371,11 +368,11 @@ function Invoke-CPLogout {
   Session object from Invoke-CPLogin
 #>
 function Invoke-CPContinueSessionInSmartconsole {
-	[CmdletBinding()]
-	param(
-		[Parameter(Mandatory=$true)] $Session
-	)
-	$Result = APICall -Session $Session -Command 'continue-session-in-smartconsole'
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]  [hashtable] $Session
+    )
+    $Result = APICall -Session $Session -Command 'continue-session-in-smartconsole'
     if (isSuccessful -Result $Result) {
         Write-Verbose "Successfull"
     } else {
@@ -391,11 +388,11 @@ function Invoke-CPContinueSessionInSmartconsole {
   Session object from Invoke-CPLogin
 #>
 function Invoke-CPPublish {
-	[CmdletBinding()]
-	param(
-		[Parameter(Mandatory=$true)] $Session
-	)
-	$Result = APICall -Session $Session -Command 'publish'
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]  [hashtable] $Session
+    )
+    $Result = APICall -Session $Session -Command 'publish'
     if (isSuccessful -Result $Result) {
         Write-Verbose "Publish Successfull"
     } else {
@@ -411,11 +408,11 @@ function Invoke-CPPublish {
   Session object from Invoke-CPLogin
 #>
 function Invoke-CPDiscard {
-	[CmdletBinding()]
-	param(
-		[Parameter(Mandatory=$true)] $Session
-	)
-	$Result = APICall -Session $Session -Command 'discard'
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]  [hashtable] $Session
+    )
+    $Result = APICall -Session $Session -Command 'discard'
     if (isSuccessful -Result $Result) {
         Write-Verbose "Discard Successfull"
     } else {
@@ -469,55 +466,51 @@ function Invoke-CPDiscard {
  Import-Csv .\AddHosts.csv | Add-CPHost -Session $Session
 #>
 function Add-CPHost {
-	[CmdletBinding()]
-	param(
-		[Parameter(Mandatory=$true)] $Session,
-		[parameter(ValueFromPipelineByPropertyName, Mandatory=$true)] [string] $Name,
-		[parameter(ValueFromPipelineByPropertyName)] [alias("ip-address")] [string] $IpAddress,
-        [parameter(ValueFromPipelineByPropertyName)] [alias("ipv4-address")] [string] $Ipv4Address,
-        [parameter(ValueFromPipelineByPropertyName)] [alias("ipv6-address")] [string] $Ipv6Address,
-		[parameter(ValueFromPipelineByPropertyName)] [string] $Comments,
-		[parameter(ValueFromPipelineByPropertyName)] [string[]] $Tags,
-		[parameter(ValueFromPipelineByPropertyName)] [string[]] $Groups,
-		[parameter(ValueFromPipelineByPropertyName)] 
-			[alias("colour")]
-			[ValidateSet(
-				"aquamarine 1", "black", "blue", "blue 1", "burly wood 4", "cyan",
-				"dark green", "dark khaki", "dark orchid", "dark orange 3",
-				"dark sea green 3", "deep pink", "deep sky blue 1", "dodger blue 3",
-				"firebrick", "foreground", "forest green", "gold", "gold 3",
-				"gray 83", "gray 90", "green", "lemon chiffon", "light coral",
-				"light sea green", "light sky blue 4", "magenta", "medium orchid",
-				"medium slate blue", "medium violet red", "navy blue", "olive drab",
-				"orange", "red", "sienna", "yellow", "")]
-			[string] $Color = "black",
-		[switch] $IgnoreWarnings,
-        [switch] $SetIfExists
-	)
-	Begin {}
-	Process {
-		if ($Color -eq "") {
-			$Color = "black"
-		}
-		
-		$Payload = @{name=$Name;color=$Color;comments=$Comments}
-        AddStringPayload -Payload $Payload -Name 'ip-address'      -Value $IpAddress
-        AddStringPayload -Payload $Payload -Name 'ipv4-address'    -Value $Ipv4Address
-        AddStringPayload -Payload $Payload -Name 'ipv6-address'    -Value $Ipv6Address
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]                                          [hashtable] $Session,
+        [parameter(ValueFromPipelineByPropertyName, Mandatory = $true)]         [string]    $Name,
+        [parameter(ValueFromPipelineByPropertyName)] [alias("ip-address")]      [string]    $IpAddress,
+        [parameter(ValueFromPipelineByPropertyName)] [alias("ipv4-address")]    [string]    $Ipv4Address,
+        [parameter(ValueFromPipelineByPropertyName)] [alias("ipv6-address")]    [string]    $Ipv6Address,
+        [parameter(ValueFromPipelineByPropertyName)]                            [string]    $Comments,
+        [parameter(ValueFromPipelineByPropertyName)]                            [string[]]  $Tags,
+        [parameter(ValueFromPipelineByPropertyName)]                            [string[]]  $Groups,
+        [parameter(ValueFromPipelineByPropertyName)] [alias("colour")]
+        [ValidateSet(
+            "aquamarine 1", "black", "blue", "blue 1", "burly wood 4", "cyan",
+            "dark green", "dark khaki", "dark orchid", "dark orange 3",
+            "dark sea green 3", "deep pink", "deep sky blue 1", "dodger blue 3",
+            "firebrick", "foreground", "forest green", "gold", "gold 3",
+            "gray 83", "gray 90", "green", "lemon chiffon", "light coral",
+            "light sea green", "light sky blue 4", "magenta", "medium orchid",
+            "medium slate blue", "medium violet red", "navy blue", "olive drab",
+            "orange", "red", "sienna", "yellow", "")]
+        [string]    $Color,
+        [switch]    $IgnoreWarnings,
+        [switch]    $SetIfExists
+    )
+    Begin {}
+    Process {
+        $Payload = @{name = $Name; comments = $Comments}
+        AddStringPayload -Payload $Payload -Name 'ip-address'      -Value  $IpAddress
+        AddStringPayload -Payload $Payload -Name 'ipv4-address'    -Value  $Ipv4Address
+        AddStringPayload -Payload $Payload -Name 'ipv6-address'    -Value  $Ipv6Address
         AddArrayPayload  -Payload $Payload -Name tags              -Values $Tags
         AddArrayPayload  -Payload $Payload -Name groups            -Values $Groups
-		AddSwitchPayload -Payload $Payload -Name 'ignore-warnings' -Value  $IgnoreWarnings
+        AddStringPayload -Payload $Payload -Name color             -Value  $Color
+        AddSwitchPayload -Payload $Payload -Name 'ignore-warnings' -Value  $IgnoreWarnings
         AddSwitchPayload -Payload $Payload -Name 'set-if-exists'   -Value  $SetIfExists
 		
-		$Result = APICall -Session $Session -Command 'add-host' -Payload $Payload
+        $Result = APICall -Session $Session -Command 'add-host' -Payload $Payload
         if (isSuccessful -Result $Result) {
             Write-Verbose "Added host $($Name)"
             $Result
         } else {
             Write-Verbose "Failed to add host $($Name)"
         }
-	}
-	End {}
+    }
+    End {}
 }
 
 <# 
@@ -537,28 +530,28 @@ function Add-CPHost {
   Apply changes ignoring warnings.
 #>
 function Remove-CPHost {
-	[CmdletBinding()]
-	param(
-		[Parameter(Mandatory=$true)] $Session,
-		[parameter(ValueFromPipelineByPropertyName)] [string] $Name,
-		[parameter(ValueFromPipelineByPropertyName)] [string] $UID,
-		[switch] $IgnoreWarnings
-	)
-	Begin {}
-	Process {
-		$Payload = @{}
-		AddIdentifier    -Payload $Payload -Name $Name             -UID $UID
-		AddSwitchPayload -Payload $Payload -Name 'ignore-warnings' -Value $IgnoreWarnings
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]                  [hashtable] $Session,
+        [parameter(ValueFromPipelineByPropertyName)]    [string]    $Name,
+        [parameter(ValueFromPipelineByPropertyName)]    [string]    $UID,
+        [switch]    $IgnoreWarnings
+    )
+    Begin {}
+    Process {
+        $Payload = @{}
+        AddIdentifier    -Payload $Payload -Name $Name             -UID $UID
+        AddSwitchPayload -Payload $Payload -Name 'ignore-warnings' -Value $IgnoreWarnings
 		
-		$Result = APICall -Session $Session -Command 'delete-host' -Payload $Payload
+        $Result = APICall -Session $Session -Command 'delete-host' -Payload $Payload
         if (isSuccessful -Result $Result) {
             Write-Verbose "Deleted host $($Name)$($UID)"
         } else {
             Write-Verbose "Failed to delete host $($Name)$($UID)"
             $Result
         }
-	}
-	End {}
+    }
+    End {}
 }
 
 ## Networks ##
@@ -612,63 +605,59 @@ function Remove-CPHost {
   Apply changes ignoring warnings.
 #>
 function Add-CPNetwork {
-	[CmdletBinding()]
-	param(
-		[Parameter(Mandatory=$true)] $Session,
-		[parameter(ValueFromPipelineByPropertyName, Mandatory=$true)] [string] $Name,
-        [parameter(ValueFromPipelineByPropertyName)] [string] $Subnet,
-        [parameter(ValueFromPipelineByPropertyName)] [int] $MaskLength,
-        [parameter(ValueFromPipelineByPropertyName)] [string] $SubnetMask,
-        [parameter(ValueFromPipelineByPropertyName)] [string] $Subnet4,
-        [parameter(ValueFromPipelineByPropertyName)] [int] $MaskLength4,
-        [parameter(ValueFromPipelineByPropertyName)] [string] $Subnet6,
-        [parameter(ValueFromPipelineByPropertyName)] [int] $MaskLength6,
-		[parameter(ValueFromPipelineByPropertyName)] [string] $Comments,
-		[parameter(ValueFromPipelineByPropertyName)] [string[]] $Tags,
-		[parameter(ValueFromPipelineByPropertyName)] [string[]] $Groups,
-		[parameter(ValueFromPipelineByPropertyName)] 
-			[alias("colour")]
-			[ValidateSet(
-				"aquamarine 1", "black", "blue", "blue 1", "burly wood 4", "cyan",
-				"dark green", "dark khaki", "dark orchid", "dark orange 3",
-				"dark sea green 3", "deep pink", "deep sky blue 1", "dodger blue 3",
-				"firebrick", "foreground", "forest green", "gold", "gold 3",
-				"gray 83", "gray 90", "green", "lemon chiffon", "light coral",
-				"light sea green", "light sky blue 4", "magenta", "medium orchid",
-				"medium slate blue", "medium violet red", "navy blue", "olive drab",
-				"orange", "red", "sienna", "yellow", "")]
-			[string] $Color = "black",
-		[switch] $IgnoreWarnings,
-        [switch] $SetIfExists
-	)
-	Begin {}
-	Process {
-		if ($Color -eq "") {
-			$Color = "black"
-		}
-		
-		$Payload = @{name=$Name;color=$Color;comments=$Comments}
-        AddStringPayload -Payload $Payload -Name subnet            -Value $Subnet
-        AddIntPayload    -Payload $Payload -Name 'mask-length'     -Value $MaskLength
-        AddStringPayload -Payload $Payload -Name 'subnet-mask'     -Value $SubnetMask
-        AddStringPayload -Payload $Payload -Name subnet4           -Value $Subnet4
-        AddIntPayload    -Payload $Payload -Name 'mask-length4'    -Value $MaskLength4
-        AddStringPayload -Payload $Payload -Name subnet6           -Value $Subnet6
-        AddIntPayload    -Payload $Payload -Name 'mask-length6'    -Value $MaskLength6
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]                                  [hashtable] $Session,
+        [parameter(ValueFromPipelineByPropertyName, Mandatory = $true)] [string]    $Name,
+        [parameter(ValueFromPipelineByPropertyName)]                    [string]    $Subnet,
+        [parameter(ValueFromPipelineByPropertyName)]                    [int]       $MaskLength,
+        [parameter(ValueFromPipelineByPropertyName)]                    [string]    $SubnetMask,
+        [parameter(ValueFromPipelineByPropertyName)]                    [string]    $Subnet4,
+        [parameter(ValueFromPipelineByPropertyName)]                    [int]       $MaskLength4,
+        [parameter(ValueFromPipelineByPropertyName)]                    [string]    $Subnet6,
+        [parameter(ValueFromPipelineByPropertyName)]                    [int]       $MaskLength6,
+        [parameter(ValueFromPipelineByPropertyName)]                    [string]    $Comments,
+        [parameter(ValueFromPipelineByPropertyName)]                    [string[]]  $Tags,
+        [parameter(ValueFromPipelineByPropertyName)]                    [string[]]  $Groups,
+        [parameter(ValueFromPipelineByPropertyName)] [alias("colour")]
+        [ValidateSet(
+            "aquamarine 1", "black", "blue", "blue 1", "burly wood 4", "cyan",
+            "dark green", "dark khaki", "dark orchid", "dark orange 3",
+            "dark sea green 3", "deep pink", "deep sky blue 1", "dodger blue 3",
+            "firebrick", "foreground", "forest green", "gold", "gold 3",
+            "gray 83", "gray 90", "green", "lemon chiffon", "light coral",
+            "light sea green", "light sky blue 4", "magenta", "medium orchid",
+            "medium slate blue", "medium violet red", "navy blue", "olive drab",
+            "orange", "red", "sienna", "yellow", "")]
+        [string]    $Color,
+        [switch]    $IgnoreWarnings,
+        [switch]    $SetIfExists
+    )
+    Begin {}
+    Process {
+        $Payload = @{name = $Name; comments = $Comments}
+        AddStringPayload -Payload $Payload -Name subnet            -Value  $Subnet
+        AddIntPayload    -Payload $Payload -Name 'mask-length'     -Value  $MaskLength
+        AddStringPayload -Payload $Payload -Name 'subnet-mask'     -Value  $SubnetMask
+        AddStringPayload -Payload $Payload -Name subnet4           -Value  $Subnet4
+        AddIntPayload    -Payload $Payload -Name 'mask-length4'    -Value  $MaskLength4
+        AddStringPayload -Payload $Payload -Name subnet6           -Value  $Subnet6
+        AddIntPayload    -Payload $Payload -Name 'mask-length6'    -Value  $MaskLength6
         AddArrayPayload  -Payload $Payload -Name tags              -Values $Tags
         AddArrayPayload  -Payload $Payload -Name groups            -Values $Groups
-		AddSwitchPayload -Payload $Payload -Name 'ignore-warnings' -Value  $IgnoreWarnings
+        AddStringPayload -Payload $Payload -Name color             -Value  $Color
+        AddSwitchPayload -Payload $Payload -Name 'ignore-warnings' -Value  $IgnoreWarnings
         AddSwitchPayload -Payload $Payload -Name 'set-if-exists'   -Value  $SetIfExists
 		
-		$Result = APICall -Session $Session -Command 'add-network' -Payload $Payload
+        $Result = APICall -Session $Session -Command 'add-network' -Payload $Payload
         if (isSuccessful -Result $Result) {
             Write-Verbose "Added network $($Name)"
             $Result
         } else {
             Write-Verbose "Failed to add network $($Name)"
         }
-	}
-	End {}
+    }
+    End {}
 }
 
 <# 
@@ -688,28 +677,28 @@ function Add-CPNetwork {
   Apply changes ignoring warnings.
 #>
 function Remove-CPNetwork {
-	[CmdletBinding()]
-	param(
-		[Parameter(Mandatory=$true)] $Session,
-		[parameter(ValueFromPipelineByPropertyName)] [string] $Name,
-		[parameter(ValueFromPipelineByPropertyName)] [string] $UID,
-		[switch] $IgnoreWarnings
-	)
-	Begin {}
-	Process {
-		$Payload = @{}
-		AddIdentifier    -Payload $Payload -Name $Name             -UID $UID
-		AddSwitchPayload -Payload $Payload -Name 'ignore-warnings' -Value $IgnoreWarnings
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]                  [hashtable] $Session,
+        [parameter(ValueFromPipelineByPropertyName)]    [string]    $Name,
+        [parameter(ValueFromPipelineByPropertyName)]    [string]    $UID,
+        [switch]    $IgnoreWarnings
+    )
+    Begin {}
+    Process {
+        $Payload = @{}
+        AddIdentifier    -Payload $Payload -Name $Name             -UID $UID
+        AddSwitchPayload -Payload $Payload -Name 'ignore-warnings' -Value $IgnoreWarnings
 		
-		$Result = APICall -Session $Session -Command 'delete-network' -Payload $Payload
+        $Result = APICall -Session $Session -Command 'delete-network' -Payload $Payload
         if (isSuccessful -Result $Result) {
             Write-Verbose "Deleted network $($Name)$($UID)"
         } else {
             Write-Verbose "Failed to delete network $($Name)$($UID)"
             $Result
         }
-	}
-	End {}
+    }
+    End {}
 }
 
 ## Groups ##
@@ -739,47 +728,43 @@ function Remove-CPNetwork {
   Apply changes ignoring warnings.
 #>
 function Add-CPGroup {
-	[CmdletBinding()]
-	param(
-		[Parameter(Mandatory=$true)] $Session,
-		[parameter(ValueFromPipelineByPropertyName, Mandatory=$true)] [string] $Name,
-		[parameter(ValueFromPipelineByPropertyName)] [string] $Comments,
-		[parameter(ValueFromPipelineByPropertyName)] [string[]] $Tags,
-		[parameter(ValueFromPipelineByPropertyName)] [string[]] $Members,
-		[parameter(ValueFromPipelineByPropertyName)] 
-			[alias("colour")]
-			[ValidateSet(
-				"aquamarine 1", "black", "blue", "blue 1", "burly wood 4", "cyan",
-				"dark green", "dark khaki", "dark orchid", "dark orange 3",
-				"dark sea green 3", "deep pink", "deep sky blue 1", "dodger blue 3",
-				"firebrick", "foreground", "forest green", "gold", "gold 3",
-				"gray 83", "gray 90", "green", "lemon chiffon", "light coral",
-				"light sea green", "light sky blue 4", "magenta", "medium orchid",
-				"medium slate blue", "medium violet red", "navy blue", "olive drab",
-				"orange", "red", "sienna", "yellow", "")]
-			[string] $Color = "black",
-		[switch] $IgnoreWarnings
-	)
-	Begin {}
-	Process {
-		if ($Color -eq "") {
-			$Color = "black"
-		}
-		
-		$Payload = @{name=$Name;color=$Color;comments=$Comments}
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]                                  [hashtable] $Session,
+        [parameter(ValueFromPipelineByPropertyName, Mandatory = $true)] [string]    $Name,
+        [parameter(ValueFromPipelineByPropertyName)]                    [string]    $Comments,
+        [parameter(ValueFromPipelineByPropertyName)]                    [string[]]  $Tags,
+        [parameter(ValueFromPipelineByPropertyName)]                    [string[]]  $Members,
+        [parameter(ValueFromPipelineByPropertyName)] [alias("colour")]
+        [ValidateSet(
+            "aquamarine 1", "black", "blue", "blue 1", "burly wood 4", "cyan",
+            "dark green", "dark khaki", "dark orchid", "dark orange 3",
+            "dark sea green 3", "deep pink", "deep sky blue 1", "dodger blue 3",
+            "firebrick", "foreground", "forest green", "gold", "gold 3",
+            "gray 83", "gray 90", "green", "lemon chiffon", "light coral",
+            "light sea green", "light sky blue 4", "magenta", "medium orchid",
+            "medium slate blue", "medium violet red", "navy blue", "olive drab",
+            "orange", "red", "sienna", "yellow", "")]
+        [string]    $Color,
+        [switch]    $IgnoreWarnings
+    )
+    Begin {}
+    Process {
+        $Payload = @{name = $Name; comments = $Comments}
         AddArrayPayload  -Payload $Payload -Name tags              -Values $Tags
         AddArrayPayload  -Payload $Payload -Name members           -Values $Members
-		AddSwitchPayload -Payload $Payload -Name 'ignore-warnings' -Value  $IgnoreWarnings
+        AddStringPayload -Payload $Payload -Name color             -Value  $Color
+        AddSwitchPayload -Payload $Payload -Name 'ignore-warnings' -Value  $IgnoreWarnings
 		
-		$Result = APICall -Session $Session -Command 'add-group' -Payload $Payload
+        $Result = APICall -Session $Session -Command 'add-group' -Payload $Payload
         if (isSuccessful -Result $Result) {
             Write-Verbose "Added group $($Name)"
             $Result
         } else {
             Write-Verbose "Failed to add group $($Name)"
         }
-	}
-	End {}
+    }
+    End {}
 }
 
 <# 
@@ -799,20 +784,20 @@ function Add-CPGroup {
   Apply changes ignoring warnings.
 #>
 function Remove-CPGroup {
-	[CmdletBinding()]
-	param(
-		[Parameter(Mandatory=$true)] $Session,
-		[parameter(ValueFromPipelineByPropertyName)] [string] $Name,
-		[parameter(ValueFromPipelineByPropertyName)] [string] $UID,
-		[switch] $IgnoreWarnings
-	)
-	Begin {}
-	Process {
-		$Payload = @{}
-		AddIdentifier    -Payload $Payload -Name $Name             -UID $UID
-		AddSwitchPayload -Payload $Payload -Name 'ignore-warnings' -Value $IgnoreWarnings
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]                  [hashtable] $Session,
+        [parameter(ValueFromPipelineByPropertyName)]    [string]    $Name,
+        [parameter(ValueFromPipelineByPropertyName)]    [string]    $UID,
+        [switch]    $IgnoreWarnings
+    )
+    Begin {}
+    Process {
+        $Payload = @{}
+        AddIdentifier    -Payload $Payload -Name $Name             -UID $UID
+        AddSwitchPayload -Payload $Payload -Name 'ignore-warnings' -Value $IgnoreWarnings
 		
-		$Result = APICall -Session $Session -Command 'delete-group' -Payload $Payload
+        $Result = APICall -Session $Session -Command 'delete-group' -Payload $Payload
         if (isSuccessful -Result $Result) {
             Write-Verbose "Deleted group $($Name)$($UID)"
             $Result
@@ -820,8 +805,8 @@ function Remove-CPGroup {
             Write-Verbose "Failed to delete group $($Name)$($UID)"
             $Result
         }
-	}
-	End {}
+    }
+    End {}
 }
 ### END OF NETWORK OBJECT FUNCTIONS ###
 
