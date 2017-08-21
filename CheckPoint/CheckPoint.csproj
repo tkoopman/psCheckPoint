@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CheckPointError.cs" />
+    <Compile Include="CloseCheckPointSession.cs" />
     <Compile Include="OpenCheckPointSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SwitchJsonConverter.cs" />

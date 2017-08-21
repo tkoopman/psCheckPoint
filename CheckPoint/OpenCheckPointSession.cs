@@ -178,16 +178,15 @@ namespace CheckPoint
         protected override void ProcessRecord()
         {
             User = Credentials.GetNetworkCredential().UserName;
-            Password = Credentials.GetNetworkCredential().Password;
-
-            string strJson = JsonConvert.SerializeObject(this);
-            StringContent content = new StringContent(strJson, Encoding.UTF8, "application/json");
 
             // Debug Output Request
             Password = "***";
-            strJson = JsonConvert.SerializeObject(this);
+            string strJson = JsonConvert.SerializeObject(this);
             this.WriteDebug($@"JSON Request to https://{ManagementServer}:{ManagementPort}/web_api/login
 {strJson}");
+
+            Password = Credentials.GetNetworkCredential().Password;
+            strJson = JsonConvert.SerializeObject(this);
 
             try
             {
@@ -200,7 +199,7 @@ namespace CheckPoint
                 }
                 HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage response = client.PostAsync($"https://{ManagementServer}:{ManagementPort}/web_api/login", content).Result;
+                HttpResponseMessage response = client.PostAsync($"https://{ManagementServer}:{ManagementPort}/web_api/login", new StringContent(strJson, Encoding.UTF8, "application/json")).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -227,8 +226,6 @@ namespace CheckPoint
                 while (e.InnerException != null) e = e.InnerException;
                 this.WriteError(new ErrorRecord(e, e.Message, ErrorCategory.ConnectionError, this));
             }
-
-            
         }
 
         protected override void EndProcessing()
