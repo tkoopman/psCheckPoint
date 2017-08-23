@@ -1,24 +1,40 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CheckPoint
 {
-    class CheckPointError
+    internal class CheckPointErrorDetail : CheckPointMessage
     {
         /// <summary>
         /// <para type="description">Error code.</para>
         /// </summary>
         [JsonProperty(PropertyName = "code")]
-        public string Code { get; set; }
+        public bool Code { get; set; }
+    }
+
+    internal class CheckPointError : CheckPointMessage
+    {
+        /// <summary>
+        /// <para type="description">Validation related to the current session.</para>
+        /// </summary>
+        [JsonProperty(PropertyName = "current-session")]
+        public string CurrentSession { get; set; }
 
         /// <summary>
-        /// <para type="description">Operation status.</para>
+        /// <para type="description">Validation warnings.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        [JsonProperty(PropertyName = "warnings")]
+        public CheckPointErrorDetail[] Warnings { get; set; }
+
+        /// <summary>
+        /// <para type="description">Validation warnings.</para>
+        /// </summary>
+        [JsonProperty(PropertyName = "errors")]
+        public CheckPointErrorDetail[] Errors { get; set; }
+
+        /// <summary>
+        /// <para type="description">Validation warnings.</para>
+        /// </summary>
+        [JsonProperty(PropertyName = "blocking-errors")]
+        public CheckPointErrorDetail[] BlockingErrors { get; set; }
     }
 }

@@ -1,14 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace CheckPoint
+namespace CheckPoint.Session
 {
     /// <summary>
     /// <para type="synopsis">Log out of a sesison.</para>
@@ -17,15 +14,9 @@ namespace CheckPoint
     /// <example>
     ///   <code>Close-CheckPointSession -Session $Session</code>
     /// </example>
-    [Cmdlet(VerbsCommon.Close, "CheckPointSession")]
-    public class CloseCheckPointSession: Cmdlet
+    [Cmdlet(VerbsCommon.Reset, "CheckPointSession")]
+    public class ResetCheckPointSession : CheckPointCmdlet
     {
-        /// <summary>
-        /// <para type="description">Check Point Session Object returned from Open-CheckPointSession.</para>
-        /// </summary>
-        [Parameter(Position = 0, Mandatory = true)]
-        public CheckPointSession Session;
-
         /// <summary>
         /// <para type="description">The session will be continued next time your open SmartConsole. In case 'uid' is not provided, use current session. In order for the session to pass successfully to SmartConsole, make sure you don't have any other active GUI sessions.</para>
         /// </summary>
@@ -34,18 +25,15 @@ namespace CheckPoint
 
         protected override void ProcessRecord()
         {
-            string command = (ContinueSessionInSmartconsole.IsPresent)? "continue-session-in-smartconsole":"logout";
-
             try
             {
                 HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Add("X-chkp-sid", Session.SID);
-                HttpResponseMessage response = client.PostAsync($"{Session.URL}/{command}", new StringContent("{ }", Encoding.UTF8, "application/json")).Result;
+                HttpResponseMessage response = client.PostAsync($"{Session.URL}/discard", new StringContent("{ }", Encoding.UTF8, "application/json")).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
-                    
                 }
                 else
                 {

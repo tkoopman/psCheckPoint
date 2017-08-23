@@ -56,9 +56,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CheckPointCmdlet.cs" />
+    <Compile Include="CheckPointMessage.cs" />
     <Compile Include="CheckPointError.cs" />
-    <Compile Include="CloseCheckPointSession.cs" />
-    <Compile Include="OpenCheckPointSession.cs" />
+    <Compile Include="CheckPointColorCmdlet.cs" />
+    <Compile Include="Objects\CheckPointDomain.cs" />
+    <Compile Include="Objects\CheckPointObject.cs" />
+    <Compile Include="Objects\CheckPointObjects.cs" />
+    <Compile Include="Objects\Host\SetCheckPointHost.cs" />
+    <Compile Include="Objects\SetCheckPointObject.cs" />
+    <Compile Include="Objects\Host\RemoveCheckPointHost.cs" />
+    <Compile Include="Objects\RemoveCheckPointObject.cs" />
+    <Compile Include="Objects\GetCheckPointObjects.cs" />
+    <Compile Include="Objects\GetCheckPointObject.cs" />
+    <Compile Include="Objects\Host\CheckPointHost.cs" />
+    <Compile Include="Objects\Host\GetCheckPointHosts.cs" />
+    <Compile Include="Objects\Host\GetCheckPointHost.cs" />
+    <Compile Include="Objects\Host\NewCheckPointHost.cs" />
+    <Compile Include="Objects\NewCheckPointObject.cs" />
+    <Compile Include="Session\CheckPointSession.cs" />
+    <Compile Include="Session\ResetCheckPointSession.cs" />
+    <Compile Include="Session\CloseCheckPointSession.cs" />
+    <Compile Include="Session\OpenCheckPointSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SwitchJsonConverter.cs" />
   </ItemGroup>

@@ -1,11 +1,6 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CheckPoint
 {
@@ -48,6 +43,7 @@ namespace CheckPoint
                 case "y":
                 case "1":
                     return new SwitchParameter(true);
+
                 case "false":
                 case "no":
                 case "n":
