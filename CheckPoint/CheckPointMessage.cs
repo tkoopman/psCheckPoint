@@ -2,7 +2,7 @@
 
 namespace CheckPoint
 {
-    internal class CheckPointMessage
+    public class CheckPointMessage
     {
         /// <summary>
         /// <para type="description">Message string.</para>

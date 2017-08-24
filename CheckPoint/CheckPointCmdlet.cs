@@ -1,24 +1,49 @@
 using CheckPoint.Session;
+using Newtonsoft.Json;
+using System;
 using System.Management.Automation;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace CheckPoint
 {
-    public abstract class CheckPointCmdlet : Cmdlet
+    [JsonObject(MemberSerialization.OptIn)]
+    public abstract class CheckPointCmdlet<T> : Cmdlet
     {
-		// Check Point Web-API Command
-		public abstract string Command { get; }
-		
+        // Check Point Web-API Command
+        public abstract string Command { get; }
+
         /// <summary>
         /// <para type="description">Session object from Open-CheckPointSession</para>
         /// </summary>
         [Parameter(Position = 0, Mandatory = true)]
         public CheckPointSession Session { get; set; }
-		
-		internal string getJSON() { return "{ }"; }
-		
-		protected abstract ProcessRecordResponse(string JSON);
-		
-		protected override void ProcessRecord()
+
+        internal virtual string getJSON()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
+
+        protected virtual void ProcessRecordResponse(string JSON)
+        {
+            // Debug Output Request
+            this.WriteDebug($@"JSON Response
+{JSON}");
+
+            T result = JsonConvert.DeserializeObject<T>(JSON);
+
+            if (result.GetType() == typeof(CheckPointMessage))
+            {
+                WriteVerbose((string)(typeof(CheckPointMessage).GetProperty("Message").GetValue(result)));
+            }
+            else
+            {
+                WriteObject(result);
+            }
+        }
+
+        protected override void ProcessRecord()
         {
             // Debug Output Request
             string strJson = getJSON();
@@ -40,7 +65,7 @@ namespace CheckPoint
                     this.WriteDebug($@"JSON Response
 {strJson}");
 
-                    ProcessRecordResponse(strJSON);
+                    ProcessRecordResponse(strJson);
                 }
                 else
                 {

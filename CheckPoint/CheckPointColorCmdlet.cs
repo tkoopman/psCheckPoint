@@ -3,7 +3,7 @@ using System.Management.Automation;
 
 namespace CheckPoint
 {
-    public abstract class CheckPointColorCmdlet : CheckPointCmdlet
+    public abstract class CheckPointColorCmdlet<T> : CheckPointCmdlet<T>
     {
         [JsonProperty(PropertyName = "color", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]

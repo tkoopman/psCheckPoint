@@ -1,13 +1,9 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Management.Automation;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 
 namespace CheckPoint.Objects
 {
-    public abstract class NewCheckPointObject : CheckPointColorCmdlet
+    public abstract class NewCheckPointObject<T> : CheckPointColorCmdlet<T>
     {
         /// <summary>
         /// <para type="description">Object name. Should be unique in the domain.</para>
@@ -61,46 +57,5 @@ namespace CheckPoint.Objects
         [JsonConverter(typeof(SwitchJsonConverter))]
         [Parameter]
         public SwitchParameter IgnoreErrors { get; set; }
-
-        protected void _ProcessRecord<T>(string Command)
-        {
-            // Debug Output Request
-            string strJson = JsonConvert.SerializeObject(this);
-            this.WriteDebug($@"JSON Request to {Session.URL}/{Command}
-{strJson}");
-
-            try
-            {
-                HttpClient client = new HttpClient();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Add("X-chkp-sid", Session.SID);
-                HttpResponseMessage response = client.PostAsync($"{Session.URL}/{Command}", new StringContent(strJson, Encoding.UTF8, "application/json")).Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    strJson = response.Content.ReadAsStringAsync().Result;
-
-                    // Debug Output Request
-                    this.WriteDebug($@"JSON Response
-{strJson}");
-
-                    T session = JsonConvert.DeserializeObject<T>(strJson);
-                    WriteObject(session);
-                }
-                else
-                {
-                    WriteWarning($"Server returned status code: {(int)response.StatusCode} [{response.StatusCode}]");
-                    strJson = response.Content.ReadAsStringAsync().Result;
-                    WriteDebug(strJson);
-                    CheckPointError error = JsonConvert.DeserializeObject<CheckPointError>(strJson);
-                    WriteObject(error);
-                }
-            }
-            catch (Exception e)
-            {
-                while (e.InnerException != null) e = e.InnerException;
-                this.WriteError(new ErrorRecord(e, e.Message, ErrorCategory.ConnectionError, this));
-            }
-        }
     }
 }

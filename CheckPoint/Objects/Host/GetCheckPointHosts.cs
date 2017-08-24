@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 
 namespace CheckPoint.Objects.Host
 {
@@ -10,14 +9,10 @@ namespace CheckPoint.Objects.Host
     /// <example>
     ///   <code>$cpHosts = Get-CheckPointHosts -Session $Session</code>
     /// </example>
-    [JsonObject(MemberSerialization.OptIn)]
     [Cmdlet(VerbsCommon.Get, "CheckPointHosts")]
     [OutputType(typeof(CheckPointObjects<CheckPointHost>))]
-    public class GetCheckPointHosts : GetCheckPointObjects
+    public class GetCheckPointHosts : GetCheckPointObjects<CheckPointHost>
     {
-        protected override void ProcessRecord()
-        {
-            _ProcessRecord<CheckPointHost>("show-hosts");
-        }
+        public override string Command { get { return "show-hosts"; } }
     }
 }
