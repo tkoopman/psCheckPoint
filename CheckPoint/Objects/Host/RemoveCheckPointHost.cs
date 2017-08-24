@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 
 namespace CheckPoint.Objects.Host
 {
@@ -10,13 +9,9 @@ namespace CheckPoint.Objects.Host
     /// <example>
     ///   <code>Remove-CheckPointHost -Session $Session -Name Test1 -Verbose</code>
     /// </example>
-    [JsonObject(MemberSerialization.OptIn)]
     [Cmdlet(VerbsCommon.Remove, "CheckPointHost")]
-    public class RemoveCheckPointHost : RemoveCheckPointObject
+    public class RemoveCheckPointHost : RemoveCheckPointObject<CheckPointMessage>
     {
-        protected override void ProcessRecord()
-        {
-            _ProcessRecord("delete-host");
-        }
+        public override string Command { get { return "delete-host"; } }
     }
 }

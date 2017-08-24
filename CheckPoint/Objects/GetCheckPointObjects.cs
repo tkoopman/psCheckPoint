@@ -1,13 +1,9 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Management.Automation;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 
 namespace CheckPoint.Objects
 {
-    public abstract class GetCheckPointObjects : CheckPointCmdlet
+    public abstract class GetCheckPointObjects<T> : CheckPointCmdlet<T>
     {
         /// <summary>
         /// <para type="description">No more than that many results will be returned.</para>
@@ -34,45 +30,15 @@ namespace CheckPoint.Objects
         [ValidateSet("uid", "standard", "full")]
         public string DetailsLevel { get; set; } = "full";
 
-        protected void _ProcessRecord<T>(string Command)
+        protected override void ProcessRecordResponse(string JSON)
         {
             // Debug Output Request
-            string strJson = JsonConvert.SerializeObject(this);
-            this.WriteDebug($@"JSON Request to {Session.URL}/{Command}
-{strJson}");
+            this.WriteDebug($@"JSON Response
+{JSON}");
 
-            try
-            {
-                HttpClient client = new HttpClient();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Add("X-chkp-sid", Session.SID);
-                HttpResponseMessage response = client.PostAsync($"{Session.URL}/{Command}", new StringContent(strJson, Encoding.UTF8, "application/json")).Result;
+            CheckPointObjects<T> result = JsonConvert.DeserializeObject<CheckPointObjects<T>>(JSON);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    strJson = response.Content.ReadAsStringAsync().Result;
-
-                    // Debug Output Request
-                    this.WriteDebug($@"JSON Response
-{strJson}");
-
-                    CheckPointObjects<T> result = JsonConvert.DeserializeObject<CheckPointObjects<T>>(strJson);
-                    WriteObject(result);
-                }
-                else
-                {
-                    WriteWarning($"Server returned status code: {(int)response.StatusCode} [{response.StatusCode}]");
-                    strJson = response.Content.ReadAsStringAsync().Result;
-                    WriteDebug(strJson);
-                    CheckPointError error = JsonConvert.DeserializeObject<CheckPointError>(strJson);
-                    WriteObject(error);
-                }
-            }
-            catch (Exception e)
-            {
-                while (e.InnerException != null) e = e.InnerException;
-                this.WriteError(new ErrorRecord(e, e.Message, ErrorCategory.ConnectionError, this));
-            }
+            WriteObject(result);
         }
     }
 }

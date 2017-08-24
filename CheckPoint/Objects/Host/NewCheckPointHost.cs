@@ -10,11 +10,12 @@ namespace CheckPoint.Objects.Host
     /// <example>
     ///   <code>$cpHost = New-CheckPointHost -Session $Session -Name Test1 -ipAddress 1.2.3.4</code>
     /// </example>
-    [JsonObject(MemberSerialization.OptIn)]
     [Cmdlet(VerbsCommon.New, "CheckPointHost")]
     [OutputType(typeof(CheckPointHost))]
-    public class NewCheckPointHost : NewCheckPointObject
+    public class NewCheckPointHost : NewCheckPointObject<CheckPointHost>
     {
+        public override string Command { get { return "add-host"; } }
+
         /// <summary>
         /// <para type="description">IPv4 or IPv6 address. If both addresses are required use ipv4-address and ipv6-address fields explicitly.</para>
         /// </summary>
@@ -48,10 +49,5 @@ namespace CheckPoint.Objects.Host
         [JsonProperty(PropertyName = "groups", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public string[] Groups { get; set; }
-
-        protected override void ProcessRecord()
-        {
-            _ProcessRecord<CheckPointHost>("add-host");
-        }
     }
 }
