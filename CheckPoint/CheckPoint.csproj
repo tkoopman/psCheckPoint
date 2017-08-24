@@ -64,6 +64,11 @@
     <Compile Include="Objects\CheckPointObject.cs" />
     <Compile Include="Objects\CheckPointObjects.cs" />
     <Compile Include="Objects\Host\SetCheckPointHost.cs" />
+    <Compile Include="Objects\Network\CheckPointNetwork.cs" />
+    <Compile Include="Objects\Network\GetCheckPointNetwork.cs" />
+    <Compile Include="Objects\Network\GetCheckPointNetworks.cs" />
+    <Compile Include="Objects\Network\NewCheckPointNetwork.cs" />
+    <Compile Include="Objects\Network\RemoveCheckPointNetwork.cs" />
     <Compile Include="Objects\SetCheckPointObject.cs" />
     <Compile Include="Objects\Host\RemoveCheckPointHost.cs" />
     <Compile Include="Objects\RemoveCheckPointObject.cs" />
@@ -80,6 +85,7 @@
     <Compile Include="Session\OpenCheckPointSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SwitchJsonConverter.cs" />
+    <Compile Include="Objects\Network\SetCheckPointNetwork.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
