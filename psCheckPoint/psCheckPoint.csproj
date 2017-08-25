@@ -61,8 +61,15 @@
     <Compile Include="CheckPointError.cs" />
     <Compile Include="CheckPointColorCmdlet.cs" />
     <Compile Include="Objects\CheckPointDomain.cs" />
+    <Compile Include="Objects\CheckPointObjectFull.cs" />
     <Compile Include="Objects\CheckPointObject.cs" />
     <Compile Include="Objects\CheckPointObjects.cs" />
+    <Compile Include="Objects\Group\CheckPointGroup.cs" />
+    <Compile Include="Objects\Group\GetCheckPointGroup.cs" />
+    <Compile Include="Objects\Group\GetCheckPointGroups.cs" />
+    <Compile Include="Objects\Group\NewCheckPointGroup.cs" />
+    <Compile Include="Objects\Group\RemoveCheckPointGroup.cs" />
+    <Compile Include="Objects\Group\SetCheckPointGroup.cs" />
     <Compile Include="Objects\Host\SetCheckPointHost.cs" />
     <Compile Include="Objects\Network\CheckPointNetwork.cs" />
     <Compile Include="Objects\Network\GetCheckPointNetwork.cs" />
@@ -80,6 +87,8 @@
     <Compile Include="Objects\Host\NewCheckPointHost.cs" />
     <Compile Include="Objects\NewCheckPointObject.cs" />
     <Compile Include="Session\CheckPointSession.cs" />
+    <Compile Include="Session\SendCheckPointKeepAlive.cs" />
+    <Compile Include="Session\PublishCheckPointSession.cs" />
     <Compile Include="Session\ResetCheckPointSession.cs" />
     <Compile Include="Session\CloseCheckPointSession.cs" />
     <Compile Include="Session\OpenCheckPointSession.cs" />

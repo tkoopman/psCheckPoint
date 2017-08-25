@@ -6,7 +6,7 @@ namespace psCheckPoint.Objects.Network
     /// <para type="synopsis">Response from New-CheckPointHost, Get-CheckPointHost & Get-CheckPointHosts</para>
     /// <para type="description">Host object details.</para>
     /// </summary>
-    public class CheckPointNetwork : CheckPointObject
+    public class CheckPointNetwork : CheckPointObjectFull
     {
         /// <summary>
         /// <para type="description">How much details are returned depends on the details-level field of the request. This table shows the level of detail shown when details-level is set to standard.</para>
@@ -14,32 +14,8 @@ namespace psCheckPoint.Objects.Network
         [JsonProperty(PropertyName = "groups")]
         public CheckPointObject[] Groups { get; set; }
 
-        /// <summary>
-        /// <para type="description">Object icon.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "icon")]
-        public string Icon { get; set; }
-
-        /// <summary>
-        /// <para type="description">Indicates whether the object is read-only.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "read-only")]
-        public bool ReadOnly { get; set; }
-
-        //TODO tags
         //TODO host-servers
-
-        /// <summary>
-        /// <para type="description">Color of the object.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "color")]
-        public string Color { get; set; }
-
-        /// <summary>
-        /// <para type="description">Comments string.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "comments")]
-        public string Comments { get; set; }
+        //TODO nat-settings
 
         /// <summary>
         /// <para type="description">IPv4 network address.</para>
@@ -76,9 +52,5 @@ namespace psCheckPoint.Objects.Network
         /// </summary>
         [JsonProperty(PropertyName = "subnet-mask")]
         public string SubnetMask { get; set; }
-
-        //TODO meta-info
-        //TODO nat-settings
-        //TODO tags
     }
 }
