@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using psCheckPoint.Objects;
 using psCheckPoint.Session;
 using System;
 using System.Management.Automation;
@@ -39,6 +40,7 @@ namespace psCheckPoint
             }
             else
             {
+                WriteVerbose($"{Command}: {(string)(typeof(CheckPointObject).GetProperty("Name").GetValue(result))}");
                 WriteObject(result);
             }
         }
@@ -80,6 +82,24 @@ namespace psCheckPoint
             {
                 while (e.InnerException != null) e = e.InnerException;
                 WriteError(new ErrorRecord(e, e.Message, ErrorCategory.ConnectionError, this));
+            }
+        }
+
+        public static string[] CreateArray(String[] values)
+        {
+            if (values == null)
+            {
+                return null;
+            }
+            else
+            {
+                if (values.Length == 1)
+                {
+                    string value = values[0];
+                    values = value.Split(new char[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries);
+                }
+
+                return values;
             }
         }
     }

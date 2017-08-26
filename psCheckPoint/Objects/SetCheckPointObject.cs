@@ -39,7 +39,13 @@ namespace psCheckPoint.Objects
         /// </summary>
         [JsonProperty(PropertyName = "tags", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Tags { get; set; }
+        public string[] Tags
+        {
+            get { return _tags; }
+            set { _tags = CreateArray(value); }
+        }
+
+        private string[] _tags;
 
         /// <summary>
         /// <para type="description">Comments string.</para>

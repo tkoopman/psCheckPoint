@@ -22,13 +22,25 @@ namespace psCheckPoint.Objects.Group
         /// </summary>
         [JsonProperty(PropertyName = "members", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Members { get; set; }
+        public string[] Members
+        {
+            get { return _members; }
+            set { _members = CreateArray(value); }
+        }
+
+        private string[] _members;
 
         /// <summary>
         /// <para type="description">Collection of group identifiers.</para>
         /// </summary>
         [JsonProperty(PropertyName = "groups", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Groups { get; set; }
+        public string[] Groups
+        {
+            get { return _groups; }
+            set { _groups = CreateArray(value); }
+        }
+
+        private string[] _groups;
     }
 }

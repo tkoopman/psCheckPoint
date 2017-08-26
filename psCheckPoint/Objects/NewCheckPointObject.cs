@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Management.Automation;
 
 namespace psCheckPoint.Objects
@@ -9,7 +10,7 @@ namespace psCheckPoint.Objects
         /// <para type="description">Object name. Should be unique in the domain.</para>
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        [Parameter(Position = 1, Mandatory = true)]
+        [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true)]
         public string Name { get; set; }
 
         /// <summary>
@@ -17,7 +18,13 @@ namespace psCheckPoint.Objects
         /// </summary>
         [JsonProperty(PropertyName = "tags", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Tags { get; set; }
+        public string[] Tags
+        {
+            get { return _tags; }
+            set { _tags = CreateArray(value); }
+        }
+
+        private string[] _tags;
 
         /// <summary>
         /// <para type="description">If another object with the same identifier already exists, it will be updated. The command behaviour will be the same as if originally a set command was called. Pay attention that original object's fields will be overwritten by the fields provided in the request payload!</para>

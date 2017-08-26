@@ -46,6 +46,12 @@ namespace psCheckPoint.Objects.Host
         /// </summary>
         [JsonProperty(PropertyName = "groups", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Groups { get; set; }
+        public string[] Groups
+        {
+            get { return _groups; }
+            set { _groups = CreateArray(value); }
+        }
+
+        private string[] _groups;
     }
 }

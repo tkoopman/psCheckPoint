@@ -61,9 +61,11 @@
     <Compile Include="CheckPointError.cs" />
     <Compile Include="CheckPointColorCmdlet.cs" />
     <Compile Include="Objects\CheckPointDomain.cs" />
+    <Compile Include="Objects\CheckPointMetaInfo.cs" />
     <Compile Include="Objects\CheckPointObjectFull.cs" />
     <Compile Include="Objects\CheckPointObject.cs" />
     <Compile Include="Objects\CheckPointObjects.cs" />
+    <Compile Include="Objects\CheckPointTime.cs" />
     <Compile Include="Objects\Group\CheckPointGroup.cs" />
     <Compile Include="Objects\Group\GetCheckPointGroup.cs" />
     <Compile Include="Objects\Group\GetCheckPointGroups.cs" />

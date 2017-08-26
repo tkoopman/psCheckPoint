@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using psCheckPoint.Objects;
 
 namespace psCheckPoint.Session
 {
@@ -26,7 +27,11 @@ namespace psCheckPoint.Session
         [JsonProperty(PropertyName = "disk-space-message")]
         public string DiskSpaceMessage { get; set; }
 
-        //TODO last-login-was-at
+        /// <summary>
+        /// <para type="description">Timestamp when administrator last accessed the management server.</para>
+        /// </summary>
+        [JsonProperty(PropertyName = "last-login-was-at")]
+        public CheckPointTime LastLoginWasAt { get; set; }
 
         //TODO login-message
 

@@ -1,21 +1,23 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Management.Automation;
 
 namespace psCheckPoint
 {
-    public abstract class CheckPointColorCmdlet<T> : CheckPointCmdlet<T>
+    internal class ValidateColorAttribute : ValidateArgumentsAttribute
     {
-        [JsonProperty(PropertyName = "color", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        [Alias("Colour")]
-        [ValidateSet(
+        private static string[] ValidColors =
+        {
             "aquamarine 1",
             "black",
             "blue",
             "blue 1",
             "burly wood 4",
             "cyan",
-            "dark green", "dark khaki", "dark orchid", "dark orange 3",
+            "dark green",
+            "dark khaki",
+            "dark orchid",
+            "dark orange 3",
             "dark sea green 3",
             "deep pink",
             "deep sky blue 1",
@@ -41,12 +43,44 @@ namespace psCheckPoint
             "orange",
             "red",
             "sienna",
-            "yellow",
-            "",
-            null,
-            IgnoreCase = true
-            )
-        ]
-        public string Color { get; set; }
+            "yellow"
+        };
+
+        protected override void Validate(object arguments, EngineIntrinsics engineIntrinsics)
+        {
+            if (arguments != null)
+            {
+                string value = arguments.ToString().ToLower();
+                if (!(string.IsNullOrWhiteSpace(value) || (Array.IndexOf(ValidColors, value) > -1)))
+                {
+                    throw new ValidationMetadataException($"{value} is not a valid color.");
+                }
+            }
+        }
+    }
+
+    public abstract class CheckPointColorCmdlet<T> : CheckPointCmdlet<T>
+    {
+        [JsonProperty(PropertyName = "color", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        [Alias("Colour")]
+        [ValidateColor]
+        public string Color
+        {
+            get { return _color; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    _color = null;
+                }
+                else
+                {
+                    _color = value;
+                }
+            }
+        }
+
+        private string _color;
     }
 }

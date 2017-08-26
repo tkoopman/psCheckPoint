@@ -21,6 +21,7 @@ namespace psCheckPoint.Objects.Host
         /// </summary>
         [JsonProperty(PropertyName = "ip-address", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ParameterSetName = "IPv4 or IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [AllowNull]
         public string ipAddress { get; set; }
 
         /// <summary>
@@ -29,6 +30,7 @@ namespace psCheckPoint.Objects.Host
         [JsonProperty(PropertyName = "ipv4-address", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ParameterSetName = "IPv4 & IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Parameter(ParameterSetName = "IPv4", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [AllowNull]
         public string ipv4Address { get; set; }
 
         /// <summary>
@@ -37,6 +39,7 @@ namespace psCheckPoint.Objects.Host
         [JsonProperty(PropertyName = "ipv6-address", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ParameterSetName = "IPv4 & IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Parameter(ParameterSetName = "IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [AllowNull]
         public string ipv6Address { get; set; }
 
         //TODO interfaces
@@ -48,6 +51,12 @@ namespace psCheckPoint.Objects.Host
         /// </summary>
         [JsonProperty(PropertyName = "groups", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Groups { get; set; }
+        public string[] Groups
+        {
+            get { return _groups; }
+            set { _groups = CreateArray(value); }
+        }
+
+        private string[] _groups;
     }
 }
