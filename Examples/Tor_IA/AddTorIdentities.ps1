@@ -12,7 +12,7 @@ $Cache="TorNodesCache.csv"
 $Download=$false
 if (Test-Path $Cache) {
 	$lastWrite = (get-item $Cache).LastWriteTime
-	$timespan = new-timespan -Seconds 5 # -minutes 30
+	$timespan = new-timespan -minutes 30
 
 	if (((get-date) - $lastWrite) -gt $timespan) {
 		$Download=$true
