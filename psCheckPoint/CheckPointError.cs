@@ -2,7 +2,7 @@
 
 namespace psCheckPoint
 {
-    internal class CheckPointErrorDetail : CheckPointMessage
+    public class CheckPointErrorDetail : CheckPointMessage
     {
         /// <summary>
         /// <para type="description">Error code.</para>
@@ -11,7 +11,7 @@ namespace psCheckPoint
         public bool Code { get; set; }
     }
 
-    internal class CheckPointError : CheckPointMessage
+    public class CheckPointError : CheckPointMessage
     {
         /// <summary>
         /// <para type="description">Validation related to the current session.</para>

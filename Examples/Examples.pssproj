@@ -27,13 +27,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="ImportExcel\" />
+    <Folder Include="Tor_IA\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ImportExcel\Import.ps1" />
+    <Compile Include="Tor_IA\AddTorIdentities.ps1" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ImportExcel\Import.xlsx" />
     <Content Include="ImportExcel\README.md" />
+    <Content Include="Tor_IA\README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="Build" />
