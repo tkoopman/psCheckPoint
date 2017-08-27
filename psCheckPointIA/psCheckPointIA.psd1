@@ -29,7 +29,7 @@ CompanyName = ''
 Copyright = '(c) 2017 tim. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'Commands for accessing Check Point Identity Awarness Web-API Calls'
+Description = 'Commands for accessing Check Point Identity Awareness Web-API Calls'
 
 # Minimum version of the Windows PowerShell engine required by this module
 # PowerShellVersion = ''
