@@ -44,5 +44,10 @@ namespace psCheckPoint.Objects
         /// </summary>
         [JsonProperty(PropertyName = "validation-state")]
         public string ValidationState { get; set; }
+
+        public override string ToString()
+        {
+            return $"Last modified by {LastModifier} on the {LastModifyTime.asDateTime().ToShortDateString()} at {LastModifyTime.asDateTime().ToShortTimeString()}";
+        }
     }
 }

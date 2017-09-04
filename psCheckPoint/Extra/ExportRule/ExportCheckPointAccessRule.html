@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Export of Check Point Rule</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0px;
+            overflow: hidden;
+        }
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        h1 {
+            margin-bottom: 0;
+            margin-top: 5px;
+            color: royalblue;
+        }
+
+        #NavBar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 40px;
+        }
+
+            #NavBar th {
+                background-color: cadetblue;
+            }
+
+        #Body {
+            position: fixed;
+            left: 0px;
+            width: 100%;
+            top: 40px;
+            height: calc(100% - 40px);
+            overflow: auto;
+        }
+    </style>
+    <script>
+        var forEach = Array.prototype.forEach;
+
+        function onLoad() {
+            var ExportJSON = `
+{JSON}
+`;
+            var Export = JSON.parse(ExportJSON);
+            Export.Rules.forEach(ProcessRule);
+            Export.Groups.forEach(ProcessGroup);
+            Export.Hosts.forEach(ProcessHost);
+            Export.Other.forEach(ProcessOther);
+        }
+        function ProcessRule(rule) {
+            var table = document.getElementById("Rules");
+            var row = table.insertRow(-1);
+
+            row.insertCell(-1).innerHTML = rule.name;
+            row.insertCell(-1).innerHTML = GetNames(rule.source);
+            row.insertCell(-1).innerHTML = GetNames(rule.destination);
+            row.insertCell(-1).innerHTML = GetNames(rule.service);
+            row.insertCell(-1).innerHTML = rule.action.name;
+        }
+        function ProcessGroup(group) {
+            var table = document.getElementById("Groups");
+            var row = table.insertRow(-1);
+
+            row.insertCell(-1).innerHTML = group.name;
+            row.insertCell(-1).innerHTML = GetNames(group.members);
+        }
+        function ProcessHost(host) {
+            var table = document.getElementById("Hosts");
+            var row = table.insertRow(-1);
+
+            row.insertCell(-1).innerHTML = host.name;
+            row.insertCell(-1).innerHTML = GetIPs(host);
+        }
+        function GetIPs(host) {
+            var result = "";
+            if (host["ipv4-address"] !== null) {
+                result += "<p>";
+                result += host["ipv4-address"];
+                result += "</p>";
+            }
+            if (host["ipv6-address"] !== null) {
+                result += "<p>";
+                result += host["ipv6-address"];
+                result += "</p>";
+            }
+            return result;
+        }
+        function ProcessOther(other) {
+            var table = document.getElementById("Other");
+            var row = table.insertRow(-1);
+
+            row.insertCell(-1).innerHTML = other.name;
+            row.insertCell(-1).innerHTML = other.type;
+        }
+        function GetNames(items) {
+            var result = "";
+            for (i = 0; i < items.length; i++) {
+                result += "<p>";
+                result += items[i].name;
+                result += "</p>";
+            }
+            return result;
+        }
+    </script>
+</head>
+
+<body onLoad="onLoad()">
+    <div id="NavBar">
+        <table>
+            <tr>
+                <th><a href="#NavRules" style="display:block;">Rules</a></th>
+                <th><a href="#NavGroups" style="display:block;">Groups</a></th>
+                <th><a href="#NavHosts" style="display:block;">Hosts</a></th>
+                <th><a href="#NavOther" style="display:block;">Other</a></th>
+            </tr>
+        </table>
+    </div>
+    <br />
+    <div id="Body">
+        <section id="NavRules">
+            <h1>Rules</h1>
+            <table id="Rules">
+                <tr>
+                    <th>Name</th>
+                    <th>Source</th>
+                    <th>Destination</th>
+                    <th>Services</th>
+                    <th>Action</th>
+                </tr>
+            </table>
+        </section>
+        <section id="NavGroups">
+            <h1>Network Groups</h1>
+            <table id="Groups">
+                <tr>
+                    <th>Name</th>
+                    <th>Members</th>
+                </tr>
+            </table>
+        </section>
+        <section id="NavHosts">
+            <h1>Hosts</h1>
+            <table id="Hosts">
+                <tr>
+                    <th>Name</th>
+                    <th>IP Address</th>
+                </tr>
+            </table>
+        </section>
+        <section id="NavOther">
+            <h1>Other Object Types</h1>
+            <table id="Other">
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                </tr>
+            </table>
+        </section>
+    </div>
+</body>
+</html>

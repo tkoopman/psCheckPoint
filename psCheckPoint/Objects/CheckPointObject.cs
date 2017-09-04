@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 
 namespace psCheckPoint.Objects
 {
@@ -27,5 +28,23 @@ namespace psCheckPoint.Objects
         /// </summary>
         [JsonProperty(PropertyName = "domain")]
         public CheckPointDomain Domain { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        public override bool Equals(object obj)
+        {
+            try
+            {
+                CheckPointObject OBJ = (CheckPointObject)obj;
+                return this.UID.Equals(OBJ.UID);
+            }
+            catch (InvalidCastException)
+            {
+                return false;
+            }
+        }
     }
 }

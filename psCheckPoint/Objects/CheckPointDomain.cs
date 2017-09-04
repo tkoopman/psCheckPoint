@@ -21,5 +21,10 @@ namespace psCheckPoint.Objects
         /// </summary>
         [JsonProperty(PropertyName = "domain-type")]
         public string DomainType { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

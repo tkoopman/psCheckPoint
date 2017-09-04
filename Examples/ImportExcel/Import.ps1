@@ -9,5 +9,6 @@ $global:Networks = Import-Excel -WorkSheetname Networks -Path .\Import.xlsx  | N
 $global:AddressRanges = Import-Excel -WorkSheetname "Address Ranges" -Path .\Import.xlsx  | New-CheckPointAddressRange -Session $Session -Verbose
 $global:MulticastAddressRanges = Import-Excel -WorkSheetname "Multicast Address Ranges" -Path .\Import.xlsx  | New-CheckPointMulticastAddressRange -Session $Session -Verbose
 $global:SecurityZones = Import-Excel -WorkSheetname "Security Zones"   -Path .\Import.xlsx  | New-CheckPointSecurityZone -Session $Session -Verbose
+$global:AccessLayers = Import-Excel -WorkSheetname "Access Layers"   -Path .\Import.xlsx  | New-CheckPointAccessLayer -Session $Session -Verbose
 
 Close-CheckPointSession -Session $Session -ContinueSessionInSmartconsole
