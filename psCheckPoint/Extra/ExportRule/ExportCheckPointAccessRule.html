@@ -64,9 +64,7 @@
         var forEach = Array.prototype.forEach;
 
         function onLoad() {
-            var ExportJSON = `
-{JSON}
-`;
+            var ExportJSON = "{JSON}";
             var Export = JSON.parse(ExportJSON);
             Export.Rules.forEach(ProcessRule);
             Export.Groups.forEach(ProcessGroup);
