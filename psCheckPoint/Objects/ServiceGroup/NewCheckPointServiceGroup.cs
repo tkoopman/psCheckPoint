@@ -1,22 +1,21 @@
 ﻿using Newtonsoft.Json;
 using System.Management.Automation;
 
-namespace psCheckPoint.Objects.Group
+namespace psCheckPoint.Objects.ServiceGroup
 {
     /// <summary>
-    /// <para type="synopsis">Edit existing object using object name or uid.</para>
+    /// <para type="synopsis">Create new object.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>$cpGroup = Set-CheckPointGroup -Session $Session -Name Test1 -NewName Test2 -Tags TestTag</code>
+    ///   <code></code>
     /// </example>
-    [Cmdlet(VerbsCommon.Set, "CheckPointGroup")]
-    [OutputType(typeof(CheckPointGroup))]
-    public class SetCheckPointGroup : SetCheckPointObject<CheckPointGroup>
+    [Cmdlet(VerbsCommon.New, "CheckPointServiceGroup")]
+    [OutputType(typeof(CheckPointServiceGroup))]
+    public class NewCheckPointServiceGroup : NewCheckPointObject<CheckPointServiceGroup>
     {
-        public override string Command { get { return "set-group"; } }
+        public override string Command { get { return "add-service-group"; } }
 
-        //TODO Add other member options for adding and removing
         /// <summary>
         /// <para type="description">Collection of group identifiers.</para>
         /// </summary>

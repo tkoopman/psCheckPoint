@@ -14,6 +14,10 @@ using System.Linq;
 using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
+using psCheckPoint.Objects.ServiceTCP;
+using psCheckPoint.Objects.Service;
+using psCheckPoint.Objects.ServiceUDP;
+using psCheckPoint.Objects.ServiceGroup;
 
 namespace psCheckPoint.Extra.Export
 {
@@ -139,6 +143,27 @@ namespace psCheckPoint.Extra.Export
                         if (r != null) { Process(r, CurrentDepth); }
                         break;
                     }
+                case "service-group":
+                    {
+                        if (export.ServiceGroups.Contains(obj)) { return; }
+                        CheckPointServiceGroup r = ProcessCheckPointObject<CheckPointServiceGroup>(obj, CurrentDepth, "Get-CheckPointServiceGroup", typeof(GetCheckPointServiceGroup));
+                        if (r != null) { Process(r, CurrentDepth); }
+                        break;
+                    }
+                case "service-tcp":
+                    {
+                        if (export.Services.Contains(obj)) { return; }
+                        CheckPointServiceTCP r = ProcessCheckPointObject<CheckPointServiceTCP>(obj, CurrentDepth, "Get-CheckPointServiceTCP", typeof(GetCheckPointServiceTCP));
+                        if (r != null) { Process(r, CurrentDepth); }
+                        break;
+                    }
+                case "service-udp":
+                    {
+                        if (export.Services.Contains(obj)) { return; }
+                        CheckPointServiceUDP r = ProcessCheckPointObject<CheckPointServiceUDP>(obj, CurrentDepth, "Get-CheckPointServiceUDP", typeof(GetCheckPointServiceUDP));
+                        if (r != null) { Process(r, CurrentDepth); }
+                        break;
+                    }
                 default:
                     {
                         if (!export.Other.Contains(obj))
@@ -167,6 +192,10 @@ namespace psCheckPoint.Extra.Export
                     Process(newObj, CurrentDepth + 1);
                 }
                 foreach (CheckPointObject newObj in obj.Destination)
+                {
+                    Process(newObj, CurrentDepth + 1);
+                }
+                foreach (CheckPointObject newObj in obj.Service)
                 {
                     Process(newObj, CurrentDepth + 1);
                 }
@@ -245,6 +274,31 @@ namespace psCheckPoint.Extra.Export
 
             WriteVerbose($"Exporting {obj.Type}: {obj.Name}");
             export.Networks.Add(obj);
+        }
+
+        private void Process(CheckPointService obj, int CurrentDepth)
+        {
+            if (export.Services.Contains(obj)) { return; }
+
+            WriteVerbose($"Exporting {obj.Type}: {obj.ToString()}");
+            export.Services.Add(obj);
+        }
+
+        private void Process(CheckPointServiceGroup obj, int CurrentDepth)
+        {
+            if (export.ServiceGroups.Contains(obj)) { return; }
+
+            WriteVerbose($"Exporting {obj.Type}: {obj.ToString()}");
+            export.ServiceGroups.Add(obj);
+
+            if (CurrentDepth < Depth && !ExcludeDetailsOn.Contains(obj.Name))
+            {
+                Process(obj.Members, CurrentDepth + 1);
+            }
+            else
+            {
+                WriteVerbose($"Not following {obj.Name}");
+            }
         }
 
         private T ProcessCheckPointObject<T>(CheckPointObject obj, int CurrentDepth, string psCmdletName, Type psCmdlet) where T : CheckPointObject

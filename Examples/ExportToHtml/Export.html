@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Export of Check Point Rule</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0px;
+            overflow: hidden;
+        }
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        h1 {
+            margin-bottom: 0;
+            margin-top: 5px;
+            color: royalblue;
+        }
+
+        #NavBar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 40px;
+        }
+
+            #NavBar table {
+                table-layout: fixed;
+            }
+
+            #NavBar th {
+                background-color: cadetblue;
+            }
+
+        #Body {
+            position: fixed;
+            left: 0px;
+            width: 100%;
+            top: 40px;
+            height: calc(100% - 40px);
+            overflow: auto;
+        }
+    </style>
+    <script>
+        var forEach = Array.prototype.forEach;
+        var services = {};
+
+        function onLoad() {
+            var ExportJSON = "{\"AccessRules\":[{\"action\":{\"name\":\"Drop\",\"uid\":\"6c488338-8eec-4103-ad21-cd461ac2c473\",\"type\":\"RulebaseAction\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}},\"destination\":[{\"name\":\"Any\",\"uid\":\"97aeb369-9aea-11d5-bd16-0090272ccb30\",\"type\":\"CpmiAnyObject\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"destination-negate\":false,\"enabled\":true,\"inline-layer\":null,\"install-on\":[{\"name\":\"Policy Targets\",\"uid\":\"6c488338-8eec-4103-ad21-cd461ac2c476\",\"type\":\"Global\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"layer\":\"ea299b70-d989-41f7-b688-fcdecd211077\",\"meta-info\":{\"creation-time\":{\"iso-8601\":\"2017-09-08T10:11+1000\",\"posix\":1504829506570},\"creator\":\"admin\",\"last-modifier\":\"admin\",\"last-modify-time\":{\"iso-8601\":\"2017-09-08T10:12+1000\",\"posix\":1504829522688},\"lock\":\"unlocked\",\"validation-state\":\"ok\"},\"service\":[{\"name\":\"Any\",\"uid\":\"97aeb369-9aea-11d5-bd16-0090272ccb30\",\"type\":\"CpmiAnyObject\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"service-negate\":false,\"source\":[{\"name\":\"Tor\",\"uid\":\"d14a70bd-c18c-4aa2-9664-383539242656\",\"type\":\"access-role\",\"domain\":{\"name\":\"SMC User\",\"uid\":\"41e821a0-3720-11e3-aa6e-0800200c9fde\",\"domain-type\":\"domain\"}}],\"source-negate\":false,\"time\":[{\"name\":\"Any\",\"uid\":\"97aeb369-9aea-11d5-bd16-0090272ccb30\",\"type\":\"CpmiAnyObject\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"vpn\":[{\"name\":\"Any\",\"uid\":\"97aeb369-9aea-11d5-bd16-0090272ccb30\",\"type\":\"CpmiAnyObject\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"comments\":\"\",\"uid\":\"a8bbf35c-5f47-4f54-984d-eab063f03812\",\"type\":\"access-rule\",\"domain\":{\"name\":\"SMC User\",\"uid\":\"41e821a0-3720-11e3-aa6e-0800200c9fde\",\"domain-type\":\"domain\"}},{\"action\":{\"name\":\"Drop\",\"uid\":\"6c488338-8eec-4103-ad21-cd461ac2c473\",\"type\":\"RulebaseAction\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}},\"destination\":[{\"name\":\"Tor\",\"uid\":\"d14a70bd-c18c-4aa2-9664-383539242656\",\"type\":\"access-role\",\"domain\":{\"name\":\"SMC User\",\"uid\":\"41e821a0-3720-11e3-aa6e-0800200c9fde\",\"domain-type\":\"domain\"}}],\"destination-negate\":false,\"enabled\":true,\"inline-layer\":null,\"install-on\":[{\"name\":\"Policy Targets\",\"uid\":\"6c488338-8eec-4103-ad21-cd461ac2c476\",\"type\":\"Global\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"layer\":\"ea299b70-d989-41f7-b688-fcdecd211077\",\"meta-info\":{\"creation-time\":{\"iso-8601\":\"2017-09-08T10:12+1000\",\"posix\":1504829529917},\"creator\":\"admin\",\"last-modifier\":\"admin\",\"last-modify-time\":{\"iso-8601\":\"2017-09-08T10:12+1000\",\"posix\":1504829531441},\"lock\":\"unlocked\",\"validation-state\":\"ok\"},\"service\":[{\"name\":\"Any\",\"uid\":\"97aeb369-9aea-11d5-bd16-0090272ccb30\",\"type\":\"CpmiAnyObject\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"service-negate\":false,\"source\":[{\"name\":\"Any\",\"uid\":\"97aeb369-9aea-11d5-bd16-0090272ccb30\",\"type\":\"CpmiAnyObject\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"source-negate\":false,\"time\":[{\"name\":\"Any\",\"uid\":\"97aeb369-9aea-11d5-bd16-0090272ccb30\",\"type\":\"CpmiAnyObject\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"vpn\":[{\"name\":\"Any\",\"uid\":\"97aeb369-9aea-11d5-bd16-0090272ccb30\",\"type\":\"CpmiAnyObject\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"comments\":\"\",\"uid\":\"abda5ce2-524b-4eac-8d78-5483d7e351ca\",\"type\":\"access-rule\",\"domain\":{\"name\":\"SMC User\",\"uid\":\"41e821a0-3720-11e3-aa6e-0800200c9fde\",\"domain-type\":\"domain\"}},{\"action\":{\"name\":\"Accept\",\"uid\":\"6c488338-8eec-4103-ad21-cd461ac2c472\",\"type\":\"RulebaseAction\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}},\"destination\":[{\"name\":\"TestExportGroup\",\"uid\":\"93dff615-7c9f-45b2-b158-36187e209711\",\"type\":\"group\",\"domain\":{\"name\":\"SMC User\",\"uid\":\"41e821a0-3720-11e3-aa6e-0800200c9fde\",\"domain-type\":\"domain\"}}],\"destination-negate\":false,\"enabled\":true,\"inline-layer\":null,\"install-on\":[{\"name\":\"Policy Targets\",\"uid\":\"6c488338-8eec-4103-ad21-cd461ac2c476\",\"type\":\"Global\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"layer\":\"ea299b70-d989-41f7-b688-fcdecd211077\",\"meta-info\":{\"creation-time\":{\"iso-8601\":\"2017-09-08T10:12+1000\",\"posix\":1504829536947},\"creator\":\"admin\",\"last-modifier\":\"admin\",\"last-modify-time\":{\"iso-8601\":\"2017-09-08T10:15+1000\",\"posix\":1504829742019},\"lock\":\"unlocked\",\"validation-state\":\"ok\"},\"service\":[{\"name\":\"dns\",\"uid\":\"97aeb46b-9aea-11d5-bd16-0090272ccb30\",\"type\":\"service-group\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}},{\"name\":\"https\",\"uid\":\"97aeb443-9aea-11d5-bd16-0090272ccb30\",\"type\":\"service-tcp\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}},{\"name\":\"http\",\"uid\":\"97aeb3d4-9aea-11d5-bd16-0090272ccb30\",\"type\":\"service-tcp\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"service-negate\":false,\"source\":[{\"name\":\"ExportTestHost\",\"uid\":\"e0f4460f-be2f-41a3-91a7-dff8fba53916\",\"type\":\"host\",\"domain\":{\"name\":\"SMC User\",\"uid\":\"41e821a0-3720-11e3-aa6e-0800200c9fde\",\"domain-type\":\"domain\"}}],\"source-negate\":false,\"time\":[{\"name\":\"Any\",\"uid\":\"97aeb369-9aea-11d5-bd16-0090272ccb30\",\"type\":\"CpmiAnyObject\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"vpn\":[{\"name\":\"Any\",\"uid\":\"97aeb369-9aea-11d5-bd16-0090272ccb30\",\"type\":\"CpmiAnyObject\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"comments\":\"\",\"uid\":\"db107892-62e7-4a2e-b798-a3d377177c2f\",\"type\":\"access-rule\",\"domain\":{\"name\":\"SMC User\",\"uid\":\"41e821a0-3720-11e3-aa6e-0800200c9fde\",\"domain-type\":\"domain\"}},{\"action\":{\"name\":\"Drop\",\"uid\":\"6c488338-8eec-4103-ad21-cd461ac2c473\",\"type\":\"RulebaseAction\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}},\"destination\":[{\"name\":\"Any\",\"uid\":\"97aeb369-9aea-11d5-bd16-0090272ccb30\",\"type\":\"CpmiAnyObject\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"destination-negate\":false,\"enabled\":true,\"inline-layer\":null,\"install-on\":[{\"name\":\"Policy Targets\",\"uid\":\"6c488338-8eec-4103-ad21-cd461ac2c476\",\"type\":\"Global\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"layer\":\"ea299b70-d989-41f7-b688-fcdecd211077\",\"meta-info\":{\"creation-time\":{\"iso-8601\":\"2017-09-08T10:11+1000\",\"posix\":1504829496141},\"creator\":\"admin\",\"last-modifier\":\"admin\",\"last-modify-time\":{\"iso-8601\":\"2017-09-08T10:11+1000\",\"posix\":1504829496141},\"lock\":\"unlocked\",\"validation-state\":\"ok\"},\"service\":[{\"name\":\"Any\",\"uid\":\"97aeb369-9aea-11d5-bd16-0090272ccb30\",\"type\":\"CpmiAnyObject\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"service-negate\":false,\"source\":[{\"name\":\"Any\",\"uid\":\"97aeb369-9aea-11d5-bd16-0090272ccb30\",\"type\":\"CpmiAnyObject\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"source-negate\":false,\"time\":[{\"name\":\"Any\",\"uid\":\"97aeb369-9aea-11d5-bd16-0090272ccb30\",\"type\":\"CpmiAnyObject\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"vpn\":[{\"name\":\"Any\",\"uid\":\"97aeb369-9aea-11d5-bd16-0090272ccb30\",\"type\":\"CpmiAnyObject\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"comments\":\"\",\"name\":\"Cleanup rule\",\"uid\":\"43cd022e-2b84-4fd4-928f-d9c267196048\",\"type\":\"access-rule\",\"domain\":{\"name\":\"SMC User\",\"uid\":\"41e821a0-3720-11e3-aa6e-0800200c9fde\",\"domain-type\":\"domain\"}}],\"AddressRanges\":[],\"Groups\":[{\"groups\":[],\"members\":[{\"name\":\"ExportTestHost2\",\"uid\":\"d7c94c87-d0bf-4aa9-a194-f1f56c5e693b\",\"type\":\"host\",\"domain\":{\"name\":\"SMC User\",\"uid\":\"41e821a0-3720-11e3-aa6e-0800200c9fde\",\"domain-type\":\"domain\"}},{\"name\":\"CP_default_Office_Mode_addresses_pool\",\"uid\":\"b71a61c6-8bea-4c50-96a1-34247fea1068\",\"type\":\"network\",\"domain\":{\"name\":\"SMC User\",\"uid\":\"41e821a0-3720-11e3-aa6e-0800200c9fde\",\"domain-type\":\"domain\"}}],\"icon\":\"General/group\",\"meta-info\":{\"creation-time\":{\"iso-8601\":\"2017-09-08T10:14+1000\",\"posix\":1504829694391},\"creator\":\"admin\",\"last-modifier\":\"admin\",\"last-modify-time\":{\"iso-8601\":\"2017-09-08T10:14+1000\",\"posix\":1504829694391},\"lock\":\"unlocked\",\"validation-state\":\"ok\"},\"read-only\":false,\"tags\":[],\"color\":\"black\",\"comments\":\"\",\"name\":\"TestExportGroup\",\"uid\":\"93dff615-7c9f-45b2-b158-36187e209711\",\"type\":\"group\",\"domain\":{\"name\":\"SMC User\",\"uid\":\"41e821a0-3720-11e3-aa6e-0800200c9fde\",\"domain-type\":\"domain\"}}],\"GroupsWithExclusion\":[],\"Hosts\":[{\"groups\":[],\"ipv4-address\":\"9.8.7.6\",\"icon\":\"Objects/host\",\"meta-info\":{\"creation-time\":{\"iso-8601\":\"2017-09-08T10:12+1000\",\"posix\":1504829574879},\"creator\":\"admin\",\"last-modifier\":\"admin\",\"last-modify-time\":{\"iso-8601\":\"2017-09-08T10:12+1000\",\"posix\":1504829574879},\"lock\":\"unlocked\",\"validation-state\":\"ok\"},\"read-only\":false,\"tags\":[],\"color\":\"black\",\"comments\":\"\",\"name\":\"ExportTestHost\",\"uid\":\"e0f4460f-be2f-41a3-91a7-dff8fba53916\",\"type\":\"host\",\"domain\":{\"name\":\"SMC User\",\"uid\":\"41e821a0-3720-11e3-aa6e-0800200c9fde\",\"domain-type\":\"domain\"}},{\"groups\":[{\"name\":\"TestExportGroup\",\"uid\":\"93dff615-7c9f-45b2-b158-36187e209711\",\"type\":\"group\",\"domain\":{\"name\":\"SMC User\",\"uid\":\"41e821a0-3720-11e3-aa6e-0800200c9fde\",\"domain-type\":\"domain\"}}],\"ipv4-address\":\"8.7.6.5\",\"icon\":\"Objects/host\",\"meta-info\":{\"creation-time\":{\"iso-8601\":\"2017-09-08T10:14+1000\",\"posix\":1504829679676},\"creator\":\"admin\",\"last-modifier\":\"admin\",\"last-modify-time\":{\"iso-8601\":\"2017-09-08T10:14+1000\",\"posix\":1504829679676},\"lock\":\"unlocked\",\"validation-state\":\"ok\"},\"read-only\":false,\"tags\":[],\"color\":\"black\",\"comments\":\"\",\"name\":\"ExportTestHost2\",\"uid\":\"d7c94c87-d0bf-4aa9-a194-f1f56c5e693b\",\"type\":\"host\",\"domain\":{\"name\":\"SMC User\",\"uid\":\"41e821a0-3720-11e3-aa6e-0800200c9fde\",\"domain-type\":\"domain\"}}],\"MulticastAddressRanges\":[],\"Networks\":[{\"groups\":[{\"name\":\"TestExportGroup\",\"uid\":\"93dff615-7c9f-45b2-b158-36187e209711\",\"type\":\"group\",\"domain\":{\"name\":\"SMC User\",\"uid\":\"41e821a0-3720-11e3-aa6e-0800200c9fde\",\"domain-type\":\"domain\"}},{\"name\":\"A_Group\",\"uid\":\"cca2abf3-f31d-4f33-914d-a57ba1754de7\",\"type\":\"group\",\"domain\":{\"name\":\"SMC User\",\"uid\":\"41e821a0-3720-11e3-aa6e-0800200c9fde\",\"domain-type\":\"domain\"}}],\"subnet4\":\"172.16.10.0\",\"broadcast\":\"allow\",\"mask-length4\":24,\"mask-length6\":0,\"subnet-mask\":\"255.255.255.0\",\"icon\":\"NetworkObjects/network\",\"meta-info\":{\"creation-time\":{\"iso-8601\":\"2017-08-21T13:46+1000\",\"posix\":1503287187981},\"creator\":\"System\",\"last-modifier\":\"System\",\"last-modify-time\":{\"iso-8601\":\"2017-08-21T13:46+1000\",\"posix\":1503287187981},\"lock\":\"unlocked\",\"validation-state\":\"ok\"},\"read-only\":false,\"tags\":[],\"color\":\"black\",\"comments\":\"Used as a default for Office Mode. If deleted, it must be specified for each gateway individually (in the VPN Clients page Advanced section)\",\"name\":\"CP_default_Office_Mode_addresses_pool\",\"uid\":\"b71a61c6-8bea-4c50-96a1-34247fea1068\",\"type\":\"network\",\"domain\":{\"name\":\"SMC User\",\"uid\":\"41e821a0-3720-11e3-aa6e-0800200c9fde\",\"domain-type\":\"domain\"}}],\"Services\":[{\"groups\":[{\"name\":\"Restrict_Common_Protocols_Action\",\"uid\":\"fa561524-e172-4e7b-8a24-e36608b25685\",\"type\":\"\",\"domain\":{\"name\":\"SMC User\",\"uid\":\"41e821a0-3720-11e3-aa6e-0800200c9fde\",\"domain-type\":\"domain\"}},{\"name\":\"dns\",\"uid\":\"97aeb46b-9aea-11d5-bd16-0090272ccb30\",\"type\":\"service-group\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"keep-connections-open-after-policy-installation\":false,\"match-by-protocol-signature\":false,\"match-for-any\":true,\"override-default-settings\":false,\"port\":\"53\",\"protocol\":\"DNS_TCP\",\"session-timeout\":3600,\"source-port\":null,\"sync-connections-on-cluster\":true,\"use-default-session-timeout\":true,\"icon\":\"Services/TCPService\",\"meta-info\":{\"creation-time\":{\"iso-8601\":\"2017-08-21T13:43+1000\",\"posix\":1503286991152},\"creator\":\"System\",\"last-modifier\":\"System\",\"last-modify-time\":{\"iso-8601\":\"2017-08-21T13:43+1000\",\"posix\":1503286991152},\"lock\":\"unlocked\",\"validation-state\":\"ok\"},\"read-only\":false,\"tags\":[],\"color\":\"black\",\"comments\":\"Domain Name System Download\",\"name\":\"domain-tcp\",\"uid\":\"97aeb3f9-9aea-11d5-bd16-0090272ccb30\",\"type\":\"service-tcp\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}},{\"accept-replies\":true,\"groups\":[{\"name\":\"Restrict_Common_Protocols_Action\",\"uid\":\"fa561524-e172-4e7b-8a24-e36608b25685\",\"type\":\"\",\"domain\":{\"name\":\"SMC User\",\"uid\":\"41e821a0-3720-11e3-aa6e-0800200c9fde\",\"domain-type\":\"domain\"}},{\"name\":\"dns\",\"uid\":\"97aeb46b-9aea-11d5-bd16-0090272ccb30\",\"type\":\"service-group\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"keep-connections-open-after-policy-installation\":false,\"match-by-protocol-signature\":false,\"match-for-any\":true,\"override-default-settings\":false,\"port\":\"53\",\"protocol\":\"DNS_UDP\",\"session-timeout\":40,\"source-port\":null,\"sync-connections-on-cluster\":true,\"use-default-session-timeout\":true,\"icon\":\"Services/UDPService\",\"meta-info\":{\"creation-time\":{\"iso-8601\":\"2017-08-21T13:43+1000\",\"posix\":1503286991180},\"creator\":\"System\",\"last-modifier\":\"System\",\"last-modify-time\":{\"iso-8601\":\"2017-08-21T13:43+1000\",\"posix\":1503286991180},\"lock\":\"unlocked\",\"validation-state\":\"ok\"},\"read-only\":false,\"tags\":[],\"color\":\"black\",\"comments\":\"Domain Name System Queries\",\"name\":\"domain-udp\",\"uid\":\"97aeb3fa-9aea-11d5-bd16-0090272ccb30\",\"type\":\"service-udp\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}},{\"groups\":[{\"name\":\"Restrict_Common_Protocols_Action\",\"uid\":\"fa561524-e172-4e7b-8a24-e36608b25685\",\"type\":\"\",\"domain\":{\"name\":\"SMC User\",\"uid\":\"41e821a0-3720-11e3-aa6e-0800200c9fde\",\"domain-type\":\"domain\"}},{\"name\":\"Web\",\"uid\":\"82bccbc2-603c-4d96-a59b-9c2b730efb5c\",\"type\":\"service-group\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"keep-connections-open-after-policy-installation\":false,\"match-by-protocol-signature\":false,\"match-for-any\":true,\"override-default-settings\":false,\"port\":\"443\",\"protocol\":\"ENC-HTTP\",\"session-timeout\":3600,\"source-port\":null,\"sync-connections-on-cluster\":true,\"use-default-session-timeout\":true,\"icon\":\"Services/TCPService\",\"meta-info\":{\"creation-time\":{\"iso-8601\":\"2017-08-21T13:43+1000\",\"posix\":1503286991993},\"creator\":\"System\",\"last-modifier\":\"System\",\"last-modify-time\":{\"iso-8601\":\"2017-08-21T13:43+1000\",\"posix\":1503286991993},\"lock\":\"unlocked\",\"validation-state\":\"ok\"},\"read-only\":false,\"tags\":[],\"color\":\"red\",\"comments\":\"HTTP protocol over TLS/SSL\",\"name\":\"https\",\"uid\":\"97aeb443-9aea-11d5-bd16-0090272ccb30\",\"type\":\"service-tcp\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}},{\"groups\":[{\"name\":\"Restrict_Common_Protocols_Action\",\"uid\":\"fa561524-e172-4e7b-8a24-e36608b25685\",\"type\":\"\",\"domain\":{\"name\":\"SMC User\",\"uid\":\"41e821a0-3720-11e3-aa6e-0800200c9fde\",\"domain-type\":\"domain\"}},{\"name\":\"Web\",\"uid\":\"82bccbc2-603c-4d96-a59b-9c2b730efb5c\",\"type\":\"service-group\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}},{\"name\":\"Authenticated\",\"uid\":\"97aeb468-9aea-11d5-bd16-0090272ccb30\",\"type\":\"service-group\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"keep-connections-open-after-policy-installation\":false,\"match-by-protocol-signature\":false,\"match-for-any\":true,\"override-default-settings\":false,\"port\":\"80\",\"protocol\":\"HTTP\",\"session-timeout\":3600,\"source-port\":null,\"sync-connections-on-cluster\":true,\"use-default-session-timeout\":true,\"icon\":\"Services/TCPService\",\"meta-info\":{\"creation-time\":{\"iso-8601\":\"2017-08-21T13:43+1000\",\"posix\":1503286990514},\"creator\":\"System\",\"last-modifier\":\"System\",\"last-modify-time\":{\"iso-8601\":\"2017-08-21T13:43+1000\",\"posix\":1503286990514},\"lock\":\"unlocked\",\"validation-state\":\"ok\"},\"read-only\":false,\"tags\":[],\"color\":\"forest green\",\"comments\":\"Hypertext Transfer Protocol\",\"name\":\"http\",\"uid\":\"97aeb3d4-9aea-11d5-bd16-0090272ccb30\",\"type\":\"service-tcp\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"ServiceGroups\":[{\"groups\":[],\"members\":[{\"name\":\"domain-tcp\",\"uid\":\"97aeb3f9-9aea-11d5-bd16-0090272ccb30\",\"type\":\"service-tcp\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}},{\"name\":\"domain-udp\",\"uid\":\"97aeb3fa-9aea-11d5-bd16-0090272ccb30\",\"type\":\"service-udp\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"icon\":\"General/group\",\"meta-info\":{\"creation-time\":{\"iso-8601\":\"2017-08-21T13:43+1000\",\"posix\":1503286992411},\"creator\":\"System\",\"last-modifier\":\"System\",\"last-modify-time\":{\"iso-8601\":\"2017-08-21T13:43+1000\",\"posix\":1503286992411},\"lock\":\"unlocked\",\"validation-state\":\"ok\"},\"read-only\":false,\"tags\":[],\"color\":\"black\",\"comments\":\"Domain Name System (TCP/UDP)\",\"name\":\"dns\",\"uid\":\"97aeb46b-9aea-11d5-bd16-0090272ccb30\",\"type\":\"service-group\",\"domain\":{\"name\":\"Check Point Data\",\"uid\":\"a0bbbc99-adef-4ef8-bb6d-defdefdefdef\",\"domain-type\":\"data domain\"}}],\"Other\":[{\"name\":\"Tor\",\"uid\":\"d14a70bd-c18c-4aa2-9664-383539242656\",\"type\":\"access-role\",\"domain\":{\"name\":\"SMC User\",\"uid\":\"41e821a0-3720-11e3-aa6e-0800200c9fde\",\"domain-type\":\"domain\"}}]}";
+            var Export = JSON.parse(ExportJSON);
+
+            Export.Services.forEach(ProcessService);
+
+            Export.AccessRules.forEach(ProcessAccessRule);
+            Export.AddressRanges.forEach(ProcessAddressRange);
+            Export.Groups.forEach(ProcessGroup);
+            Export.GroupsWithExclusion.forEach(ProcessGroupWithExclusion);
+            Export.Hosts.forEach(ProcessHost);
+            Export.MulticastAddressRanges.forEach(ProcessMulticastAddressRange);
+            Export.Networks.forEach(ProcessNetwork);
+            Export.ServiceGroups.forEach(ProcessServiceGroup);
+            Export.Other.forEach(ProcessOther);
+
+            document.getElementById("NumAccessRules").innerHTML = document.getElementById("AccessRules").rows.length - 1;
+            document.getElementById("NumAddressRanges").innerHTML = document.getElementById("AddressRanges").rows.length - 1;
+            document.getElementById("NumGroups").innerHTML = document.getElementById("Groups").rows.length - 1;
+            document.getElementById("NumGroupsWithExclusion").innerHTML = document.getElementById("GroupsWithExclusion").rows.length - 1;
+            document.getElementById("NumHosts").innerHTML = document.getElementById("Hosts").rows.length - 1;
+            document.getElementById("NumMulticastAddressRanges").innerHTML = document.getElementById("MulticastAddressRanges").rows.length - 1;
+            document.getElementById("NumNetworks").innerHTML = document.getElementById("Networks").rows.length - 1;
+            document.getElementById("NumServiceGroups").innerHTML = document.getElementById("ServiceGroups").rows.length - 1;
+            document.getElementById("NumOther").innerHTML = document.getElementById("Other").rows.length - 1;
+
+            if (document.getElementById("AccessRules").rows.length <= 1) Hide("AccessRules");
+            if (document.getElementById("AddressRanges").rows.length <= 1) Hide("AddressRanges");
+            if (document.getElementById("Groups").rows.length <= 1) Hide("Groups");
+            if (document.getElementById("GroupsWithExclusion").rows.length <= 1) Hide("GroupsWithExclusion");
+            if (document.getElementById("Hosts").rows.length <= 1) Hide("Hosts");
+            if (document.getElementById("MulticastAddressRanges").rows.length <= 1) Hide("MulticastAddressRanges");
+            if (document.getElementById("Networks").rows.length <= 1) Hide("Networks");
+            if (document.getElementById("ServiceGroups").rows.length <= 1) Hide("ServiceGroups");
+            if (document.getElementById("Other").rows.length <= 1) Hide("Other");
+        }
+        function ProcessAccessRule(obj) {
+            var table = document.getElementById("AccessRules");
+            var row = table.insertRow(-1);
+
+            row.insertCell(-1).innerHTML = SafeString(obj.name);
+            row.insertCell(-1).innerHTML = GetNames(obj.source);
+            row.insertCell(-1).innerHTML = GetNames(obj.destination);
+            row.insertCell(-1).innerHTML = GetServiceNames(obj.service);
+            row.insertCell(-1).innerHTML = SafeString(obj.action.name);
+            row.insertCell(-1).innerHTML = SafeString(obj.comments);
+        }
+        function ProcessAddressRange(obj) {
+            var table = document.getElementById("AddressRanges");
+            var row = table.insertRow(-1);
+
+            row.insertCell(-1).innerHTML = SafeString(obj.name);
+            row.insertCell(-1).innerHTML = GetIPRanges(obj);
+            row.insertCell(-1).innerHTML = SafeString(obj.comments);
+        }
+        function ProcessGroup(obj) {
+            var table = document.getElementById("Groups");
+            var row = table.insertRow(-1);
+
+            row.insertCell(-1).innerHTML = SafeString(obj.name);
+            row.insertCell(-1).innerHTML = GetNames(obj.members);
+            row.insertCell(-1).innerHTML = SafeString(obj.comments);
+        }
+        function ProcessGroupWithExclusion(obj) {
+            var table = document.getElementById("GroupsWithExclusion");
+            var row = table.insertRow(-1);
+
+            row.insertCell(-1).innerHTML = SafeString(obj.name);
+            row.insertCell(-1).innerHTML = SafeString(obj.include.name);
+            row.insertCell(-1).innerHTML = SafeString(obj.except.name);
+            row.insertCell(-1).innerHTML = SafeString(obj.comments);
+        }
+        function ProcessHost(obj) {
+            var table = document.getElementById("Hosts");
+            var row = table.insertRow(-1);
+
+            row.insertCell(-1).innerHTML = SafeString(obj.name);
+            row.insertCell(-1).innerHTML = GetIPs(obj);
+            row.insertCell(-1).innerHTML = SafeString(obj.comments);
+        }
+        function ProcessMulticastAddressRange(obj) {
+            var table = document.getElementById("MulticastAddressRanges");
+            var row = table.insertRow(-1);
+
+            row.insertCell(-1).innerHTML = SafeString(obj.name);
+            row.insertCell(-1).innerHTML = GetIPRanges(obj);
+            row.insertCell(-1).innerHTML = SafeString(obj.comments);
+        }
+        function ProcessNetwork(obj) {
+            var table = document.getElementById("Networks");
+            var row = table.insertRow(-1);
+
+            row.insertCell(-1).innerHTML = SafeString(obj.name);
+            row.insertCell(-1).innerHTML = GetSubnets(obj);
+            row.insertCell(-1).innerHTML = SafeString(obj.comments);
+        }
+        function ProcessServiceGroup(obj) {
+            var table = document.getElementById("ServiceGroups");
+            var row = table.insertRow(-1);
+
+            row.insertCell(-1).innerHTML = SafeString(obj.name);
+            row.insertCell(-1).innerHTML = GetServiceNames(obj.members);
+            row.insertCell(-1).innerHTML = SafeString(obj.comments);
+        }
+        function ProcessService(obj) {
+            switch (obj.type) {
+                case "service-tcp":
+                    services[obj.name] = "tcp/" + obj.port;
+                    break;
+                case "service-udp":
+                    services[obj.name] = "udp/" + obj.port;
+                    break;
+            }
+        }
+        function ProcessOther(obj) {
+            var table = document.getElementById("Other");
+            var row = table.insertRow(-1);
+
+            row.insertCell(-1).innerHTML = SafeString(obj.name);
+            row.insertCell(-1).innerHTML = SafeString(obj.type);
+            row.insertCell(-1).innerHTML = SafeString(obj.comments);
+        }
+        function GetSubnets(obj) {
+            var result = "";
+            if (obj["subnet4"]) {
+                result += "<p>";
+                result += obj["subnet4"];
+                result += "/";
+                result += obj["mask-length4"];
+                result += "</p>";
+            }
+            if (obj["subnet6"]) {
+                result += "<p>";
+                result += obj["subnet6"];
+                result += "/";
+                result += obj["mask-length6"];
+                result += "</p>";
+            }
+            return result;
+        }
+        function GetIPRanges(obj) {
+            var result = "";
+            if (obj["ipv4-address-first"]) {
+                result += "<p>";
+                result += obj["ipv4-address-first"];
+                result += " - ";
+                result += obj["ipv4-address-last"];
+                result += "</p>";
+            }
+            if (obj["ipv6-address-first"]) {
+                result += "<p>";
+                result += obj["ipv6-address-first"];
+                result += " - ";
+                result += obj["ipv6-address-last"];
+                result += "</p>";
+            }
+            return result;
+        }
+        function GetIPs(obj) {
+            var result = "";
+            if (obj["ipv4-address"]) {
+                result += "<p>";
+                result += obj["ipv4-address"];
+                result += "</p>";
+            }
+            if (obj["ipv6-address"]) {
+                result += "<p>";
+                result += obj["ipv6-address"];
+                result += "</p>";
+            }
+            return result;
+        }
+        function SafeString(str) {
+            if (str) {
+                return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace( />/g, '&gt;').replace(/"/g, '&quot;');
+            } else {
+                return "&nbsp;";
+            }
+        }
+        function GetNames(items) {
+            var result = "";
+            for (i = 0; i < items.length; i++) {
+                result += "<p>";
+                result += SafeString(items[i].name);
+                result += "</p>";
+            }
+            return result;
+        }
+        function GetServiceNames(items) {
+            var result = "";
+            for (i = 0; i < items.length; i++) {
+                result += "<p>";
+                result += SafeString(items[i].name);
+                if (services[items[i].name]) {
+                    result += " (";
+                    result += services[items[i].name];
+                    result += ")";
+                }
+                result += "</p>";
+            }
+            return result;
+        }
+        function Hide(className) {
+            var objs = document.getElementsByClassName(className);
+            for (var i = 0; i < objs.length; i++) {
+                objs[i].style.visibility = "collapse";
+                objs[i].style.display = "none";
+            }
+        }
+    </script>
+</head>
+
+<body onLoad="onLoad()">
+    <div id="NavBar">
+        <table>
+            <tr>
+                <th class="AccessRules"><a href="#NavAccessRules" style="display:block;">Access Rules (<span id="NumAccessRules"></span>)</a></th>
+                <th class="AddressRanges"><a href="#NavAddressRanges" style="display:block;">Address Ranges (<span id="NumAddressRanges"></span>)</a></th>
+                <th class="Groups"><a href="#NavGroups" style="display:block;">Groups (<span id="NumGroups"></span>)</a></th>
+                <th class="GroupsWithExclusion"><a href="#NavGroupsWithExclusion" style="display:block;">Groups with Exclusion (<span id="NumGroupsWithExclusion"></span>)</a></th>
+                <th class="Hosts"><a href="#NavHosts" style="display:block;">Hosts (<span id="NumHosts"></span>)</a></th>
+                <th class="MulticastAddressRanges"><a href="#NavMulticastAddressRanges" style="display:block;">Multicast Address Ranges (<span id="NumMulticastAddressRanges"></span>)</a></th>
+                <th class="Networks"><a href="#NavNetworks" style="display:block;">Networks (<span id="NumNetworks"></span>)</a></th>
+                <th class="ServiceGroups"><a href="#NavServiceGroups" style="display:block;">Service Groups (<span id="NumServiceGroups"></span>)</a></th>
+                <th class="Other"><a href="#NavOther" style="display:block;">Other (<span id="NumOther"></span>)</a></th>
+            </tr>
+        </table>
+    </div>
+    <br />
+    <div id="Body">
+        <section id="NavAccessRules" class="AccessRules">
+            <h1>Rules</h1>
+            <table id="AccessRules">
+                <tr>
+                    <th>Name</th>
+                    <th>Source</th>
+                    <th>Destination</th>
+                    <th>Services</th>
+                    <th>Action</th>
+                    <th>Comments</th>
+                </tr>
+            </table>
+        </section>
+        <section id="NavAddressRanges" class="AddressRanges">
+            <h1>Address Ranges</h1>
+            <table id="AddressRanges">
+                <tr>
+                    <th>Name</th>
+                    <th>Range</th>
+                    <th>Comments</th>
+                </tr>
+            </table>
+        </section>
+        <section id="NavGroups" class="Groups">
+            <h1>Network Groups</h1>
+            <table id="Groups">
+                <tr>
+                    <th>Name</th>
+                    <th>Members</th>
+                    <th>Comments</th>
+                </tr>
+            </table>
+        </section>
+        <section id="NavGroupsWithExclusion" class="GroupsWithExclusion">
+            <h1>Network Groups with Exclusion</h1>
+            <table id="GroupsWithExclusion">
+                <tr>
+                    <th>Name</th>
+                    <th>Include</th>
+                    <th>Except</th>
+                    <th>Comments</th>
+                </tr>
+            </table>
+        </section>
+        <section id="NavHosts" class="Hosts">
+            <h1>Hosts</h1>
+            <table id="Hosts">
+                <tr>
+                    <th>Name</th>
+                    <th>IP Address</th>
+                    <th>Comments</th>
+                </tr>
+            </table>
+        </section>
+        <section id="NavMulticastAddressRanges" class="MulticastAddressRanges">
+            <h1>Multicast Address Ranges</h1>
+            <table id="MulticastAddressRanges">
+                <tr>
+                    <th>Name</th>
+                    <th>Range</th>
+                    <th>Comments</th>
+                </tr>
+            </table>
+        </section>
+        <section id="NavNetworks" class="Networks">
+            <h1>Networks</h1>
+            <table id="Networks">
+                <tr>
+                    <th>Name</th>
+                    <th>Network</th>
+                    <th>Comments</th>
+                </tr>
+            </table>
+        </section>
+        <section id="NavServiceGroups" class="ServiceGroups">
+            <h1>Service Groups</h1>
+            <table id="ServiceGroups">
+                <tr>
+                    <th>Name</th>
+                    <th>Members</th>
+                    <th>Comments</th>
+                </tr>
+            </table>
+        </section>
+        <section id="NavOther" class="Other">
+            <h1>Other Object Types</h1>
+            <table id="Other">
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Comments</th>
+                </tr>
+            </table>
+        </section>
+    </div>
+</body>
+</html>

@@ -12,6 +12,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using psCheckPoint.Objects.ServiceTCP;
+using psCheckPoint.Objects.Service;
+using psCheckPoint.Objects.ServiceGroup;
 
 namespace psCheckPoint.Extra.Export
 {
@@ -38,6 +41,12 @@ namespace psCheckPoint.Extra.Export
 
         [JsonProperty(PropertyName = "Networks", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         public List<CheckPointNetwork> Networks { get; set; } = new List<CheckPointNetwork>();
+
+        [JsonProperty(PropertyName = "Services", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public List<CheckPointService> Services { get; set; } = new List<CheckPointService>();
+
+        [JsonProperty(PropertyName = "ServiceGroups", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public List<CheckPointServiceGroup> ServiceGroups { get; set; } = new List<CheckPointServiceGroup>();
 
         [JsonProperty(PropertyName = "Other", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         public List<CheckPointObject> Other { get; set; } = new List<CheckPointObject>();
