@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace psCheckPoint.Extra.ExportRule
+namespace psCheckPoint.Extra.Export
 {
     [Cmdlet(VerbsData.ConvertTo, "CheckPointHtml", DefaultParameterSetName = "ES0")]
     [OutputType(typeof(string))]
@@ -62,7 +62,7 @@ namespace psCheckPoint.Extra.ExportRule
             {
                 // Load default template
                 Assembly _assembly = Assembly.GetExecutingAssembly();
-                StreamReader _html = new StreamReader(_assembly.GetManifestResourceStream("psCheckPoint.Extra.ExportRule.ExportCheckPointAccessRule.html"));
+                StreamReader _html = new StreamReader(_assembly.GetManifestResourceStream("psCheckPoint.Extra.Export.ExportTemplate.html"));
                 html = _html.ReadToEnd();
                 _html.Close();
             }
@@ -87,7 +87,7 @@ namespace psCheckPoint.Extra.ExportRule
                     html = html.Replace("\"{JSON}\"", "`{JSON}`");
                 }
             }
-            else if (EscapeJson.IsPresent || html.Contains("\"{JSON}\""))
+            else if (this.ParameterSetName.Equals("ES5") || html.Contains("\"{JSON}\""))
             {
                 json = HttpUtility.JavaScriptStringEncode(json);
             }
@@ -96,7 +96,7 @@ namespace psCheckPoint.Extra.ExportRule
 
             if (Open.IsPresent && Out == null)
             {
-                Out = Path.GetTempFileName() + ".html";
+                Out = Path.GetTempPath() + $"Export_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.html";
             }
             if (Out != null)
             {

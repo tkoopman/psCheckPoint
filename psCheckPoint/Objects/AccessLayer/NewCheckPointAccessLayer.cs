@@ -1,21 +1,29 @@
 ﻿using Newtonsoft.Json;
-using psCheckPoint.Objects;
 using System.ComponentModel;
 using System.Management.Automation;
 
-namespace psCheckPoint.AccessControl_NAT.AccessLayer
+namespace psCheckPoint.Objects.AccessLayer
 {
     /// <summary>
-    /// <para type="synopsis">Edit existing object using object name or uid.</para>
+    /// <para type="synopsis">Create new object.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
+    ///   <code></code>
     /// </example>
-    [Cmdlet(VerbsCommon.Set, "CheckPointAccessLayer")]
+    [Cmdlet(VerbsCommon.New, "CheckPointAccessLayer")]
     [OutputType(typeof(CheckPointAccessLayer))]
-    public class SetCheckPointAccessLayer : SetCheckPointObject<CheckPointAccessLayer>
+    public class NewCheckPointAccessLayer : NewCheckPointCmdlet<CheckPointAccessLayer>
     {
-        public override string Command { get { return "set-access-layer"; } }
+        public override string Command { get { return "add-access-layer"; } }
+
+        /// <summary>
+        /// <para type="description">Indicates whether to include a cleanup rule in the new layer.</para>
+        /// </summary>
+        [JsonProperty(PropertyName = "add-default-rule", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [DefaultValue(true)]
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        public bool AddDefaultRule { get; set; } = true;
 
         /// <summary>
         /// <para type="description">Whether to enable Applications & URL Filtering blade on the layer.</para>

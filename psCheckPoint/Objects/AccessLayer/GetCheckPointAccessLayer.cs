@@ -1,7 +1,7 @@
 ﻿using psCheckPoint.Objects;
 using System.Management.Automation;
 
-namespace psCheckPoint.AccessControl_NAT.AccessLayer
+namespace psCheckPoint.Objects.AccessLayer
 {
     /// <summary>
     /// <para type="synopsis">Retrieve existing object using object name or uid.</para>

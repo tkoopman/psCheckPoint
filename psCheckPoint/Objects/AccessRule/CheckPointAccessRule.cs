@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using psCheckPoint.Objects;
 
-namespace psCheckPoint.AccessControl_NAT.AccessRule
+namespace psCheckPoint.Objects.AccessRule
 {
     public class CheckPointAccessRule : CheckPointObject
     {

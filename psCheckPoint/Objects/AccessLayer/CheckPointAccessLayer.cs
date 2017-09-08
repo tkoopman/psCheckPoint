@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using psCheckPoint.Objects;
 
-namespace psCheckPoint.AccessControl_NAT.AccessLayer
+namespace psCheckPoint.Objects.AccessLayer
 {
     /// <summary>
     /// <para type="synopsis"></para>

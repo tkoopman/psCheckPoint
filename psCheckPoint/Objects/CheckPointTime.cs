@@ -12,13 +12,13 @@ namespace psCheckPoint.Objects
         /// <summary>
         /// <para type="description">Date and time represented in international ISO 8601 format.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "iso-8601")]
+        [JsonProperty(PropertyName = "iso-8601", NullValueHandling = NullValueHandling.Ignore)]
         public string ISO8601 { get; set; }
 
         /// <summary>
         /// <para type="description">Number of milliseconds that have elapsed since 00:00:00, 1 January 1970.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "posix")]
+        [JsonProperty(PropertyName = "posix", NullValueHandling = NullValueHandling.Ignore)]
         public long Posix { get; set; }
 
         public DateTime asDateTime()

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Management.Automation;
 
-namespace psCheckPoint.AccessControl_NAT.AccessRule
+namespace psCheckPoint.Objects.AccessRule
 {
     [Cmdlet(VerbsCommon.Get, "CheckPointAccessRule")]
     [OutputType(typeof(CheckPointAccessRule))]
@@ -20,14 +20,14 @@ namespace psCheckPoint.AccessControl_NAT.AccessRule
         /// <para type="description">Object name.</para>
         /// </summary>
         [JsonProperty(PropertyName = "name", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(Position = 2, Mandatory = true, ParameterSetName = "By Name", ValueFromPipelineByPropertyName = true, ValueFromPipeline = true)]
+        [Parameter(Position = 2, Mandatory = true, ParameterSetName = "By Name", ValueFromPipelineByPropertyName = true)]
         public string Name { get; set; }
 
         /// <summary>
         /// <para type="description">Rule number.</para>
         /// </summary>
         [JsonProperty(PropertyName = "rule-number", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(Mandatory = true, ParameterSetName = "By Rule Number", ValueFromPipelineByPropertyName = true)]
+        [Parameter(Mandatory = true, ParameterSetName = "By Rule Number", ValueFromPipelineByPropertyName = true, ValueFromPipeline = true)]
         public int RuleNumber { get; set; }
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿using Newtonsoft.Json;
+using System.Management.Automation;
 
 namespace psCheckPoint.Session
 {
@@ -13,5 +14,23 @@ namespace psCheckPoint.Session
     public class ResetCheckPointSession : CheckPointCmdlet<CheckPointMessage>
     {
         public override string Command { get { return "discard"; } }
+
+        /// <summary>
+        /// <para type="description">Reset none active session</para>
+        /// </summary>
+        [Parameter(ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ValueFromRemainingArguments = true)]
+        public psCheckPoint.Objects.Session.CheckPointSession ResetSession { get; set; }
+
+        [JsonProperty(PropertyName = "uid", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        protected string UID { get; set; }
+
+        internal override string getJSON()
+        {
+            if (ResetSession != null)
+            {
+                UID = ResetSession.UID;
+            }
+            return base.getJSON();
+        }
     }
 }

@@ -11,13 +11,13 @@ namespace psCheckPoint.Objects.Group
         /// <summary>
         /// <para type="description">How much details are returned depends on the details-level field of the request. This table shows the level of detail shown when details-level is set to standard.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "groups")]
+        [JsonProperty(PropertyName = "groups", NullValueHandling = NullValueHandling.Ignore)]
         public CheckPointObject[] Groups { get; set; }
 
         /// <summary>
         /// <para type="description">Collection of Network objects identified by the name or UID. How much details are returned depends on the details-level field of the request. This table shows the level of detail shown when details-level is set to standard.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "members")]
+        [JsonProperty(PropertyName = "members", NullValueHandling = NullValueHandling.Ignore)]
         public CheckPointObject[] Members { get; set; }
     }
 }

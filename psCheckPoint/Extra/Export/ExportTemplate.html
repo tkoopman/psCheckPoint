@@ -1,0 +1,348 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Export of Check Point Rule</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0px;
+            overflow: hidden;
+        }
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        h1 {
+            margin-bottom: 0;
+            margin-top: 5px;
+            color: royalblue;
+        }
+
+        #NavBar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 40px;
+        }
+
+            #NavBar table {
+                table-layout: fixed;
+            }
+
+            #NavBar th {
+                background-color: cadetblue;
+            }
+
+        #Body {
+            position: fixed;
+            left: 0px;
+            width: 100%;
+            top: 40px;
+            height: calc(100% - 40px);
+            overflow: auto;
+        }
+    </style>
+    <script>
+        var forEach = Array.prototype.forEach;
+
+        function onLoad() {
+            var ExportJSON = "{JSON}";
+            var Export = JSON.parse(ExportJSON);
+
+            Export.AccessRules.forEach(ProcessAccessRule);
+            Export.AddressRanges.forEach(ProcessAddressRange);
+            Export.Groups.forEach(ProcessGroup);
+            Export.GroupsWithExclusion.forEach(ProcessGroupWithExclusion);
+            Export.Hosts.forEach(ProcessHost);
+            Export.MulticastAddressRanges.forEach(ProcessMulticastAddressRange);
+            Export.Networks.forEach(ProcessNetwork);
+            Export.Other.forEach(ProcessOther);
+
+            document.getElementById("NumAccessRules").innerHTML = document.getElementById("AccessRules").rows.length - 1;
+            document.getElementById("NumAddressRanges").innerHTML = document.getElementById("AddressRanges").rows.length - 1;
+            document.getElementById("NumGroups").innerHTML = document.getElementById("Groups").rows.length - 1;
+            document.getElementById("NumGroupsWithExclusion").innerHTML = document.getElementById("GroupsWithExclusion").rows.length - 1;
+            document.getElementById("NumHosts").innerHTML = document.getElementById("Hosts").rows.length - 1;
+            document.getElementById("NumMulticastAddressRanges").innerHTML = document.getElementById("MulticastAddressRanges").rows.length - 1;
+            document.getElementById("NumNetworks").innerHTML = document.getElementById("Networks").rows.length - 1;
+            document.getElementById("NumOther").innerHTML = document.getElementById("Other").rows.length - 1;
+
+            if (document.getElementById("AccessRules").rows.length <= 1) Hide("AccessRules");
+            if (document.getElementById("AddressRanges").rows.length <= 1) Hide("AddressRanges");
+            if (document.getElementById("Groups").rows.length <= 1) Hide("Groups");
+            if (document.getElementById("GroupsWithExclusion").rows.length <= 1) Hide("GroupsWithExclusion");
+            if (document.getElementById("Hosts").rows.length <= 1) Hide("Hosts");
+            if (document.getElementById("MulticastAddressRanges").rows.length <= 1) Hide("MulticastAddressRanges");
+            if (document.getElementById("Networks").rows.length <= 1) Hide("Networks");
+            if (document.getElementById("Other").rows.length <= 1) Hide("Other");
+        }
+        function ProcessAccessRule(obj) {
+            var table = document.getElementById("AccessRules");
+            var row = table.insertRow(-1);
+
+            row.insertCell(-1).innerHTML = SafeString(obj.name);
+            row.insertCell(-1).innerHTML = GetNames(obj.source);
+            row.insertCell(-1).innerHTML = GetNames(obj.destination);
+            row.insertCell(-1).innerHTML = GetNames(obj.service);
+            row.insertCell(-1).innerHTML = SafeString(obj.action.name);
+            row.insertCell(-1).innerHTML = SafeString(obj.comments);
+        }
+        function ProcessAddressRange(obj) {
+            var table = document.getElementById("AddressRanges");
+            var row = table.insertRow(-1);
+
+            row.insertCell(-1).innerHTML = SafeString(obj.name);
+            row.insertCell(-1).innerHTML = GetIPRanges(obj);
+            row.insertCell(-1).innerHTML = SafeString(obj.comments);
+        }
+        function ProcessGroup(obj) {
+            var table = document.getElementById("Groups");
+            var row = table.insertRow(-1);
+
+            row.insertCell(-1).innerHTML = SafeString(obj.name);
+            row.insertCell(-1).innerHTML = GetNames(obj.members);
+            row.insertCell(-1).innerHTML = SafeString(obj.comments);
+        }
+        function ProcessGroupWithExclusion(obj) {
+            var table = document.getElementById("GroupsWithExclusion");
+            var row = table.insertRow(-1);
+
+            row.insertCell(-1).innerHTML = SafeString(obj.name);
+            row.insertCell(-1).innerHTML = SafeString(obj.include.name);
+            row.insertCell(-1).innerHTML = SafeString(obj.except.name);
+            row.insertCell(-1).innerHTML = SafeString(obj.comments);
+        }
+        function ProcessHost(obj) {
+            var table = document.getElementById("Hosts");
+            var row = table.insertRow(-1);
+
+            row.insertCell(-1).innerHTML = SafeString(obj.name);
+            row.insertCell(-1).innerHTML = GetIPs(obj);
+            row.insertCell(-1).innerHTML = SafeString(obj.comments);
+        }
+        function ProcessMulticastAddressRange(obj) {
+            var table = document.getElementById("MulticastAddressRanges");
+            var row = table.insertRow(-1);
+
+            row.insertCell(-1).innerHTML = SafeString(obj.name);
+            row.insertCell(-1).innerHTML = GetIPRanges(obj);
+            row.insertCell(-1).innerHTML = SafeString(obj.comments);
+        }
+        function ProcessNetwork(obj) {
+            var table = document.getElementById("Networks");
+            var row = table.insertRow(-1);
+
+            row.insertCell(-1).innerHTML = SafeString(obj.name);
+            row.insertCell(-1).innerHTML = GetSubnets(obj);
+            row.insertCell(-1).innerHTML = SafeString(obj.comments);
+        }
+        function ProcessOther(obj) {
+            var table = document.getElementById("Other");
+            var row = table.insertRow(-1);
+
+            row.insertCell(-1).innerHTML = SafeString(obj.name);
+            row.insertCell(-1).innerHTML = SafeString(obj.type);
+            row.insertCell(-1).innerHTML = SafeString(obj.comments);
+        }
+        function GetSubnets(obj) {
+            var result = "";
+            if (obj["subnet4"]) {
+                result += "<p>";
+                result += obj["subnet4"];
+                result += "/";
+                result += obj["mask-length4"];
+                result += "</p>";
+            }
+            if (obj["subnet6"]) {
+                result += "<p>";
+                result += obj["subnet6"];
+                result += "/";
+                result += obj["mask-length6"];
+                result += "</p>";
+            }
+            return result;
+        }
+        function GetIPRanges(obj) {
+            var result = "";
+            if (obj["ipv4-address-first"]) {
+                result += "<p>";
+                result += obj["ipv4-address-first"];
+                result += " - ";
+                result += obj["ipv4-address-last"];
+                result += "</p>";
+            }
+            if (obj["ipv6-address-first"]) {
+                result += "<p>";
+                result += obj["ipv6-address-first"];
+                result += " - ";
+                result += obj["ipv6-address-last"];
+                result += "</p>";
+            }
+            return result;
+        }
+        function GetIPs(obj) {
+            var result = "";
+            if (obj["ipv4-address"]) {
+                result += "<p>";
+                result += obj["ipv4-address"];
+                result += "</p>";
+            }
+            if (obj["ipv6-address"]) {
+                result += "<p>";
+                result += obj["ipv6-address"];
+                result += "</p>";
+            }
+            return result;
+        }
+        function SafeString(str) {
+            if (str) {
+                return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace( />/g, '&gt;').replace(/"/g, '&quot;');
+            } else {
+                return "&nbsp;";
+            }
+        }
+        function GetNames(items) {
+            var result = "";
+            for (i = 0; i < items.length; i++) {
+                result += "<p>";
+                result += SafeString(items[i].name);
+                result += "</p>";
+            }
+            return result;
+        }
+        function Hide(className) {
+            var objs = document.getElementsByClassName(className);
+            for (var i = 0; i < objs.length; i++) {
+                objs[i].style.visibility = "collapse";
+                objs[i].style.display = "none";
+            }
+        }
+    </script>
+</head>
+
+<body onLoad="onLoad()">
+    <div id="NavBar">
+        <table>
+            <tr>
+                <th class="AccessRules"><a href="#NavAccessRules" style="display:block;">Access Rules (<span id="NumAccessRules"></span>)</a></th>
+                <th class="AddressRanges"><a href="#NavAddressRanges" style="display:block;">Address Ranges (<span id="NumAddressRanges"></span>)</a></th>
+                <th class="Groups"><a href="#NavGroups" style="display:block;">Groups (<span id="NumGroups"></span>)</a></th>
+                <th class="GroupsWithExclusion"><a href="#NavGroupsWithExclusion" style="display:block;">Groups with Exclusion (<span id="NumGroupsWithExclusion"></span>)</a></th>
+                <th class="Hosts"><a href="#NavHosts" style="display:block;">Hosts (<span id="NumHosts"></span>)</a></th>
+                <th class="MulticastAddressRanges"><a href="#NavMulticastAddressRanges" style="display:block;">Multicast Address Ranges (<span id="NumMulticastAddressRanges"></span>)</a></th>
+                <th class="Networks"><a href="#NavNetworks" style="display:block;">Networks (<span id="NumNetworks"></span>)</a></th>
+                <th class="Other"><a href="#NavOther" style="display:block;">Other (<span id="NumOther"></span>)</a></th>
+            </tr>
+        </table>
+    </div>
+    <br />
+    <div id="Body">
+        <section id="NavAccessRules" class="AccessRules">
+            <h1>Rules</h1>
+            <table id="AccessRules">
+                <tr>
+                    <th>Name</th>
+                    <th>Source</th>
+                    <th>Destination</th>
+                    <th>Services</th>
+                    <th>Action</th>
+                    <th>Comments</th>
+                </tr>
+            </table>
+        </section>
+        <section id="NavAddressRanges" class="AddressRanges">
+            <h1>Address Ranges</h1>
+            <table id="AddressRanges">
+                <tr>
+                    <th>Name</th>
+                    <th>Range</th>
+                    <th>Comments</th>
+                </tr>
+            </table>
+        </section>
+        <section id="NavGroups" class="Groups">
+            <h1>Network Groups</h1>
+            <table id="Groups">
+                <tr>
+                    <th>Name</th>
+                    <th>Members</th>
+                    <th>Comments</th>
+                </tr>
+            </table>
+        </section>
+        <section id="NavGroupsWithExclusion" class="GroupsWithExclusion">
+            <h1>Network Groups with Exclusion</h1>
+            <table id="GroupsWithExclusion">
+                <tr>
+                    <th>Name</th>
+                    <th>Include</th>
+                    <th>Except</th>
+                    <th>Comments</th>
+                </tr>
+            </table>
+        </section>
+        <section id="NavHosts" class="Hosts">
+            <h1>Hosts</h1>
+            <table id="Hosts">
+                <tr>
+                    <th>Name</th>
+                    <th>IP Address</th>
+                    <th>Comments</th>
+                </tr>
+            </table>
+        </section>
+        <section id="NavMulticastAddressRanges" class="MulticastAddressRanges">
+            <h1>Multicast Address Ranges</h1>
+            <table id="MulticastAddressRanges">
+                <tr>
+                    <th>Name</th>
+                    <th>Range</th>
+                    <th>Comments</th>
+                </tr>
+            </table>
+        </section>
+        <section id="NavNetworks" class="Networks">
+            <h1>Networks</h1>
+            <table id="Networks">
+                <tr>
+                    <th>Name</th>
+                    <th>Network</th>
+                    <th>Comments</th>
+                </tr>
+            </table>
+        </section>
+        <section id="NavOther" class="Other">
+            <h1>Other Object Types</h1>
+            <table id="Other">
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Comments</th>
+                </tr>
+            </table>
+        </section>
+    </div>
+</body>
+</html>

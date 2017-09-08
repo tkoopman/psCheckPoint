@@ -9,6 +9,7 @@ namespace psCheckPoint.Objects
         /// <para type="description">No more than that many results will be returned.</para>
         /// </summary>
         [JsonProperty(PropertyName = "limit", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [PSDefaultValue(Value = 50)]
         [Parameter]
         [ValidateRange(1, 500)]
         public int UID { get; set; } = 50;
@@ -26,9 +27,7 @@ namespace psCheckPoint.Objects
         /// <para type="description">The level of detail for some of the fields in the response can vary from showing only the UID value of the object to a fully detailed representation of the object.</para>
         /// </summary>
         [JsonProperty(PropertyName = "details-level", DefaultValueHandling = DefaultValueHandling.Include)]
-        [Parameter]
-        [ValidateSet("uid", "standard", "full")]
-        public string DetailsLevel { get; set; } = "full";
+        protected string DetailsLevel { get; set; } = "full";
 
         protected override void ProcessRecordResponse(string JSON)
         {

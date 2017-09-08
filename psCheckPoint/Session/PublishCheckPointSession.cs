@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿using Newtonsoft.Json;
+using System.Management.Automation;
 
 namespace psCheckPoint.Session
 {
@@ -14,6 +15,22 @@ namespace psCheckPoint.Session
     {
         public override string Command { get { return "publish"; } }
 
-        //TODO uid
+        /// <summary>
+        /// <para type="description">Publish none active session</para>
+        /// </summary>
+        [Parameter(ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ValueFromRemainingArguments = true)]
+        public psCheckPoint.Objects.Session.CheckPointSession PublishSession { get; set; }
+
+        [JsonProperty(PropertyName = "uid", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        protected string UID { get; set; }
+
+        internal override string getJSON()
+        {
+            if (PublishSession != null)
+            {
+                UID = PublishSession.UID;
+            }
+            return base.getJSON();
+        }
     }
 }
