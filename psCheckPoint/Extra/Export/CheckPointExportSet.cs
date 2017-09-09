@@ -1,20 +1,15 @@
 ﻿using Newtonsoft.Json;
-using psCheckPoint.Objects.AccessRule;
 using psCheckPoint.Objects;
+using psCheckPoint.Objects.AccessRule;
 using psCheckPoint.Objects.AddressRange;
 using psCheckPoint.Objects.Group;
 using psCheckPoint.Objects.GroupWithExclusion;
 using psCheckPoint.Objects.Host;
 using psCheckPoint.Objects.MulticastAddressRange;
 using psCheckPoint.Objects.Network;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using psCheckPoint.Objects.ServiceTCP;
 using psCheckPoint.Objects.Service;
 using psCheckPoint.Objects.ServiceGroup;
+using System.Collections.Generic;
 
 namespace psCheckPoint.Extra.Export
 {

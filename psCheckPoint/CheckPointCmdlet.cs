@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using psCheckPoint.Objects;
+using psCheckPoint.Objects.Misc;
 using psCheckPoint.Session;
 using System;
 using System.Management.Automation;
@@ -37,6 +38,10 @@ namespace psCheckPoint
             if (result.GetType() == typeof(CheckPointMessage))
             {
                 WriteVerbose((string)(typeof(CheckPointMessage).GetProperty("Message").GetValue(result)));
+            }
+            else if (result is CheckPointWhereUsed)
+            {
+                WriteObject(result);
             }
             else
             {

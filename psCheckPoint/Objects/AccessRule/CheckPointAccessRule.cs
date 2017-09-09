@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using psCheckPoint.Objects;
 
 namespace psCheckPoint.Objects.AccessRule
 {

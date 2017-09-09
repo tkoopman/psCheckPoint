@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace psCheckPoint.Objects.SecurityZone
+﻿namespace psCheckPoint.Objects.SecurityZone
 {
     /// <summary>
     /// <para type="synopsis">Response from New-CheckPointSecurityZone, Get-CheckPointSecurityZone & Get-CheckPointSecurityZones</para>

@@ -1,23 +1,19 @@
-﻿using psCheckPoint.Objects.AccessRule;
-using psCheckPoint.Objects;
+﻿using psCheckPoint.Objects;
+using psCheckPoint.Objects.AccessRule;
 using psCheckPoint.Objects.AddressRange;
 using psCheckPoint.Objects.Group;
 using psCheckPoint.Objects.GroupWithExclusion;
 using psCheckPoint.Objects.Host;
 using psCheckPoint.Objects.MulticastAddressRange;
 using psCheckPoint.Objects.Network;
+using psCheckPoint.Objects.Service;
+using psCheckPoint.Objects.ServiceGroup;
+using psCheckPoint.Objects.ServiceTCP;
+using psCheckPoint.Objects.ServiceUDP;
 using psCheckPoint.Session;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
-using psCheckPoint.Objects.ServiceTCP;
-using psCheckPoint.Objects.Service;
-using psCheckPoint.Objects.ServiceUDP;
-using psCheckPoint.Objects.ServiceGroup;
 
 namespace psCheckPoint.Extra.Export
 {
@@ -96,14 +92,14 @@ namespace psCheckPoint.Extra.Export
                 case "access-rule":
                     {
                         if (export.AccessRules.Contains(obj)) { return; }
-                        CheckPointAccessRule r = ProcessCheckPointObject<CheckPointAccessRule>(obj, CurrentDepth, "Get-CheckPointAccessRule", typeof(GetCheckPointAccessRule));
+                        CheckPointAccessRule r = obj.toFullObj<CheckPointAccessRule>(Session);
                         if (r != null) { Process(r, CurrentDepth); }
                         break;
                     }
                 case "address-range":
                     {
                         if (export.AddressRanges.Contains(obj)) { return; }
-                        CheckPointAddressRange r = ProcessCheckPointObject<CheckPointAddressRange>(obj, CurrentDepth, "Get-CheckPointAddressRange", typeof(GetCheckPointAddressRange));
+                        CheckPointAddressRange r = obj.toFullObj<CheckPointAddressRange>(Session);
                         if (r != null) { Process(r, CurrentDepth); }
                         break;
                     }
@@ -111,56 +107,56 @@ namespace psCheckPoint.Extra.Export
                 case "group":
                     {
                         if (export.Groups.Contains(obj)) { return; }
-                        CheckPointGroup r = ProcessCheckPointObject<CheckPointGroup>(obj, CurrentDepth, "Get-CheckPointGroup", typeof(GetCheckPointGroup));
+                        CheckPointGroup r = obj.toFullObj<CheckPointGroup>(Session);
                         if (r != null) { Process(r, CurrentDepth); }
                         break;
                     }
                 case "group-with-exclusion":
                     {
                         if (export.GroupsWithExclusion.Contains(obj)) { return; }
-                        CheckPointGroupWithExclusion r = ProcessCheckPointObject<CheckPointGroupWithExclusion>(obj, CurrentDepth, "Get-CheckPointGroupWithExclusion", typeof(GetCheckPointGroupWithExclusion));
+                        CheckPointGroupWithExclusion r = obj.toFullObj<CheckPointGroupWithExclusion>(Session);
                         if (r != null) { Process(r, CurrentDepth); }
                         break;
                     }
                 case "host":
                     {
                         if (export.Hosts.Contains(obj)) { return; }
-                        CheckPointHost r = ProcessCheckPointObject<CheckPointHost>(obj, CurrentDepth, "Get-CheckPointHost", typeof(GetCheckPointHost));
+                        CheckPointHost r = obj.toFullObj<CheckPointHost>(Session);
                         if (r != null) { Process(r, CurrentDepth); }
                         break;
                     }
                 case "multicast-address-range":
                     {
                         if (export.Hosts.Contains(obj)) { return; }
-                        CheckPointMulticastAddressRange r = ProcessCheckPointObject<CheckPointMulticastAddressRange>(obj, CurrentDepth, "Get-CheckPointMulticastAddressRange", typeof(GetCheckPointMulticastAddressRange));
+                        CheckPointMulticastAddressRange r = obj.toFullObj<CheckPointMulticastAddressRange>(Session);
                         if (r != null) { Process(r, CurrentDepth); }
                         break;
                     }
                 case "network":
                     {
                         if (export.Hosts.Contains(obj)) { return; }
-                        CheckPointNetwork r = ProcessCheckPointObject<CheckPointNetwork>(obj, CurrentDepth, "Get-CheckPointNetwork", typeof(GetCheckPointNetwork));
+                        CheckPointNetwork r = obj.toFullObj<CheckPointNetwork>(Session);
                         if (r != null) { Process(r, CurrentDepth); }
                         break;
                     }
                 case "service-group":
                     {
                         if (export.ServiceGroups.Contains(obj)) { return; }
-                        CheckPointServiceGroup r = ProcessCheckPointObject<CheckPointServiceGroup>(obj, CurrentDepth, "Get-CheckPointServiceGroup", typeof(GetCheckPointServiceGroup));
+                        CheckPointServiceGroup r = obj.toFullObj<CheckPointServiceGroup>(Session);
                         if (r != null) { Process(r, CurrentDepth); }
                         break;
                     }
                 case "service-tcp":
                     {
                         if (export.Services.Contains(obj)) { return; }
-                        CheckPointServiceTCP r = ProcessCheckPointObject<CheckPointServiceTCP>(obj, CurrentDepth, "Get-CheckPointServiceTCP", typeof(GetCheckPointServiceTCP));
+                        CheckPointServiceTCP r = obj.toFullObj<CheckPointServiceTCP>(Session);
                         if (r != null) { Process(r, CurrentDepth); }
                         break;
                     }
                 case "service-udp":
                     {
                         if (export.Services.Contains(obj)) { return; }
-                        CheckPointServiceUDP r = ProcessCheckPointObject<CheckPointServiceUDP>(obj, CurrentDepth, "Get-CheckPointServiceUDP", typeof(GetCheckPointServiceUDP));
+                        CheckPointServiceUDP r = obj.toFullObj<CheckPointServiceUDP>(Session);
                         if (r != null) { Process(r, CurrentDepth); }
                         break;
                     }
@@ -298,21 +294,6 @@ namespace psCheckPoint.Extra.Export
             else
             {
                 WriteVerbose($"Not following {obj.Name}");
-            }
-        }
-
-        private T ProcessCheckPointObject<T>(CheckPointObject obj, int CurrentDepth, string psCmdletName, Type psCmdlet) where T : CheckPointObject
-        {
-            if (obj is T) { return (T)obj; }
-
-            using (PowerShell PSI = PowerShell.Create())
-            {
-                PSI.AddCommand(new CmdletInfo(psCmdletName, psCmdlet));
-                PSI.AddParameter("Session", Session);
-                PSI.AddParameter("UID", obj.UID);
-
-                Collection<T> results = PSI.Invoke<T>();
-                return results.First();
             }
         }
     }

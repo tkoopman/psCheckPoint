@@ -16,5 +16,13 @@ namespace psCheckPoint.Objects.ServiceUDP
     public class NewCheckPointServiceUDP : NewCheckPointService<CheckPointServiceUDP>
     {
         public override string Command { get { return "add-service-udp"; } }
+
+        /// <summary>
+        /// <para type="description">N/A</para>
+        /// </summary>
+        [JsonProperty(PropertyName = "accept-replies", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonConverter(typeof(SwitchJsonConverter))]
+        [Parameter]
+        public SwitchParameter AcceptReplies { get; set; }
     }
 }
