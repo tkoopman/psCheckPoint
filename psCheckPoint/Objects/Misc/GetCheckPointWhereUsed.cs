@@ -1,5 +1,8 @@
 ﻿using Newtonsoft.Json;
+using psCheckPoint.Session;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Management.Automation;
 
 namespace psCheckPoint.Objects.Misc
@@ -59,5 +62,22 @@ namespace psCheckPoint.Objects.Misc
         [DefaultValue(5)]
         [Parameter]
         public int IndirectMaxDepth { get; set; } = 5;
+
+        public static CheckPointWhereUsed Run(CheckPointSession Session, CheckPointObject obj, bool indirect)
+        {
+            using (PowerShell PSI = PowerShell.Create())
+            {
+                PSI.AddCommand(new CmdletInfo("Get-CheckPointWhereUsed", typeof(GetCheckPointWhereUsed)));
+                PSI.AddParameter("Session", Session);
+                PSI.AddParameter("UID", obj.UID);
+                if (indirect)
+                {
+                    PSI.AddParameter("Indirect");
+                }
+
+                Collection<CheckPointWhereUsed> results = PSI.Invoke<CheckPointWhereUsed>();
+                return results.First();
+            }
+        }
     }
 }

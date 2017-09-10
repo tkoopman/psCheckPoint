@@ -3,8 +3,7 @@
 namespace psCheckPoint.Objects.MulticastAddressRange
 {
     /// <summary>
-    /// <para type="synopsis">Response from New-CheckPointMulticastAddressRange, Get-CheckPointMulticastAddressRange & Get-CheckPointMulticastAddressRanges</para>
-    /// <para type="description">Multicast Address Range object details.</para>
+    /// <para type="description">Details of a Check Point Multicast Address Range</para>
     /// </summary>
     public class CheckPointMulticastAddressRange : CheckPointObjectFull
     {

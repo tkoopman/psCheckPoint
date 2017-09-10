@@ -1,8 +1,7 @@
 ﻿namespace psCheckPoint.Objects.SecurityZone
 {
     /// <summary>
-    /// <para type="synopsis">Response from New-CheckPointSecurityZone, Get-CheckPointSecurityZone & Get-CheckPointSecurityZones</para>
-    /// <para type="description">Security Zone object details.</para>
+    /// <para type="description">Details of a Check Point Security Zone</para>
     /// </summary>
     public class CheckPointSecurityZone : CheckPointObjectFull
     {

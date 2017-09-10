@@ -17,7 +17,10 @@ using System.Management.Automation;
 
 namespace psCheckPoint.Objects
 {
-    public class CheckPointObject
+    /// <summary>
+    /// <para type="description">Base summary details of Check Point Objects</para>
+    /// </summary>
+    public class CheckPointObject : ICheckPointObjectSummary
     {
         /// <summary>
         /// <para type="description">Object name. Should be unique in the domain.</para>
@@ -43,11 +46,17 @@ namespace psCheckPoint.Objects
         [JsonProperty(PropertyName = "domain", NullValueHandling = NullValueHandling.Ignore)]
         public CheckPointDomain Domain { get; set; }
 
+        /// <summary>
+        /// <para type="description">Convert object to string. (Object name or UID if not Name)</para>
+        /// </summary>
         public override string ToString()
         {
             return (String.IsNullOrWhiteSpace(Name)) ? UID : Name;
         }
 
+        /// <summary>
+        /// <para type="description">Returns true if object UIDs match</para>
+        /// </summary>
         public override bool Equals(object obj)
         {
             try
@@ -61,15 +70,29 @@ namespace psCheckPoint.Objects
             }
         }
 
-        public CheckPointObject toFullObj(CheckPointSession Session)
+        /// <summary>
+        /// <para type="description">Returns Hashcode of object UID</para>
+        /// </summary>
+        public override int GetHashCode()
         {
-            CheckPointObject r = null;
+            return this.UID.GetHashCode();
+        }
+
+        /// <summary>
+        /// <para type="description">Return full object from summary</para>
+        /// </summary>
+        /// <param name="Session">Current session used to get full defails</param>
+        /// <returns>Full details of object. If psCheckPoint doesn't implement the commands to get the full details of this object yet, returns this. If object not found then returns null.</returns>
+        public CheckPointObject ToFullObj(CheckPointSession Session)
+        {
+            CheckPointObject r;
             switch (this.Type)
             {
                 case "access-rule":
                     {
-                        r = GetCheckPointObject<CheckPointAccessRule>(Session, "Get-CheckPointAccessRule", typeof(GetCheckPointAccessRule));
-                        break;
+                        // Unable to get full object from CheckPointObject as also need to know Layer
+                        // This means it must already be a full access-rule object
+                        return this;
                     }
                 case "address-range":
                     {
@@ -126,9 +149,16 @@ namespace psCheckPoint.Objects
             return r;
         }
 
-        public T toFullObj<T>(CheckPointSession Session) where T : CheckPointObject
+        /// <summary>
+        /// <para type="description">Return full object from summary</para>
+        /// </summary>
+        /// <typeparam name="T">Type object should be returned as.</typeparam>
+        /// <param name="Session">Current session used to get full defails.</param>
+        /// <returns>Full details of object.</returns>
+        /// <exception cref="InvalidCastException">If full object is not of type T.</exception>
+        public T ToFullObj<T>(CheckPointSession Session) where T : CheckPointObject
         {
-            CheckPointObject r = toFullObj(Session);
+            CheckPointObject r = ToFullObj(Session);
             if (r is T)
             {
                 return (r as T);

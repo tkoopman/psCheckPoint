@@ -3,8 +3,8 @@
 namespace psCheckPoint.Objects.Session
 {
     /// <summary>
-    /// <para type="synopsis">Response from New-CheckPointSession, Get-CheckPointSession & Get-CheckPointSessions</para>
-    /// <para type="description">Session object details.</para>
+    /// <para type="description">Details of a Check Point Session</para>
+    /// <para type="description">This session object does NOT include login details so cannot be used as Session parameter in other commands</para>
     /// </summary>
     public class CheckPointSession : CheckPointObjectFull
     {

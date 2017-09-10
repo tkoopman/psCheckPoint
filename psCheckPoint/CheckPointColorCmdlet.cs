@@ -4,6 +4,37 @@ using System.Management.Automation;
 
 namespace psCheckPoint
 {
+    /// <summary>
+    /// <para type="description">Base class for other Cmdlets that call a Web-API that need standard Color parameter</para>
+    /// </summary>
+    public abstract class CheckPointColorCmdlet<T> : CheckPointCmdlet<T>
+    {
+        /// <summary>
+        /// <para type="description">Color of the object. Should be one of existing colors.</para>
+        /// </summary>
+        [JsonProperty(PropertyName = "color", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        [Alias("Colour")]
+        [ValidateColor]
+        public string Color
+        {
+            get { return _color; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    _color = null;
+                }
+                else
+                {
+                    _color = value;
+                }
+            }
+        }
+
+        private string _color;
+    }
+
     internal class ValidateColorAttribute : ValidateArgumentsAttribute
     {
         private static string[] ValidColors =
@@ -57,30 +88,5 @@ namespace psCheckPoint
                 }
             }
         }
-    }
-
-    public abstract class CheckPointColorCmdlet<T> : CheckPointCmdlet<T>
-    {
-        [JsonProperty(PropertyName = "color", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        [Alias("Colour")]
-        [ValidateColor]
-        public string Color
-        {
-            get { return _color; }
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    _color = null;
-                }
-                else
-                {
-                    _color = value;
-                }
-            }
-        }
-
-        private string _color;
     }
 }

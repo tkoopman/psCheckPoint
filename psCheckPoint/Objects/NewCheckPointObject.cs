@@ -3,6 +3,9 @@ using System.Management.Automation;
 
 namespace psCheckPoint.Objects
 {
+    /// <summary>
+    /// <para type="description">Base class for New-CheckPoint*ObjectName* classes</para>
+    /// </summary>
     public abstract class NewCheckPointObject<T> : NewCheckPointCmdlet<T>
     {
         /// <summary>

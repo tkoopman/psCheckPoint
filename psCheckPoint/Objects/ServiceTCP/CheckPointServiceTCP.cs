@@ -3,8 +3,7 @@
 namespace psCheckPoint.Objects.ServiceTCP
 {
     /// <summary>
-    /// <para type="synopsis">Response from New-CheckPointServiceTCP, Get-CheckPointServiceTCP & Get-CheckPointServicesTCP</para>
-    /// <para type="description">TCP object details.</para>
+    /// <para type="description">Details of a Check Point TCP Service</para>
     /// </summary>
     public class CheckPointServiceTCP : CheckPointService
     {

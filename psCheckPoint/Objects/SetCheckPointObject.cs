@@ -3,6 +3,9 @@ using System.Management.Automation;
 
 namespace psCheckPoint.Objects
 {
+    /// <summary>
+    /// <para type="description">Base class for Set-CheckPoint*ObjectName* classes</para>
+    /// </summary>
     public abstract class SetCheckPointObject<T> : CheckPointColorCmdlet<T>
     {
         /// <summary>

@@ -3,8 +3,7 @@
 namespace psCheckPoint.Objects.Group
 {
     /// <summary>
-    /// <para type="synopsis"></para>
-    /// <para type="description"></para>
+    /// <para type="description">Details of a Check Point Group</para>
     /// </summary>
     public class CheckPointGroup : CheckPointObjectFull
     {

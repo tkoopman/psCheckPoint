@@ -2,6 +2,9 @@
 
 namespace psCheckPoint.Objects.AccessRule
 {
+    /// <summary>
+    /// <para type="description">Details of a Check Point Access Rule</para>
+    /// </summary>
     public class CheckPointAccessRule : CheckPointObject
     {
         /// <summary>

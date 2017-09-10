@@ -3,8 +3,7 @@
 namespace psCheckPoint.Objects.ServiceGroup
 {
     /// <summary>
-    /// <para type="synopsis"></para>
-    /// <para type="description"></para>
+    /// <para type="description">Details of a Check Point Service Group</para>
     /// </summary>
     public class CheckPointServiceGroup : CheckPointObjectFull
     {

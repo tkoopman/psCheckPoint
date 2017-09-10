@@ -3,6 +3,9 @@ using System.Management.Automation;
 
 namespace psCheckPoint.Objects
 {
+    /// <summary>
+    /// <para type="description">Base class for Remove-CheckPoint*ObjectName* classes</para>
+    /// </summary>
     public abstract class RemoveCheckPointObject<T> : CheckPointCmdlet<T>
     {
         /// <summary>
@@ -22,10 +25,8 @@ namespace psCheckPoint.Objects
         /// <summary>
         /// <para type="description">The level of detail for some of the fields in the response can vary from showing only the UID value of the object to a fully detailed representation of the object.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "details-level", DefaultValueHandling = DefaultValueHandling.Include)]
-        [Parameter]
-        [ValidateSet("uid", "standard", "full")]
-        public string DetailsLevel { get; set; } = "standard";
+        [JsonProperty(PropertyName = "details-level", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        protected string DetailsLevel { get; set; } = "standard";
 
         /// <summary>
         /// <para type="description">Apply changes ignoring warnings.</para>

@@ -3,8 +3,7 @@
 namespace psCheckPoint.Objects.Service
 {
     /// <summary>
-    /// <para type="synopsis"></para>
-    /// <para type="description"></para>
+    /// <para type="description">Base details of a Check Point Service</para>
     /// </summary>
     public abstract class CheckPointService : CheckPointObjectFull
     {

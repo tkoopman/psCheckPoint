@@ -73,6 +73,7 @@
     <Compile Include="Extra\Export\ConvertToCheckPointHtml.cs" />
     <Compile Include="Extra\Export\ExportCheckPointAccessRule.cs" />
     <Compile Include="NewCheckPointCmdlet.cs" />
+    <Compile Include="Objects\ICheckPointObjectSummary.cs" />
     <Compile Include="Objects\Misc\CheckPointWhereUsed.cs" />
     <Compile Include="Objects\Misc\GetCheckPointObjects.cs" />
     <Compile Include="Objects\Misc\GetCheckPointWhereUsed.cs" />
