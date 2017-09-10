@@ -3,6 +3,9 @@ using System.Management.Automation;
 
 namespace psCheckPoint.Objects
 {
+    /// <summary>
+    /// <para type="description">Base class for Get-CheckPoint*ObjectName*s classes</para>
+    /// </summary>
     public abstract class GetCheckPointObjects<T> : CheckPointCmdlet<T>
     {
         /// <summary>
@@ -29,6 +32,9 @@ namespace psCheckPoint.Objects
         [JsonProperty(PropertyName = "details-level", DefaultValueHandling = DefaultValueHandling.Include)]
         protected string DetailsLevel { get; set; } = "full";
 
+        /// <summary>
+        /// <para type="description">Overrides so that result returned is of correct type</para>
+        /// </summary>
         protected override void ProcessRecordResponse(string JSON)
         {
             // Debug Output Request

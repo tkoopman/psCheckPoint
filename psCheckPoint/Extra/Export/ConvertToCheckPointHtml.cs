@@ -1,22 +1,24 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Management.Automation;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace psCheckPoint.Extra.Export
 {
+    /// <summary>
+    /// <para type="synopsis">Convert output from Export-CheckPointObjects to a HTML file.</para>
+    /// </summary>
+    /// <example>
+    /// <code>Export-CheckPointObjects -Session $Session -Verbose $InputObject | ConvertTo-CheckPointHtml -Open</code>
+    /// </example>
     [Cmdlet(VerbsData.ConvertTo, "CheckPointHtml", DefaultParameterSetName = "ES0")]
     [OutputType(typeof(string))]
     public class ConvertToCheckPointHtml : PSCmdlet
     {
         /// <summary>
-        /// <para type="description"></para>
+        /// <para type="description">Export set from Export-CheckPointObjects</para>
         /// </summary>
         [Parameter(Position = 0, Mandatory = true, ValueFromPipeline = true)]
         public CheckPointExportSet Export { get; set; }
@@ -29,6 +31,7 @@ namespace psCheckPoint.Extra.Export
 
         /// <summary>
         /// <para type="description">Open file afterwards in default browser.</para>
+        /// <para type="description">If no filename provides then temp file will be created.</para>
         /// </summary>
         [Parameter]
         public SwitchParameter Open { get; set; }
@@ -55,6 +58,9 @@ namespace psCheckPoint.Extra.Export
         [Parameter(ParameterSetName = "ES5")]
         public SwitchParameter EscapeJson { get; set; }
 
+        /// <summary>
+        /// <para type="description">Convert export set to JSON and insert into HTML template for output.</para>
+        /// </summary>
         protected override void ProcessRecord()
         {
             string html = null;

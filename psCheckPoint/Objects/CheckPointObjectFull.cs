@@ -2,6 +2,9 @@
 
 namespace psCheckPoint.Objects
 {
+    /// <summary>
+    /// <para type="description">Extended summary details of most Check Point Objects</para>
+    /// </summary>
     public class CheckPointObjectFull : CheckPointObject
     {
         /// <summary>

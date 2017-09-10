@@ -1,16 +1,14 @@
 ﻿using Newtonsoft.Json;
-using psCheckPoint.Objects;
 
 namespace psCheckPoint.Objects.AccessLayer
 {
     /// <summary>
-    /// <para type="synopsis"></para>
-    /// <para type="description"></para>
+    /// <para type="description">Details of a Check Point Access Layer</para>
     /// </summary>
     public class CheckPointAccessLayer : CheckPointObjectFull
     {
         /// <summary>
-        /// <para type="description">Whether Applications & URL Filtering blade is enabled on this layer.</para>
+        /// <para type="description">Whether Applications and URL Filtering blade is enabled on this layer.</para>
         /// </summary>
         [JsonProperty(PropertyName = "applications-and-url-filtering")]
         public bool ApplicationsAndUrlFiltering { get; set; }

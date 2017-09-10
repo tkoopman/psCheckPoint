@@ -3,8 +3,7 @@
 namespace psCheckPoint.Objects.AddressRange
 {
     /// <summary>
-    /// <para type="synopsis">Response from New-CheckPointAddressRange, Get-CheckPointAddressRange & Get-CheckPointAddressRanges</para>
-    /// <para type="description">Address Range object details.</para>
+    /// <para type="description">Details of a Check Point Address Range</para>
     /// </summary>
     public class CheckPointAddressRange : CheckPointObjectFull
     {

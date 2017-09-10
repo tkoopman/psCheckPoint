@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using psCheckPoint.Objects.Service;
+﻿using psCheckPoint.Objects.Service;
 using System.Management.Automation;
 
 namespace psCheckPoint.Objects.ServiceTCP

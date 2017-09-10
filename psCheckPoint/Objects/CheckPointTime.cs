@@ -1,12 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects
 {
+    /// <summary>
+    /// <para type="description">Check Point Object's Time Fields</para>
+    /// </summary>
     public class CheckPointTime
     {
         /// <summary>
@@ -21,10 +20,22 @@ namespace psCheckPoint.Objects
         [JsonProperty(PropertyName = "posix", NullValueHandling = NullValueHandling.Ignore)]
         public long Posix { get; set; }
 
+        /// <summary>
+        /// <para type="description">Return as a standard c# DateTime object</para>
+        /// </summary>
         public DateTime asDateTime()
         {
             DateTime result = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
             return result.AddMilliseconds(Posix).ToLocalTime();
+        }
+
+        /// <summary>
+        /// Returns as string
+        /// </summary>
+        /// <returns>String of date and time</returns>
+        public override string ToString()
+        {
+            return this.asDateTime().ToString();
         }
     }
 }

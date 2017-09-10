@@ -2,6 +2,9 @@
 
 namespace psCheckPoint.Objects
 {
+    /// <summary>
+    /// <para type="description">Result from commands that return multiple objects.</para>
+    /// </summary>
     public class CheckPointObjects<T>
     {
         /// <summary>

@@ -9,8 +9,6 @@ namespace psCheckPoint
     /// </summary>
     public class SwitchJsonConverter : JsonConverter
     {
-        #region Overrides of JsonConverter
-
         /// <summary>
         /// Determines whether this instance can convert the specified object type.
         /// </summary>
@@ -64,7 +62,5 @@ namespace psCheckPoint
             //writer.WriteComment(value.GetType().ToString());
             serializer.Serialize(writer, ((SwitchParameter)value).IsPresent.ToString());
         }
-
-        #endregion Overrides of JsonConverter
     }
 }

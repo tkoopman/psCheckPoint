@@ -2,6 +2,9 @@
 
 namespace psCheckPoint.Objects
 {
+    /// <summary>
+    /// <para type="description">Details of a Check Point Domain</para>
+    /// </summary>
     public class CheckPointDomain
     {
         /// <summary>
@@ -22,6 +25,9 @@ namespace psCheckPoint.Objects
         [JsonProperty(PropertyName = "domain-type", NullValueHandling = NullValueHandling.Ignore)]
         public string DomainType { get; set; }
 
+        /// <summary>
+        /// <para type="description">Convert domain object to string. (Domain name)</para>
+        /// </summary>
         public override string ToString()
         {
             return Name;

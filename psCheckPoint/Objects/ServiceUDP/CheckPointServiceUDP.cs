@@ -4,8 +4,7 @@ using psCheckPoint.Objects.Service;
 namespace psCheckPoint.Objects.ServiceUDP
 {
     /// <summary>
-    /// <para type="synopsis">Response from New-CheckPointServiceUDP, Get-CheckPointServiceUDP & Get-CheckPointServicesUDP</para>
-    /// <para type="description">UDP object details.</para>
+    /// <para type="description">Details of a Check Point UDP Service</para>
     /// </summary>
     public class CheckPointServiceUDP : CheckPointService
     {

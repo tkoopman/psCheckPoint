@@ -3,8 +3,7 @@
 namespace psCheckPoint.Objects.Network
 {
     /// <summary>
-    /// <para type="synopsis">Response from New-CheckPointHost, Get-CheckPointHost & Get-CheckPointHosts</para>
-    /// <para type="description">Host object details.</para>
+    /// <para type="description">Details of a Check Point Network</para>
     /// </summary>
     public class CheckPointNetwork : CheckPointObjectFull
     {

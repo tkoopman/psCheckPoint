@@ -3,8 +3,7 @@
 namespace psCheckPoint.Objects.GroupWithExclusion
 {
     /// <summary>
-    /// <para type="synopsis"></para>
-    /// <para type="description"></para>
+    /// <para type="description">Details of a Check Point Group with Exclusion</para>
     /// </summary>
     public class CheckPointGroupWithExclusion : CheckPointObjectFull
     {

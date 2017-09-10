@@ -1,9 +1,11 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Management.Automation;
 
 namespace psCheckPoint
 {
+    /// <summary>
+    /// <para type="description">Base class for New-CheckPoint*ObjectName* classes</para>
+    /// </summary>
     public abstract class NewCheckPointCmdlet<T> : CheckPointColorCmdlet<T>
     {
         /// <summary>
@@ -37,9 +39,7 @@ namespace psCheckPoint
         /// <para type="description">The level of detail for some of the fields in the response can vary from showing only the UID value of the object to a fully detailed representation of the object.</para>
         /// </summary>
         [JsonProperty(PropertyName = "details-level", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter]
-        [ValidateSet("uid", "standard", "full")]
-        public string DetailsLevel { get; set; } = "standard";
+        protected string DetailsLevel { get; set; } = "standard";
 
         /// <summary>
         /// <para type="description">Apply changes ignoring warnings.</para>
