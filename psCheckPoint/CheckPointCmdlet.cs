@@ -41,12 +41,12 @@ namespace psCheckPoint
         protected virtual void ProcessRecordResponse(string JSON)
         {
             // Debug Output Request
-            this.WriteDebug($@"JSON Response
+            WriteDebug($@"JSON Response
 {JSON}");
 
             T result = JsonConvert.DeserializeObject<T>(JSON);
 
-            if (result.GetType() == typeof(CheckPointMessage))
+            if (result is CheckPointMessage)
             {
                 WriteVerbose((string)(typeof(CheckPointMessage).GetProperty("Message").GetValue(result)));
             }
@@ -54,9 +54,13 @@ namespace psCheckPoint
             {
                 WriteObject(result);
             }
-            else
+            else if (result is CheckPointObject)
             {
                 WriteVerbose($"{Command}: {(string)(typeof(CheckPointObject).GetProperty("Name").GetValue(result))}");
+                WriteObject(result);
+            }
+            else
+            {
                 WriteObject(result);
             }
         }
