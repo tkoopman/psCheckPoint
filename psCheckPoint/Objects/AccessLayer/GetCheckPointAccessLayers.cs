@@ -10,7 +10,7 @@ namespace psCheckPoint.Objects.AccessLayer
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointAccessLayers")]
     [OutputType(typeof(CheckPointObjects<CheckPointAccessLayer>))]
-    public class GetCheckPointAccessLayers : GetCheckPointObjects<CheckPointAccessLayer>
+    public class GetCheckPointAccessLayers : GetCheckPointObjectsBase<CheckPointAccessLayers>
     {
         public override string Command { get { return "show-access-layers"; } }
     }

@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Objects\AccessLayer\CheckPointAccessLayer.cs" />
+    <Compile Include="Objects\AccessLayer\CheckPointAccessLayers.cs" />
     <Compile Include="Objects\AccessLayer\GetCheckPointAccessLayer.cs" />
     <Compile Include="Objects\AccessLayer\GetCheckPointAccessLayers.cs" />
     <Compile Include="Objects\AccessLayer\NewCheckPointAccessLayer.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Extra\Export\ConvertToCheckPointHtml.cs" />
     <Compile Include="Extra\Export\ExportCheckPointAccessRule.cs" />
     <Compile Include="NewCheckPointCmdlet.cs" />
+    <Compile Include="Objects\CheckPointObjectsBase.cs" />
     <Compile Include="Objects\ICheckPointObjectSummary.cs" />
     <Compile Include="Objects\Misc\CheckPointWhereUsed.cs" />
     <Compile Include="Objects\Misc\GetCheckPointObjects.cs" />

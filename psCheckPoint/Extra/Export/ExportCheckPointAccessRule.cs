@@ -13,6 +13,7 @@ using psCheckPoint.Objects.ServiceTCP;
 using psCheckPoint.Objects.ServiceUDP;
 using psCheckPoint.Session;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
@@ -118,13 +119,6 @@ namespace psCheckPoint.Extra.Export
             {
                 Process(obj as ICheckPointObjectSummary, CurrentDepth);
             }
-            else if (obj is object[])
-            {
-                foreach (object o in (obj as object[]))
-                {
-                    Process(o, CurrentDepth);
-                }
-            }
             else if (obj is PSObject)
             {
                 Process((obj as PSObject).BaseObject, CurrentDepth);
@@ -145,13 +139,9 @@ namespace psCheckPoint.Extra.Export
                 }
                 //TODO add other entries when implemented fully
             }
-            else if (obj is CheckPointObjects<CheckPointObject>)
+            else if (obj is IEnumerable)
             {
-                Process((obj as CheckPointObjects<CheckPointObject>).Objects, CurrentDepth);
-            }
-            else if (obj is List<Object>)
-            {
-                foreach (object o in (obj as List<Object>))
+                foreach (object o in (obj as IEnumerable))
                 {
                     Process(o, CurrentDepth);
                 }

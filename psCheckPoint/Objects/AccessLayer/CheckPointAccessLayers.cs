@@ -1,17 +1,17 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace psCheckPoint.Objects
+namespace psCheckPoint.Objects.AccessLayer
 {
     /// <summary>
     /// <para type="description">Result from commands that return multiple objects.</para>
     /// </summary>
-    public class CheckPointObjects<T> : CheckPointObjectsBase<T>
+    public class CheckPointAccessLayers : CheckPointObjectsBase<CheckPointAccessLayer>
     {
         /// <summary>
         /// <para type="description">How much details are returned depends on the details-level field of the request. This table shows the level of detail shown when details-level is set to standard.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "objects")]
-        public List<T> Objects { get { return _Objects; } set { _Objects = value; } }
+        [JsonProperty(PropertyName = "access-layers")]
+        public List<CheckPointAccessLayer> AccessLayers { get { return _Objects; } set { _Objects = value; } }
     }
 }
