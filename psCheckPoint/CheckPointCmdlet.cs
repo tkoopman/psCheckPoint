@@ -72,7 +72,7 @@ namespace psCheckPoint
         {
             // Debug Output Request
             string strJson = getJSON();
-            this.WriteDebug($@"JSON Request to {Session.URL}/{Command}
+            WriteDebug($@"JSON Request to {Session.URL}/{Command}
 {strJson}");
 
             try
@@ -87,14 +87,17 @@ namespace psCheckPoint
                     strJson = response.Content.ReadAsStringAsync().Result;
 
                     // Debug Output Request
-                    this.WriteDebug($@"JSON Response
+                    WriteDebug($@"JSON Response
 {strJson}");
 
                     ProcessRecordResponse(strJson);
                 }
                 else
                 {
-                    WriteWarning($"Server returned status code: {(int)response.StatusCode} [{response.StatusCode}]");
+                    if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
+                    {
+                        WriteWarning($"Server returned status code: {(int)response.StatusCode} [{response.StatusCode}]");
+                    }
                     strJson = response.Content.ReadAsStringAsync().Result;
                     WriteDebug(strJson);
                     CheckPointError error = JsonConvert.DeserializeObject<CheckPointError>(strJson);

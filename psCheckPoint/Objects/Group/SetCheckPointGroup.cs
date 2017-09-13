@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections;
 using System.Management.Automation;
 
 namespace psCheckPoint.Objects.Group
@@ -21,6 +22,8 @@ namespace psCheckPoint.Objects.Group
         /// <para type="description">Collection of group identifiers.</para>
         /// </summary>
         [JsonProperty(PropertyName = "members", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        protected dynamic _members;
+
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public string[] Members
         {
@@ -28,7 +31,27 @@ namespace psCheckPoint.Objects.Group
             set { _members = CreateArray(value); }
         }
 
-        private string[] _members;
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        public string[] AddMembers
+        {
+            get { return _members; }
+            set
+            {
+                _members = new Hashtable();
+                _members["add"] = CreateArray(value);
+            }
+        }
+
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        public string[] RemoveMembers
+        {
+            get { return _members; }
+            set
+            {
+                _members = new Hashtable();
+                _members["remove"] = CreateArray(value);
+            }
+        }
 
         /// <summary>
         /// <para type="description">Collection of group identifiers.</para>
