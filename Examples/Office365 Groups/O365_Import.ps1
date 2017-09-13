@@ -12,17 +12,18 @@ param(
 	[switch]$NoIPv6,
 	[switch]$PrintURLs,
 	[switch]$Publish,
-	[switch]$IgnoreWarnings
+	[switch]$IgnoreWarnings,
+	[string]$Color = "red"
 )
 
 # Download Microsoft Cloud IP Ranges and Names into Object
 $O365IPAddresses = "https://support.content.office.net/en-us/static/O365IPAddresses.xml"
 [XML]$O365 = Invoke-WebRequest -Uri $O365IPAddresses -DisableKeepAlive
 
-$Updated = $O365.products.updated
+$Updated = ([datetime]::parseexact($O365.products.updated,"M/d/yyyy",[System.Globalization.CultureInfo]::InvariantCulture)).ToShortDateString()
 $Comments = "Microsoft Office365 added $Updated"
+$GroupComments = "Microsoft Office365 updated $Updated"
 $MSO365 = "Microsoft_Office365"
-$MS = "Microsoft"
 
 # Login to Check Point API to get Session ID
 Write-Verbose " *** Log in to Check Point Smart Center API *** "
@@ -37,10 +38,15 @@ $Group = Get-CheckPointGroup -Session $Session -Name $MSO365 -Verbose:$false
 if ($Group.Code) {
 	# Main group does not exist. Create it
 	Write-Verbose "Creating main group $MSO365"
-	$Group = New-CheckPointGroup -Session $Session -Name $MSO365 -Tag $MSO365 -Color Red -Comments "$Comments"
+	$Group = New-CheckPointGroup -Session $Session -Name $MSO365 -Tag $MSO365 -Color $Color -Comments "$GroupComments"
 	if ($Group.Code) {
 		Write-Error "Failed to create group $MSO365. $Group"
 		exit
+	}
+} else {
+	if ($Group.Comments -ne $GroupComments) {
+		Write-Verbose "Updating $MSO365 group's comment"
+		Set-CheckPointGroup -Session $Session -Name $MSO365 -Comments "$GroupComments" -Verbose:$false
 	}
 }
 
@@ -57,7 +63,7 @@ ForEach ($Product in $O365.products.product) {
 	if ($Group.code) {
 		#Group not found
 		Write-Verbose "Creating product group $GroupName"
-		$Group = New-CheckPointGroup -Session $Session -Name $GroupName -Tag $MSO365 -Groups $MSO365 -Color Red -Verbose:$false
+		$Group = New-CheckPointGroup -Session $Session -Name $GroupName -Tag $MSO365 -Groups $MSO365 -Color $Color -Comments "$GroupComments" -Verbose:$false
 		$Existing = @()
 		if ($Group.Code) {
 			Write-Error "Failed to create group $GroupName. $Group"
@@ -70,6 +76,11 @@ ForEach ($Product in $O365.products.product) {
 			$Existing = @()
 		}
 		Write-Verbose "Group $GroupName already exists with $Count members"
+		
+		if ($Group.Comments -ne $GroupComments) {
+			Write-Verbose "Updating $GroupName group's comment"
+			Set-CheckPointGroup -Session $Session -Name $GroupName -Comments "$GroupComments" -Verbose:$false
+		}
 	}
 
 	$MSList = New-Object System.Collections.ArrayList
@@ -83,7 +94,9 @@ ForEach ($Product in $O365.products.product) {
 					If ($Type -eq "IPv4" ) {
 						$Network = $Entry.split("/")[0]
 						$MaskLength = $Entry.split("/")[1]
-						If ($MaskLength -eq 32) {
+						
+						# MS sometimes puts /32 and sometimes just no mask length #Consistency
+						If (-not $MaskLength -or $MaskLength -eq 32) {
 							$i = $MSList.Add("$($MSO365)_$($Network)")
 						} else {
 							$i = $MSList.Add("$($MSO365)_$($Entry)")
@@ -91,11 +104,9 @@ ForEach ($Product in $O365.products.product) {
 					} ElseIf ($Type -eq "IPv6") {
 						$Network = $Entry.split("/")[0]
 						$MaskLength = $Entry.split("/")[1]
-						If ($Entry -notlike "*/") {
-							Write-Verbose "Look $Entry"
-							$MaskLength = 128
-						}
-						If ($MaskLength -eq 128) {
+						
+						# MS sometimes puts /128 and sometimes just no mask length #Consistency
+						If (-not $MaskLength -or $MaskLength -eq 128) {
 							$i = $MSList.Add("$($MSO365)_$($Network)")
 						} else {
 							$i = $MSList.Add("$($MSO365)_$($Entry)")
@@ -110,6 +121,7 @@ ForEach ($Product in $O365.products.product) {
 		}
 	}
 
+	# MS sometimes enters the same entry twice #Consistency
 	$MSList = $MSList | Select -Unique
 	if ($MSList.Count -eq 0) {
 		$MSList = @()
@@ -140,13 +152,13 @@ ForEach ($Product in $O365.products.product) {
 						$Network = $ObjIP.split("/")[0]
 						$MaskLength = $ObjIP.split("/")[1]
 						Write-Verbose "Creating network $ObjName in $GroupName"
-						$Obj = New-CheckPointNetwork -Session $Session -Name $ObjName -Subnet $Network -MaskLength $MaskLength -Groups $GroupName -Tags $MSO365 -Comments "$Comments" -IgnoreWarnings:$IgnoreWarnings.IsPresent -Verbose:$false
+						$Obj = New-CheckPointNetwork -Session $Session -Name $ObjName -Subnet $Network -MaskLength $MaskLength -Groups $GroupName -Tags $MSO365 -Color $Color -Comments "$Comments" -IgnoreWarnings:$IgnoreWarnings.IsPresent -Verbose:$false
 						if ($Obj.Code) {
 							Write-Warning "Failed to create network $ObjName in $GroupName. $Obj"
 						}
 					} else {
 						Write-Verbose "Creating host $ObjName in $GroupName"
-						$Obj = New-CheckPointHost -Session $Session -Name $ObjName -ipAddress $ObjIP -Groups $GroupName -Tags $MSO365 -Comments "$Comments" -IgnoreWarnings:$IgnoreWarnings.IsPresent -Verbose:$false
+						$Obj = New-CheckPointHost -Session $Session -Name $ObjName -ipAddress $ObjIP -Groups $GroupName -Tags $MSO365 -Comments "$Comments" -Color $Color -IgnoreWarnings:$IgnoreWarnings.IsPresent -Verbose:$false
 						if ($Obj.Code) {
 							Write-Warning "Failed to create host $ObjName in $GroupName. $Obj"
 						}
