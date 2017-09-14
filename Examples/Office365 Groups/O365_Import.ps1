@@ -4,6 +4,7 @@
 # (C) 2017, Hugo van der Kooij
 #
 # Don't forget to run `Install-Module psCheckPoint` (as administrator) once!
+# v0.3.3 or higher required of psCheckPoint module
 #
 # WARNING: This script will put a significant load on your SmartCenter!
 #
