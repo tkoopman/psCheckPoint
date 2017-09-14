@@ -47,7 +47,7 @@ if ($Group.Code) {
 } else {
 	if ($Group.Comments -ne $GroupComments) {
 		Write-Verbose "Updating $MSO365 group's comment"
-		Set-CheckPointGroup -Session $Session -Name $MSO365 -Comments "$GroupComments" -Verbose:$false
+		$Group = Set-CheckPointGroup -Session $Session -Name $MSO365 -Comments "$GroupComments" -Verbose:$false
 	}
 }
 
@@ -77,10 +77,10 @@ ForEach ($Product in $O365.products.product) {
 			$Existing = @()
 		}
 		Write-Verbose "Group $GroupName already exists with $Count members"
-		
+
 		if ($Group.Comments -ne $GroupComments) {
 			Write-Verbose "Updating $GroupName group's comment"
-			Set-CheckPointGroup -Session $Session -Name $GroupName -Comments "$GroupComments" -Verbose:$false
+			$Group = Set-CheckPointGroup -Session $Session -Name $GroupName -Comments "$GroupComments" -Verbose:$false
 		}
 	}
 
@@ -95,7 +95,7 @@ ForEach ($Product in $O365.products.product) {
 					If ($Type -eq "IPv4" ) {
 						$Network = $Entry.split("/")[0]
 						$MaskLength = $Entry.split("/")[1]
-						
+
 						# MS sometimes puts /32 and sometimes just no mask length #Consistency
 						If (-not $MaskLength -or $MaskLength -eq 32) {
 							$i = $MSList.Add("$($MSO365)_$($Network)")
@@ -105,7 +105,7 @@ ForEach ($Product in $O365.products.product) {
 					} ElseIf ($Type -eq "IPv6") {
 						$Network = $Entry.split("/")[0]
 						$MaskLength = $Entry.split("/")[1]
-						
+
 						# MS sometimes puts /128 and sometimes just no mask length #Consistency
 						If (-not $MaskLength -or $MaskLength -eq 128) {
 							$i = $MSList.Add("$($MSO365)_$($Network)")
@@ -136,7 +136,7 @@ ForEach ($Product in $O365.products.product) {
 		$Split = $Entry.InputObject.split("_")
 		$ObjIP = $Split[-1]
 		$IsNetwork = ($ObjIP -like "*/*")
-		
+
 		switch ($Entry.SideIndicator)
 		{
 			"<=" {

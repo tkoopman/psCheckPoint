@@ -112,6 +112,12 @@ namespace psCheckPoint.Session
         [Parameter]
         public SwitchParameter NoCertificateValidation { get; set; }
 
+        /// <summary>
+        /// <para type="description">Do not enable HTTP compression.</para>
+        /// </summary>
+        [Parameter]
+        public SwitchParameter NoCompression { get; set; }
+
         protected override void ProcessRecord()
         {
             User = Credentials.GetNetworkCredential().UserName;
@@ -135,28 +141,32 @@ namespace psCheckPoint.Session
                 {
                     ServicePointManager.ServerCertificateValidationCallback = null;
                 }
-                HttpClient client = new HttpClient();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage response = client.PostAsync($"https://{ManagementServer}:{ManagementPort}/web_api/login", new StringContent(strJson, Encoding.UTF8, "application/json")).Result;
-
-                if (response.IsSuccessStatusCode)
+                using (HttpClient client = new HttpClient())
                 {
-                    strJson = response.Content.ReadAsStringAsync().Result;
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    using (HttpResponseMessage response = client.PostAsync($"https://{ManagementServer}:{ManagementPort}/web_api/login", new StringContent(strJson, Encoding.UTF8, "application/json")).Result)
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            strJson = response.Content.ReadAsStringAsync().Result;
 
-                    // Debug Output Request
-                    this.WriteDebug($@"JSON Response
+                            // Debug Output Request
+                            this.WriteDebug($@"JSON Response
 {strJson}");
 
-                    CheckPointSession session = JsonConvert.DeserializeObject<CheckPointSession>(strJson);
-                    WriteObject(session);
-                }
-                else
-                {
-                    WriteWarning($"Server returned status code: {(int)response.StatusCode} [{response.StatusCode}]");
-                    strJson = response.Content.ReadAsStringAsync().Result;
-                    WriteDebug(strJson);
-                    CheckPointError error = JsonConvert.DeserializeObject<CheckPointError>(strJson);
-                    WriteObject(error);
+                            CheckPointSession session = JsonConvert.DeserializeObject<CheckPointSession>(strJson);
+                            session.EnableCompression = !NoCompression.IsPresent;
+                            WriteObject(session);
+                        }
+                        else
+                        {
+                            WriteWarning($"Server returned status code: {(int)response.StatusCode} [{response.StatusCode}]");
+                            strJson = response.Content.ReadAsStringAsync().Result;
+                            WriteDebug(strJson);
+                            CheckPointError error = JsonConvert.DeserializeObject<CheckPointError>(strJson);
+                            WriteObject(error);
+                        }
+                    }
                 }
             }
             catch (Exception e)

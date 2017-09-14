@@ -77,31 +77,30 @@ namespace psCheckPoint
 
             try
             {
-                HttpClient client = new HttpClient();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Add("X-chkp-sid", Session.SID);
-                HttpResponseMessage response = client.PostAsync($"{Session.URL}/{Command}", new StringContent(strJson, Encoding.UTF8, "application/json")).Result;
-
-                if (response.IsSuccessStatusCode)
+                HttpClient client = Session.getHttpClient();
+                using (HttpResponseMessage response = client.PostAsync($"{Command}", new StringContent(strJson, Encoding.UTF8, "application/json")).Result)
                 {
-                    strJson = response.Content.ReadAsStringAsync().Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        strJson = response.Content.ReadAsStringAsync().Result;
 
-                    // Debug Output Request
-                    WriteDebug($@"JSON Response
+                        // Debug Output Request
+                        WriteDebug($@"JSON Response
 {strJson}");
 
-                    ProcessRecordResponse(strJson);
-                }
-                else
-                {
-                    if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
-                    {
-                        WriteWarning($"Server returned status code: {(int)response.StatusCode} [{response.StatusCode}]");
+                        ProcessRecordResponse(strJson);
                     }
-                    strJson = response.Content.ReadAsStringAsync().Result;
-                    WriteDebug(strJson);
-                    CheckPointError error = JsonConvert.DeserializeObject<CheckPointError>(strJson);
-                    WriteObject(error);
+                    else
+                    {
+                        if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
+                        {
+                            WriteWarning($"Server returned status code: {(int)response.StatusCode} [{response.StatusCode}]");
+                        }
+                        strJson = response.Content.ReadAsStringAsync().Result;
+                        WriteDebug(strJson);
+                        CheckPointError error = JsonConvert.DeserializeObject<CheckPointError>(strJson);
+                        WriteObject(error);
+                    }
                 }
             }
             catch (Exception e)
