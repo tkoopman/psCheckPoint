@@ -10,13 +10,22 @@ using System.Text;
 namespace psCheckPointIA
 {
     [JsonObject(MemberSerialization.OptIn)]
-    internal class Batch<RequestType, ResponseType>
+    internal class Batch<RequestType, ResponseType> : IDisposable
     {
+        private HttpClient client = new HttpClient();
+
         public Batch(string gateway, string sharedSecret, string command)
         {
             Gateway = gateway;
             SharedSecret = sharedSecret;
             Command = command;
+
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
+
+        public void Clear()
+        {
+            Requests.Clear();
         }
 
         public string Gateway { get; set; }
@@ -42,33 +51,32 @@ namespace psCheckPointIA
 
             try
             {
-                HttpClient client = new HttpClient();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage response = client.PostAsync(URL, new StringContent(strJson, Encoding.UTF8, "application/json")).Result;
-
-                if (response.IsSuccessStatusCode)
+                using (HttpResponseMessage response = client.PostAsync(URL, new StringContent(strJson, Encoding.UTF8, "application/json")).Result)
                 {
-                    strJson = response.Content.ReadAsStringAsync().Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        strJson = response.Content.ReadAsStringAsync().Result;
 
-                    // Debug Output Request
-                    cmdlet.WriteDebug($@"JSON Response
+                        // Debug Output Request
+                        cmdlet.WriteDebug($@"JSON Response
 {strJson}");
 
-                    Responses<ResponseType> responses = JsonConvert.DeserializeObject<Responses<ResponseType>>(strJson);
+                        Responses<ResponseType> responses = JsonConvert.DeserializeObject<Responses<ResponseType>>(strJson);
 
-                    cmdlet.WriteObject(responses.responses);
-                }
-                else
-                {
-                    cmdlet.WriteWarning($"Server returned status code: {(int)response.StatusCode} [{response.StatusCode}]");
-                    strJson = response.Content.ReadAsStringAsync().Result;
+                        cmdlet.WriteObject(responses.responses);
+                    }
+                    else
+                    {
+                        cmdlet.WriteWarning($"Server returned status code: {(int)response.StatusCode} [{response.StatusCode}]");
+                        strJson = response.Content.ReadAsStringAsync().Result;
 
-                    // Debug Output Request
-                    cmdlet.WriteDebug($@"JSON Response
+                        // Debug Output Request
+                        cmdlet.WriteDebug($@"JSON Response
 {strJson}");
 
-                    CheckPointError error = JsonConvert.DeserializeObject<CheckPointError>(strJson);
-                    cmdlet.WriteObject(error);
+                        CheckPointError error = JsonConvert.DeserializeObject<CheckPointError>(strJson);
+                        cmdlet.WriteObject(error);
+                    }
                 }
             }
             catch (Exception e)
@@ -76,6 +84,11 @@ namespace psCheckPointIA
                 while (e.InnerException != null) e = e.InnerException;
                 cmdlet.WriteError(new ErrorRecord(e, e.Message, ErrorCategory.ConnectionError, this));
             }
+        }
+
+        public void Dispose()
+        {
+            ((IDisposable)client).Dispose();
         }
     }
 }

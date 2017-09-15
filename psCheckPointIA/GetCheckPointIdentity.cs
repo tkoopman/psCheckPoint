@@ -128,7 +128,7 @@ namespace psCheckPointIA
             if (batch.Requests.Count >= BatchSize)
             {
                 batch.Post(this);
-                batch = new Batch<GetIdentity, GetIdentityResponse>(Gateway, SharedSecret, "show-identity");
+                batch.Clear();
             }
         }
 
@@ -137,8 +137,10 @@ namespace psCheckPointIA
             if (batch.Requests.Count >= 1)
             {
                 batch.Post(this);
-                batch = null;
             }
+
+            batch.Dispose();
+            batch = null;
         }
     }
 }

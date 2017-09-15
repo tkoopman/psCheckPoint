@@ -130,7 +130,7 @@ namespace psCheckPointIA
             if (batch.Requests.Count >= BatchSize)
             {
                 batch.Post(this);
-                batch = new Batch<RemoveIdentity, RemoveIdentityResponse>(Gateway, SharedSecret, "delete-identity");
+                batch.Clear();
             }
         }
 
@@ -139,8 +139,10 @@ namespace psCheckPointIA
             if (batch.Requests.Count >= 1)
             {
                 batch.Post(this);
-                batch = null;
             }
+
+            batch.Dispose();
+            batch = null;
         }
     }
 }
