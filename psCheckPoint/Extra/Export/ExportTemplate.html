@@ -72,17 +72,17 @@
             var ExportJSON = "{JSON}";
             var Export = JSON.parse(ExportJSON);
 
-            Export.Services.forEach(ProcessService);
+            if (Export.Services) Export.Services.forEach(ProcessService);
 
-            Export.AccessRules.forEach(ProcessAccessRule);
-            Export.AddressRanges.forEach(ProcessAddressRange);
-            Export.Groups.forEach(ProcessGroup);
-            Export.GroupsWithExclusion.forEach(ProcessGroupWithExclusion);
-            Export.Hosts.forEach(ProcessHost);
-            Export.MulticastAddressRanges.forEach(ProcessMulticastAddressRange);
-            Export.Networks.forEach(ProcessNetwork);
-            Export.ServiceGroups.forEach(ProcessServiceGroup);
-            Export.Other.forEach(ProcessOther);
+            if (Export.Services) Export.AccessRules.forEach(ProcessAccessRule);
+            if (Export.AddressRanges) Export.AddressRanges.forEach(ProcessAddressRange);
+            if (Export.Groups) Export.Groups.forEach(ProcessGroup);
+            if (Export.GroupsWithExclusion) Export.GroupsWithExclusion.forEach(ProcessGroupWithExclusion);
+            if (Export.Hosts) Export.Hosts.forEach(ProcessHost);
+            if (Export.MulticastAddressRanges) Export.MulticastAddressRanges.forEach(ProcessMulticastAddressRange);
+            if (Export.Networks) Export.Networks.forEach(ProcessNetwork);
+            if (Export.ServiceGroups) Export.ServiceGroups.forEach(ProcessServiceGroup);
+            if (Export.Other) Export.Other.forEach(ProcessOther);
 
             document.getElementById("NumAccessRules").innerHTML = document.getElementById("AccessRules").rows.length - 1;
             document.getElementById("NumAddressRanges").innerHTML = document.getElementById("AddressRanges").rows.length - 1;

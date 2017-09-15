@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace psCheckPoint.Objects
 {
@@ -24,6 +25,7 @@ namespace psCheckPoint.Objects
         /// <para type="description">Object icon.</para>
         /// </summary>
         [JsonProperty(PropertyName = "icon", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, Order = 999)]
+        [DefaultValue("")]
         public string Icon { get; private set; }
 
         /// <summary>
@@ -36,6 +38,7 @@ namespace psCheckPoint.Objects
         /// <para type="description">Indicates whether the object is read-only.</para>
         /// </summary>
         [JsonProperty(PropertyName = "read-only", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, Order = 12)]
+        [DefaultValue(false)]
         public bool ReadOnly { get; private set; }
 
         /// <summary>
@@ -54,6 +57,17 @@ namespace psCheckPoint.Objects
         /// <para type="description">Comments string.</para>
         /// </summary>
         [JsonProperty(PropertyName = "comments", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, Order = 800)]
+        [DefaultValue("")]
         public string Comments { get; private set; }
+
+        public bool ShouldSerializeTags()
+        {
+            return Tags.Length > 0;
+        }
+
+        public bool ShouldSerializeColor()
+        {
+            return !(string.IsNullOrWhiteSpace(Color) || Color.Equals("black"));
+        }
     }
 }

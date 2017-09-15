@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace psCheckPoint.Objects
 {
@@ -52,6 +53,7 @@ namespace psCheckPoint.Objects
         /// <para type="description">Any validation errors attached to the object</para>
         /// </summary>
         [JsonProperty(PropertyName = "validation-state", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [DefaultValue("")]
         public string ValidationState { get; private set; }
 
         /// <summary>

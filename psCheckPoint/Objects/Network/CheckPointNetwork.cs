@@ -65,5 +65,10 @@ namespace psCheckPoint.Objects.Network
         /// </summary>
         [JsonProperty(PropertyName = "subnet-mask", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         public string SubnetMask { get; private set; }
+
+        public bool ShouldSerializeGroups()
+        {
+            return Groups.Length > 0;
+        }
     }
 }

@@ -39,5 +39,10 @@ namespace psCheckPoint.Objects.Host
 
         //TODO nat-settings
         //TODO host-servers
+
+        public bool ShouldSerializeGroups()
+        {
+            return Groups.Length > 0;
+        }
     }
 }

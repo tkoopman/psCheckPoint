@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace psCheckPoint.Objects.AccessRule
 {
@@ -51,12 +52,14 @@ namespace psCheckPoint.Objects.AccessRule
         /// <para type="description">True if negate is set for destination.</para>
         /// </summary>
         [JsonProperty(PropertyName = "destination-negate", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [DefaultValue(false)]
         public bool DestinationNegate { get; private set; }
 
         /// <summary>
         /// <para type="description">Enable/Disable the rule.</para>
         /// </summary>
         [JsonProperty(PropertyName = "enabled", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [DefaultValue(false)]
         public bool Enabled { get; private set; }
 
         //TODO hits
@@ -77,6 +80,7 @@ namespace psCheckPoint.Objects.AccessRule
         /// <para type="description">N/A</para>
         /// </summary>
         [JsonProperty(PropertyName = "layer", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [DefaultValue("")]
         public string Layer { get; private set; }
 
         /// <summary>
@@ -95,6 +99,7 @@ namespace psCheckPoint.Objects.AccessRule
         /// <para type="description">True if negate is set for service.</para>
         /// </summary>
         [JsonProperty(PropertyName = "service-negate", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [DefaultValue(false)]
         public bool ServiceNegate { get; private set; }
 
         /// <summary>
@@ -107,6 +112,7 @@ namespace psCheckPoint.Objects.AccessRule
         /// <para type="description">True if negate is set for source.</para>
         /// </summary>
         [JsonProperty(PropertyName = "source-negate", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [DefaultValue(false)]
         public bool SourceNegate { get; private set; }
 
         /// <summary>
@@ -128,6 +134,7 @@ namespace psCheckPoint.Objects.AccessRule
         /// <para type="description">Comments string.</para>
         /// </summary>
         [JsonProperty(PropertyName = "comments", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [DefaultValue("")]
         public string Comments { get; private set; }
     }
 }

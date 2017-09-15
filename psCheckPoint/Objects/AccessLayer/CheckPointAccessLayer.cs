@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace psCheckPoint.Objects.AccessLayer
 {
@@ -25,42 +26,49 @@ namespace psCheckPoint.Objects.AccessLayer
         /// <para type="description">Whether Applications and URL Filtering blade is enabled on this layer.</para>
         /// </summary>
         [JsonProperty(PropertyName = "applications-and-url-filtering", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [DefaultValue(false)]
         public bool ApplicationsAndUrlFiltering { get; private set; }
 
         /// <summary>
         /// <para type="description">Whether Content Awareness blade is enabled on this layer.</para>
         /// </summary>
         [JsonProperty(PropertyName = "content-awareness", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [DefaultValue(false)]
         public bool ContentAwareness { get; private set; }
 
         /// <summary>
         /// <para type="description">Whether X-Forward-For HTTP header is been used.</para>
         /// </summary>
         [JsonProperty(PropertyName = "detect-using-x-forward-for", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [DefaultValue(false)]
         public bool DetectUsingXForwardFor { get; private set; }
 
         /// <summary>
         /// <para type="description">Whether Firewall blade is enabled on this layer.</para>
         /// </summary>
         [JsonProperty(PropertyName = "firewall", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [DefaultValue(false)]
         public bool Firewall { get; private set; }
 
         /// <summary>
         /// <para type="description">Whether Mobile Access blade is enabled on this layer.</para>
         /// </summary>
         [JsonProperty(PropertyName = "mobile-access", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [DefaultValue(false)]
         public bool MobileAccess { get; private set; }
 
         /// <summary>
         /// <para type="description">Parent layer of this layer.</para>
         /// </summary>
         [JsonProperty(PropertyName = "parent-layer", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [DefaultValue("")]
         public string ParentLayer { get; private set; }
 
         /// <summary>
         /// <para type="description">Whether this layer is shared.</para>
         /// </summary>
         [JsonProperty(PropertyName = "shared", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [DefaultValue(false)]
         public bool Shared { get; private set; }
     }
 }

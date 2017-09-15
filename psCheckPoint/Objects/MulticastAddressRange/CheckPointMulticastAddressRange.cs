@@ -48,5 +48,10 @@ namespace psCheckPoint.Objects.MulticastAddressRange
         /// </summary>
         [JsonProperty(PropertyName = "ipv6-address-last", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         public string IPv6AddressLast { get; private set; }
+
+        public bool ShouldSerializeGroups()
+        {
+            return Groups.Length > 0;
+        }
     }
 }

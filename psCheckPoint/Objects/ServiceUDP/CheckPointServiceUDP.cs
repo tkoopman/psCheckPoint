@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using psCheckPoint.Objects.Service;
+using System.ComponentModel;
 
 namespace psCheckPoint.Objects.ServiceUDP
 {
@@ -25,6 +26,7 @@ namespace psCheckPoint.Objects.ServiceUDP
         /// <para type="description"></para>
         /// </summary>
         [JsonProperty(PropertyName = "accept-replies", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [DefaultValue(false)]
         public bool AcceptReplies { get; private set; }
     }
 }

@@ -27,5 +27,15 @@ namespace psCheckPoint.Objects.Group
         /// </summary>
         [JsonProperty(PropertyName = "members", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, Order = 1)]
         public CheckPointObject[] Members { get; private set; }
+
+        public bool ShouldSerializeGroups()
+        {
+            return Groups.Length > 0;
+        }
+
+        public bool ShouldSerializeMembers()
+        {
+            return Members.Length > 0;
+        }
     }
 }

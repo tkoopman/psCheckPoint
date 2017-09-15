@@ -84,5 +84,55 @@ namespace psCheckPoint.Extra.Export
         /// </summary>
         [JsonProperty(PropertyName = "Other", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         public List<CheckPointObject> Other { get; private set; } = new List<CheckPointObject>();
+
+        public bool ShouldSerializeAccessRules()
+        {
+            return AccessRules.Count > 0;
+        }
+
+        public bool ShouldSerializeAddressRanges()
+        {
+            return AddressRanges.Count > 0;
+        }
+
+        public bool ShouldSerializeGroups()
+        {
+            return Groups.Count > 0;
+        }
+
+        public bool ShouldSerializeGroupsWithExclusion()
+        {
+            return GroupsWithExclusion.Count > 0;
+        }
+
+        public bool ShouldSerializeHosts()
+        {
+            return Hosts.Count > 0;
+        }
+
+        public bool ShouldSerializeMulticastAddressRanges()
+        {
+            return MulticastAddressRanges.Count > 0;
+        }
+
+        public bool ShouldSerializeNetworks()
+        {
+            return Networks.Count > 0;
+        }
+
+        public bool ShouldSerializeServices()
+        {
+            return Services.Count > 0;
+        }
+
+        public bool ShouldSerializeServiceGroups()
+        {
+            return ServiceGroups.Count > 0;
+        }
+
+        public bool ShouldSerializeOther()
+        {
+            return Other.Count > 0;
+        }
     }
 }

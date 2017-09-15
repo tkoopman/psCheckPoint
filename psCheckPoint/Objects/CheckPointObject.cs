@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using psCheckPoint.Objects.AccessRule;
 using psCheckPoint.Objects.AddressRange;
 using psCheckPoint.Objects.Group;
 using psCheckPoint.Objects.GroupWithExclusion;
@@ -12,6 +11,7 @@ using psCheckPoint.Objects.ServiceUDP;
 using psCheckPoint.Session;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Management.Automation;
 
@@ -35,18 +35,21 @@ namespace psCheckPoint.Objects
         /// <para type="description">Object name. Should be unique in the domain.</para>
         /// </summary>
         [JsonProperty(PropertyName = "name", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, Order = -100)]
+        [DefaultValue("")]
         public string Name { get; private set; }
 
         /// <summary>
         /// <para type="description">Object unique identifier.</para>
         /// </summary>
         [JsonProperty(PropertyName = "uid", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, Order = 900)]
+        [DefaultValue("")]
         public string UID { get; private set; }
 
         /// <summary>
         /// <para type="description">Type of the object.</para>
         /// </summary>
         [JsonProperty(PropertyName = "type", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, Order = -101)]
+        [DefaultValue("")]
         public string Type { get; private set; }
 
         /// <summary>
@@ -54,6 +57,11 @@ namespace psCheckPoint.Objects
         /// </summary>
         [JsonProperty(PropertyName = "domain", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, Order = 1000)]
         public CheckPointDomain Domain { get; private set; }
+
+        public bool ShouldSerializeDomain()
+        {
+            return !Domain.Equals(CheckPointDomain.DEFAULT);
+        }
 
         /// <summary>
         /// <para type="description">Convert object to string. (Object name or UID if not Name)</para>

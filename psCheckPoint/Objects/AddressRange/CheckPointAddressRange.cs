@@ -50,5 +50,10 @@ namespace psCheckPoint.Objects.AddressRange
         public string IPv6AddressLast { get; private set; }
 
         //TODO nat-settings
+
+        public bool ShouldSerializeGroups()
+        {
+            return Groups.Length > 0;
+        }
     }
 }
