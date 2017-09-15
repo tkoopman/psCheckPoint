@@ -13,17 +13,24 @@ namespace psCheckPoint.Objects.Misc
     /// </summary>
     public class CheckPointWhereUsed
     {
+        [JsonConstructor]
+        private CheckPointWhereUsed(CheckPointWhereUsedResults usedDirectly, CheckPointWhereUsedResults usedIndirectly)
+        {
+            UsedDirectly = usedDirectly;
+            UsedIndirectly = usedIndirectly;
+        }
+
         /// <summary>
         /// <para type="description">Summary of Where Used Directly results</para>
         /// </summary>
-        [JsonProperty(PropertyName = "used-directly", NullValueHandling = NullValueHandling.Ignore)]
-        public CheckPointWhereUsedResults UsedDirectly { get; set; }
+        [JsonProperty(PropertyName = "used-directly", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public CheckPointWhereUsedResults UsedDirectly { get; private set; }
 
         /// <summary>
         /// <para type="description">Summary of Where Used Indirectly results</para>
         /// </summary>
-        [JsonProperty(PropertyName = "used-indirectly", NullValueHandling = NullValueHandling.Ignore)]
-        public CheckPointWhereUsedResults UsedIndirectly { get; set; }
+        [JsonProperty(PropertyName = "used-indirectly", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public CheckPointWhereUsedResults UsedIndirectly { get; private set; }
     }
 
     /// <summary>
@@ -31,35 +38,45 @@ namespace psCheckPoint.Objects.Misc
     /// </summary>
     public class CheckPointWhereUsedResults
     {
+        [JsonConstructor]
+        private CheckPointWhereUsedResults(int total, CheckPointObject[] objects, CheckPointWhereUsedRule[] accessControlRules, CheckPointWhereUsedNAT[] nATRules, CheckPointWhereUsedThreatRule[] threatPreventionRules)
+        {
+            Total = total;
+            Objects = objects;
+            AccessControlRules = accessControlRules;
+            NATRules = nATRules;
+            ThreatPreventionRules = threatPreventionRules;
+        }
+
         /// <summary>
         /// <para type="description">Total results found</para>
         /// </summary>
-        [JsonProperty(PropertyName = "total", NullValueHandling = NullValueHandling.Ignore)]
-        public int Total { get; set; }
+        [JsonProperty(PropertyName = "total", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public int Total { get; private set; }
 
         /// <summary>
         /// <para type="description">Summary of Check Point Objects found</para>
         /// </summary>
-        [JsonProperty(PropertyName = "objects", NullValueHandling = NullValueHandling.Ignore)]
-        public CheckPointObject[] Objects { get; set; }
+        [JsonProperty(PropertyName = "objects", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public CheckPointObject[] Objects { get; private set; }
 
         /// <summary>
         /// <para type="description">Summary of Access Control Rules found</para>
         /// </summary>
-        [JsonProperty(PropertyName = "access-control-rules", NullValueHandling = NullValueHandling.Ignore)]
-        public CheckPointWhereUsedRule[] AccessControlRules { get; set; }
+        [JsonProperty(PropertyName = "access-control-rules", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public CheckPointWhereUsedRule[] AccessControlRules { get; private set; }
 
         /// <summary>
         /// <para type="description">Summary of NATs found</para>
         /// </summary>
-        [JsonProperty(PropertyName = "nat-rules", NullValueHandling = NullValueHandling.Ignore)]
-        public CheckPointWhereUsedNAT[] NATRules { get; set; }
+        [JsonProperty(PropertyName = "nat-rules", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public CheckPointWhereUsedNAT[] NATRules { get; private set; }
 
         /// <summary>
         /// <para type="description">Summary of Threat Prevention Rules found</para>
         /// </summary>
-        [JsonProperty(PropertyName = "threat-prevention-rules", NullValueHandling = NullValueHandling.Ignore)]
-        public CheckPointWhereUsedThreatRule[] ThreatPreventionRules { get; set; }
+        [JsonProperty(PropertyName = "threat-prevention-rules", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public CheckPointWhereUsedThreatRule[] ThreatPreventionRules { get; private set; }
     }
 
     /// <summary>
@@ -67,29 +84,38 @@ namespace psCheckPoint.Objects.Misc
     /// </summary>
     public class CheckPointWhereUsedRule : ICheckPointObjectSummary
     {
+        [JsonConstructor]
+        private CheckPointWhereUsedRule(CheckPointObject rule, string[] ruleColumns, string position, CheckPointObject layer)
+        {
+            Rule = rule;
+            RuleColumns = ruleColumns;
+            Position = position;
+            Layer = layer;
+        }
+
         /// <summary>
         /// <para type="description">Summary of Access Control Rule found</para>
         /// </summary>
-        [JsonProperty(PropertyName = "rule", NullValueHandling = NullValueHandling.Ignore)]
-        public CheckPointObject Rule { get; set; }
+        [JsonProperty(PropertyName = "rule", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public CheckPointObject Rule { get; private set; }
 
         /// <summary>
         /// <para type="description">Columns where object is used in rule.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "rule-columns", NullValueHandling = NullValueHandling.Ignore)]
-        public string[] RuleColumns { get; set; }
+        [JsonProperty(PropertyName = "rule-columns", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public string[] RuleColumns { get; private set; }
 
         /// <summary>
         /// <para type="description">Rule position</para>
         /// </summary>
-        [JsonProperty(PropertyName = "position", NullValueHandling = NullValueHandling.Ignore)]
-        public string Position { get; set; }
+        [JsonProperty(PropertyName = "position", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public string Position { get; private set; }
 
         /// <summary>
         /// <para type="description">Summary of Layer rule exists in.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "layer", NullValueHandling = NullValueHandling.Ignore)]
-        public CheckPointObject Layer { get; set; }
+        [JsonProperty(PropertyName = "layer", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public CheckPointObject Layer { get; private set; }
 
         /// <summary>
         /// <para type="description">Summary object type</para>
@@ -135,29 +161,38 @@ namespace psCheckPoint.Objects.Misc
     /// </summary>
     public class CheckPointWhereUsedNAT : ICheckPointObjectSummary
     {
+        [JsonConstructor]
+        private CheckPointWhereUsedNAT(CheckPointObject rule, string[] ruleColumns, string position, CheckPointObject package)
+        {
+            Rule = rule;
+            RuleColumns = ruleColumns;
+            Position = position;
+            Package = package;
+        }
+
         /// <summary>
         /// <para type="description">Summary of NAT Rule found</para>
         /// </summary>
-        [JsonProperty(PropertyName = "rule", NullValueHandling = NullValueHandling.Ignore)]
-        public CheckPointObject Rule { get; set; }
+        [JsonProperty(PropertyName = "rule", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public CheckPointObject Rule { get; private set; }
 
         /// <summary>
         /// <para type="description">Columns where object is used in rule.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "rule-columns", NullValueHandling = NullValueHandling.Ignore)]
-        public string[] RuleColumns { get; set; }
+        [JsonProperty(PropertyName = "rule-columns", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public string[] RuleColumns { get; private set; }
 
         /// <summary>
         /// <para type="description">Rule position</para>
         /// </summary>
-        [JsonProperty(PropertyName = "position", NullValueHandling = NullValueHandling.Ignore)]
-        public string Position { get; set; }
+        [JsonProperty(PropertyName = "position", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public string Position { get; private set; }
 
         /// <summary>
         /// <para type="description">Summary of Package NAT rule exists in.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "package", NullValueHandling = NullValueHandling.Ignore)]
-        public CheckPointObject Package { get; set; }
+        [JsonProperty(PropertyName = "package", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public CheckPointObject Package { get; private set; }
 
         /// <summary>
         /// <para type="description">Summary object type</para>
@@ -186,41 +221,52 @@ namespace psCheckPoint.Objects.Misc
     /// </summary>
     public class CheckPointWhereUsedThreatRule : ICheckPointObjectSummary
     {
+        [JsonConstructor]
+        private CheckPointWhereUsedThreatRule(CheckPointObject rule, string[] ruleColumns, string position, CheckPointObject layer, string layerPosition, CheckPointObject package)
+        {
+            Rule = rule;
+            RuleColumns = ruleColumns;
+            Position = position;
+            Layer = layer;
+            LayerPosition = layerPosition;
+            Package = package;
+        }
+
         /// <summary>
         /// <para type="description">Summary of Threat Rule found</para>
         /// </summary>
-        [JsonProperty(PropertyName = "rule", NullValueHandling = NullValueHandling.Ignore)]
-        public CheckPointObject Rule { get; set; }
+        [JsonProperty(PropertyName = "rule", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public CheckPointObject Rule { get; private set; }
 
         /// <summary>
         /// <para type="description">Columns where object is used in rule.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "rule-columns", NullValueHandling = NullValueHandling.Ignore)]
-        public string[] RuleColumns { get; set; }
+        [JsonProperty(PropertyName = "rule-columns", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public string[] RuleColumns { get; private set; }
 
         /// <summary>
         /// <para type="description">Rule position</para>
         /// </summary>
-        [JsonProperty(PropertyName = "position", NullValueHandling = NullValueHandling.Ignore)]
-        public string Position { get; set; }
+        [JsonProperty(PropertyName = "position", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public string Position { get; private set; }
 
         /// <summary>
         /// <para type="description">Summary of Layer rule exists in.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "layer", NullValueHandling = NullValueHandling.Ignore)]
-        public CheckPointObject Layer { get; set; }
+        [JsonProperty(PropertyName = "layer", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public CheckPointObject Layer { get; private set; }
 
         /// <summary>
         /// <para type="description">Layer position</para>
         /// </summary>
-        [JsonProperty(PropertyName = "layer-position", NullValueHandling = NullValueHandling.Ignore)]
-        public string LayerPosition { get; set; }
+        [JsonProperty(PropertyName = "layer-position", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public string LayerPosition { get; private set; }
 
         /// <summary>
         /// <para type="description">Summary of Package NAT rule exists in.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "package", NullValueHandling = NullValueHandling.Ignore)]
-        public CheckPointObject Package { get; set; }
+        [JsonProperty(PropertyName = "package", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public CheckPointObject Package { get; private set; }
 
         /// <summary>
         /// <para type="description">Summary object type</para>

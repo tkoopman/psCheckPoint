@@ -17,7 +17,7 @@ namespace psCheckPoint.Objects.AccessLayer
         public override string Command { get { return "set-access-layer"; } }
 
         /// <summary>
-        /// <para type="description">Whether to enable Applications & URL Filtering blade on the layer.</para>
+        /// <para type="description">Whether to enable Applications and URL Filtering blade on the layer.</para>
         /// </summary>
         [JsonProperty(PropertyName = "applications-and-url-filtering", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]

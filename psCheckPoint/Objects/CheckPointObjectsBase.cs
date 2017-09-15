@@ -13,7 +13,7 @@ namespace psCheckPoint.Objects
         /// <summary>
         /// <para type="description">From which element number the query was done.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "from")]
+        [JsonProperty(PropertyName = "from", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         public int From { get; set; }
 
         /// <summary>
@@ -24,13 +24,13 @@ namespace psCheckPoint.Objects
         /// <summary>
         /// <para type="description">To which element number the query was done.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "to")]
+        [JsonProperty(PropertyName = "to", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         public int To { get; set; }
 
         /// <summary>
         /// <para type="description">Total number of elements returned by the query.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "total")]
+        [JsonProperty(PropertyName = "total", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         public int Total { get; set; }
 
         public IEnumerator<T> GetEnumerator()

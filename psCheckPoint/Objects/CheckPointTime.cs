@@ -8,16 +8,23 @@ namespace psCheckPoint.Objects
     /// </summary>
     public class CheckPointTime
     {
+        [JsonConstructor]
+        private CheckPointTime(string iSO8601, long posix)
+        {
+            ISO8601 = iSO8601;
+            Posix = posix;
+        }
+
         /// <summary>
         /// <para type="description">Date and time represented in international ISO 8601 format.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "iso-8601", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty(PropertyName = "iso-8601", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         public string ISO8601 { get; set; }
 
         /// <summary>
         /// <para type="description">Number of milliseconds that have elapsed since 00:00:00, 1 January 1970.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "posix", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty(PropertyName = "posix", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         public long Posix { get; set; }
 
         /// <summary>

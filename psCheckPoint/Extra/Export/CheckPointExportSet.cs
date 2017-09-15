@@ -29,60 +29,60 @@ namespace psCheckPoint.Extra.Export
         /// <para type="synopsis">List of exported Access Rules.</para>
         /// </summary>
         [JsonProperty(PropertyName = "AccessRules", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        public List<CheckPointAccessRule> AccessRules { get; set; } = new List<CheckPointAccessRule>();
+        public List<CheckPointAccessRule> AccessRules { get; private set; } = new List<CheckPointAccessRule>();
 
         /// <summary>
         /// <para type="synopsis">List of exported Address Ranges.</para>
         /// </summary>
         [JsonProperty(PropertyName = "AddressRanges", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        public List<CheckPointAddressRange> AddressRanges { get; set; } = new List<CheckPointAddressRange>();
+        public List<CheckPointAddressRange> AddressRanges { get; private set; } = new List<CheckPointAddressRange>();
 
         /// <summary>
         /// <para type="synopsis">List of exported Groups.</para>
         /// </summary>
         [JsonProperty(PropertyName = "Groups", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        public List<CheckPointGroup> Groups { get; set; } = new List<CheckPointGroup>();
+        public List<CheckPointGroup> Groups { get; private set; } = new List<CheckPointGroup>();
 
         /// <summary>
         /// <para type="synopsis">List of exported Groups with Exclusion.</para>
         /// </summary>
         [JsonProperty(PropertyName = "GroupsWithExclusion", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        public List<CheckPointGroupWithExclusion> GroupsWithExclusion { get; set; } = new List<CheckPointGroupWithExclusion>();
+        public List<CheckPointGroupWithExclusion> GroupsWithExclusion { get; private set; } = new List<CheckPointGroupWithExclusion>();
 
         /// <summary>
         /// <para type="synopsis">List of exported Hosts.</para>
         /// </summary>
         [JsonProperty(PropertyName = "Hosts", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        public List<CheckPointHost> Hosts { get; set; } = new List<CheckPointHost>();
+        public List<CheckPointHost> Hosts { get; private set; } = new List<CheckPointHost>();
 
         /// <summary>
         /// <para type="synopsis">List of exported Multicast Address Ranges.</para>
         /// </summary>
         [JsonProperty(PropertyName = "MulticastAddressRanges", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        public List<CheckPointMulticastAddressRange> MulticastAddressRanges { get; set; } = new List<CheckPointMulticastAddressRange>();
+        public List<CheckPointMulticastAddressRange> MulticastAddressRanges { get; private set; } = new List<CheckPointMulticastAddressRange>();
 
         /// <summary>
         /// <para type="synopsis">List of exported Networks.</para>
         /// </summary>
         [JsonProperty(PropertyName = "Networks", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        public List<CheckPointNetwork> Networks { get; set; } = new List<CheckPointNetwork>();
+        public List<CheckPointNetwork> Networks { get; private set; } = new List<CheckPointNetwork>();
 
         /// <summary>
         /// <para type="synopsis">List of exported Services.</para>
         /// </summary>
         [JsonProperty(PropertyName = "Services", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        public List<CheckPointService> Services { get; set; } = new List<CheckPointService>();
+        public List<CheckPointService> Services { get; private set; } = new List<CheckPointService>();
 
         /// <summary>
         /// <para type="synopsis">List of exported Service Groups.</para>
         /// </summary>
         [JsonProperty(PropertyName = "ServiceGroups", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        public List<CheckPointServiceGroup> ServiceGroups { get; set; } = new List<CheckPointServiceGroup>();
+        public List<CheckPointServiceGroup> ServiceGroups { get; private set; } = new List<CheckPointServiceGroup>();
 
         /// <summary>
         /// <para type="synopsis">List of exported objects not currently fully implemented in psCheckPoint.</para>
         /// </summary>
         [JsonProperty(PropertyName = "Other", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        public List<CheckPointObject> Other { get; set; } = new List<CheckPointObject>();
+        public List<CheckPointObject> Other { get; private set; } = new List<CheckPointObject>();
     }
 }

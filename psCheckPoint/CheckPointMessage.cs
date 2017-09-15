@@ -7,11 +7,17 @@ namespace psCheckPoint
     /// </summary>
     public class CheckPointMessage
     {
+        [JsonConstructor]
+        protected CheckPointMessage(string message)
+        {
+            Message = message;
+        }
+
         /// <summary>
         /// <para type="description">Message string.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        [JsonProperty(PropertyName = "message", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public string Message { get; private set; }
 
         /// <summary>
         /// <para type="description">Returns base message as string</para>

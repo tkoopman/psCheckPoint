@@ -22,29 +22,38 @@ namespace psCheckPoint.Objects
     /// </summary>
     public class CheckPointObject : ICheckPointObjectSummary
     {
+        [JsonConstructor]
+        protected CheckPointObject(string name, string uID, string type, CheckPointDomain domain)
+        {
+            Name = name;
+            UID = uID;
+            Type = type;
+            Domain = domain;
+        }
+
         /// <summary>
         /// <para type="description">Object name. Should be unique in the domain.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "name", NullValueHandling = NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "name", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, Order = -100)]
+        public string Name { get; private set; }
 
         /// <summary>
         /// <para type="description">Object unique identifier.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "uid", NullValueHandling = NullValueHandling.Ignore)]
-        public string UID { get; set; }
+        [JsonProperty(PropertyName = "uid", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, Order = 900)]
+        public string UID { get; private set; }
 
         /// <summary>
         /// <para type="description">Type of the object.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "type", NullValueHandling = NullValueHandling.Ignore)]
-        public string Type { get; set; }
+        [JsonProperty(PropertyName = "type", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, Order = -101)]
+        public string Type { get; private set; }
 
         /// <summary>
         /// <para type="description">Information about the domain the object belongs to..</para>
         /// </summary>
-        [JsonProperty(PropertyName = "domain", NullValueHandling = NullValueHandling.Ignore)]
-        public CheckPointDomain Domain { get; set; }
+        [JsonProperty(PropertyName = "domain", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, Order = 1000)]
+        public CheckPointDomain Domain { get; private set; }
 
         /// <summary>
         /// <para type="description">Convert object to string. (Object name or UID if not Name)</para>
