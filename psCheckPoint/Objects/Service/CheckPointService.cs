@@ -106,5 +106,23 @@ namespace psCheckPoint.Objects.Service
         {
             return Groups.Length > 0;
         }
+
+        protected override void Refresh(CheckPointObject obj)
+        {
+            base.Refresh(obj);
+            CheckPointService o = (CheckPointService)obj;
+
+            Groups = o.Groups;
+            KeepConnectionsOpenAfterPolicyInstallation = o.KeepConnectionsOpenAfterPolicyInstallation;
+            MatchByProtocolSignature = o.MatchByProtocolSignature;
+            MatchForAny = o.MatchForAny;
+            OverrideDefaultSettings = o.OverrideDefaultSettings;
+            Port = o.Port;
+            Protocol = o.Protocol;
+            SessionTimeout = o.SessionTimeout;
+            SourcePort = o.SourcePort;
+            SyncConnectionsOnCluster = o.SyncConnectionsOnCluster;
+            UseDefaultSessionTimeout = o.UseDefaultSessionTimeout;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel;
 using System.Management.Automation;
 
 namespace psCheckPoint.Objects.AccessRule
@@ -44,8 +45,7 @@ namespace psCheckPoint.Objects.AccessRule
         /// <para type="description">The level of detail for some of the fields in the response can vary from showing only the UID value of the object to a fully detailed representation of the object.</para>
         /// </summary>
         [JsonProperty(PropertyName = "details-level", DefaultValueHandling = DefaultValueHandling.Include)]
-        [Parameter]
-        [ValidateSet("uid", "standard", "full")]
-        public string DetailsLevel { get; set; } = "full";
+        [DefaultValue("standard")]
+        protected string DetailsLevel { get; set; } = "standard";
     }
 }

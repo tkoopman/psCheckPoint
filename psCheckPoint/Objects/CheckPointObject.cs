@@ -188,7 +188,7 @@ namespace psCheckPoint.Objects
 
         private T GetCheckPointObject<T>(CheckPointSession Session, string psCmdletName, Type psCmdlet) where T : CheckPointObject
         {
-            if (this is T) { return (T)this; }
+            if (this is T && !forceUpdate) { return (T)this; }
 
             using (PowerShell PSI = PowerShell.Create())
             {
@@ -199,6 +199,33 @@ namespace psCheckPoint.Objects
                 Collection<T> results = PSI.Invoke<T>();
                 return results.First();
             }
+        }
+
+        private bool forceUpdate = false;
+
+        /// <summary>
+        /// Called when getting multiple objects to turn summary details into full
+        /// Values in Obj will be for the same UID.
+        /// Should call base.Refresh(obj) followed by setting and extra implemented properties to the
+        /// values of obj.
+        /// </summary>
+        /// <param name="obj">Will be the result of ToFullObj on this object</param>
+        protected virtual void Refresh(CheckPointObject obj)
+        {
+        }
+
+        /// <summary>
+        /// Instead of calling the show-{type}s with full details-level so that we can see all fields we want,
+        /// We call it with just standard and then use the refresh methods to get the rest.
+        /// This is much faster on large results as when details-level set to full it also gets full details of each
+        /// sub-item which is more than we need. This can result in very large results when say a group has lots of hosts.
+        /// </summary>
+        /// <param name="Session">Current Session</param>
+        internal void Refresh(CheckPointSession Session)
+        {
+            forceUpdate = true;
+            this.Refresh(ToFullObj(Session));
+            forceUpdate = false;
         }
     }
 }

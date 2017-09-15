@@ -9,14 +9,14 @@ namespace psCheckPoint.Objects.AddressRange
     {
         [JsonConstructor]
         protected CheckPointAddressRange(string name, string uID, string type, CheckPointDomain domain, string icon, CheckPointMetaInfo metaInfo, bool readOnly, CheckPointObject[] tags, string color, string comments,
-            CheckPointObject[] groups, string pv4AddressFirst, string pv4AddressLast, string pv6AddressFirst, string pv6AddressLast) :
+            CheckPointObject[] groups, string ipv4AddressFirst, string ipv4AddressLast, string ipv6AddressFirst, string ipv6AddressLast) :
             base(name, uID, type, domain, icon, metaInfo, readOnly, tags, color, comments)
         {
             Groups = groups;
-            IPv4AddressFirst = pv4AddressFirst;
-            IPv4AddressLast = pv4AddressLast;
-            IPv6AddressFirst = pv6AddressFirst;
-            IPv6AddressLast = pv6AddressLast;
+            IPv4AddressFirst = ipv4AddressFirst;
+            IPv4AddressLast = ipv4AddressLast;
+            IPv6AddressFirst = ipv6AddressFirst;
+            IPv6AddressLast = ipv6AddressLast;
         }
 
         /// <summary>
@@ -54,6 +54,18 @@ namespace psCheckPoint.Objects.AddressRange
         public bool ShouldSerializeGroups()
         {
             return Groups.Length > 0;
+        }
+
+        protected override void Refresh(CheckPointObject obj)
+        {
+            base.Refresh(obj);
+            CheckPointAddressRange o = (CheckPointAddressRange)obj;
+
+            Groups = o.Groups;
+            IPv4AddressFirst = o.IPv4AddressFirst;
+            IPv4AddressLast = o.IPv4AddressLast;
+            IPv6AddressFirst = o.IPv6AddressFirst;
+            IPv6AddressLast = o.IPv6AddressLast;
         }
     }
 }

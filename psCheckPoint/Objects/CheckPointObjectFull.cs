@@ -69,5 +69,18 @@ namespace psCheckPoint.Objects
         {
             return !(string.IsNullOrWhiteSpace(Color) || Color.Equals("black"));
         }
+
+        protected override void Refresh(CheckPointObject obj)
+        {
+            base.Refresh(obj);
+            CheckPointObjectFull o = (CheckPointObjectFull)obj;
+
+            Icon = o.Icon;
+            MetaInfo = o.MetaInfo;
+            ReadOnly = o.ReadOnly;
+            Tags = o.Tags;
+            Color = o.Color;
+            Comments = o.Comments;
+        }
     }
 }

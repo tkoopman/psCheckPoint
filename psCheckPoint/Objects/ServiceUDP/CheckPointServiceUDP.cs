@@ -28,5 +28,13 @@ namespace psCheckPoint.Objects.ServiceUDP
         [JsonProperty(PropertyName = "accept-replies", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         [DefaultValue(false)]
         public bool AcceptReplies { get; private set; }
+
+        protected override void Refresh(CheckPointObject obj)
+        {
+            base.Refresh(obj);
+            CheckPointServiceUDP o = (CheckPointServiceUDP)obj;
+
+            AcceptReplies = o.AcceptReplies;
+        }
     }
 }

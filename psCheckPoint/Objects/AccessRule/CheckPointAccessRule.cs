@@ -136,5 +136,27 @@ namespace psCheckPoint.Objects.AccessRule
         [JsonProperty(PropertyName = "comments", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         [DefaultValue("")]
         public string Comments { get; private set; }
+
+        protected override void Refresh(CheckPointObject obj)
+        {
+            base.Refresh(obj);
+            CheckPointAccessRule o = (CheckPointAccessRule)obj;
+
+            Action = o.Action;
+            Destination = o.Destination;
+            DestinationNegate = o.DestinationNegate;
+            Enabled = o.Enabled;
+            InlineLayer = o.InlineLayer;
+            InstallOn = o.InstallOn;
+            Layer = o.Layer;
+            MetaInfo = o.MetaInfo;
+            Service = o.Service;
+            ServiceNegate = o.ServiceNegate;
+            Source = o.Source;
+            SourceNegate = o.SourceNegate;
+            Time = o.Time;
+            VPN = o.VPN;
+            Comments = o.Comments;
+        }
     }
 }

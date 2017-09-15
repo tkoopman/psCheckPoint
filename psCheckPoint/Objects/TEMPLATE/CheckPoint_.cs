@@ -14,4 +14,10 @@ namespace psCheckPoint.Objects._
         [JsonProperty(PropertyName = "groups", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         public CheckPointObject[] Groups { get; set; }
     }
+
+    protected override void Refresh(CheckPointObject obj)
+    {
+        base.Refresh(obj);
+        CheckPoint_ o = (CheckPoint_)obj;
+    }
 }

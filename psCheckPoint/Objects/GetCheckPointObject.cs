@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel;
 using System.Management.Automation;
 
 namespace psCheckPoint.Objects
@@ -26,6 +27,7 @@ namespace psCheckPoint.Objects
         /// <para type="description">The level of detail for some of the fields in the response can vary from showing only the UID value of the object to a fully detailed representation of the object.</para>
         /// </summary>
         [JsonProperty(PropertyName = "details-level", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [DefaultValue("standard")]
         protected string DetailsLevel { get; set; } = "standard";
     }
 }

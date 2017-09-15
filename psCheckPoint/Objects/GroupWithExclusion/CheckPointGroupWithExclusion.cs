@@ -27,5 +27,14 @@ namespace psCheckPoint.Objects.GroupWithExclusion
         /// </summary>
         [JsonProperty(PropertyName = "except", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         public CheckPointObject Except { get; private set; }
+
+        protected override void Refresh(CheckPointObject obj)
+        {
+            base.Refresh(obj);
+            CheckPointGroupWithExclusion o = (CheckPointGroupWithExclusion)obj;
+
+            Include = o.Include;
+            Except = o.Except;
+        }
     }
 }

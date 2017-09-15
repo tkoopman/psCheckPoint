@@ -44,5 +44,15 @@ namespace psCheckPoint.Objects.Host
         {
             return Groups.Length > 0;
         }
+
+        protected override void Refresh(CheckPointObject obj)
+        {
+            base.Refresh(obj);
+            CheckPointHost o = (CheckPointHost)obj;
+
+            Groups = o.Groups;
+            IPv4Address = o.IPv4Address;
+            IPv6Address = o.IPv6Address;
+        }
     }
 }
