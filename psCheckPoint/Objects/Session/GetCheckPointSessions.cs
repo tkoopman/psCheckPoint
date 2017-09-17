@@ -13,6 +13,11 @@ namespace psCheckPoint.Objects.Session
     [OutputType(typeof(CheckPointObjects<CheckPointSession>))]
     public class GetCheckPointSessions : GetCheckPointObjects<CheckPointSession>
     {
+        public GetCheckPointSessions()
+        {
+            DetailsLevel = "full";
+        }
+
         public override string Command { get { return "show-sessions"; } }
 
         /// <summary>

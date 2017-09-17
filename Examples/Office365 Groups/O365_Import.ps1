@@ -4,10 +4,11 @@
 # (C) 2017, Hugo van der Kooij
 #
 # Don't forget to run `Install-Module psCheckPoint` (as administrator) once!
-# v0.3.3 or higher required of psCheckPoint module
+# v0.4.1 or higher required of psCheckPoint module
 #
 # WARNING: This script will put a significant load on your SmartCenter!
 #
+[CmdletBinding(SupportsShouldProcess=$true)]
 param(
 	[switch]$NoIPv4,
 	[switch]$NoIPv6,
@@ -61,7 +62,7 @@ ForEach ($Product in $O365.products.product) {
 	# Check if group exists and get existing members
 	$Group = Get-CheckPointGroup -Session $Session -Name $GroupName -Verbose:$false
 
-	if ($Group.code) {
+	if ($Group.Code) {
 		#Group not found
 		Write-Verbose "Creating product group $GroupName"
 		$Group = New-CheckPointGroup -Session $Session -Name $GroupName -Tag $MSO365 -Groups $MSO365 -Color $Color -Comments "$GroupComments" -Verbose:$false
@@ -147,7 +148,7 @@ ForEach ($Product in $O365.products.product) {
 				} else {
 					$Obj = Get-CheckPointHost -Session $Session -Name $ObjName -Verbose:$false
 				}
-				if ($Obj.code) {
+				if ($Obj.Code) {
 					# Create New Object
 					if ($IsNetwork) {
 						$Network = $ObjIP.split("/")[0]
@@ -183,13 +184,13 @@ ForEach ($Product in $O365.products.product) {
 		}
 	}
 	if ($ToAdd.Count -gt 0) {
-		$Obj = Set-CheckPointGroup -Session $Session -Name $GroupName -AddMembers $ToAdd -Verbose:$false
+		$Obj = Set-CheckPointGroup -Session $Session -Name $GroupName -Members $ToAdd -MemberAction Add -Verbose:$false
 		if ($Obj.Code) {
 			Write-Warning "Failed to add new group members to $GroupName. $Obj"
 		}
 	}
 	if ($ToRemove.Count -gt 0) {
-		$Obj = Set-CheckPointGroup -Session $Session -Name $GroupName -RemoveMembers $ToRemove -Verbose:$false
+		$Obj = Set-CheckPointGroup -Session $Session -Name $GroupName -Members $ToRemove -MemberAction Remove -Verbose:$false
 		if ($Obj.Code) {
 			Write-Warning "Failed to remove old group members from $GroupName. $Obj"
 		}
@@ -201,12 +202,12 @@ ForEach($Name in $Removed) {
 	if ($used.UsedDirectly.Total -eq 0) {
 		Write-Verbose "Deleting $Name"
 		if ($Name -like "*/*") {
-			$Msg = Remove-CheckPointNetwork -Session $Session -Name $Name
+			$Msg = Remove-CheckPointNetwork -Session $Session -Name $Name -Verbose:$false
 			if ($Msg.Code) {
 				Write-Warning "Failed to remove unused network $Name. $Msg"
 			}
 		} else {
-			$Msg = Remove-CheckPointHost -Session $Session -Name $Name
+			$Msg = Remove-CheckPointHost -Session $Session -Name $Name -Verbose:$false
 			if ($Msg.Code) {
 				Write-Warning "Failed to remove unused host $Name. $Msg"
 			}

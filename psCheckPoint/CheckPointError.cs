@@ -32,6 +32,7 @@ namespace psCheckPoint
             string code, CheckPointErrorDetail[] warnings, CheckPointErrorDetail[] errors, CheckPointErrorDetail[] blockingErrors) :
             base(message)
         {
+            Code = code;
             Warnings = warnings;
             Errors = errors;
             BlockingErrors = blockingErrors;

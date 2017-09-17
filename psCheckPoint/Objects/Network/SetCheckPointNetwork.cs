@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Management.Automation;
+using System.Runtime.Serialization;
 
 namespace psCheckPoint.Objects.Network
 {
@@ -72,17 +73,26 @@ namespace psCheckPoint.Objects.Network
         [ValidateSet("disallow", "allow", IgnoreCase = true)]
         public string Broadcast { get; set; }
 
+        [JsonProperty(PropertyName = "groups", NullValueHandling = NullValueHandling.Ignore)]
+        private dynamic _groups;
+
+        /// <summary>
+        /// <para type="description">Action to take with groups.</para>
+        /// </summary>
+        [Parameter]
+        public MembershipActions GroupAction { get; set; } = MembershipActions.Replace;
+
         /// <summary>
         /// <para type="description">Collection of group identifiers.</para>
+        /// <para type="description">Groups listed will be either Added, Removed or replace the current list of group membership based on GroupAction parameter.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "groups", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Groups
-        {
-            get { return _groups; }
-            set { _groups = CreateArray(value); }
-        }
+        public string[] Groups { get; set; }
 
-        private string[] _groups;
+        [OnSerializing]
+        private void OnSerializing(StreamingContext context)
+        {
+            _groups = ProcessGroupAction(GroupAction, Groups);
+        }
     }
 }

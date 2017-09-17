@@ -11,7 +11,7 @@
 RootModule = 'psCheckPoint.dll'
 
 # Version number of this module.
-ModuleVersion = '0.4.0'
+ModuleVersion = '0.4.1'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -26,7 +26,7 @@ Author = 'Tim Koopman'
 CompanyName = ''
 
 # Copyright statement for this module
-Copyright = '(c) 2017 tim. All rights reserved.'
+Copyright = '(c) 2017 Tim Koopman. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'Commands for accessing Check Point Web-API Calls'

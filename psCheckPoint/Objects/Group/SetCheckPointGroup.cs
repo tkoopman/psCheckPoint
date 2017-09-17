@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System.Collections;
 using System.Management.Automation;
+using System.Runtime.Serialization;
 
 namespace psCheckPoint.Objects.Group
 {
@@ -17,53 +17,43 @@ namespace psCheckPoint.Objects.Group
     {
         public override string Command { get { return "set-group"; } }
 
-        //TODO Add other member options for adding and removing
+        [JsonProperty(PropertyName = "members", NullValueHandling = NullValueHandling.Ignore)]
+        private dynamic _members;
+
         /// <summary>
-        /// <para type="description">Collection of group identifiers.</para>
+        /// <para type="description">Action to take with members.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "members", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        protected dynamic _members;
+        [Parameter]
+        public MembershipActions MemberAction { get; set; } = MembershipActions.Replace;
 
+        /// <summary>
+        /// <para type="description">Collection of Network objects identified by the name or UID.</para>
+        /// <para type="description">Members listed will be either Added, Removed or replace the current list of members based on MemberAction parameter.</para>
+        /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Members
-        {
-            get { return _members; }
-            set { _members = CreateArray(value); }
-        }
+        public string[] Members { get; set; }
 
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] AddMembers
-        {
-            get { return _members; }
-            set
-            {
-                _members = new Hashtable();
-                _members["add"] = CreateArray(value);
-            }
-        }
+        [JsonProperty(PropertyName = "groups", NullValueHandling = NullValueHandling.Ignore)]
+        private dynamic _groups;
 
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] RemoveMembers
-        {
-            get { return _members; }
-            set
-            {
-                _members = new Hashtable();
-                _members["remove"] = CreateArray(value);
-            }
-        }
+        /// <summary>
+        /// <para type="description">Action to take with groups.</para>
+        /// </summary>
+        [Parameter]
+        public MembershipActions GroupAction { get; set; } = MembershipActions.Replace;
 
         /// <summary>
         /// <para type="description">Collection of group identifiers.</para>
+        /// <para type="description">Groups listed will be either Added, Removed or replace the current list of group membership based on GroupAction parameter.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "groups", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Groups
-        {
-            get { return _groups; }
-            set { _groups = CreateArray(value); }
-        }
+        public string[] Groups { get; set; }
 
-        private string[] _groups;
+        [OnSerializing]
+        private void OnSerializing(StreamingContext context)
+        {
+            _groups = ProcessGroupAction(GroupAction, Groups);
+            _members = ProcessGroupAction(MemberAction, Members);
+        }
     }
 }

@@ -3,12 +3,28 @@ using psCheckPoint.Objects;
 using psCheckPoint.Objects.Misc;
 using psCheckPoint.Session;
 using System;
+using System.Collections;
 using System.Management.Automation;
 using System.Net.Http;
 using System.Text;
 
 namespace psCheckPoint
 {
+    /// <summary>
+    /// Action to take when changing membership of object.
+    /// </summary>
+    public enum MembershipActions
+    {
+        /// <summary>Replace existing membership with new items</summary>
+        Replace,
+
+        /// <summary>Add new items to existing membership</summary>
+        Add,
+
+        /// <summary>Remove items from existing membership</summary>
+        Remove
+    };
+
     /// <summary>
     /// <para type="description">Base class for other Cmdlets that call a Web-API</para>
     /// </summary>
@@ -113,7 +129,7 @@ namespace psCheckPoint
         /// <para type="description">Used by Cmdlet parameters that accept arrays</para>
         /// <para type="description">Allows arrays to also be accepted in CSV format with either a , (comma) or ; (semicolon) seperator.</para>
         /// </summary>
-        public static string[] CreateArray(String[] values)
+        protected static string[] CreateArray(String[] values)
         {
             if (values == null)
             {
@@ -129,6 +145,36 @@ namespace psCheckPoint
 
                 return values;
             }
+        }
+
+        /// <summary>
+        /// <para type="description">Used OnSerializing Events in Set mthods to control how set will process groups based on action.</para>
+        /// </summary>
+        protected static dynamic ProcessGroupAction(MembershipActions action, String[] values)
+        {
+            if (values != null && values.Length > 0)
+            {
+                switch (action)
+                {
+                    case MembershipActions.Add:
+                        {
+                            Hashtable r = new Hashtable();
+                            r["add"] = CreateArray(values);
+                            return r;
+                        }
+                    case MembershipActions.Remove:
+                        {
+                            Hashtable r = new Hashtable();
+                            r["remove"] = CreateArray(values);
+                            return r;
+                        }
+                    default:
+                        {
+                            return CreateArray(values);
+                        }
+                }
+            }
+            else { return null; }
         }
     }
 }
