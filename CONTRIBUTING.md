@@ -16,9 +16,11 @@ Please, don't use the issue tracker for support questions. You can ask support q
 ## Reporting Security Vulnerabilities
 Also, if you find any security vulnerabilities, do not open a issue. Security vulnerabilities should only be reported via email <psCheckPoint@koopmail.net>.
 
-## Issue Tracker
+## Bugs and Feature Requests
 
 Please use the issue tracker to log bugs & feature requests. Is also good to submit any enhancements you may be working on, in a fork, so they can be discussed with the community.
+
+Also if there is a particular Check Point API command we have not yet implemented in psCheckPoint, please log it as a feature request as we will try and prioritise those API calls that are requested.
 
 ## Submitting Code
 
