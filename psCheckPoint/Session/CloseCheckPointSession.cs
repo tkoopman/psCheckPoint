@@ -2,6 +2,8 @@
 
 namespace psCheckPoint.Session
 {
+    /// <api cmd="logout">Close-CheckPointSession</api>
+    /// <api cmd="continue-session-in-smartconsole">Close-CheckPointSession</api>
     /// <summary>
     /// <para type="synopsis">Log out of a sesison.</para>
     /// <para type="description"></para>

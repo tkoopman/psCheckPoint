@@ -2,6 +2,7 @@
 
 namespace psCheckPoint.Objects.GroupWithExclusion
 {
+    /// <api cmd="delete-group-with-exclusion">Remove-CheckPointGroupWithExclusion</api>
     /// <summary>
     /// <para type="synopsis">Delete existing object using object name or uid.</para>
     /// <para type="description"></para>

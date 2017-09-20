@@ -3,6 +3,7 @@ using System.Management.Automation;
 
 namespace psCheckPoint.Objects.GroupWithExclusion
 {
+    /// <api cmd="add-group-with-exclusion">New-CheckPointGroupWithExclusion</api>
     /// <summary>
     /// <para type="synopsis">Create new object.</para>
     /// <para type="description"></para>

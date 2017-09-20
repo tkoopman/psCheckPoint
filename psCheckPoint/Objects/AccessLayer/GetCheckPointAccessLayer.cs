@@ -2,6 +2,7 @@
 
 namespace psCheckPoint.Objects.AccessLayer
 {
+    /// <api cmd="show-access-layer">Get-CheckPointAccessLayer</api>
     /// <summary>
     /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
     /// <para type="description"></para>

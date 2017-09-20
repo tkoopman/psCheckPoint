@@ -7,6 +7,10 @@ using System.Management.Automation;
 
 namespace psCheckPoint.Objects.Misc
 {
+    /// <api cmd="where-used">Get-CheckPointWhereUsed</api>
+    /// <summary>
+    ///
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "CheckPointWhereUsed", DefaultParameterSetName = "By Object")]
     [OutputType(typeof(CheckPointWhereUsed))]
     public class GetCheckPointWhereUsed : CheckPointCmdlet<CheckPointWhereUsed>

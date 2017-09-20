@@ -2,6 +2,7 @@
 
 namespace psCheckPoint.Objects.ServiceTCP
 {
+    /// <api cmd="delete-service-tcp">Remove-CheckPointServiceTCP</api>
     /// <summary>
     /// <para type="synopsis">Delete existing object using object name or uid.</para>
     /// <para type="description"></para>

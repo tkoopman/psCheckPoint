@@ -2,6 +2,7 @@
 
 namespace psCheckPoint.Objects.Host
 {
+    /// <api cmd="show-host">Get-CheckPointHost</api>
     /// <summary>
     /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
     /// <para type="description"></para>

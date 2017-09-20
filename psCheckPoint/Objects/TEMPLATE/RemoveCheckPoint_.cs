@@ -2,6 +2,7 @@
 
 namespace psCheckPoint.Objects._
 {
+    /// <api cmd="delete-_">Remove-CheckPoint_</api>
     /// <summary>
     /// <para type="synopsis">Delete existing object using object name or uid.</para>
     /// <para type="description"></para>

@@ -2,6 +2,7 @@
 
 namespace psCheckPoint.Objects.ServiceUDP
 {
+    /// <api cmd="show-service-udp">Get-CheckPointServiceUDP</api>
     /// <summary>
     /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
     /// <para type="description"></para>

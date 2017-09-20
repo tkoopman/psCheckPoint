@@ -2,6 +2,7 @@
 
 namespace psCheckPoint.Objects.Group
 {
+    /// <api cmd="show-groups">Get-CheckPointGroups</api>
     /// <summary>
     /// <para type="synopsis">Retrieve all objects.</para>
     /// <para type="description"></para>

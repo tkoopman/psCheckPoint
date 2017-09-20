@@ -9,6 +9,7 @@ using System.Text;
 
 namespace psCheckPoint.Session
 {
+    /// <api cmd="login">Open-CheckPointSession</api>
     /// <summary>
     /// <para type="synopsis">Log in to the server with username and password.</para>
     /// <para type="description"></para>

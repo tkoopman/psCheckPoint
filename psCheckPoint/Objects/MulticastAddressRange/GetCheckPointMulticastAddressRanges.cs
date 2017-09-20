@@ -2,6 +2,7 @@
 
 namespace psCheckPoint.Objects.MulticastAddressRange
 {
+    /// <api cmd="show-multicast-address-ranges">Get-CheckPointMulticastAddressRanges</api>
     /// <summary>
     /// <para type="synopsis">Retrieve all objects.</para>
     /// <para type="description"></para>

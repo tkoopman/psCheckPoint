@@ -2,6 +2,7 @@
 
 namespace psCheckPoint.Objects.AddressRange
 {
+    /// <api cmd="show-address-range">Get-CheckPointAddressRange</api>
     /// <summary>
     /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
     /// <para type="description"></para>

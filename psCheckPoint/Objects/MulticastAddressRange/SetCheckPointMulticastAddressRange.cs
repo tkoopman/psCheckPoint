@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 
 namespace psCheckPoint.Objects.MulticastAddressRange
 {
+    /// <api cmd="set-multicast-address-range">Set-CheckPointMulticastAddressRange</api>
     /// <summary>
     /// <para type="synopsis">Edit existing object using object name or uid.</para>
     /// <para type="description"></para>

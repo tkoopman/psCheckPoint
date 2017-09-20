@@ -2,6 +2,7 @@
 
 namespace psCheckPoint.Objects.Network
 {
+    /// <api cmd="delete-network">Remove-CheckPointNetwork</api>
     /// <summary>
     /// <para type="synopsis">Delete existing object using object name or uid.</para>
     /// <para type="description"></para>

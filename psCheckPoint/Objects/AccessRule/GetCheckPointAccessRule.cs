@@ -4,6 +4,10 @@ using System.Management.Automation;
 
 namespace psCheckPoint.Objects.AccessRule
 {
+    /// <api cmd="show-access-rule">Get-CheckPointAccessRule</api>
+    /// <summary>
+    ///
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "CheckPointAccessRule")]
     [OutputType(typeof(CheckPointAccessRule))]
     public class GetCheckPointAccessRule : CheckPointCmdlet<CheckPointAccessRule>

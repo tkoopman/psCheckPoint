@@ -2,6 +2,7 @@
 
 namespace psCheckPoint.Objects.Network
 {
+    /// <api cmd="show-network">Get-CheckPointNetwork</api>
     /// <summary>
     /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
     /// <para type="description"></para>

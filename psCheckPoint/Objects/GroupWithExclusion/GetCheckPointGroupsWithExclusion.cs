@@ -2,6 +2,7 @@
 
 namespace psCheckPoint.Objects.GroupWithExclusion
 {
+    /// <api cmd="show-groups-with-exclusion">Get-CheckPointGroupsWithExclusion</api>
     /// <summary>
     /// <para type="synopsis">Retrieve all objects.</para>
     /// <para type="description"></para>

@@ -4,6 +4,7 @@ using System.Management.Automation;
 
 namespace psCheckPoint.Objects.AccessLayer
 {
+    /// <api cmd="add-access-layer">New-CheckPointAccessLayer</api>
     /// <summary>
     /// <para type="synopsis">Create new object.</para>
     /// <para type="description"></para>

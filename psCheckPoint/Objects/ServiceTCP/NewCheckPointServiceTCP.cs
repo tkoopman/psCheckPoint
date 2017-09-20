@@ -3,6 +3,7 @@ using System.Management.Automation;
 
 namespace psCheckPoint.Objects.ServiceTCP
 {
+    /// <api cmd="add-service-tcp">New-CheckPointServiceTCP</api>
     /// <summary>
     /// <para type="synopsis">Create new object.</para>
     /// <para type="description"></para>

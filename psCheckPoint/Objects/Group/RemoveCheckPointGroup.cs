@@ -2,6 +2,7 @@
 
 namespace psCheckPoint.Objects.Group
 {
+    /// <api cmd="delete-group">Remove-CheckPointGroup</api>
     /// <summary>
     /// <para type="synopsis">Delete existing object using object name or uid.</para>
     /// <para type="description"></para>

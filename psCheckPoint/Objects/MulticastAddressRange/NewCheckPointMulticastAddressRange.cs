@@ -3,6 +3,7 @@ using System.Management.Automation;
 
 namespace psCheckPoint.Objects.MulticastAddressRange
 {
+    /// <api cmd="add-multicast-address-range">New-CheckPointMulticastAddressRange</api>
     /// <summary>
     /// <para type="synopsis">Create new object.</para>
     /// <para type="description"></para>
