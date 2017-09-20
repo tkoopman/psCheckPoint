@@ -4,6 +4,10 @@ using System.Management.Automation;
 
 namespace psCheckPoint.Objects.Misc
 {
+    /// <api cmd="show-objects">Get-CheckPointObjects</api>
+    /// <summary>
+    ///
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "CheckPointObjects")]
     [OutputType(typeof(CheckPointObjects<CheckPointObject>))]
     public class GetCheckPointObjects : GetCheckPointObjects<CheckPointObject>

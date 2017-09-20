@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 
 namespace psCheckPoint.Objects._
 {
+    /// <api cmd="set-_">Set-CheckPoint_</api>
     /// <summary>
     /// <para type="synopsis">Edit existing object using object name or uid.</para>
     /// <para type="description"></para>

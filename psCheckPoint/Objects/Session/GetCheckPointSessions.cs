@@ -3,6 +3,7 @@ using System.Management.Automation;
 
 namespace psCheckPoint.Objects.Session
 {
+    /// <api cmd="show-sessions">Get-CheckPointSessions</api>
     /// <summary>
     /// <para type="synopsis">Retrieve all objects.</para>
     /// <para type="description"></para>

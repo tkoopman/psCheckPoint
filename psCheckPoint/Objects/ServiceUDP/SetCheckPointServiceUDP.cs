@@ -4,6 +4,7 @@ using System.Management.Automation;
 
 namespace psCheckPoint.Objects.ServiceUDP
 {
+    /// <api cmd="set-service-udp">Set-CheckPointServiceUDP</api>
     /// <summary>
     /// <para type="synopsis">Edit existing object using object name or uid.</para>
     /// <para type="description"></para>

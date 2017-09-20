@@ -2,6 +2,7 @@
 
 namespace psCheckPoint.Objects.ServiceTCP
 {
+    /// <api cmd="show-services-tcp">Get-CheckPointServicesTCP</api>
     /// <summary>
     /// <para type="synopsis">Retrieve all objects.</para>
     /// <para type="description"></para>

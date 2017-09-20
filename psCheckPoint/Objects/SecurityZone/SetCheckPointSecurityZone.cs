@@ -2,6 +2,7 @@
 
 namespace psCheckPoint.Objects.SecurityZone
 {
+    /// <api cmd="set-security-zone">Set-CheckPointSecurityZone</api>
     /// <summary>
     /// <para type="synopsis">Edit existing object using object name or uid.</para>
     /// <para type="description"></para>

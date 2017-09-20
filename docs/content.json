@@ -1,0 +1,1761 @@
+[
+  {
+    "Name": "Session Management",
+    "Cmdlets": [
+      {
+        "Name": "login",
+        "Class": "OpenCheckPointSession",
+        "Cmdlet": "Open-CheckPointSession"
+      },
+      {
+        "Name": "publish",
+        "Class": "PublishCheckPointSession",
+        "Cmdlet": "Publish-CheckPointSession"
+      },
+      {
+        "Name": "discard",
+        "Class": "ResetCheckPointSession",
+        "Cmdlet": "Reset-CheckPointSession"
+      },
+      {
+        "Name": "logout",
+        "Class": "CloseCheckPointSession",
+        "Cmdlet": "Close-CheckPointSession"
+      },
+      {
+        "Name": "keepalive",
+        "Class": "SendCheckPointKeepAlive",
+        "Cmdlet": "Send-CheckPointKeepAlive"
+      }
+    ],
+    "SubChapters": [
+      {
+        "Name": "Session",
+        "Cmdlets": [
+          {
+            "Name": "show-session",
+            "Class": "GetCheckPointSession",
+            "Cmdlet": "Get-CheckPointSession"
+          },
+          {
+            "Name": "set-session",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "continue-session-in-smartconsole",
+            "Class": "CloseCheckPointSession",
+            "Cmdlet": "Close-CheckPointSession"
+          },
+          {
+            "Name": "show-last-published-session",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "switch-session",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-sessions",
+            "Class": "GetCheckPointSessions",
+            "Cmdlet": "Get-CheckPointSessions"
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Login Message",
+        "Cmdlets": [
+          {
+            "Name": "show-login-message",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-login-message",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      }
+    ]
+  },
+  {
+    "Name": "Network Objects",
+    "Cmdlets": [],
+    "SubChapters": [
+      {
+        "Name": "Host",
+        "Cmdlets": [
+          {
+            "Name": "add-host",
+            "Class": "NewCheckPointHost",
+            "Cmdlet": "New-CheckPointHost"
+          },
+          {
+            "Name": "show-host",
+            "Class": "GetCheckPointHost",
+            "Cmdlet": "Get-CheckPointHost"
+          },
+          {
+            "Name": "set-host",
+            "Class": "SetCheckPointHost",
+            "Cmdlet": "Set-CheckPointHost"
+          },
+          {
+            "Name": "delete-host",
+            "Class": "RemoveCheckPointHost",
+            "Cmdlet": "Remove-CheckPointHost"
+          },
+          {
+            "Name": "show-hosts",
+            "Class": "GetCheckPointHosts",
+            "Cmdlet": "Get-CheckPointHosts"
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Network",
+        "Cmdlets": [
+          {
+            "Name": "add-network",
+            "Class": "NewCheckPointNetwork",
+            "Cmdlet": "New-CheckPointNetwork"
+          },
+          {
+            "Name": "show-network",
+            "Class": "GetCheckPointNetwork",
+            "Cmdlet": "Get-CheckPointNetwork"
+          },
+          {
+            "Name": "set-network",
+            "Class": "SetCheckPointNetwork",
+            "Cmdlet": "Set-CheckPointNetwork"
+          },
+          {
+            "Name": "delete-network",
+            "Class": "RemoveCheckPointNetwork",
+            "Cmdlet": "Remove-CheckPointNetwork"
+          },
+          {
+            "Name": "show-networks",
+            "Class": "GetCheckPointNetworks",
+            "Cmdlet": "Get-CheckPointNetworks"
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Group",
+        "Cmdlets": [
+          {
+            "Name": "add-group",
+            "Class": "NewCheckPointGroup",
+            "Cmdlet": "New-CheckPointGroup"
+          },
+          {
+            "Name": "show-group",
+            "Class": "GetCheckPointGroup",
+            "Cmdlet": "Get-CheckPointGroup"
+          },
+          {
+            "Name": "set-group",
+            "Class": "SetCheckPointGroup",
+            "Cmdlet": "Set-CheckPointGroup"
+          },
+          {
+            "Name": "delete-group",
+            "Class": "RemoveCheckPointGroup",
+            "Cmdlet": "Remove-CheckPointGroup"
+          },
+          {
+            "Name": "show-groups",
+            "Class": "GetCheckPointGroups",
+            "Cmdlet": "Get-CheckPointGroups"
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Address Range",
+        "Cmdlets": [
+          {
+            "Name": "add-address-range",
+            "Class": "NewCheckPointAddressRange",
+            "Cmdlet": "New-CheckPointAddressRange"
+          },
+          {
+            "Name": "show-address-range",
+            "Class": "GetCheckPointAddressRange",
+            "Cmdlet": "Get-CheckPointAddressRange"
+          },
+          {
+            "Name": "set-address-range",
+            "Class": "SetCheckPointAddressRange",
+            "Cmdlet": "Set-CheckPointAddressRange"
+          },
+          {
+            "Name": "delete-address-range",
+            "Class": "RemoveCheckPointAddressRange",
+            "Cmdlet": "Remove-CheckPointAddressRange"
+          },
+          {
+            "Name": "show-address-ranges",
+            "Class": "GetCheckPointAddressRanges",
+            "Cmdlet": "Get-CheckPointAddressRanges"
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Multicast Address Range",
+        "Cmdlets": [
+          {
+            "Name": "add-multicast-address-range",
+            "Class": "NewCheckPointMulticastAddressRange",
+            "Cmdlet": "New-CheckPointMulticastAddressRange"
+          },
+          {
+            "Name": "show-multicast-address-range",
+            "Class": "GetCheckPointMulticastAddressRange",
+            "Cmdlet": "Get-CheckPointMulticastAddressRange"
+          },
+          {
+            "Name": "set-multicast-address-range",
+            "Class": "SetCheckPointMulticastAddressRange",
+            "Cmdlet": "Set-CheckPointMulticastAddressRange"
+          },
+          {
+            "Name": "delete-multicast-address-range",
+            "Class": "RemoveCheckPointMulticastAddressRange",
+            "Cmdlet": "Remove-CheckPointMulticastAddressRange"
+          },
+          {
+            "Name": "show-multicast-address-ranges",
+            "Class": "GetCheckPointMulticastAddressRanges",
+            "Cmdlet": "Get-CheckPointMulticastAddressRanges"
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Group with exclusion",
+        "Cmdlets": [
+          {
+            "Name": "add-group-with-exclusion",
+            "Class": "NewCheckPointGroupWithExclusion",
+            "Cmdlet": "New-CheckPointGroupWithExclusion"
+          },
+          {
+            "Name": "show-group-with-exclusion",
+            "Class": "GetCheckPointGroupWithExclusion",
+            "Cmdlet": "Get-CheckPointGroupWithExclusion"
+          },
+          {
+            "Name": "set-group-with-exclusion",
+            "Class": "SetCheckPointHostWithExclusion",
+            "Cmdlet": "Set-CheckPointGroupWithExclusion"
+          },
+          {
+            "Name": "delete-group-with-exclusion",
+            "Class": "RemoveCheckPointGroupWithExclusion",
+            "Cmdlet": "Remove-CheckPointGroupWithExclusion"
+          },
+          {
+            "Name": "show-groups-with-exclusion",
+            "Class": "GetCheckPointGroupsWithExclusion",
+            "Cmdlet": "Get-CheckPointGroupsWithExclusion"
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Simple Gateway",
+        "Cmdlets": [
+          {
+            "Name": "add-simple-gateway",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-simple-gateway",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-simple-gateway",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-simple-gateway",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-simple-gateways",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Security Zone",
+        "Cmdlets": [
+          {
+            "Name": "add-security-zone",
+            "Class": "NewCheckPointSecurityZone",
+            "Cmdlet": "New-CheckPointSecurityZone"
+          },
+          {
+            "Name": "show-security-zone",
+            "Class": "GetCheckPointSecurityZone",
+            "Cmdlet": "Get-CheckPointSecurityZone"
+          },
+          {
+            "Name": "set-security-zone",
+            "Class": "SetCheckPointSecurityZone",
+            "Cmdlet": "Set-CheckPointSecurityZone"
+          },
+          {
+            "Name": "delete-security-zone",
+            "Class": "RemoveCheckPointSecurityZone",
+            "Cmdlet": "Remove-CheckPointSecurityZone"
+          },
+          {
+            "Name": "show-security-zones",
+            "Class": "GetCheckPointSecurityZones",
+            "Cmdlet": "Get-CheckPointSecurityZones"
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Time",
+        "Cmdlets": [
+          {
+            "Name": "add-time",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-time",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-time",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-time",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-times",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Time Group",
+        "Cmdlets": [
+          {
+            "Name": "add-time-group",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-time-group",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-time-group",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-time-group",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-time-groups",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Access Role",
+        "Cmdlets": [
+          {
+            "Name": "add-access-role",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-access-role",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-access-role",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-access-role",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-access-roles",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Dynamic Object",
+        "Cmdlets": [
+          {
+            "Name": "add-dynamic-object",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-dynamic-object",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-dynamic-object",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-dynamic-object",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-dynamic-objects",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Trusted Client",
+        "Cmdlets": [
+          {
+            "Name": "add-trusted-client",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-trusted-client",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-trusted-client",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-trusted-client",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-trusted-clients",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Tags",
+        "Cmdlets": [
+          {
+            "Name": "add-tag",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-tag",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-tag",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-tag",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-tags",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "DNS Domain",
+        "Cmdlets": [
+          {
+            "Name": "add-dns-domain",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-dns-domain",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-dns-domain",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-dns-domain",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-dns-domains",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "OPSEC Application",
+        "Cmdlets": [
+          {
+            "Name": "add-opsec-application",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-opsec-application",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-opsec-application",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-opsec-application",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-opsec-applications",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      }
+    ]
+  },
+  {
+    "Name": "Data Center",
+    "Cmdlets": [
+      {
+        "Name": "show-data-center-content",
+        "Class": null,
+        "Cmdlet": null
+      }
+    ],
+    "SubChapters": [
+      {
+        "Name": "Data Center",
+        "Cmdlets": [
+          {
+            "Name": "show-data-center",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-data-centers",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Data Center Object",
+        "Cmdlets": [
+          {
+            "Name": "add-data-center-object",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-data-center-object",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-data-center-object",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-data-center-objects",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      }
+    ]
+  },
+  {
+    "Name": "Service & Applications",
+    "Cmdlets": [],
+    "SubChapters": [
+      {
+        "Name": "Service TCP",
+        "Cmdlets": [
+          {
+            "Name": "add-service-tcp",
+            "Class": "NewCheckPointServiceTCP",
+            "Cmdlet": "New-CheckPointServiceTCP"
+          },
+          {
+            "Name": "show-service-tcp",
+            "Class": "GetCheckPointServiceTCP",
+            "Cmdlet": "Get-CheckPointServiceTCP"
+          },
+          {
+            "Name": "set-service-tcp",
+            "Class": "SetCheckPointServiceTCP",
+            "Cmdlet": "Set-CheckPointServiceTCP"
+          },
+          {
+            "Name": "delete-service-tcp",
+            "Class": "RemoveCheckPointServiceTCP",
+            "Cmdlet": "Remove-CheckPointServiceTCP"
+          },
+          {
+            "Name": "show-services-tcp",
+            "Class": "GetCheckPointServicesTCP",
+            "Cmdlet": "Get-CheckPointServicesTCP"
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Service UDP",
+        "Cmdlets": [
+          {
+            "Name": "add-service-udp",
+            "Class": "NewCheckPointServiceUDP",
+            "Cmdlet": "New-CheckPointServiceUDP"
+          },
+          {
+            "Name": "show-service-udp",
+            "Class": "GetCheckPointServiceUDP",
+            "Cmdlet": "Get-CheckPointServiceUDP"
+          },
+          {
+            "Name": "set-service-udp",
+            "Class": "SetCheckPointServiceUDP",
+            "Cmdlet": "Set-CheckPointServiceUDP"
+          },
+          {
+            "Name": "delete-service-udp",
+            "Class": "RemoveCheckPointServiceUDP",
+            "Cmdlet": "Remove-CheckPointServiceUDP"
+          },
+          {
+            "Name": "show-services-udp",
+            "Class": "GetCheckPointServicesUDP",
+            "Cmdlet": "Get-CheckPointServicesUDP"
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Service ICMP",
+        "Cmdlets": [
+          {
+            "Name": "add-service-icmp",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-service-icmp",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-service-icmp",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-service-icmp",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-services-icmp",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Service ICMP6",
+        "Cmdlets": [
+          {
+            "Name": "add-service-icmp6",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-service-icmp6",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-service-icmp6",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-service-icmp6",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-services-icmp6",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Service SCTP",
+        "Cmdlets": [
+          {
+            "Name": "add-service-sctp",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-service-sctp",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-service-sctp",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-service-sctp",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-services-sctp",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Service Other",
+        "Cmdlets": [
+          {
+            "Name": "add-service-other",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-service-other",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-service-other",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-service-other",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-services-other",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Service Group",
+        "Cmdlets": [
+          {
+            "Name": "add-service-group",
+            "Class": "NewCheckPointServiceGroup",
+            "Cmdlet": "New-CheckPointServiceGroup"
+          },
+          {
+            "Name": "show-service-group",
+            "Class": "GetCheckPointServiceGroup",
+            "Cmdlet": "Get-CheckPointServiceGroup"
+          },
+          {
+            "Name": "set-service-group",
+            "Class": "SetCheckPointServiceGroup",
+            "Cmdlet": "Set-CheckPointServiceGroup"
+          },
+          {
+            "Name": "delete-service-group",
+            "Class": "RemoveCheckPointServiceGroup",
+            "Cmdlet": "Remove-CheckPointServiceGroup"
+          },
+          {
+            "Name": "show-service-groups",
+            "Class": "GetCheckPointServiceGroups",
+            "Cmdlet": "Get-CheckPointServiceGroups"
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Application",
+        "Cmdlets": [
+          {
+            "Name": "add-application-site",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-application-site",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-application-site",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-application-site",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-application-sites",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Application Category",
+        "Cmdlets": [
+          {
+            "Name": "add-application-site-category",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-application-site-category",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-application-site-category",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-application-site-category",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-application-site-categories",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Application Group",
+        "Cmdlets": [
+          {
+            "Name": "add-application-site-group",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-application-site-group",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-application-site-group",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-application-site-group",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-application-site-groups",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Service DCE-RPC",
+        "Cmdlets": [
+          {
+            "Name": "add-service-dce-rpc",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-service-dce-rpc",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-service-dce-rpc",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-service-dce-rpc",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-services-dce-rpc",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Service RPC",
+        "Cmdlets": [
+          {
+            "Name": "add-service-rpc",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-service-rpc",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-service-rpc",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-service-rpc",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-services-rpc",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      }
+    ]
+  },
+  {
+    "Name": "Access Control & NAT",
+    "Cmdlets": [],
+    "SubChapters": [
+      {
+        "Name": "Access Rule",
+        "Cmdlets": [
+          {
+            "Name": "add-access-rule",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-access-rulebase",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-access-rule",
+            "Class": "GetCheckPointAccessRule",
+            "Cmdlet": "Get-CheckPointAccessRule"
+          },
+          {
+            "Name": "set-access-rule",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-access-rule",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Access Section",
+        "Cmdlets": [
+          {
+            "Name": "add-access-section",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-access-section",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-access-section",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-access-section",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Access Layer",
+        "Cmdlets": [
+          {
+            "Name": "add-access-layer",
+            "Class": "NewCheckPointAccessLayer",
+            "Cmdlet": "New-CheckPointAccessLayer"
+          },
+          {
+            "Name": "show-access-layer",
+            "Class": "GetCheckPointAccessLayer",
+            "Cmdlet": "Get-CheckPointAccessLayer"
+          },
+          {
+            "Name": "set-access-layer",
+            "Class": "SetCheckPointAccessLayer",
+            "Cmdlet": "Set-CheckPointAccessLayer"
+          },
+          {
+            "Name": "delete-access-layer",
+            "Class": "RemoveCheckPointAccessLayer",
+            "Cmdlet": "Remove-CheckPointAccessLayer"
+          },
+          {
+            "Name": "show-access-layers",
+            "Class": "GetCheckPointAccessLayers",
+            "Cmdlet": "Get-CheckPointAccessLayers"
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "NAT Rule",
+        "Cmdlets": [
+          {
+            "Name": "add-nat-rule",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-nat-rulebase",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-nat-rule",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-nat-rule",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-nat-rule",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "NAT Section",
+        "Cmdlets": [
+          {
+            "Name": "add-nat-section",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-nat-section",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-nat-section",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-nat-section",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      }
+    ]
+  },
+  {
+    "Name": "VPN",
+    "Cmdlets": [],
+    "SubChapters": [
+      {
+        "Name": "VPN Community Meshed",
+        "Cmdlets": [
+          {
+            "Name": "add-vpn-community-meshed",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-vpn-community-meshed",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-vpn-community-meshed",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-vpn-community-meshed",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-vpn-communities-meshed",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "VPN Community Star",
+        "Cmdlets": [
+          {
+            "Name": "add-vpn-community-star",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-vpn-community-star",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-vpn-community-star",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-vpn-community-star",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-vpn-communities-star",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      }
+    ]
+  },
+  {
+    "Name": "Threat Prevention",
+    "Cmdlets": [],
+    "SubChapters": [
+      {
+        "Name": "Threat Rule",
+        "Cmdlets": [
+          {
+            "Name": "add-threat-rule",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-threat-rulebase",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-threat-rule",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-threat-rule",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-threat-rule",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Threat Exception",
+        "Cmdlets": [
+          {
+            "Name": "add-threat-exception",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-threat-rule-exception-rulebase",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-threat-exception",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-threat-exception",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-threat-exception",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Threat Exception Group",
+        "Cmdlets": [
+          {
+            "Name": "add-exception-group",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-exception-group",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-exception-group",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-exception-group",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-exception-groups",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Threat Protection",
+        "Cmdlets": [
+          {
+            "Name": "show-threat-protection",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-threat-protection",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-threat-protections",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "add-threat-protections",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-threat-protections",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Threat Profile",
+        "Cmdlets": [
+          {
+            "Name": "add-threat-profile",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-threat-profile",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-threat-profile",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-threat-profile",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-threat-profiles",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Threat Layer",
+        "Cmdlets": [
+          {
+            "Name": "add-threat-layer",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-threat-layer",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-threat-layer",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-threat-layer",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-threat-layers",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "IPS",
+        "Cmdlets": [
+          {
+            "Name": "show-ips-update-schedule",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-ips-update-schedule",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "run-ips-update",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-ips-status",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "IPS Extended Attributes",
+        "Cmdlets": [
+          {
+            "Name": "show-ips-protection-extended-attribute",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-ips-protection-extended-attributes",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      }
+    ]
+  },
+  {
+    "Name": "Policy",
+    "Cmdlets": [
+      {
+        "Name": "verify-policy",
+        "Class": null,
+        "Cmdlet": null
+      },
+      {
+        "Name": "install-policy",
+        "Class": null,
+        "Cmdlet": null
+      }
+    ],
+    "SubChapters": [
+      {
+        "Name": "Policy Package",
+        "Cmdlets": [
+          {
+            "Name": "add-package",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-package",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-package",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-package",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-packages",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      }
+    ]
+  },
+  {
+    "Name": "Multi-Domain",
+    "Cmdlets": [],
+    "SubChapters": [
+      {
+        "Name": "Domain",
+        "Cmdlets": [
+          {
+            "Name": "add-domain",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-domain",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-domain",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-domain",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-domains",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Global Domain",
+        "Cmdlets": [
+          {
+            "Name": "show-global-domain",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-global-domain",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Multi-Domain Server (MDS)",
+        "Cmdlets": [
+          {
+            "Name": "show-mds",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-mdss",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Placeholder",
+        "Cmdlets": [
+          {
+            "Name": "show-place-holder",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "Global Assignment",
+        "Cmdlets": [
+          {
+            "Name": "add-global-assignment",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-global-assignment",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-global-assignment",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-global-assignment",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-global-assignments",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "assign-global-assignment",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      }
+    ]
+  },
+  {
+    "Name": "Misc.",
+    "Cmdlets": [
+      {
+        "Name": "where-used",
+        "Class": "GetCheckPointWhereUsed",
+        "Cmdlet": "Get-CheckPointWhereUsed"
+      },
+      {
+        "Name": "show-task",
+        "Class": null,
+        "Cmdlet": null
+      },
+      {
+        "Name": "run-script",
+        "Class": null,
+        "Cmdlet": null
+      },
+      {
+        "Name": "show-unused-objects",
+        "Class": null,
+        "Cmdlet": null
+      },
+      {
+        "Name": "export",
+        "Class": null,
+        "Cmdlet": null
+      },
+      {
+        "Name": "show-changes",
+        "Class": null,
+        "Cmdlet": null
+      },
+      {
+        "Name": "show-gateways-and-servers",
+        "Class": null,
+        "Cmdlet": null
+      },
+      {
+        "Name": "show-objects",
+        "Class": "GetCheckPointObjects",
+        "Cmdlet": "Get-CheckPointObjects"
+      },
+      {
+        "Name": "show-validations",
+        "Class": null,
+        "Cmdlet": null
+      },
+      {
+        "Name": "show-api-versions",
+        "Class": null,
+        "Cmdlet": null
+      },
+      {
+        "Name": "show-object",
+        "Class": null,
+        "Cmdlet": null
+      },
+      {
+        "Name": "show-commands",
+        "Class": null,
+        "Cmdlet": null
+      },
+      {
+        "Name": "put-file",
+        "Class": null,
+        "Cmdlet": null
+      }
+    ],
+    "SubChapters": [
+      {
+        "Name": "Administrator",
+        "Cmdlets": [
+          {
+            "Name": "add-administrator",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-administrator",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-administrator",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "delete-administrator",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "show-administrators",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "unlock-administrator",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      },
+      {
+        "Name": "API Settings",
+        "Cmdlets": [
+          {
+            "Name": "show-api-settings",
+            "Class": null,
+            "Cmdlet": null
+          },
+          {
+            "Name": "set-api-settings",
+            "Class": null,
+            "Cmdlet": null
+          }
+        ],
+        "SubChapters": []
+      }
+    ]
+  }
+]

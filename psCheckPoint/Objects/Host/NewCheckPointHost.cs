@@ -3,6 +3,7 @@ using System.Management.Automation;
 
 namespace psCheckPoint.Objects.Host
 {
+    /// <api cmd="add-host">New-CheckPointHost</api>
     /// <summary>
     /// <para type="synopsis">Create new object.</para>
     /// <para type="description"></para>

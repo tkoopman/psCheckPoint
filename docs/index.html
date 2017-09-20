@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>psCheckPoint Help</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.0/metisMenu.min.css" />
+    <link href='http://fonts.googleapis.com/css?family=Old+Standard+TT:400,400italic,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.0/metisMenu.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.7.4/showdown.min.js"></script>
+    <script>
+        function onLoad() {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var chapters = JSON.parse(this.responseText);
+                    var menu = document.getElementById("ByAPI");
+                    if (chapters.length != 0) {
+                        for (var i = 0; i < chapters.length; i++) {
+                            var chapter = chapters[i];
+                            ProcessChapter(chapter, menu, false);
+                        }
+                    }
+                    $("#menu").metisMenu();
+                }
+            };
+            xmlhttp.open("GET", "content.json", true);
+            xmlhttp.send();
+
+            showdown.setFlavor('github');
+            showdown.setOption('headerLevelStart', 3);
+        }
+
+        function ProcessChapter(chapter, menu, hasCmdlets) {
+            var m = document.createElement("LI");
+            menu.appendChild(m);
+            m.innerHTML = '<a href="#" class="has-arrow" aria-expanded="false">' + chapter["Name"] + '</a>';
+
+            var c = document.createElement("UL");
+            c.setAttribute('aria-expanded', 'false');
+            m.appendChild(c);
+
+            if (chapter["Cmdlets"].length != 0) {
+                for (var i = 0; i < chapter["Cmdlets"].length; i++) {
+                    var cmdlet = chapter["Cmdlets"][i];
+                    hasCmdlets = ProcessCmdlet(cmdlet, c) || hasCmdlets;
+                }
+            }
+
+            if (chapter["SubChapters"].length != 0) {
+                for (var i = 0; i < chapter["SubChapters"].length; i++) {
+                    var sub = chapter["SubChapters"][i];
+                    hasCmdlets = ProcessChapter(sub, c, false) || hasCmdlets;
+                }
+            }
+
+            if (!hasCmdlets) {
+                m.className = "NI";
+            }
+
+            return hasCmdlets;
+        }
+
+        function ProcessCmdlet(cmdlet, menu) {
+            var m = document.createElement("LI");
+            if (cmdlet["Class"] == null) {
+                m.className = "NI";
+                m.innerHTML = '<a href="javascript:ShowHTML(\'NotImplemented.html\');">' + cmdlet["Name"] + '</a>';
+            } else {
+                m.innerHTML = '<a href="javascript:ShowMD(\'' + cmdlet["Cmdlet"] + '\');">' + cmdlet["Name"] + '</a>';
+            }
+            menu.appendChild(m);
+
+            return (cmdlet["Class"] != null);
+        }
+
+        function ShowMD(name) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var converter = new showdown.Converter(),
+                        text = this.responseText,
+                        html = converter.makeHtml(text),
+                        content = document.getElementById("content");
+
+                    content.innerHTML = html;
+                }
+            };
+            xmlhttp.open("GET", "md/" + name + ".md", true);
+            xmlhttp.send();
+        }
+
+        function ShowHTML(name) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var content = document.getElementById("content");
+
+                    content.innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", name, true);
+            xmlhttp.send();
+        }
+    </script>
+</head>
+<body onload="onLoad();">
+    <div id="sidemenu">
+        <nav class="sidebar-nav">
+            <ul class="metismenu" id="menu">
+                <li>
+                    <a href="#" aria-expanded="true">Home</a>
+                </li>
+                <li>
+                    <a class="has-arrow" href="#" aria-expanded="false">Documentation</a>
+                    <ul aria-expanded="false">
+                        <li>
+                            <a class="has-arrow" href="#" aria-expanded="false">By PowerShell</a>
+                            <ul aria-expanded="false" id="ByCMDLET">
+                                <a href="#">Coming Soon</a>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow" href="#" aria-expanded="false">By API</a>
+                            <ul aria-expanded="false" id="ByAPI"></ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div id="content">
+    </div>
+</body>
+</html>

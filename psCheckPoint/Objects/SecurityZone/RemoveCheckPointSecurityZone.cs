@@ -2,6 +2,7 @@
 
 namespace psCheckPoint.Objects.SecurityZone
 {
+    /// <api cmd="delete-security-zone">Remove-CheckPointSecurityZone</api>
     /// <summary>
     /// <para type="synopsis">Delete existing object using object name or uid.</para>
     /// <para type="description"></para>

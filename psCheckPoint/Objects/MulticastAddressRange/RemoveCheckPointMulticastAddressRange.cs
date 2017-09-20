@@ -2,6 +2,7 @@
 
 namespace psCheckPoint.Objects.MulticastAddressRange
 {
+    /// <api cmd="delete-multicast-address-range">Remove-CheckPointMulticastAddressRange</api>
     /// <summary>
     /// <para type="synopsis">Delete existing object using object name or uid.</para>
     /// <para type="description"></para>

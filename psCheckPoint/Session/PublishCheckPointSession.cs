@@ -3,6 +3,7 @@ using System.Management.Automation;
 
 namespace psCheckPoint.Session
 {
+    /// <api cmd="publish">Publish-CheckPointSession</api>
     /// <summary>
     /// <para type="synopsis">All the changes done by this user will be seen by all users only after publish is called.</para>
     /// <para type="description"></para>

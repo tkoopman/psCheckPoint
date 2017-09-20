@@ -3,6 +3,7 @@ using System.Management.Automation;
 
 namespace psCheckPoint.Session
 {
+    /// <api cmd="discard">Reset-CheckPointSession</api>
     /// <summary>
     /// <para type="synopsis">Log out of a sesison.</para>
     /// <para type="description"></para>

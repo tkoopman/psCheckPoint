@@ -2,6 +2,7 @@
 
 namespace psCheckPoint.Objects.AccessLayer
 {
+    /// <api cmd="delete-access-layer">Remove-CheckPointAccessLayer</api>
     /// <summary>
     /// <para type="synopsis">Delete existing object using object name or uid.</para>
     /// <para type="description"></para>

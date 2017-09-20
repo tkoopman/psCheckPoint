@@ -2,6 +2,7 @@
 
 namespace psCheckPoint.Objects.ServiceUDP
 {
+    /// <api cmd="delete-service-udp">Remove-CheckPointServiceUDP</api>
     /// <summary>
     /// <para type="synopsis">Delete existing object using object name or uid.</para>
     /// <para type="description"></para>

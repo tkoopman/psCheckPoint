@@ -3,6 +3,7 @@ using System.Management.Automation;
 
 namespace psCheckPoint.Objects.Network
 {
+    /// <api cmd="add-network">New-CheckPointNetwork</api>
     /// <summary>
     /// <para type="synopsis">Create new object.</para>
     /// <para type="description"></para>

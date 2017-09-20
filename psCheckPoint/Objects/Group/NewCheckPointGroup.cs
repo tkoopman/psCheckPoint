@@ -3,6 +3,7 @@ using System.Management.Automation;
 
 namespace psCheckPoint.Objects.Group
 {
+    /// <api cmd="add-group">New-CheckPointGroup</api>
     /// <summary>
     /// <para type="synopsis">Create new object.</para>
     /// <para type="description"></para>

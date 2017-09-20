@@ -4,6 +4,7 @@ using System.Management.Automation;
 
 namespace psCheckPoint.Objects.ServiceUDP
 {
+    /// <api cmd="add-service-udp">New-CheckPointServiceUDP</api>
     /// <summary>
     /// <para type="synopsis">Create new object.</para>
     /// <para type="description"></para>

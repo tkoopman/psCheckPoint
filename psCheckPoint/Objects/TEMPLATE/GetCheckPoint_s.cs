@@ -2,6 +2,7 @@
 
 namespace psCheckPoint.Objects._
 {
+    /// <api cmd="show-_s">Get-CheckPoint_s</api>
     /// <summary>
     /// <para type="synopsis">Retrieve all objects.</para>
     /// <para type="description"></para>

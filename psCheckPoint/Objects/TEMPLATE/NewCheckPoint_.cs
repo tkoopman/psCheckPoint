@@ -3,6 +3,7 @@ using System.Management.Automation;
 
 namespace psCheckPoint.Objects._
 {
+    /// <api cmd="add-_">New-CheckPoint_</api>
     /// <summary>
     /// <para type="synopsis">Create new object.</para>
     /// <para type="description"></para>

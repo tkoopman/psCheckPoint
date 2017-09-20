@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 
 namespace psCheckPoint.Objects.Group
 {
+    /// <api cmd="set-group">Set-CheckPointGroup</api>
     /// <summary>
     /// <para type="synopsis">Edit existing object using object name or uid.</para>
     /// <para type="description"></para>

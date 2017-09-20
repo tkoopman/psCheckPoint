@@ -3,6 +3,7 @@ using System.Management.Automation;
 
 namespace psCheckPoint.Objects.ServiceGroup
 {
+    /// <api cmd="add-service-group">New-CheckPointServiceGroup</api>
     /// <summary>
     /// <para type="synopsis">Create new object.</para>
     /// <para type="description"></para>

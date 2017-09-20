@@ -2,6 +2,7 @@
 
 namespace psCheckPoint.Objects.AddressRange
 {
+    /// <api cmd="delete-address-range">Remove-CheckPointAddressRange</api>
     /// <summary>
     /// <para type="synopsis">Delete existing object using object name or uid.</para>
     /// <para type="description"></para>

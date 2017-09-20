@@ -2,6 +2,7 @@
 
 namespace psCheckPoint.Objects.ServiceGroup
 {
+    /// <api cmd="show-service-group">Get-CheckPointServiceGroup</api>
     /// <summary>
     /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
     /// <para type="description"></para>
