@@ -1,0 +1,18 @@
+[
+  {
+    "Name": "Export Commands",
+    "Cmdlets": [
+      {
+        "Name": "ExportCheckPointObjects",
+        "Class": "ExportCheckPointObjects",
+        "Cmdlet": "Export-CheckPointObjects"
+      },
+      {
+        "Name": "ConvertToCheckPointHtml",
+        "Class": "ConvertToCheckPointHtml",
+        "Cmdlet": "ConvertTo-CheckPointHtml"
+      }
+    ],
+    "SubChapters": []
+  }
+]
