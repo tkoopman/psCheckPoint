@@ -6,7 +6,7 @@ namespace psCheckPoint.Objects.ServiceTCP
     /// <summary>
     /// <para type="description">Details of a Check Point TCP Service</para>
     /// </summary>
-    public class CheckPointServiceTCP : CheckPointService
+    public class CheckPointServiceTCP : CheckPointServiceBase
     {
         [JsonConstructor]
         private CheckPointServiceTCP(string name, string uID, string type, CheckPointDomain domain, string icon, CheckPointMetaInfo metaInfo, bool readOnly, CheckPointObject[] tags, string color, string comments, CheckPointObject[] groups, bool keepConnectionsOpenAfterPolicyInstallation, bool matchByProtocolSignature, bool matchForAny, bool overrideDefaultSettings, string port, string protocol, int sessionTimeout, string sourcePort, bool syncConnectionsOnCluster, bool useDefaultSessionTimeout) :

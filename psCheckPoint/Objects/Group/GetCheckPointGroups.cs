@@ -11,8 +11,8 @@ namespace psCheckPoint.Objects.Group
     ///   <code>$cpGroups = Get-CheckPointGroups -Session $Session</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointGroups")]
-    [OutputType(typeof(CheckPointObjects<CheckPointGroup>))]
-    public class GetCheckPointGroups : GetCheckPointObjects<CheckPointGroup>
+    [OutputType(typeof(CheckPointObjects<CheckPointObject>))]
+    public class GetCheckPointGroups : GetCheckPointObjects
     {
         public override string Command { get { return "show-groups"; } }
     }

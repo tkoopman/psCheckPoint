@@ -55,17 +55,5 @@ namespace psCheckPoint.Objects.AddressRange
         {
             return Groups.Length > 0;
         }
-
-        protected override void Refresh(CheckPointObject obj)
-        {
-            base.Refresh(obj);
-            CheckPointAddressRange o = (CheckPointAddressRange)obj;
-
-            Groups = o.Groups;
-            IPv4AddressFirst = o.IPv4AddressFirst;
-            IPv4AddressLast = o.IPv4AddressLast;
-            IPv6AddressFirst = o.IPv6AddressFirst;
-            IPv6AddressLast = o.IPv6AddressLast;
-        }
     }
 }

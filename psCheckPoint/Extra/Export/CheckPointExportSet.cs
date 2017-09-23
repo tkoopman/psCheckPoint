@@ -71,7 +71,7 @@ namespace psCheckPoint.Extra.Export
         /// <para type="synopsis">List of exported Services.</para>
         /// </summary>
         [JsonProperty(PropertyName = "Services", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        public List<CheckPointService> Services { get; private set; } = new List<CheckPointService>();
+        public List<CheckPointServiceBase> Services { get; private set; } = new List<CheckPointServiceBase>();
 
         /// <summary>
         /// <para type="synopsis">List of exported Service Groups.</para>

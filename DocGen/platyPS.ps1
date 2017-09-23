@@ -7,5 +7,5 @@ param(
 New-Item -ItemType Directory -Force -Path $path
 
 Import-Module ..\psCheckPoint\bin\Release\psCheckPoint.psd1
-New-MarkdownHelp -Module psCheckPoint -OutputFolder $path -Force -WithModulePage -AlphabeticParamsOrder -NoMetadata
+New-MarkdownHelp -Module psCheckPoint -OutputFolder $path -Force -AlphabeticParamsOrder -NoMetadata
 Remove-Module psCheckPoint

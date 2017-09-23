@@ -75,6 +75,7 @@
     <Compile Include="Extra\Export\ExportCheckPointAccessRule.cs" />
     <Compile Include="NewCheckPointCmdlet.cs" />
     <Compile Include="Objects\CheckPointObjectsBase.cs" />
+    <Compile Include="Objects\GetCheckPointFullObject.cs" />
     <Compile Include="Objects\ICheckPointObjectSummary.cs" />
     <Compile Include="Objects\Misc\CheckPointWhereUsed.cs" />
     <Compile Include="Objects\Misc\GetCheckPointObjects.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="Objects\ServiceUDP\RemoveCheckPointServiceUDP.cs" />
     <Compile Include="Objects\ServiceUDP\SetCheckPointServiceUDP.cs" />
     <Compile Include="Objects\Service\CheckPointService.cs" />
+    <Compile Include="Objects\Service\CheckPointServiceBase.cs" />
     <Compile Include="Objects\Service\NewCheckPointService.cs" />
     <Compile Include="Objects\Service\SetCheckPointService.cs" />
     <Compile Include="Objects\SetCheckPointObject.cs" />

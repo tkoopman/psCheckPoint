@@ -10,8 +10,8 @@ namespace psCheckPoint.Objects.MulticastAddressRange
     /// <example>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointMulticastAddressRanges")]
-    [OutputType(typeof(CheckPointObjects<CheckPointMulticastAddressRange>))]
-    public class GetCheckPointMulticastAddressRanges : GetCheckPointObjects<CheckPointMulticastAddressRange>
+    [OutputType(typeof(CheckPointObjects<CheckPointObject>))]
+    public class GetCheckPointMulticastAddressRanges : GetCheckPointObjects
     {
         public override string Command { get { return "show-multicast-address-ranges"; } }
     }

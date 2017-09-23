@@ -11,7 +11,7 @@ namespace psCheckPoint.Objects.AddressRange
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointAddressRanges")]
     [OutputType(typeof(CheckPointObjects<CheckPointAddressRange>))]
-    public class GetCheckPointAddressRanges : GetCheckPointObjects<CheckPointAddressRange>
+    public class GetCheckPointAddressRanges : GetCheckPointObjects
     {
         public override string Command { get { return "show-address-ranges"; } }
     }

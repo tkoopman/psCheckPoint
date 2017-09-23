@@ -7,7 +7,7 @@ namespace psCheckPoint.Objects.ServiceUDP
     /// <summary>
     /// <para type="description">Details of a Check Point UDP Service</para>
     /// </summary>
-    public class CheckPointServiceUDP : CheckPointService
+    public class CheckPointServiceUDP : CheckPointServiceBase
     {
         [JsonConstructor]
         private CheckPointServiceUDP(string name, string uID, string type, CheckPointDomain domain, string icon, CheckPointMetaInfo metaInfo, bool readOnly, CheckPointObject[] tags, string color, string comments, CheckPointObject[] groups, bool keepConnectionsOpenAfterPolicyInstallation, bool matchByProtocolSignature, bool matchForAny, bool overrideDefaultSettings, string port, string protocol, int sessionTimeout, string sourcePort, bool syncConnectionsOnCluster, bool useDefaultSessionTimeout,
@@ -28,13 +28,5 @@ namespace psCheckPoint.Objects.ServiceUDP
         [JsonProperty(PropertyName = "accept-replies", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         [DefaultValue(false)]
         public bool AcceptReplies { get; private set; }
-
-        protected override void Refresh(CheckPointObject obj)
-        {
-            base.Refresh(obj);
-            CheckPointServiceUDP o = (CheckPointServiceUDP)obj;
-
-            AcceptReplies = o.AcceptReplies;
-        }
     }
 }

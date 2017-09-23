@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿using psCheckPoint.Objects.Service;
+using System.Management.Automation;
 
 namespace psCheckPoint.Objects.ServiceTCP
 {
@@ -10,8 +11,8 @@ namespace psCheckPoint.Objects.ServiceTCP
     /// <example>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointServicesTCP")]
-    [OutputType(typeof(CheckPointObjects<CheckPointServiceTCP>))]
-    public class GetCheckPointServicesTCP : GetCheckPointObjects<CheckPointServiceTCP>
+    [OutputType(typeof(CheckPointObjects<CheckPointService>))]
+    public class GetCheckPointServicesTCP : GetCheckPointObjectsBase<CheckPointObjects<CheckPointService>>
     {
         public override string Command { get { return "show-services-tcp"; } }
     }

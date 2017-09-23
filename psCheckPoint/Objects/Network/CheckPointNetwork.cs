@@ -70,19 +70,5 @@ namespace psCheckPoint.Objects.Network
         {
             return Groups.Length > 0;
         }
-
-        protected override void Refresh(CheckPointObject obj)
-        {
-            base.Refresh(obj);
-            CheckPointNetwork o = (CheckPointNetwork)obj;
-
-            Groups = o.Groups;
-            Subnet4 = o.Subnet4;
-            Subnet6 = o.Subnet6;
-            Broadcast = o.Broadcast;
-            MaskLength4 = o.MaskLength4;
-            MaskLength6 = o.MaskLength6;
-            SubnetMask = o.SubnetMask;
-        }
     }
 }

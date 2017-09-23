@@ -37,14 +37,5 @@ namespace psCheckPoint.Objects.ServiceGroup
         {
             return Members.Length > 0;
         }
-
-        protected override void Refresh(CheckPointObject obj)
-        {
-            base.Refresh(obj);
-            CheckPointServiceGroup o = (CheckPointServiceGroup)obj;
-
-            Groups = o.Groups;
-            Members = o.Members;
-        }
     }
 }

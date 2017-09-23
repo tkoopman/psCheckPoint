@@ -7,6 +7,7 @@ using System.Web;
 
 namespace psCheckPoint.Extra.Export
 {
+    /// <extra category="Export Commands">ConvertTo-CheckPointHtml</extra>
     /// <summary>
     /// <para type="synopsis">Convert output from Export-CheckPointObjects to a HTML file.</para>
     /// </summary>

@@ -19,6 +19,7 @@ using System.Management.Automation;
 
 namespace psCheckPoint.Extra.Export
 {
+    /// <extra category="Export Commands">Export-CheckPointObjects</extra>
     /// <summary>
     /// <para type="synopsis">Export input objects and any other object used by input objects.</para>
     /// <para type="description">Performs an export of input objects and any object used by an input object.</para>
@@ -350,7 +351,7 @@ namespace psCheckPoint.Extra.Export
             WhereUsed(obj, CurrentDepth);
         }
 
-        private void Process(CheckPointService obj, int CurrentDepth)
+        private void Process(CheckPointServiceBase obj, int CurrentDepth)
         {
             if (export.Services.Contains(obj)) { return; }
 
