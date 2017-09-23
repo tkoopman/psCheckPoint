@@ -10,6 +10,7 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="Content/bootstrap.cerulean.min.css">
     <link rel="stylesheet" href="Content/font-awesome.min.css">
+    <link rel="stylesheet" href="Content/pscp-sidemenu.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.7.4/showdown.min.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -50,51 +51,31 @@
         </div>
     </nav>
 
-    <div class="jumbotron">
-        <h1>Welcome to psCheckPoint</h1>
-        <p>The PowerShell module that implements the Check Point Web APIs and more!</p>
+    <div class="nav-side-menu">
+        <div class="brand">By API Commands</div>
+        <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+        <div class="menu-list">
+            <ul id="menu-content" class="menu-content collapse out"></ul>
+        </div>
+    </div>
+    <div class="container" id="main">
+        <div class="row">
+            <div class="col-md-12" id="content">
+                <div class="alert alert-info">
+                    Please select the Check Point API command from the left, to see the PowerShell commandlet for it.
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title">Documentation</h3>
-        </div>
-        <div class="panel-body col-md-3">
-            <div class="panel panel-primary">
-                <div class="panel-heading">By API Commands</div>
-                <div class="panel-body">
-                    <p>If you know the Check Point API command you can find it here to see what the matching PowerShell commands is, and how to use it.</p>
-                    <p><a class="btn btn-primary btn-default pull-right" href="ByAPI.html">View</a></p>
-                </div>
-            </div>
-        </div>
-        <div class="panel-body col-md-3">
-            <div class="panel panel-primary">
-                <div class="panel-heading">By PowerShell Commands</div>
-                <div class="panel-body">
-                    <p>View all PowerShell commands that link back to the Check Point API.</p>
-                    <p><a class="btn btn-primary btn-default pull-right" href="ByCmdlet.html">View</a></p>
-                </div>
-            </div>
-        </div>
-        <div class="panel-body col-md-3">
-            <div class="panel panel-success">
-                <div class="panel-heading">Extras</div>
-                <div class="panel-body">
-                    <p>Look here for the extra PowerShell commands we implement to extend the standard API commands.</p>
-                    <p><a class="btn btn-primary btn-success pull-right" href="Extras.html">View</a></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="Scripts/jquery-3.2.1.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="Scripts/bootstrap.min.js"></script>
-        <script src="Scripts/pscp-menu.js"></script>
-        <script>
-            createMenu("Cmdlet", "extra-content.json");
-            ShowContent(urlParams.get("Content"));
-        </script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="Scripts/jquery-3.2.1.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="Scripts/bootstrap.min.js"></script>
+    <script src="Scripts/pscp-menu.js"></script>
+    <script>
+        createMenu("Name");
+        ShowContent(urlParams.get("Content"));
+    </script>
 </body>
 </html>
