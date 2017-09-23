@@ -70,19 +70,5 @@ namespace psCheckPoint.Objects.AccessLayer
         [JsonProperty(PropertyName = "shared", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         [DefaultValue(false)]
         public bool Shared { get; private set; }
-
-        protected override void Refresh(CheckPointObject obj)
-        {
-            base.Refresh(obj);
-            CheckPointAccessLayer o = (CheckPointAccessLayer)obj;
-
-            ApplicationsAndUrlFiltering = o.ApplicationsAndUrlFiltering;
-            ContentAwareness = o.ContentAwareness;
-            DetectUsingXForwardFor = o.DetectUsingXForwardFor;
-            Firewall = o.Firewall;
-            MobileAccess = o.MobileAccess;
-            ParentLayer = o.ParentLayer;
-            Shared = o.Shared;
-        }
     }
 }

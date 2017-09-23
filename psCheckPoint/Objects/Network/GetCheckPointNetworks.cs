@@ -11,8 +11,8 @@ namespace psCheckPoint.Objects.Network
     ///   <code>$cpNetworks = Get-CheckPointNetworks -Session $Session</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointNetworks")]
-    [OutputType(typeof(CheckPointObjects<CheckPointNetwork>))]
-    public class GetCheckPointNetworks : GetCheckPointObjects<CheckPointNetwork>
+    [OutputType(typeof(CheckPointObjects<CheckPointObject>))]
+    public class GetCheckPointNetworks : GetCheckPointObjects
     {
         public override string Command { get { return "show-networks"; } }
     }

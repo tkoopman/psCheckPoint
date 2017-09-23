@@ -10,8 +10,8 @@ namespace psCheckPoint.Objects.SecurityZone
     /// <example>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointSecurityZones")]
-    [OutputType(typeof(CheckPointObjects<CheckPointSecurityZone>))]
-    public class GetCheckPointSecurityZones : GetCheckPointObjects<CheckPointSecurityZone>
+    [OutputType(typeof(CheckPointObjects<CheckPointObject>))]
+    public class GetCheckPointSecurityZones : GetCheckPointObjects
     {
         public override string Command { get { return "show-security-zones"; } }
     }

@@ -121,7 +121,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### psCheckPoint.Objects.CheckPointObjects`1[[psCheckPoint.Objects.CheckPointObject, psCheckPoint, Version=0.4.1.0, Culture=neutral, PublicKeyToken=null]]
+### psCheckPoint.Objects.CheckPointObjects`1[[psCheckPoint.Objects.CheckPointObject, psCheckPoint, Version=0.4.2.0, Culture=neutral, PublicKeyToken=null]]
 Result from commands that return multiple objects.
 
 ## NOTES

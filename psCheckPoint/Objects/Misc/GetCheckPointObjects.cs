@@ -10,7 +10,7 @@ namespace psCheckPoint.Objects.Misc
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "CheckPointObjects")]
     [OutputType(typeof(CheckPointObjects<CheckPointObject>))]
-    public class GetCheckPointObjects : GetCheckPointObjects<CheckPointObject>
+    public class GetCheckPointObjects : psCheckPoint.Objects.GetCheckPointObjects
     {
         public override string Command { get { return "show-objects"; } }
 

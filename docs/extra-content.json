@@ -3,14 +3,25 @@
     "Name": "Export Commands",
     "Cmdlets": [
       {
-        "Name": "ExportCheckPointObjects",
-        "Class": "ExportCheckPointObjects",
-        "Cmdlet": "Export-CheckPointObjects"
-      },
-      {
-        "Name": "ConvertToCheckPointHtml",
+        "Name": "ConvertTo-CheckPointHtml",
         "Class": "ConvertToCheckPointHtml",
         "Cmdlet": "ConvertTo-CheckPointHtml"
+      },
+      {
+        "Name": "Export-CheckPointObjects",
+        "Class": "ExportCheckPointObjects",
+        "Cmdlet": "Export-CheckPointObjects"
+      }
+    ],
+    "SubChapters": []
+  },
+  {
+    "Name": "Misc.",
+    "Cmdlets": [
+      {
+        "Name": "Get-CheckPointFullObject",
+        "Class": "GetCheckPointFullObject",
+        "Cmdlet": "Get-CheckPointFullObject"
       }
     ],
     "SubChapters": []

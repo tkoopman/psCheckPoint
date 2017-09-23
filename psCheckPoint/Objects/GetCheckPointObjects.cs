@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.Collections;
 using System.ComponentModel;
 using System.Management.Automation;
 
@@ -8,7 +7,7 @@ namespace psCheckPoint.Objects
     /// <summary>
     /// <para type="description">Base class for Get-CheckPoint*ObjectName*s classes</para>
     /// </summary>
-    public abstract class GetCheckPointObjects<T> : GetCheckPointObjectsBase<CheckPointObjects<T>>
+    public abstract class GetCheckPointObjects : GetCheckPointObjectsBase<CheckPointObjects<CheckPointObject>>
     {
     }
 
@@ -41,31 +40,5 @@ namespace psCheckPoint.Objects
         [JsonProperty(PropertyName = "details-level", DefaultValueHandling = DefaultValueHandling.Include)]
         [DefaultValue("standard")]
         protected string DetailsLevel { get; set; } = "standard";
-
-        /// <summary>
-        /// <para type="description">Process results from the Web-API call</para>
-        /// </summary>
-        protected override void ProcessRecordResponse(string JSON)
-        {
-            // Debug Output Request
-            WriteDebug($@"JSON Response
-{JSON}");
-
-            T result = JsonConvert.DeserializeObject<T>(JSON);
-
-            if (result is IEnumerable)
-            {
-                foreach (object o in (result as IEnumerable))
-                {
-                    if (o is CheckPointObject)
-                    {
-                        CheckPointObject OBJ = (CheckPointObject)o;
-                        OBJ.Refresh(Session);
-                    }
-                }
-            }
-
-            WriteObject(result);
-        }
     }
 }

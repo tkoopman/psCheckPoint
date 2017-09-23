@@ -126,28 +126,5 @@ namespace psCheckPoint.Objects.Session
         /// </summary>
         [JsonProperty(PropertyName = "user-name", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         public string UserName { get; set; }
-
-        protected override void Refresh(CheckPointObject obj)
-        {
-            base.Refresh(obj);
-            CheckPointSession o = (CheckPointSession)obj;
-
-            Application = o.Application;
-            Changes = o.Changes;
-            ConnectionMode = o.ConnectionMode;
-            Description = o.Description;
-            Email = o.Email;
-            ExpiredSession = o.ExpiredSession;
-            InWork = o.InWork;
-            IPAddress = o.IPAddress;
-            LastLoginTime = o.LastLoginTime;
-            LastLogoutTime = o.LastLogoutTime;
-            Locks = o.Locks;
-            PhoneNumber = o.PhoneNumber;
-            PublishTime = o.PublishTime;
-            SessionTimeout = o.SessionTimeout;
-            State = o.State;
-            UserName = o.UserName;
-        }
     }
 }

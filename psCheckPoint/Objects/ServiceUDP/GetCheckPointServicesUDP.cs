@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿using psCheckPoint.Objects.Service;
+using System.Management.Automation;
 
 namespace psCheckPoint.Objects.ServiceUDP
 {
@@ -10,8 +11,8 @@ namespace psCheckPoint.Objects.ServiceUDP
     /// <example>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointServicesUDP")]
-    [OutputType(typeof(CheckPointObjects<CheckPointServiceUDP>))]
-    public class GetCheckPointServicesUDP : GetCheckPointObjects<CheckPointServiceUDP>
+    [OutputType(typeof(CheckPointObjects<CheckPointService>))]
+    public class GetCheckPointServicesUDP : GetCheckPointObjectsBase<CheckPointObjects<CheckPointService>>
     {
         public override string Command { get { return "show-services-udp"; } }
     }
