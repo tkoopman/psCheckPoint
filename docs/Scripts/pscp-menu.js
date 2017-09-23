@@ -73,7 +73,7 @@ function ProcessCmdlet(cmdlet, menu, location) {
     if (cmdlet["Class"] == null) {
         qs = '?Content=NotImplemented.html';
     } else {
-        qs = '?Content=/md/' + cmdlet["Cmdlet"] + '.md';
+        qs = '?Content=md/' + cmdlet["Cmdlet"] + '.md';
     }
     qs += '&Menu=' + location;
     qs += '&API=' + m.id;
