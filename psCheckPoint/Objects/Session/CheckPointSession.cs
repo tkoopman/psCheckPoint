@@ -8,6 +8,9 @@ namespace psCheckPoint.Objects.Session
     /// </summary>
     public class CheckPointSession : CheckPointObjectFull
     {
+        /// <summary>
+        /// JSON Constructor for Session
+        /// </summary>
         [JsonConstructor]
         private CheckPointSession(string name, string uID, string type, CheckPointDomain domain, string icon, CheckPointMetaInfo metaInfo, bool readOnly, CheckPointObject[] tags, string color, string comments,
             string application, int changes, string connectionMode, string description, string email, bool expiredSession, bool inWork, string iPAddress, CheckPointTime lastLoginTime, CheckPointTime lastLogoutTime, int locks, string phoneNumber, CheckPointTime publishTime, int sessionTimeout, string state, string userName) :

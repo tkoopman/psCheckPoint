@@ -1,6 +1,7 @@
 # Get-CheckPointObjects
 
 ## SYNOPSIS
+Find objects by Filter.
 
 ## SYNTAX
 
@@ -10,16 +11,15 @@ Get-CheckPointObjects [-Filter <String>] [-IPOnly] [-Type <String>] [-UID <Int32
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+Can find many different types of objects based on a filter.
+Filters are same as what can be used in Smart Console
 
 ## EXAMPLES
 
-### Example 1
+### ----------  EXAMPLE 1  ----------
 ```
-PS C:\> {{ Add example code here }}
+Get-CheckPointObjects -Session $Session -Filter "O365 OR Office365"
 ```
-
-{{ Add example description here }}
 
 ## PARAMETERS
 
@@ -121,7 +121,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### psCheckPoint.Objects.CheckPointObjects`1[[psCheckPoint.Objects.CheckPointObject, psCheckPoint, Version=0.4.2.0, Culture=neutral, PublicKeyToken=null]]
+### psCheckPoint.Objects.CheckPointObjects`1[[psCheckPoint.Objects.CheckPointObject, psCheckPoint, Version=0.5.0.0, Culture=neutral, PublicKeyToken=null]]
 Result from commands that return multiple objects.
 
 ## NOTES

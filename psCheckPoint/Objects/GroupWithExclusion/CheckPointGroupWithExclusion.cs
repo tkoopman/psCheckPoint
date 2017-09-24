@@ -7,6 +7,9 @@ namespace psCheckPoint.Objects.GroupWithExclusion
     /// </summary>
     public class CheckPointGroupWithExclusion : CheckPointObjectFull
     {
+        /// <summary>
+        /// JSON Constructor for Group with Exclusion
+        /// </summary>
         [JsonConstructor]
         private CheckPointGroupWithExclusion(string name, string uID, string type, CheckPointDomain domain, string icon, CheckPointMetaInfo metaInfo, bool readOnly, CheckPointObject[] tags, string color, string comments,
             CheckPointObject include, CheckPointObject except) :

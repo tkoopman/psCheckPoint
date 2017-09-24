@@ -7,6 +7,9 @@ namespace psCheckPoint.Objects.Network
     /// </summary>
     public class CheckPointNetwork : CheckPointObjectFull
     {
+        /// <summary>
+        /// JSON Constructor for Network
+        /// </summary>
         [JsonConstructor]
         private CheckPointNetwork(string name, string uID, string type, CheckPointDomain domain, string icon, CheckPointMetaInfo metaInfo, bool readOnly, CheckPointObject[] tags, string color, string comments,
             CheckPointObject[] groups, string subnet4, string subnet6, string broadcast, int maskLength4, int maskLength6, string subnetMask) :
@@ -66,6 +69,10 @@ namespace psCheckPoint.Objects.Network
         [JsonProperty(PropertyName = "subnet-mask", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         public string SubnetMask { get; private set; }
 
+        /// <summary>
+        /// Conditional Property Serialization for Groups
+        /// </summary>
+        /// <returns>true if Groups should be serialised.</returns>
         public bool ShouldSerializeGroups()
         {
             return Groups.Length > 0;

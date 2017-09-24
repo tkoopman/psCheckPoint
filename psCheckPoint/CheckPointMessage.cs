@@ -7,6 +7,9 @@ namespace psCheckPoint
     /// </summary>
     public class CheckPointMessage
     {
+        /// <summary>
+        /// JSON Constructor for Check Point Message
+        /// </summary>
         [JsonConstructor]
         protected CheckPointMessage(string message)
         {

@@ -52,7 +52,7 @@ Accept wildcard characters: False
 ### -ClientType
 Deletes only associations created by the specified identity source.If no value is set for the client-type parameter, or if it is set to any, the gateway deletes all identities associated with the given IP(or IPs)
 
-Note - When theclient-type is set to vpn(remote access), the gateway deletes all the identities associated with the given IP(or IPs).
+Note - When the client-type is set to vpn(remote access), the gateway deletes all the identities associated with the given IP(or IPs).
 This is because when you delete an identity associated with an office mode IP, this usually means that this office mode IP is no longer valid.
 
 ```yaml
@@ -215,7 +215,7 @@ Required when the revoke method is range.
 ### System.String
 Deletes only associations created by the specified identity source.If no value is set for the client-type parameter, or if it is set to any, the gateway deletes all identities associated with the given IP(or IPs)
 
-Note - When theclient-type is set to vpn(remote access), the gateway deletes all the identities associated with the given IP(or IPs).
+Note - When the client-type is set to vpn(remote access), the gateway deletes all the identities associated with the given IP(or IPs).
 This is because when you delete an identity associated with an office mode IP, this usually means that this office mode IP is no longer valid.
 
 ## OUTPUTS

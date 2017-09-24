@@ -75,7 +75,7 @@ namespace psCheckPoint.Objects.Service
         public string SourcePort { get; set; }
 
         /// <summary>
-        /// <para type="description">Enables state-synchronized High Availability or Load Sharing on a ClusterXL or OPSEC-certified cluster.</para>
+        /// <para type="description">Enables state-synchronised High Availability or Load Sharing on a ClusterXL or OPSEC-certified cluster.</para>
         /// </summary>
         [JsonProperty(PropertyName = "sync-connections-on-cluster", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [JsonConverter(typeof(SwitchJsonConverter))]

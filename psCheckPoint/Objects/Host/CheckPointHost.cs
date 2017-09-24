@@ -7,6 +7,9 @@ namespace psCheckPoint.Objects.Host
     /// </summary>
     public class CheckPointHost : CheckPointObjectFull
     {
+        /// <summary>
+        /// JSON Constructor for Host
+        /// </summary>
         [JsonConstructor]
         private CheckPointHost(string name, string uID, string type, CheckPointDomain domain, string icon, CheckPointMetaInfo metaInfo, bool readOnly, CheckPointObject[] tags, string color, string comments,
             CheckPointObject[] groups, string ipv4Address, string ipv6Address) :
@@ -40,6 +43,10 @@ namespace psCheckPoint.Objects.Host
         //TODO nat-settings
         //TODO host-servers
 
+        /// <summary>
+        /// Conditional Property Serialization for Groups
+        /// </summary>
+        /// <returns>true if Groups should be serialised.</returns>
         public bool ShouldSerializeGroups()
         {
             return Groups.Length > 0;

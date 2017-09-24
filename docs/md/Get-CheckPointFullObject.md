@@ -10,7 +10,7 @@ Get-CheckPointFullObject [-Session] <CheckPointSession> -Object <PSObject>
 ```
 
 ## DESCRIPTION
-Many commands return lists of object summarys.
+Many commands return lists of object summaries.
 
 Use this to return the full objects for each summary.
 

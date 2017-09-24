@@ -10,6 +10,7 @@ namespace psCheckPoint.Extra.Export
     /// <extra category="Export Commands">ConvertTo-CheckPointHtml</extra>
     /// <summary>
     /// <para type="synopsis">Convert output from Export-CheckPointObjects to a HTML file.</para>
+    /// <para type="description">Pipe results from Export-CheckPointObjects to here to create a HTML report of the exported data.</para>
     /// </summary>
     /// <example>
     /// <code>Export-CheckPointObjects -Session $Session -Verbose $InputObject | ConvertTo-CheckPointHtml -Open</code>
@@ -47,14 +48,14 @@ namespace psCheckPoint.Extra.Export
 
         /// <summary>
         /// <para type="description">Indent the JSON data in the HTML output.</para>
-        /// <para type="description">This will force the use of "Template Literals" which requires an ES6 compatibile browser. (`{JSON}`)</para>
+        /// <para type="description">This will force the use of "Template Literals" which requires an ES6 compatible browser. (`{JSON}`)</para>
         /// </summary>
         [Parameter(ParameterSetName = "ES6")]
         public SwitchParameter IndentedJson { get; set; }
 
         /// <summary>
         /// <para type="description">Escape JSON text before inserting into HTML file.</para>
-        /// <para type="description">Automatically turned on if templated uses double quotes to define location for JSON. ("{JSON}")</para>
+        /// <para type="description">Automatically turned on if template uses double quotes to define location for JSON. ("{JSON}")</para>
         /// </summary>
         [Parameter(ParameterSetName = "ES5")]
         public SwitchParameter EscapeJson { get; set; }

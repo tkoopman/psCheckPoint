@@ -5,7 +5,7 @@ namespace psCheckPoint.Session
     /// <api cmd="logout">Close-CheckPointSession</api>
     /// <api cmd="continue-session-in-smartconsole">Close-CheckPointSession</api>
     /// <summary>
-    /// <para type="synopsis">Log out of a sesison.</para>
+    /// <para type="synopsis">Log out of a session.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
@@ -20,6 +20,9 @@ namespace psCheckPoint.Session
         [Parameter]
         public SwitchParameter ContinueSessionInSmartconsole { get; set; }
 
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return (ContinueSessionInSmartconsole.IsPresent) ? "continue-session-in-smartconsole" : "logout"; } }
     }
 }

@@ -6,7 +6,7 @@ namespace psCheckPoint.IA
 {
     /// <summary>
     /// Handles converting JSON string values into a System.Management.Automation.SwitchParameter data type.
-    /// In this case outputing the NOT value as we using NO switch params.
+    /// In this case outputting the NOT value as we using NO switch parameters.
     /// </summary>
     public class SwitchJsonConverter : JsonConverter
     {

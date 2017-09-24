@@ -15,6 +15,9 @@ namespace psCheckPoint.Objects.Network
     [OutputType(typeof(CheckPointNetwork))]
     public class NewCheckPointNetwork : NewCheckPointObject<CheckPointNetwork>
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "add-network"; } }
 
         /// <summary>
@@ -68,6 +71,9 @@ namespace psCheckPoint.Objects.Network
 
         //TODO nat-settings
 
+        /// <summary>
+        /// <para type="description">Allow broadcast address inclusion.</para>
+        /// </summary>
         [JsonProperty(PropertyName = "broadcast", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
         [ValidateSet("disallow", "allow", IgnoreCase = true)]

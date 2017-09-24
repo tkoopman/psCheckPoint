@@ -8,6 +8,9 @@ namespace psCheckPoint.Objects.AccessLayer
     /// </summary>
     public class CheckPointAccessLayer : CheckPointObjectFull
     {
+        /// <summary>
+        /// JSON Constructor for Access Layer
+        /// </summary>
         [JsonConstructor]
         private CheckPointAccessLayer(string name, string uID, string type, CheckPointDomain domain, string icon, CheckPointMetaInfo metaInfo, bool readOnly, CheckPointObject[] tags, string color, string comments,
             bool applicationsAndUrlFiltering, bool contentAwareness, bool detectUsingXForwardFor, bool firewall, bool mobileAccess, string parentLayer, bool shared) :

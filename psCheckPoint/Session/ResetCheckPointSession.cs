@@ -5,7 +5,7 @@ namespace psCheckPoint.Session
 {
     /// <api cmd="discard">Reset-CheckPointSession</api>
     /// <summary>
-    /// <para type="synopsis">Log out of a sesison.</para>
+    /// <para type="synopsis">Log out of a session.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
@@ -14,6 +14,9 @@ namespace psCheckPoint.Session
     [Cmdlet(VerbsCommon.Reset, "CheckPointSession")]
     public class ResetCheckPointSession : CheckPointCmdlet<CheckPointMessage>
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "discard"; } }
 
         /// <summary>
@@ -22,16 +25,21 @@ namespace psCheckPoint.Session
         [Parameter(ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ValueFromRemainingArguments = true)]
         public psCheckPoint.Objects.Session.CheckPointSession ResetSession { get; set; }
 
+        /// <summary>
+        /// <para type="description">Reset none active session UID</para>
+        /// </summary>
         [JsonProperty(PropertyName = "uid", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         protected string UID { get; set; }
 
-        internal override string getJSON()
+        internal override string GetJSON()
         {
+            // Check if we need to pass UID of session to reset
+            // By not sending any UID API will reset current session.
             if (ResetSession != null)
             {
                 UID = ResetSession.UID;
             }
-            return base.getJSON();
+            return base.GetJSON();
         }
     }
 }

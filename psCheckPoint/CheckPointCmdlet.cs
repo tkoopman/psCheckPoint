@@ -11,7 +11,7 @@ using System.Text;
 namespace psCheckPoint
 {
     /// <summary>
-    /// Action to take when changing membership of object.
+    /// <para type="description">Action to take when changing membership of object.</para>
     /// </summary>
     public enum MembershipActions
     {
@@ -45,7 +45,7 @@ namespace psCheckPoint
         /// <summary>
         /// <para type="description">Returns valid JSON request data</para>
         /// </summary>
-        internal virtual string getJSON()
+        internal virtual string GetJSON()
         {
             return JsonConvert.SerializeObject(this);
         }
@@ -86,13 +86,13 @@ namespace psCheckPoint
         protected override void ProcessRecord()
         {
             // Debug Output Request
-            string strJson = getJSON();
+            string strJson = GetJSON();
             WriteDebug($@"JSON Request to {Session.URL}/{Command}
 {strJson}");
 
             try
             {
-                HttpClient client = Session.getHttpClient();
+                HttpClient client = Session.GetHttpClient();
                 using (HttpResponseMessage response = client.PostAsync($"{Command}", new StringContent(strJson, Encoding.UTF8, "application/json")).Result)
                 {
                     if (response.IsSuccessStatusCode)
@@ -127,7 +127,7 @@ namespace psCheckPoint
 
         /// <summary>
         /// <para type="description">Used by Cmdlet parameters that accept arrays</para>
-        /// <para type="description">Allows arrays to also be accepted in CSV format with either a , (comma) or ; (semicolon) seperator.</para>
+        /// <para type="description">Allows arrays to also be accepted in CSV format with either a , (comma) or ; (semicolon) separator.</para>
         /// </summary>
         protected static string[] CreateArray(String[] values)
         {
@@ -148,7 +148,7 @@ namespace psCheckPoint
         }
 
         /// <summary>
-        /// <para type="description">Used OnSerializing Events in Set mthods to control how set will process groups based on action.</para>
+        /// <para type="description">Used OnSerializing Events in Set methods to control how set will process groups based on action.</para>
         /// </summary>
         protected static dynamic ProcessGroupAction(MembershipActions action, String[] values)
         {
@@ -158,14 +158,18 @@ namespace psCheckPoint
                 {
                     case MembershipActions.Add:
                         {
-                            Hashtable r = new Hashtable();
-                            r["add"] = CreateArray(values);
+                            Hashtable r = new Hashtable
+                            {
+                                ["add"] = CreateArray(values)
+                            };
                             return r;
                         }
                     case MembershipActions.Remove:
                         {
-                            Hashtable r = new Hashtable();
-                            r["remove"] = CreateArray(values);
+                            Hashtable r = new Hashtable
+                            {
+                                ["remove"] = CreateArray(values)
+                            };
                             return r;
                         }
                     default:

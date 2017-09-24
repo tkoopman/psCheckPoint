@@ -12,6 +12,9 @@ namespace psCheckPoint.Objects.ServiceTCP
     [Cmdlet(VerbsCommon.Remove, "CheckPointServiceTCP")]
     public class RemoveCheckPointServiceTCP : RemoveCheckPointObject<CheckPointMessage>
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "delete-service-tcp"; } }
     }
 }

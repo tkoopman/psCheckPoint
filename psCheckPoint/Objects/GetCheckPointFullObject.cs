@@ -7,7 +7,7 @@ namespace psCheckPoint.Objects
     /// <extra category="Misc.">Get-CheckPointFullObject</extra>
     /// <summary>
     /// <para type="synopsis">Retrieve full object details from object summary.</para>
-    /// <para type="description">Many commands return lists of object summarys.</para>
+    /// <para type="description">Many commands return lists of object summaries.</para>
     /// <para type="description">Use this to return the full objects for each summary.</para>
     /// </summary>
     /// <example>
@@ -29,6 +29,9 @@ namespace psCheckPoint.Objects
         [Parameter(Mandatory = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
         public PSObject Object { get; set; }
 
+        /// <summary>
+        /// Provides a record-by-record processing functionality for the cmdlet.
+        /// </summary>
         protected override void ProcessRecord()
         {
             Process(Object);

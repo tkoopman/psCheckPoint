@@ -27,7 +27,7 @@ Set-CheckPointAccessLayer [-ApplicationsAndUrlFiltering <Boolean>] [-ContentAwar
 
 ### ----------  EXAMPLE 1  ----------
 ```
-
+Set-CheckPointAccessLayer -Session $Session -Name Network -ApplicationsAndUrlFiltering $true
 ```
 
 ## PARAMETERS

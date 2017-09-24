@@ -23,12 +23,18 @@ namespace psCheckPoint.IA
 
         private Batch<GetIdentity, GetIdentityResponse> batch;
 
+        /// <summary>
+        /// Provides a one-time, preprocessing functionality for the cmdlet.
+        /// </summary>
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
             batch = new Batch<GetIdentity, GetIdentityResponse>(Gateway, SharedSecret, "show-identity");
         }
 
+        /// <summary>
+        /// Provides a record-by-record processing functionality for the cmdlet.
+        /// </summary>
         protected override void ProcessRecord()
         {
             batch.Requests.Add(new GetIdentity(IPAddress));
@@ -39,6 +45,9 @@ namespace psCheckPoint.IA
             }
         }
 
+        /// <summary>
+        /// Provides a one-time, post-processing functionality for the cmdlet.
+        /// </summary>
         protected override void EndProcessing()
         {
             if (batch.Requests.Count >= 1)
@@ -52,7 +61,7 @@ namespace psCheckPoint.IA
     }
 
     /// <summary>
-    /// Stores identity IP to get ready for serilization to JSON request.
+    /// Stores identity IP to get ready for serialization to JSON request.
     /// </summary>
     internal class GetIdentity
     {

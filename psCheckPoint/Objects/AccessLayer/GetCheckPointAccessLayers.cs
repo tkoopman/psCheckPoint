@@ -8,11 +8,15 @@ namespace psCheckPoint.Objects.AccessLayer
     /// <para type="description"></para>
     /// </summary>
     /// <example>
+    /// <code>Get-CheckPointAccessLayers -Session $Session</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointAccessLayers")]
     [OutputType(typeof(CheckPointObjects<CheckPointAccessLayer>))]
     public class GetCheckPointAccessLayers : GetCheckPointObjectsBase<CheckPointAccessLayers>
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "show-access-layers"; } }
     }
 }

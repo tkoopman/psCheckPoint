@@ -13,6 +13,9 @@ namespace psCheckPoint.Objects.SecurityZone
     [OutputType(typeof(CheckPointSecurityZone))]
     public class SetCheckPointSecurityZone : SetCheckPointObject<CheckPointSecurityZone>
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "set-security-zone"; } }
     }
 }

@@ -16,6 +16,9 @@ namespace psCheckPoint.Objects.ServiceUDP
     [OutputType(typeof(CheckPointServiceUDP))]
     public class NewCheckPointServiceUDP : NewCheckPointService<CheckPointServiceUDP>
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "add-service-udp"; } }
 
         /// <summary>

@@ -14,6 +14,9 @@ namespace psCheckPoint.Objects.Network
     [OutputType(typeof(CheckPointNetwork))]
     public class GetCheckPointNetwork : GetCheckPointObject<CheckPointNetwork>
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "show-network"; } }
     }
 }

@@ -1,6 +1,7 @@
 # Get-CheckPointAccessRule
 
 ## SYNOPSIS
+Retrieve existing object using object name or uid.
 
 ## SYNTAX
 

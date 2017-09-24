@@ -6,12 +6,15 @@ namespace psCheckPoint.Objects.AccessRule
 {
     /// <api cmd="show-access-rule">Get-CheckPointAccessRule</api>
     /// <summary>
-    ///
+    /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "CheckPointAccessRule")]
     [OutputType(typeof(CheckPointAccessRule))]
     public class GetCheckPointAccessRule : CheckPointCmdlet<CheckPointAccessRule>
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "show-access-rule"; } }
 
         /// <summary>
@@ -42,7 +45,7 @@ namespace psCheckPoint.Objects.AccessRule
         [Parameter(Position = 1, Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public string Layer { get; set; }
 
-        //TODO hit-seetings
+        //TODO hit-settings
         //TODO show-hits
 
         /// <summary>

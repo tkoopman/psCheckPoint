@@ -21,7 +21,7 @@ Get-CheckPointAccessLayer [-Name] <String> [-Session] <CheckPointSession>
 
 ### ----------  EXAMPLE 1  ----------
 ```
-
+Get-CheckPointAccessLayer -Session $Session -Name Network
 ```
 
 ## PARAMETERS

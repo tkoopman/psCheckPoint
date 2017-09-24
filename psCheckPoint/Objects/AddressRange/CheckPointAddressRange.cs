@@ -7,6 +7,9 @@ namespace psCheckPoint.Objects.AddressRange
     /// </summary>
     public class CheckPointAddressRange : CheckPointObjectFull
     {
+        /// <summary>
+        /// JSON Constructor for Address Range
+        /// </summary>
         [JsonConstructor]
         protected CheckPointAddressRange(string name, string uID, string type, CheckPointDomain domain, string icon, CheckPointMetaInfo metaInfo, bool readOnly, CheckPointObject[] tags, string color, string comments,
             CheckPointObject[] groups, string ipv4AddressFirst, string ipv4AddressLast, string ipv6AddressFirst, string ipv6AddressLast) :
@@ -51,6 +54,10 @@ namespace psCheckPoint.Objects.AddressRange
 
         //TODO nat-settings
 
+        /// <summary>
+        /// Conditional Property Serialization for Groups
+        /// </summary>
+        /// <returns>true if Groups should be serialised.</returns>
         public bool ShouldSerializeGroups()
         {
             return Groups.Length > 0;

@@ -13,6 +13,9 @@ namespace psCheckPoint.Session
     /// </summary>
     public class CheckPointSession
     {
+        /// <summary>
+        /// JSON Constructor for logged in Check Point Session
+        /// </summary>
         [JsonConstructor]
         private CheckPointSession(string SID, string APIServerVersion, string DiskSpaceMessage, CheckPointTime LastLoginWasAt, bool ReadOnly, int SessionTimeout, bool Standby, string UID, string URL)
         {
@@ -87,7 +90,7 @@ namespace psCheckPoint.Session
 
         private HttpClient _httpClient = null;
 
-        internal HttpClient getHttpClient()
+        internal HttpClient GetHttpClient()
         {
             if (_httpClient == null)
             {
@@ -97,8 +100,10 @@ namespace psCheckPoint.Session
                     handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
                 }
 
-                _httpClient = new HttpClient(handler);
-                _httpClient.BaseAddress = new Uri($"{URL}/");
+                _httpClient = new HttpClient(handler)
+                {
+                    BaseAddress = new Uri($"{URL}/")
+                };
                 _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 _httpClient.DefaultRequestHeaders.Add("X-chkp-sid", SID);
             }

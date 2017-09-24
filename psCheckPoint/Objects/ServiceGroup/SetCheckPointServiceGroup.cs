@@ -16,6 +16,9 @@ namespace psCheckPoint.Objects.ServiceGroup
     [OutputType(typeof(CheckPointServiceGroup))]
     public class SetCheckPointServiceGroup : SetCheckPointObject<CheckPointServiceGroup>
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "set-service-group"; } }
 
         [JsonProperty(PropertyName = "members", NullValueHandling = NullValueHandling.Ignore)]

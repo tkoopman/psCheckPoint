@@ -13,6 +13,9 @@ namespace psCheckPoint.Session
     [Cmdlet(VerbsCommunications.Send, "CheckPointKeepAlive")]
     public class SendCheckPointKeepAlive : CheckPointCmdlet<CheckPointMessage>
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "keepalive"; } }
     }
 }

@@ -13,6 +13,9 @@ namespace psCheckPoint.Objects.MulticastAddressRange
     [OutputType(typeof(CheckPointMulticastAddressRange))]
     public class GetCheckPointMulticastAddressRange : GetCheckPointObject<CheckPointMulticastAddressRange>
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "show-multicast-address-range"; } }
     }
 }

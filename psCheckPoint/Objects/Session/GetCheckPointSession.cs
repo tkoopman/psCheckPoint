@@ -14,6 +14,9 @@ namespace psCheckPoint.Objects.Session
     [OutputType(typeof(CheckPointSession))]
     public class GetCheckPointSession : CheckPointCmdlet<CheckPointSession>
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "show-session"; } }
 
         /// <summary>

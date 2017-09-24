@@ -14,6 +14,9 @@ namespace psCheckPoint.Objects.ServiceGroup
     [OutputType(typeof(CheckPointServiceGroup))]
     public class GetCheckPointServiceGroup : GetCheckPointObject<CheckPointServiceGroup>
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "show-service-group"; } }
     }
 }

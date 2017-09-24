@@ -8,6 +8,9 @@ namespace psCheckPoint.Objects.AccessRule
     /// </summary>
     public class CheckPointAccessRule : CheckPointObject
     {
+        /// <summary>
+        /// JSON Constructor for Access Rule
+        /// </summary>
         [JsonConstructor]
         private CheckPointAccessRule(string name, string uID, string type, CheckPointDomain domain,
             CheckPointObject action, CheckPointObject[] destination, bool destinationNegate, bool enabled, CheckPointObject inlineLayer, CheckPointObject[] installOn, string layer, CheckPointMetaInfo metaInfo, CheckPointObject[] service, bool serviceNegate, CheckPointObject[] source, bool sourceNegate, CheckPointObject[] time, CheckPointObject[] vPN, string comments) :

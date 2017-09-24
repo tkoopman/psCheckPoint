@@ -34,7 +34,7 @@ $cpNetwork = Set-CheckPointNetwork -Session $Session -Name Test1 -NewName Test2 
 ## PARAMETERS
 
 ### -Broadcast
-{{Fill Broadcast Description}}
+Allow broadcast address inclusion.
 
 ```yaml
 Type: String
@@ -356,6 +356,7 @@ IPv6 network mask length.
 IPv4 network address.
 
 ### System.String
+Allow broadcast address inclusion.
 
 ### System.String[]
 Collection of group identifiers.

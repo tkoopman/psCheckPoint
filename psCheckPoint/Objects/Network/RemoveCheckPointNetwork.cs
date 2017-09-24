@@ -13,6 +13,9 @@ namespace psCheckPoint.Objects.Network
     [Cmdlet(VerbsCommon.Remove, "CheckPointNetwork")]
     public class RemoveCheckPointNetwork : RemoveCheckPointObject<CheckPointMessage>
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "delete-network"; } }
     }
 }

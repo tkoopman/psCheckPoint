@@ -21,7 +21,7 @@ Remove-CheckPointAccessLayer [-Name] <String> [-IgnoreWarnings] [-IgnoreErrors] 
 
 ### ----------  EXAMPLE 1  ----------
 ```
-
+Remove-CheckPointAccessLayer -Session $Session -Name Network
 ```
 
 ## PARAMETERS

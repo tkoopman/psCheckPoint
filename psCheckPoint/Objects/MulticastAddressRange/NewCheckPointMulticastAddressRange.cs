@@ -15,6 +15,9 @@ namespace psCheckPoint.Objects.MulticastAddressRange
     [OutputType(typeof(CheckPointMulticastAddressRange))]
     public class NewCheckPointMulticastAddressRange : NewCheckPointObject<CheckPointMulticastAddressRange>
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "add-multicast-address-range"; } }
 
         /// <summary>
@@ -75,9 +78,12 @@ namespace psCheckPoint.Objects.MulticastAddressRange
 
         private string[] _groups;
 
+        /// <summary>
+        /// Provides a record-by-record processing functionality for the cmdlet.
+        /// </summary>
         protected override void ProcessRecord()
         {
-            // Allow specifing a Single Address Multicast Address Range by only entering a single address
+            // Allow specifying a Single Address Multicast Address Range by only entering a single address
             if (IPAddressFirst != null && IPAddressLast == null) { IPAddressLast = IPAddressFirst; }
             if (IPv4AddressFirst != null && IPv4AddressLast == null) { IPv4AddressLast = IPv4AddressFirst; }
             if (IPv6AddressFirst != null && IPv6AddressLast == null) { IPv6AddressLast = IPv6AddressFirst; }

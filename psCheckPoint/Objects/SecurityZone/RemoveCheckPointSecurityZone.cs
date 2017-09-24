@@ -12,6 +12,9 @@ namespace psCheckPoint.Objects.SecurityZone
     [Cmdlet(VerbsCommon.Remove, "CheckPointSecurityZone")]
     public class RemoveCheckPointSecurityZone : RemoveCheckPointObject<CheckPointMessage>
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "delete-security-zone"; } }
     }
 }

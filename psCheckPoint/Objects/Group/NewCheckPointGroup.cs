@@ -15,6 +15,9 @@ namespace psCheckPoint.Objects.Group
     [OutputType(typeof(CheckPointGroup))]
     public class NewCheckPointGroup : NewCheckPointObject<CheckPointGroup>
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "add-group"; } }
 
         /// <summary>

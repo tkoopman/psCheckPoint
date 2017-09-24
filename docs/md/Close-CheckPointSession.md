@@ -1,7 +1,7 @@
 # Close-CheckPointSession
 
 ## SYNOPSIS
-Log out of a sesison.
+Log out of a session.
 
 ## SYNTAX
 

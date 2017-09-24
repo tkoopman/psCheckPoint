@@ -8,6 +8,9 @@ namespace psCheckPoint.Objects
     /// </summary>
     public abstract class CheckPointObjectFull : CheckPointObject
     {
+        /// <summary>
+        /// JSON Constructor for Common Check Point Object Details
+        /// </summary>
         [JsonConstructor]
         protected CheckPointObjectFull(string name, string uID, string type, CheckPointDomain domain,
             string icon, CheckPointMetaInfo metaInfo, bool readOnly, CheckPointObject[] tags, string color, string comments) :
@@ -60,11 +63,19 @@ namespace psCheckPoint.Objects
         [DefaultValue("")]
         public string Comments { get; private set; }
 
+        /// <summary>
+        /// Conditional Property Serialization for Tags
+        /// </summary>
+        /// <returns>true if Tags should be serialised.</returns>
         public bool ShouldSerializeTags()
         {
             return Tags.Length > 0;
         }
 
+        /// <summary>
+        /// Conditional Property Serialization for Color
+        /// </summary>
+        /// <returns>true if Color should be serialised.</returns>
         public bool ShouldSerializeColor()
         {
             return !(string.IsNullOrWhiteSpace(Color) || Color.Equals("black"));

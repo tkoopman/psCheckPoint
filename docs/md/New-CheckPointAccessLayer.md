@@ -24,7 +24,7 @@ New-CheckPointAccessLayer [-AddDefaultRule <Boolean>] [-ApplicationsAndUrlFilter
 ## PARAMETERS
 
 ### -AddDefaultRule
-Indicates whether to include a cleanup rule in the new layer.
+Indicates whether to include a clean-up rule in the new layer.
 
 ```yaml
 Type: Boolean
@@ -240,7 +240,7 @@ Accept wildcard characters: False
 ## INPUTS
 
 ### System.Boolean
-Indicates whether to include a cleanup rule in the new layer.
+Indicates whether to include a clean-up rule in the new layer.
 
 ### System.Boolean
 Whether to enable Applications and URL Filtering blade on the layer.

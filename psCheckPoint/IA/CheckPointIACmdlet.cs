@@ -34,6 +34,9 @@ namespace psCheckPoint.IA
         [Parameter]
         public SwitchParameter NoCertificateValidation { get; set; }
 
+        /// <summary>
+        /// Provides a one-time, preprocessing functionality for the cmdlet.
+        /// </summary>
         protected override void BeginProcessing()
         {
             if (NoCertificateValidation.IsPresent)

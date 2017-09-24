@@ -8,6 +8,9 @@ namespace psCheckPoint.Objects.Service
     /// </summary>
     public abstract class CheckPointServiceBase : CheckPointService
     {
+        /// <summary>
+        /// JSON Constructor for Common Service Properties
+        /// </summary>
         [JsonConstructor]
         protected CheckPointServiceBase(string name, string uID, string type, CheckPointDomain domain, string icon, CheckPointMetaInfo metaInfo, bool readOnly, CheckPointObject[] tags, string color, string comments,
             CheckPointObject[] groups, bool keepConnectionsOpenAfterPolicyInstallation, bool matchByProtocolSignature, bool matchForAny, bool overrideDefaultSettings, string port, string protocol, int sessionTimeout, string sourcePort, bool syncConnectionsOnCluster, bool useDefaultSessionTimeout) :
@@ -32,7 +35,7 @@ namespace psCheckPoint.Objects.Service
             Comments = comments;
         }
 
-        //TODO aggerssive-aging
+        //TODO aggressive-aging
 
         /// <summary>
         /// <para type="description">How much details are returned depends on the details-level field of the request. This table shows the level of detail shown when details-level is set to standard.</para>
@@ -89,7 +92,7 @@ namespace psCheckPoint.Objects.Service
         public string SourcePort { get; private set; }
 
         /// <summary>
-        /// <para type="description">Enables state-synchronized High Availability or Load Sharing on a ClusterXL or OPSEC-certified cluster.</para>
+        /// <para type="description">Enables state-synchronised High Availability or Load Sharing on a ClusterXL or OPSEC-certified cluster.</para>
         /// </summary>
         [JsonProperty(PropertyName = "sync-connections-on-cluster", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         [DefaultValue(false)]
@@ -102,6 +105,10 @@ namespace psCheckPoint.Objects.Service
         [DefaultValue(false)]
         public bool UseDefaultSessionTimeout { get; private set; }
 
+        /// <summary>
+        /// Conditional Property Serialization for Groups
+        /// </summary>
+        /// <returns>true if Groups should be serialised.</returns>
         public bool ShouldSerializeGroups()
         {
             return Groups.Length > 0;
@@ -146,11 +153,19 @@ namespace psCheckPoint.Objects.Service
         [DefaultValue("")]
         public string Comments { get; private set; }
 
+        /// <summary>
+        /// Conditional Property Serialization for Tags
+        /// </summary>
+        /// <returns>true if Tags should be serialised.</returns>
         public bool ShouldSerializeTags()
         {
             return Tags.Length > 0;
         }
 
+        /// <summary>
+        /// Conditional Property Serialization for Color
+        /// </summary>
+        /// <returns>true if Color should be serialised.</returns>
         public bool ShouldSerializeColor()
         {
             return !(string.IsNullOrWhiteSpace(Color) || Color.Equals("black"));

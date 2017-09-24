@@ -8,6 +8,9 @@ namespace psCheckPoint.Objects
     /// </summary>
     public class CheckPointMetaInfo
     {
+        /// <summary>
+        /// JSON Constructor for Check Point Meta-Info
+        /// </summary>
         [JsonConstructor]
         private CheckPointMetaInfo(CheckPointTime creationTime, string creator, string lastModifier, CheckPointTime lastModifyTime, string @lock, string validationState)
         {
@@ -61,7 +64,7 @@ namespace psCheckPoint.Objects
         /// </summary>
         public override string ToString()
         {
-            return $"{LastModifyTime.asDateTime().ToString()} by {LastModifier}";
+            return $"{LastModifyTime.AsDateTime().ToString()} by {LastModifier}";
         }
     }
 }

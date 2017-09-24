@@ -1,7 +1,7 @@
 # Open-CheckPointSession
 
 ## SYNOPSIS
-Log in to the server with username and password.
+Log in to the server with user name and password.
 
 ## SYNTAX
 
@@ -43,7 +43,7 @@ Accept wildcard characters: False
 ```
 
 ### -Credentials
-PSCredential containing Username and Password.
+PSCredential containing User name and Password.
 If not provided you will be prompted.
 
 ```yaml

@@ -16,6 +16,9 @@ namespace psCheckPoint.Objects.Host
     [OutputType(typeof(CheckPointHost))]
     public class SetCheckPointHost : SetCheckPointObject<CheckPointHost>
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "set-host"; } }
 
         /// <summary>
@@ -23,21 +26,21 @@ namespace psCheckPoint.Objects.Host
         /// </summary>
         [JsonProperty(PropertyName = "ip-address", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string ipAddress { get; set; }
+        public string IPAddress { get; set; }
 
         /// <summary>
         /// <para type="description">IPv4 address.</para>
         /// </summary>
         [JsonProperty(PropertyName = "ipv4-address", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string ipv4Address { get; set; }
+        public string IPv4Address { get; set; }
 
         /// <summary>
         /// <para type="description">IPv6 address.</para>
         /// </summary>
         [JsonProperty(PropertyName = "ipv6-address", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string ipv6Address { get; set; }
+        public string IPv6Address { get; set; }
 
         //TODO interfaces
         //TODO nat-settings

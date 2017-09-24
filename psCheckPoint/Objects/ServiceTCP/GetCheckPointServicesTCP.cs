@@ -14,6 +14,9 @@ namespace psCheckPoint.Objects.ServiceTCP
     [OutputType(typeof(CheckPointObjects<CheckPointService>))]
     public class GetCheckPointServicesTCP : GetCheckPointObjectsBase<CheckPointObjects<CheckPointService>>
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "show-services-tcp"; } }
     }
 }

@@ -7,6 +7,9 @@ namespace psCheckPoint.Objects.ServiceGroup
     /// </summary>
     public class CheckPointServiceGroup : CheckPointObjectFull
     {
+        /// <summary>
+        /// JSON Constructor for Service Group
+        /// </summary>
         [JsonConstructor]
         private CheckPointServiceGroup(string name, string uID, string type, CheckPointDomain domain, string icon, CheckPointMetaInfo metaInfo, bool readOnly, CheckPointObject[] tags, string color, string comments,
             CheckPointObject[] groups, CheckPointObject[] members) :
@@ -28,11 +31,19 @@ namespace psCheckPoint.Objects.ServiceGroup
         [JsonProperty(PropertyName = "members", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         public CheckPointObject[] Members { get; private set; }
 
+        /// <summary>
+        /// Conditional Property Serialization for Groups
+        /// </summary>
+        /// <returns>true if Groups should be serialised.</returns>
         public bool ShouldSerializeGroups()
         {
             return Groups.Length > 0;
         }
 
+        /// <summary>
+        /// Conditional Property Serialization for Members
+        /// </summary>
+        /// <returns>true if Members should be serialised.</returns>
         public bool ShouldSerializeMembers()
         {
             return Members.Length > 0;

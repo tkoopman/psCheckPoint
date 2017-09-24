@@ -8,6 +8,9 @@ namespace psCheckPoint.Objects
     /// </summary>
     public class CheckPointTime
     {
+        /// <summary>
+        /// JSON Constructor for Check Point Time Object
+        /// </summary>
         [JsonConstructor]
         private CheckPointTime(string iSO8601, long posix)
         {
@@ -30,7 +33,7 @@ namespace psCheckPoint.Objects
         /// <summary>
         /// <para type="description">Return as a standard c# DateTime object</para>
         /// </summary>
-        public DateTime asDateTime()
+        public DateTime AsDateTime()
         {
             DateTime result = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
             return result.AddMilliseconds(Posix).ToLocalTime();
@@ -42,7 +45,7 @@ namespace psCheckPoint.Objects
         /// <returns>String of date and time</returns>
         public override string ToString()
         {
-            return this.asDateTime().ToString();
+            return this.AsDateTime().ToString();
         }
     }
 }

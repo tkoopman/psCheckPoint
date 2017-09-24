@@ -8,10 +8,14 @@ namespace psCheckPoint.Objects.AccessLayer
     /// <para type="description"></para>
     /// </summary>
     /// <example>
+    /// <code>Remove-CheckPointAccessLayer -Session $Session -Name Network</code>
     /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointAccessLayer")]
     public class RemoveCheckPointAccessLayer : RemoveCheckPointObject<CheckPointMessage>
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "delete-access-layer"; } }
     }
 }

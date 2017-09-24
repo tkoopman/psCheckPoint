@@ -7,14 +7,14 @@ Edit existing object using object name or uid.
 
 ### By UID
 ```
-Set-CheckPointHost [-ipAddress <String>] [-ipv4Address <String>] [-ipv6Address <String>]
+Set-CheckPointHost [-IPAddress <String>] [-IPv4Address <String>] [-IPv6Address <String>]
  [-GroupAction <MembershipActions>] [-Groups <String[]>] -UID <String> [-NewName <String>] [-Tags <String[]>]
  [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-Color <String>] [-Session] <CheckPointSession>
 ```
 
 ### By Name
 ```
-Set-CheckPointHost [-ipAddress <String>] [-ipv4Address <String>] [-ipv6Address <String>]
+Set-CheckPointHost [-IPAddress <String>] [-IPv4Address <String>] [-IPv6Address <String>]
  [-GroupAction <MembershipActions>] [-Groups <String[]>] [-Name] <String> [-NewName <String>]
  [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-Color <String>]
  [-Session] <CheckPointSession>
@@ -129,7 +129,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ipAddress
+### -IPAddress
 IPv4 or IPv6 address.
 If both addresses are required use ipv4-address and ipv6-address fields explicitly.
 
@@ -145,7 +145,7 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -ipv4Address
+### -IPv4Address
 IPv4 address.
 
 ```yaml
@@ -160,7 +160,7 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -ipv6Address
+### -IPv6Address
 IPv6 address.
 
 ```yaml

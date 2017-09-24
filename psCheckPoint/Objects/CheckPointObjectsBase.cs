@@ -33,11 +33,19 @@ namespace psCheckPoint.Objects
         [JsonProperty(PropertyName = "total", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         public int Total { get; set; }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through the collection of Objects.
+        /// </summary>
+        /// <returns>An IEnumerator object that can be used to iterate through the collection.</returns>
         public IEnumerator<T> GetEnumerator()
         {
             return ((IEnumerable<T>)_Objects).GetEnumerator();
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through the collection of Objects.
+        /// </summary>
+        /// <returns>An IEnumerator object that can be used to iterate through the collection.</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return ((IEnumerable<T>)_Objects).GetEnumerator();

@@ -7,6 +7,9 @@ namespace psCheckPoint.Objects.MulticastAddressRange
     /// </summary>
     public class CheckPointMulticastAddressRange : CheckPointObjectFull
     {
+        /// <summary>
+        /// JSON Constructor for Multicast Address Range
+        /// </summary>
         [JsonConstructor]
         private CheckPointMulticastAddressRange(string name, string uID, string type, CheckPointDomain domain, string icon, CheckPointMetaInfo metaInfo, bool readOnly, CheckPointObject[] tags, string color, string comments,
             CheckPointObject[] groups, string ipv4AddressFirst, string ipv4AddressLast, string ipv6AddressFirst, string ipv6AddressLast) :
@@ -49,6 +52,10 @@ namespace psCheckPoint.Objects.MulticastAddressRange
         [JsonProperty(PropertyName = "ipv6-address-last", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         public string IPv6AddressLast { get; private set; }
 
+        /// <summary>
+        /// Conditional Property Serialization for Groups
+        /// </summary>
+        /// <returns>true if Groups should be serialised.</returns>
         public bool ShouldSerializeGroups()
         {
             return Groups.Length > 0;

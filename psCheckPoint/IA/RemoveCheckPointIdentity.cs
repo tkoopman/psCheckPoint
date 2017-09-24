@@ -47,7 +47,7 @@ namespace psCheckPoint.IA
 
         /// <summary>
         /// <para type="description">Deletes only associations created by the specified identity source.If no value is set for the client-type parameter, or if it is set to any, the gateway deletes all identities associated with the given IP(or IPs)</para>
-        /// <para type="description">Note - When theclient-type is set to vpn(remote access), the gateway deletes all the identities associated with the given IP(or IPs). This is because when you delete an identity associated with an office mode IP, this usually means that this office mode IP is no longer valid.</para>
+        /// <para type="description">Note - When the client-type is set to vpn(remote access), the gateway deletes all the identities associated with the given IP(or IPs). This is because when you delete an identity associated with an office mode IP, this usually means that this office mode IP is no longer valid.</para>
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true)]
         [ValidateSet("any", "captive-portal", "ida-agent", "vpn", "ad-query", "multihost-agent", "radius", "ida-api", "identity-collector", IgnoreCase = true)]
@@ -55,12 +55,18 @@ namespace psCheckPoint.IA
 
         private Batch<RemoveIdentity, RemoveIdentityResponse> batch;
 
+        /// <summary>
+        /// Provides a one-time, preprocessing functionality for the cmdlet.
+        /// </summary>
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
             batch = new Batch<RemoveIdentity, RemoveIdentityResponse>(Gateway, SharedSecret, "delete-identity");
         }
 
+        /// <summary>
+        /// Provides a record-by-record processing functionality for the cmdlet.
+        /// </summary>
         protected override void ProcessRecord()
         {
             string revokeMethod = (IPAddress == null) ? ParameterSetName : null;
@@ -72,6 +78,9 @@ namespace psCheckPoint.IA
             }
         }
 
+        /// <summary>
+        /// Provides a one-time, post-processing functionality for the cmdlet.
+        /// </summary>
         protected override void EndProcessing()
         {
             if (batch.Requests.Count >= 1)
@@ -85,7 +94,7 @@ namespace psCheckPoint.IA
     }
 
     /// <summary>
-    /// Stores identity to be removed ready for serilization to JSON request
+    /// Stores identity to be removed ready for serialization to JSON request
     /// </summary>
     internal class RemoveIdentity
     {

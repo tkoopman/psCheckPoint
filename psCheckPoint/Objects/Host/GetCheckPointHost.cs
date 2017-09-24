@@ -14,6 +14,9 @@ namespace psCheckPoint.Objects.Host
     [OutputType(typeof(CheckPointHost))]
     public class GetCheckPointHost : GetCheckPointObject<CheckPointHost>
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "show-host"; } }
     }
 }

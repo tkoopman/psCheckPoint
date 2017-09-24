@@ -1,6 +1,7 @@
 # Get-CheckPointWhereUsed
 
 ## SYNOPSIS
+Searches for usage of the target object in other objects and rules.
 
 ## SYNTAX
 
@@ -23,16 +24,13 @@ Get-CheckPointWhereUsed -Name <String> [-ByName] [-Indirect] [-IndirectMaxDepth 
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
 
 ## EXAMPLES
 
-### Example 1
+### ----------  EXAMPLE 1  ----------
 ```
-PS C:\> {{ Add example code here }}
+Get-CheckPointWhereUsed -Session $Session -Name http
 ```
-
-{{ Add example description here }}
 
 ## PARAMETERS
 

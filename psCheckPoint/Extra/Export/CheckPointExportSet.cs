@@ -85,51 +85,91 @@ namespace psCheckPoint.Extra.Export
         [JsonProperty(PropertyName = "Other", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         public List<CheckPointObject> Other { get; private set; } = new List<CheckPointObject>();
 
+        /// <summary>
+        /// Conditional Property Serialization for Rules
+        /// </summary>
+        /// <returns>true if Rules should be serialised.</returns>
         public bool ShouldSerializeAccessRules()
         {
             return AccessRules.Count > 0;
         }
 
+        /// <summary>
+        /// Conditional Property Serialization for Address Ranges
+        /// </summary>
+        /// <returns>true if AddressRanges should be serialised.</returns>
         public bool ShouldSerializeAddressRanges()
         {
             return AddressRanges.Count > 0;
         }
 
+        /// <summary>
+        /// Conditional Property Serialization for Groups
+        /// </summary>
+        /// <returns>true if Groups should be serialised.</returns>
         public bool ShouldSerializeGroups()
         {
             return Groups.Count > 0;
         }
 
+        /// <summary>
+        /// Conditional Property Serialization for Groups with Exclusion
+        /// </summary>
+        /// <returns>true if GroupsWithExclusion should be serialised.</returns>
         public bool ShouldSerializeGroupsWithExclusion()
         {
             return GroupsWithExclusion.Count > 0;
         }
 
+        /// <summary>
+        /// Conditional Property Serialization for Hosts
+        /// </summary>
+        /// <returns>true if Hosts should be serialised.</returns>
         public bool ShouldSerializeHosts()
         {
             return Hosts.Count > 0;
         }
 
+        /// <summary>
+        /// Conditional Property Serialization for Multicast Address Ranges
+        /// </summary>
+        /// <returns>true if MulticastAddressRanges should be serialised.</returns>
         public bool ShouldSerializeMulticastAddressRanges()
         {
             return MulticastAddressRanges.Count > 0;
         }
 
+        /// <summary>
+        /// Conditional Property Serialization for Networks
+        /// </summary>
+        /// <returns>true if Networks should be serialised.</returns>
         public bool ShouldSerializeNetworks()
         {
             return Networks.Count > 0;
         }
 
+        /// <summary>
+        /// Conditional Property Serialization for Services
+        /// </summary>
+        /// <returns>true if Services should be serialised.</returns>
         public bool ShouldSerializeServices()
         {
             return Services.Count > 0;
         }
 
+        /// <summary>
+        /// Conditional Property Serialization for Service Groups
+        /// </summary>
+        /// <returns>true if ServiceGroups should be serialised.</returns>
         public bool ShouldSerializeServiceGroups()
         {
             return ServiceGroups.Count > 0;
         }
 
+        /// <summary>
+        /// Conditional Property Serialization for Other
+        /// </summary>
+        /// <returns>true if Other should be serialised.</returns>
         public bool ShouldSerializeOther()
         {
             return Other.Count > 0;

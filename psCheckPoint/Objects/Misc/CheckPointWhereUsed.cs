@@ -13,6 +13,9 @@ namespace psCheckPoint.Objects.Misc
     /// </summary>
     public class CheckPointWhereUsed
     {
+        /// <summary>
+        /// JSON Constructor for Where Used Results Summary
+        /// </summary>
         [JsonConstructor]
         private CheckPointWhereUsed(CheckPointWhereUsedResults usedDirectly, CheckPointWhereUsedResults usedIndirectly)
         {
@@ -34,10 +37,13 @@ namespace psCheckPoint.Objects.Misc
     }
 
     /// <summary>
-    /// <para type="description">Summary of Where Used results</para>
+    /// <para type="description">Summary of Where Used Result Details</para>
     /// </summary>
     public class CheckPointWhereUsedResults
     {
+        /// <summary>
+        /// JSON Constructor for Where Used Result Details
+        /// </summary>
         [JsonConstructor]
         private CheckPointWhereUsedResults(int total, CheckPointObject[] objects, CheckPointWhereUsedRule[] accessControlRules, CheckPointWhereUsedNAT[] nATRules, CheckPointWhereUsedThreatRule[] threatPreventionRules)
         {
@@ -84,6 +90,9 @@ namespace psCheckPoint.Objects.Misc
     /// </summary>
     public class CheckPointWhereUsedRule : ICheckPointObjectSummary
     {
+        /// <summary>
+        /// JSON Constructor for Where Used Rule Results
+        /// </summary>
         [JsonConstructor]
         private CheckPointWhereUsedRule(CheckPointObject rule, string[] ruleColumns, string position, CheckPointObject layer)
         {
@@ -161,6 +170,9 @@ namespace psCheckPoint.Objects.Misc
     /// </summary>
     public class CheckPointWhereUsedNAT : ICheckPointObjectSummary
     {
+        /// <summary>
+        /// JSON Constructor for Where Used NAT Results
+        /// </summary>
         [JsonConstructor]
         private CheckPointWhereUsedNAT(CheckPointObject rule, string[] ruleColumns, string position, CheckPointObject package)
         {
@@ -221,6 +233,9 @@ namespace psCheckPoint.Objects.Misc
     /// </summary>
     public class CheckPointWhereUsedThreatRule : ICheckPointObjectSummary
     {
+        /// <summary>
+        /// JSON Constructor for Where Used Threat Rule Results
+        /// </summary>
         [JsonConstructor]
         private CheckPointWhereUsedThreatRule(CheckPointObject rule, string[] ruleColumns, string position, CheckPointObject layer, string layerPosition, CheckPointObject package)
         {

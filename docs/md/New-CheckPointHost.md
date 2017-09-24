@@ -7,26 +7,26 @@ Create new object.
 
 ### IPv4 or IPv6
 ```
-New-CheckPointHost -ipAddress <String> [-Groups <String[]>] [-SetIfExists] -Name <String> [-Tags <String[]>]
+New-CheckPointHost -IPAddress <String> [-Groups <String[]>] [-SetIfExists] -Name <String> [-Tags <String[]>]
  [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-Color <String>] [-Session] <CheckPointSession>
 ```
 
 ### IPv4 & IPv6
 ```
-New-CheckPointHost -ipv4Address <String> -ipv6Address <String> [-Groups <String[]>] [-SetIfExists]
+New-CheckPointHost -IPv4Address <String> -IPv6Address <String> [-Groups <String[]>] [-SetIfExists]
  -Name <String> [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-Color <String>]
  [-Session] <CheckPointSession>
 ```
 
 ### IPv4
 ```
-New-CheckPointHost -ipv4Address <String> [-Groups <String[]>] [-SetIfExists] -Name <String> [-Tags <String[]>]
+New-CheckPointHost -IPv4Address <String> [-Groups <String[]>] [-SetIfExists] -Name <String> [-Tags <String[]>]
  [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-Color <String>] [-Session] <CheckPointSession>
 ```
 
 ### IPv6
 ```
-New-CheckPointHost -ipv6Address <String> [-Groups <String[]>] [-SetIfExists] -Name <String> [-Tags <String[]>]
+New-CheckPointHost -IPv6Address <String> [-Groups <String[]>] [-SetIfExists] -Name <String> [-Tags <String[]>]
  [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-Color <String>] [-Session] <CheckPointSession>
 ```
 
@@ -119,7 +119,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ipAddress
+### -IPAddress
 IPv4 or IPv6 address.
 If both addresses are required use ipv4-address and ipv6-address fields explicitly.
 
@@ -135,7 +135,7 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -ipv4Address
+### -IPv4Address
 IPv4 address.
 
 ```yaml
@@ -150,7 +150,7 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -ipv6Address
+### -IPv6Address
 IPv6 address.
 
 ```yaml

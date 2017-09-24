@@ -9,12 +9,19 @@ namespace psCheckPoint.Objects.Misc
 {
     /// <api cmd="where-used">Get-CheckPointWhereUsed</api>
     /// <summary>
-    ///
+    /// <para type="synopsis">Searches for usage of the target object in other objects and rules.</para>
+    /// <para type="description"></para>
     /// </summary>
+    /// <example>
+    /// <code>Get-CheckPointWhereUsed -Session $Session -Name http</code>
+    /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointWhereUsed", DefaultParameterSetName = "By Object")]
     [OutputType(typeof(CheckPointWhereUsed))]
     public class GetCheckPointWhereUsed : CheckPointCmdlet<CheckPointWhereUsed>
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "where-used"; } }
 
         /// <summary>
@@ -49,6 +56,7 @@ namespace psCheckPoint.Objects.Misc
         /// <para type="description">Check Point Object.</para>
         /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "By Object", ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
+        [PSDefaultValue(Value = null)]
         public CheckPointObject Object { set { UID = value.UID; } }
 
         /// <summary>
@@ -67,6 +75,13 @@ namespace psCheckPoint.Objects.Misc
         [Parameter]
         public int IndirectMaxDepth { get; set; } = 5;
 
+        /// <summary>
+        /// For running PowerShell Cmdlet from another C# class
+        /// </summary>
+        /// <param name="Session">Open Check Point session that will be used for running command</param>
+        /// <param name="obj">Object to be run against.</param>
+        /// <param name="indirect">Weather to include indirect uses.</param>
+        /// <returns>Object contains results.</returns>
         public static CheckPointWhereUsed Run(CheckPointSession Session, CheckPointObject obj, bool indirect)
         {
             using (PowerShell PSI = PowerShell.Create())

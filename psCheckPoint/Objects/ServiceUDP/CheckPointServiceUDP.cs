@@ -9,6 +9,9 @@ namespace psCheckPoint.Objects.ServiceUDP
     /// </summary>
     public class CheckPointServiceUDP : CheckPointServiceBase
     {
+        /// <summary>
+        /// JSON Constructor for UDP Service
+        /// </summary>
         [JsonConstructor]
         private CheckPointServiceUDP(string name, string uID, string type, CheckPointDomain domain, string icon, CheckPointMetaInfo metaInfo, bool readOnly, CheckPointObject[] tags, string color, string comments, CheckPointObject[] groups, bool keepConnectionsOpenAfterPolicyInstallation, bool matchByProtocolSignature, bool matchForAny, bool overrideDefaultSettings, string port, string protocol, int sessionTimeout, string sourcePort, bool syncConnectionsOnCluster, bool useDefaultSessionTimeout,
             bool acceptReplies) :
@@ -17,6 +20,10 @@ namespace psCheckPoint.Objects.ServiceUDP
             AcceptReplies = acceptReplies;
         }
 
+        /// <summary>
+        /// Converts UDP port to a string
+        /// </summary>
+        /// <returns>String of UDP port</returns>
         public override string ToString()
         {
             return $"{Name} (udp/{Port})";

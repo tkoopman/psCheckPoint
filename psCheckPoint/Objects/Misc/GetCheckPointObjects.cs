@@ -6,12 +6,19 @@ namespace psCheckPoint.Objects.Misc
 {
     /// <api cmd="show-objects">Get-CheckPointObjects</api>
     /// <summary>
-    ///
+    /// <para type="synopsis">Find objects by Filter.</para>
+    /// <para type="description">Can find many different types of objects based on a filter. Filters are same as what can be used in Smart Console</para>
     /// </summary>
+    /// <example>
+    /// <code>Get-CheckPointObjects -Session $Session -Filter "O365 OR Office365"</code>
+    /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointObjects")]
     [OutputType(typeof(CheckPointObjects<CheckPointObject>))]
     public class GetCheckPointObjects : psCheckPoint.Objects.GetCheckPointObjects
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "show-objects"; } }
 
         /// <summary>

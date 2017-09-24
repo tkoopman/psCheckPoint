@@ -380,7 +380,7 @@ namespace psCheckPoint.Extra.Export
 
         private void WhereUsed(CheckPointObject obj, int CurrentDepth)
         {
-            // Only do this if an CheckPointObject was used as inital input
+            // Only do this if an CheckPointObject was used as initial input
             if (CurrentDepth == 0 && !SkipWhereUsed.IsPresent)
             {
                 WriteVerbose($"Performing where-used on {obj.ToString()}");

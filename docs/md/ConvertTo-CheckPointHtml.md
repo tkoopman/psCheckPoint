@@ -23,7 +23,7 @@ ConvertTo-CheckPointHtml [-Export] <CheckPointExportSet> [-Out <String>] [-Open]
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+Pipe results from Export-CheckPointObjects to here to create a HTML report of the exported data.
 
 ## EXAMPLES
 
@@ -37,7 +37,7 @@ Export-CheckPointObjects -Session $Session -Verbose $InputObject | ConvertTo-Che
 ### -EscapeJson
 Escape JSON text before inserting into HTML file.
 
-Automatically turned on if templated uses double quotes to define location for JSON.
+Automatically turned on if template uses double quotes to define location for JSON.
 ("{JSON}")
 
 ```yaml
@@ -70,7 +70,7 @@ Accept wildcard characters: False
 ### -IndentedJson
 Indent the JSON data in the HTML output.
 
-This will force the use of "Template Literals" which requires an ES6 compatibile browser.
+This will force the use of "Template Literals" which requires an ES6 compatible browser.
 (\`{JSON}\`)
 
 ```yaml

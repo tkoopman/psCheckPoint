@@ -9,6 +9,9 @@ namespace psCheckPoint.Objects
     /// </summary>
     public class CheckPointDomain
     {
+        /// <summary>
+        /// JSON Constructor for Domain information
+        /// </summary>
         [JsonConstructor]
         private CheckPointDomain(string name, string uID, string domainType)
         {

@@ -294,7 +294,7 @@ Accept wildcard characters: False
 ```
 
 ### -SyncConnectionsOnCluster
-Enables state-synchronized High Availability or Load Sharing on a ClusterXL or OPSEC-certified cluster.
+Enables state-synchronised High Availability or Load Sharing on a ClusterXL or OPSEC-certified cluster.
 
 ```yaml
 Type: SwitchParameter

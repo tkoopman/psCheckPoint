@@ -8,12 +8,19 @@ namespace psCheckPoint.Objects.ServiceTCP
     /// </summary>
     public class CheckPointServiceTCP : CheckPointServiceBase
     {
+        /// <summary>
+        /// JSON Constructor for TCP Service
+        /// </summary>
         [JsonConstructor]
         private CheckPointServiceTCP(string name, string uID, string type, CheckPointDomain domain, string icon, CheckPointMetaInfo metaInfo, bool readOnly, CheckPointObject[] tags, string color, string comments, CheckPointObject[] groups, bool keepConnectionsOpenAfterPolicyInstallation, bool matchByProtocolSignature, bool matchForAny, bool overrideDefaultSettings, string port, string protocol, int sessionTimeout, string sourcePort, bool syncConnectionsOnCluster, bool useDefaultSessionTimeout) :
             base(name, uID, type, domain, icon, metaInfo, readOnly, tags, color, comments, groups, keepConnectionsOpenAfterPolicyInstallation, matchByProtocolSignature, matchForAny, overrideDefaultSettings, port, protocol, sessionTimeout, sourcePort, syncConnectionsOnCluster, useDefaultSessionTimeout)
         {
         }
 
+        /// <summary>
+        /// Converts TCP port to a string
+        /// </summary>
+        /// <returns>String of TCP port</returns>
         public override string ToString()
         {
             return $"{Name} (tcp/{Port})";

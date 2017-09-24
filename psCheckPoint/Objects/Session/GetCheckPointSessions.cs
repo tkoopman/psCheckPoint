@@ -14,11 +14,17 @@ namespace psCheckPoint.Objects.Session
     [OutputType(typeof(CheckPointObjects<CheckPointObject>))]
     public class GetCheckPointSessions : GetCheckPointObjects
     {
+        /// <summary>
+        /// Default constructor the changes GetCheckPointObjects.DetailsLevel default setting
+        /// </summary>
         public GetCheckPointSessions()
         {
             DetailsLevel = "full";
         }
 
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "show-sessions"; } }
 
         /// <summary>

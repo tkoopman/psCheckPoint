@@ -11,7 +11,7 @@ namespace psCheckPoint.Session
 {
     /// <api cmd="login">Open-CheckPointSession</api>
     /// <summary>
-    /// <para type="synopsis">Log in to the server with username and password.</para>
+    /// <para type="synopsis">Log in to the server with user name and password.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
@@ -35,7 +35,7 @@ namespace psCheckPoint.Session
         public int ManagementPort { get; set; } = 443;
 
         /// <summary>
-        /// <para type="description">PSCredential containing Username and Password. If not provided you will be prompted.</para>
+        /// <para type="description">PSCredential containing User name and Password. If not provided you will be prompted.</para>
         /// </summary>
         [Parameter(Position = 1, Mandatory = true)]
         public PSCredential Credentials { get; set; }
@@ -119,6 +119,9 @@ namespace psCheckPoint.Session
         [Parameter]
         public SwitchParameter NoCompression { get; set; }
 
+        /// <summary>
+        /// Provides a record-by-record processing functionality for the cmdlet.
+        /// </summary>
         protected override void ProcessRecord()
         {
             User = Credentials.GetNetworkCredential().UserName;

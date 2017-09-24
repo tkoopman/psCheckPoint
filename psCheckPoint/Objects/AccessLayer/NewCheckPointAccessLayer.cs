@@ -16,10 +16,13 @@ namespace psCheckPoint.Objects.AccessLayer
     [OutputType(typeof(CheckPointAccessLayer))]
     public class NewCheckPointAccessLayer : NewCheckPointCmdlet<CheckPointAccessLayer>
     {
+        /// <summary>
+        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// </summary>
         public override string Command { get { return "add-access-layer"; } }
 
         /// <summary>
-        /// <para type="description">Indicates whether to include a cleanup rule in the new layer.</para>
+        /// <para type="description">Indicates whether to include a clean-up rule in the new layer.</para>
         /// </summary>
         [JsonProperty(PropertyName = "add-default-rule", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         [DefaultValue(true)]
