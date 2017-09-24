@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace psCheckPointIA
+namespace psCheckPoint.IA
 {
     [JsonObject(MemberSerialization.OptIn)]
     internal class Batch<RequestType, ResponseType> : IDisposable

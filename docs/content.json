@@ -1757,5 +1757,26 @@
         "SubChapters": []
       }
     ]
+  },
+  {
+    "Name": "Identity Awareness",
+    "Cmdlets": [
+      {
+        "Name": "add-identity",
+        "Class": "AddCheckPointIdentity",
+        "Cmdlet": "Add-CheckPointIdentity"
+      },
+      {
+        "Name": "delete-identity",
+        "Class": "RemoveCheckPointIdentity",
+        "Cmdlet": "Remove-CheckPointIdentity"
+      },
+      {
+        "Name": "show-identity",
+        "Class": "GetCheckPointIdentity",
+        "Cmdlet": "Get-CheckPointIdentity"
+      }
+    ],
+    "SubChapters": []
   }
 ]

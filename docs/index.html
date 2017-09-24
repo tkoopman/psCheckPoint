@@ -53,6 +53,7 @@
     <div class="jumbotron">
         <h1>Welcome to psCheckPoint</h1>
         <p>The PowerShell module that implements the Check Point Web APIs and more!</p>
+        <p>Contains PowerShell commands for R80.10 Management API and Firewall Identity Awareness API!</p>
     </div>
 
     <div class="panel panel-primary">
@@ -86,15 +87,21 @@
                 </div>
             </div>
         </div>
+        <div class="panel-body col-md-3">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Installation</h3>
+                </div>
+                <div class="panel panel-primary">
+                    <code>Install-Module -Name psCheckPoint [-Scope CurrentUser]</code>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="Scripts/jquery-3.2.1.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="Scripts/bootstrap.min.js"></script>
-        <script src="Scripts/pscp-menu.js"></script>
-        <script>
-            createMenu("Cmdlet", "extra-content.json");
-            ShowContent(urlParams.get("Content"));
-        </script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="Scripts/jquery-3.2.1.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="Scripts/bootstrap.min.js"></script>
 </body>
 </html>

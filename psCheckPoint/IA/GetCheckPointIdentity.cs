@@ -1,8 +1,59 @@
 ﻿using Newtonsoft.Json;
 using System.Management.Automation;
 
-namespace psCheckPointIA
+namespace psCheckPoint.IA
 {
+    /// <IA cmd="show-identity">Get-CheckPointIdentity</IA>
+    /// <summary>
+    /// <para type="synopsis">Queries the Identity Awareness associations of a given IP.</para>
+    /// <para type="description"></para>
+    /// </summary>
+    /// <example>
+    ///   <code>Get-CheckPointIdentity -Gateway 192.168.1.1 -SharedSecret *** -NoCertificateValidation -IPAddress 192.168.1.2</code>
+    /// </example>
+    [Cmdlet(VerbsCommon.Get, "CheckPointIdentity")]
+    [OutputType(typeof(AddIdentityResponse))]
+    public class GetCheckPointIdentity : CheckPointIACmdlet
+    {
+        /// <summary>
+        /// <para type="description">Identity IP</para>
+        /// </summary>
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
+        public string IPAddress { get; set; }
+
+        private Batch<GetIdentity, GetIdentityResponse> batch;
+
+        protected override void BeginProcessing()
+        {
+            base.BeginProcessing();
+            batch = new Batch<GetIdentity, GetIdentityResponse>(Gateway, SharedSecret, "show-identity");
+        }
+
+        protected override void ProcessRecord()
+        {
+            batch.Requests.Add(new GetIdentity(IPAddress));
+            if (batch.Requests.Count >= BatchSize)
+            {
+                batch.Post(this);
+                batch.Clear();
+            }
+        }
+
+        protected override void EndProcessing()
+        {
+            if (batch.Requests.Count >= 1)
+            {
+                batch.Post(this);
+            }
+
+            batch.Dispose();
+            batch = null;
+        }
+    }
+
+    /// <summary>
+    /// Stores identity IP to get ready for serilization to JSON request.
+    /// </summary>
     internal class GetIdentity
     {
         public GetIdentity(string iPAddress)
@@ -98,49 +149,5 @@ namespace psCheckPointIA
         /// </summary>
         [JsonProperty(PropertyName = "identity-source")]
         public string IdentitySource { get; set; }
-    }
-
-    /// <summary>
-    /// <para type="synopsis">Queries the Identity Awareness associations of a given IP.</para>
-    /// <para type="description"></para>
-    /// </summary>
-    [Cmdlet(VerbsCommon.Get, "CheckPointIdentity")]
-    [OutputType(typeof(AddIdentityResponse))]
-    public class GetCheckPointIdentity : CheckPointIACmdlet
-    {
-        /// <summary>
-        /// <para type="description">Identity IP</para>
-        /// </summary>
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
-        public string IPAddress { get; set; }
-
-        private Batch<GetIdentity, GetIdentityResponse> batch;
-
-        protected override void BeginProcessing()
-        {
-            base.BeginProcessing();
-            batch = new Batch<GetIdentity, GetIdentityResponse>(Gateway, SharedSecret, "show-identity");
-        }
-
-        protected override void ProcessRecord()
-        {
-            batch.Requests.Add(new GetIdentity(IPAddress));
-            if (batch.Requests.Count >= BatchSize)
-            {
-                batch.Post(this);
-                batch.Clear();
-            }
-        }
-
-        protected override void EndProcessing()
-        {
-            if (batch.Requests.Count >= 1)
-            {
-                batch.Post(this);
-            }
-
-            batch.Dispose();
-            batch = null;
-        }
     }
 }

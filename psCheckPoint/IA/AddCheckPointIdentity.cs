@@ -2,99 +2,16 @@
 using System;
 using System.Management.Automation;
 
-namespace psCheckPointIA
+namespace psCheckPoint.IA
 {
-    internal class Identity
-    {
-        public Identity(string iPAddress, string user, string machine, string domain, int sessionTimeout, SwitchParameter noFetchUserGroups, SwitchParameter noFetchMachineGroups, string[] userGroups, string[] machineGroups, SwitchParameter noCalculateRoles, string[] roles, string machineOS, string hostType)
-        {
-            IPAddress = iPAddress;
-            User = user;
-            Machine = machine;
-            Domain = domain;
-            SessionTimeout = sessionTimeout;
-            NoFetchUserGroups = noFetchUserGroups;
-            NoFetchMachineGroups = noFetchMachineGroups;
-            UserGroups = userGroups;
-            MachineGroups = machineGroups;
-            NoCalculateRoles = noCalculateRoles;
-            Roles = roles;
-            MachineOS = machineOS;
-            HostType = hostType;
-        }
-
-        [JsonProperty(PropertyName = "ip-address")]
-        public string IPAddress { get; set; }
-
-        [JsonProperty(PropertyName = "user", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public string User { get; set; }
-
-        [JsonProperty(PropertyName = "machine", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public string Machine { get; set; }
-
-        [JsonProperty(PropertyName = "domain", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public string Domain { get; set; }
-
-        [JsonProperty(PropertyName = "session-timeout", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public int SessionTimeout { get; set; } = 43200;
-
-        [JsonProperty(PropertyName = "fetch-user-groups", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [JsonConverter(typeof(SwitchJsonConverter))]
-        public SwitchParameter NoFetchUserGroups { get; set; }
-
-        [JsonProperty(PropertyName = "fetch-machine-groups", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [JsonConverter(typeof(SwitchJsonConverter))]
-        public SwitchParameter NoFetchMachineGroups { get; set; }
-
-        [JsonProperty(PropertyName = "user-groups", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public string[] UserGroups { get; set; }
-
-        [JsonProperty(PropertyName = "machine-groups", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public string[] MachineGroups { get; set; }
-
-        [JsonProperty(PropertyName = "calculate-roles", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [JsonConverter(typeof(SwitchJsonConverter))]
-        public SwitchParameter NoCalculateRoles { get; set; }
-
-        [JsonProperty(PropertyName = "roles", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public string[] Roles { get; set; }
-
-        [JsonProperty(PropertyName = "machine-os", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public string MachineOS { get; set; }
-
-        [JsonProperty(PropertyName = "host-type", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public string HostType { get; set; }
-    }
-
-    /// <summary>
-    /// <para type="synopsis">Response from Add-CheckPointIdentity</para>
-    /// <para type="description"></para>
-    /// </summary>
-    public class AddIdentityResponse
-    {
-        /// <summary>
-        /// <para type="description">Created IPv4 identity</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ipv4-address")]
-        public string IPv4Address { get; set; }
-
-        /// <summary>
-        /// <para type="description">Created IPv6 identity</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ipv6-address")]
-        public string IPv6Address { get; set; }
-
-        /// <summary>
-        /// <para type="description">Textual description of the command’s result</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
-    }
-
+    /// <IA cmd="add-identity">Add-CheckPointIdentity</IA>
     /// <summary>
     /// <para type="synopsis">Creates a new Identity Awareness association for a specified IP address.</para>
     /// <para type="description"></para>
     /// </summary>
+    /// <example>
+    ///   <code>Add-CheckPointIdentity -Gateway 192.168.1.1 -SharedSecret *** -NoCertificateValidation -IPAddress 192.168.1.2 -NoFetchUserGroups -NoFetchMachineGroups -NoCalculateRoles -User "Test User" -Machine "Test Machine" -Roles "Test Role"</code>
+    /// </example>
     [Cmdlet(VerbsCommon.Add, "CheckPointIdentity")]
     [OutputType(typeof(AddIdentityResponse))]
     public class AddCheckPointIdentity : CheckPointIACmdlet
@@ -242,5 +159,95 @@ namespace psCheckPointIA
                 return values;
             }
         }
+    }
+
+    /// <summary>
+    /// Stores identity to be sent ready for serilization to JSON request.
+    /// </summary>
+    internal class Identity
+    {
+        public Identity(string iPAddress, string user, string machine, string domain, int sessionTimeout, SwitchParameter noFetchUserGroups, SwitchParameter noFetchMachineGroups, string[] userGroups, string[] machineGroups, SwitchParameter noCalculateRoles, string[] roles, string machineOS, string hostType)
+        {
+            IPAddress = iPAddress;
+            User = user;
+            Machine = machine;
+            Domain = domain;
+            SessionTimeout = sessionTimeout;
+            NoFetchUserGroups = noFetchUserGroups;
+            NoFetchMachineGroups = noFetchMachineGroups;
+            UserGroups = userGroups;
+            MachineGroups = machineGroups;
+            NoCalculateRoles = noCalculateRoles;
+            Roles = roles;
+            MachineOS = machineOS;
+            HostType = hostType;
+        }
+
+        [JsonProperty(PropertyName = "ip-address")]
+        public string IPAddress { get; set; }
+
+        [JsonProperty(PropertyName = "user", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string User { get; set; }
+
+        [JsonProperty(PropertyName = "machine", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string Machine { get; set; }
+
+        [JsonProperty(PropertyName = "domain", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string Domain { get; set; }
+
+        [JsonProperty(PropertyName = "session-timeout", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public int SessionTimeout { get; set; } = 43200;
+
+        [JsonProperty(PropertyName = "fetch-user-groups", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonConverter(typeof(SwitchJsonConverter))]
+        public SwitchParameter NoFetchUserGroups { get; set; }
+
+        [JsonProperty(PropertyName = "fetch-machine-groups", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonConverter(typeof(SwitchJsonConverter))]
+        public SwitchParameter NoFetchMachineGroups { get; set; }
+
+        [JsonProperty(PropertyName = "user-groups", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string[] UserGroups { get; set; }
+
+        [JsonProperty(PropertyName = "machine-groups", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string[] MachineGroups { get; set; }
+
+        [JsonProperty(PropertyName = "calculate-roles", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonConverter(typeof(SwitchJsonConverter))]
+        public SwitchParameter NoCalculateRoles { get; set; }
+
+        [JsonProperty(PropertyName = "roles", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string[] Roles { get; set; }
+
+        [JsonProperty(PropertyName = "machine-os", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string MachineOS { get; set; }
+
+        [JsonProperty(PropertyName = "host-type", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string HostType { get; set; }
+    }
+
+    /// <summary>
+    /// <para type="synopsis">Response from Add-CheckPointIdentity</para>
+    /// <para type="description"></para>
+    /// </summary>
+    public class AddIdentityResponse
+    {
+        /// <summary>
+        /// <para type="description">Created IPv4 identity</para>
+        /// </summary>
+        [JsonProperty(PropertyName = "ipv4-address")]
+        public string IPv4Address { get; set; }
+
+        /// <summary>
+        /// <para type="description">Created IPv6 identity</para>
+        /// </summary>
+        [JsonProperty(PropertyName = "ipv6-address")]
+        public string IPv6Address { get; set; }
+
+        /// <summary>
+        /// <para type="description">Textual description of the command’s result</para>
+        /// </summary>
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; set; }
     }
 }

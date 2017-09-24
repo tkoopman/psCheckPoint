@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "psCheckPoint", "psCheckPoint\psCheckPoint.csproj", "{4FF88B87-441A-4419-91C7-13041E60D0C0}"
 EndProject
 Project("{F5034706-568F-408A-B7B3-4D38C6DB8A32}") = "Examples", "Examples\Examples.pssproj", "{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "psCheckPointIA", "psCheckPointIA\psCheckPointIA.csproj", "{9DA03E78-8C36-47CC-BA77-256EB0A1992F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocGen", "DocGen\DocGen.csproj", "{162C6C86-5420-4B2D-99BE-60BB9CB68851}"
 EndProject
@@ -47,10 +45,6 @@ Global
 		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9DA03E78-8C36-47CC-BA77-256EB0A1992F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9DA03E78-8C36-47CC-BA77-256EB0A1992F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9DA03E78-8C36-47CC-BA77-256EB0A1992F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9DA03E78-8C36-47CC-BA77-256EB0A1992F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{162C6C86-5420-4B2D-99BE-60BB9CB68851}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{162C6C86-5420-4B2D-99BE-60BB9CB68851}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{162C6C86-5420-4B2D-99BE-60BB9CB68851}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -14,7 +14,6 @@ namespace DocGen
     internal class content_json
     {
         private static Dictionary<string, APICmdlet> cmds;
-        private static Dictionary<string, ExtraCmdlet> extraCmds;
 
         private static void Main(string[] args)
         {
@@ -51,6 +50,7 @@ namespace DocGen
                         string strJson = response.Content.ReadAsStringAsync().Result;
 
                         dynamic content = JsonConvert.DeserializeObject(strJson);
+
                         foreach (dynamic chapter in content["chapters"])
                         {
                             ProcessChapter(chapter, output);
@@ -72,13 +72,30 @@ namespace DocGen
                 }
             }
 
+            AppendIAContentJson(output);
+
             // Output results to file
             File.WriteAllText($@"{path}\content.json", JsonConvert.SerializeObject(output.SubChapters, Formatting.Indented));
         }
 
+        private static void AppendIAContentJson(OutputChapter output)
+        {
+            Dictionary<string, APICmdlet> iaCmds = getImplementedIACmdlets();
+
+            var list = iaCmds.Keys.ToList();
+            list.Sort();
+
+            OutputChapter current = new OutputChapter("Identity Awareness", output);
+            foreach (string i in list)
+            {
+                Console.WriteLine(iaCmds[i].cmdlet);
+                new OutputCmdlet(current, iaCmds[i].apicmd, iaCmds[i].type.Name, iaCmds[i].cmdlet);
+            }
+        }
+
         private static void CreateExtraContentJson(string path)
         {
-            extraCmds = getImplementedExtraCmdlets();
+            Dictionary<string, ExtraCmdlet> extraCmds = getImplementedExtraCmdlets();
             OutputChapter output = new OutputChapter("chapters");
 
             var list = extraCmds.Keys.ToList();
@@ -184,6 +201,34 @@ namespace DocGen
                     string cmdlet = api.Value;
 
                     cmds[category + '/' + cmdlet] = new ExtraCmdlet(category, cmdlet, t);
+                }
+            }
+
+            return cmds;
+        }
+
+        private static Dictionary<string, APICmdlet> getImplementedIACmdlets()
+        {
+            XDocument doc = XDocument.Parse(File.ReadAllText("psCheckPoint.xml"));
+
+            List<XElement> members = doc.Descendants("members").Descendants("member")
+                        .Where(c => c.Descendants("IA").Any())
+                        .ToList();
+
+            Dictionary<string, APICmdlet> cmds = new Dictionary<string, APICmdlet>();
+
+            foreach (XElement member in members)
+            {
+                string fullClassName = member.Attribute("name").Value.Split(':').Last();
+                Assembly asm = typeof(CheckPointSession).Assembly;
+                Type t = asm.GetType(fullClassName);
+
+                foreach (XElement api in member.Descendants("IA"))
+                {
+                    string cmd = api.Attribute("cmd").Value;
+                    string cmdlet = api.Value;
+
+                    cmds[cmd] = new APICmdlet(cmd, cmdlet, t);
                 }
             }
 

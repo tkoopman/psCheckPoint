@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Security;
 
-namespace psCheckPointIA
+namespace psCheckPoint.IA
 {
     /// <summary>
     /// <para type="synopsis">Queries the Identity Awareness associations of a given IP.</para>

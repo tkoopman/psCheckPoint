@@ -2,7 +2,7 @@
 using System;
 using System.Management.Automation;
 
-namespace psCheckPointIA
+namespace psCheckPoint.IA
 {
     /// <summary>
     /// Handles converting JSON string values into a System.Management.Automation.SwitchParameter data type.
@@ -10,8 +10,6 @@ namespace psCheckPointIA
     /// </summary>
     public class SwitchJsonConverter : JsonConverter
     {
-        #region Overrides of JsonConverter
-
         /// <summary>
         /// Determines whether this instance can convert the specified object type.
         /// </summary>
@@ -60,7 +58,5 @@ namespace psCheckPointIA
             int output = (((SwitchParameter)value).IsPresent) ? 0 : 1;
             serializer.Serialize(writer, output);
         }
-
-        #endregion Overrides of JsonConverter
     }
 }
