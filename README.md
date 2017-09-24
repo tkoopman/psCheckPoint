@@ -6,3 +6,7 @@ Documentation can be found at https://tkoopman.github.io/psCheckPoint/
 
 # Installation
 `Install-Module -Name psCheckPoint [-Scope CurrentUser]`
+
+NOTE: If you have psCheckPointIA module installed, uninstall before installing psCheckPoint v0.5.0+ as they have been merged into the one module, and psCheckPointIA is now deprecated. 
+
+`Uninstall-Module psCheckPointIA`
