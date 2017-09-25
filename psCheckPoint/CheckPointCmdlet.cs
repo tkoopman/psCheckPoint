@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using psCheckPoint.Objects;
+using psCheckPoint.Objects.AccessRule;
 using psCheckPoint.Objects.Misc;
 using psCheckPoint.Session;
 using System;
@@ -67,6 +68,16 @@ namespace psCheckPoint
             }
             else if (result is CheckPointWhereUsed)
             {
+                WriteObject(result);
+            }
+            else if (result is CheckPointAccessRuleBase)
+            {
+                CheckPointAccessRuleBase ruleBase = (result as CheckPointAccessRuleBase);
+                foreach (CheckPointAccessRuleSummary rule in ruleBase.RuleBase)
+                {
+                    rule.Layer = ruleBase.UID;
+                }
+
                 WriteObject(result);
             }
             else if (result is CheckPointObject)

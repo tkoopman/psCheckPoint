@@ -71,7 +71,10 @@
     <Compile Include="Objects\AccessLayer\NewCheckPointAccessLayer.cs" />
     <Compile Include="Objects\AccessLayer\RemoveCheckPointAccessLayer.cs" />
     <Compile Include="Objects\AccessLayer\SetCheckPointAccessLayer.cs" />
+    <Compile Include="Objects\AccessRule\CheckPointAccessRuleBase.cs" />
+    <Compile Include="Objects\AccessRule\CheckPointAccessRuleSummary.cs" />
     <Compile Include="Objects\AccessRule\CheckPointAccessRule.cs" />
+    <Compile Include="Objects\AccessRule\GetCheckPointAccessRuleBase.cs" />
     <Compile Include="Objects\AccessRule\GetCheckPointAccessRule.cs" />
     <Compile Include="CheckPointCmdlet.cs" />
     <Compile Include="CheckPointMessage.cs" />

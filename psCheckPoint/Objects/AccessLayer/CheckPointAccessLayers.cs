@@ -12,6 +12,6 @@ namespace psCheckPoint.Objects.AccessLayer
         /// <para type="description">How much details are returned depends on the details-level field of the request. This table shows the level of detail shown when details-level is set to standard.</para>
         /// </summary>
         [JsonProperty(PropertyName = "access-layers")]
-        public List<CheckPointAccessLayer> AccessLayers { get { return _Objects; } set { _Objects = value; } }
+        public List<CheckPointAccessLayer> AccessLayers { get { return _Objects; } private set { _Objects = value; } }
     }
 }

@@ -107,15 +107,14 @@ namespace psCheckPoint.Objects
         /// </summary>
         /// <param name="Session">Current session used to get full details</param>
         /// <returns>Full details of object. If psCheckPoint doesn't implement the commands to get the full details of this object yet, returns this. If object not found then returns null.</returns>
-        public CheckPointObject ToFullObj(CheckPointSession Session)
+        public virtual CheckPointObject ToFullObj(CheckPointSession Session)
         {
             CheckPointObject r;
             switch (this.Type)
             {
                 case "access-rule":
                     {
-                        // Unable to get full object from CheckPointObject as also need to know Layer
-                        // This means it must already be a full access-rule object
+                        // Should never hit here as method overridden by CheckPointAccessRuleSummary
                         return this;
                     }
                 case "address-range":

@@ -94,7 +94,7 @@ namespace psCheckPoint.Objects.Misc
         /// JSON Constructor for Where Used Rule Results
         /// </summary>
         [JsonConstructor]
-        private CheckPointWhereUsedRule(CheckPointObject rule, string[] ruleColumns, string position, CheckPointObject layer)
+        private CheckPointWhereUsedRule(CheckPointObject rule, string[] ruleColumns, int position, CheckPointObject layer)
         {
             Rule = rule;
             RuleColumns = ruleColumns;
@@ -118,7 +118,7 @@ namespace psCheckPoint.Objects.Misc
         /// <para type="description">Rule position</para>
         /// </summary>
         [JsonProperty(PropertyName = "position", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        public string Position { get; private set; }
+        public int Position { get; private set; }
 
         /// <summary>
         /// <para type="description">Summary of Layer rule exists in.</para>
@@ -144,7 +144,20 @@ namespace psCheckPoint.Objects.Misc
                 PSI.AddParameter("Layer", this.Layer.UID);
 
                 Collection<CheckPointAccessRule> results = PSI.Invoke<CheckPointAccessRule>();
-                return results.First();
+
+                // Because the standard API call show-access-rule does not return rule number
+                // Keep rule number from summary if it exists from API call where-used.
+                CheckPointObject obj = results.First();
+                if (obj is CheckPointAccessRuleSummary)
+                {
+                    CheckPointAccessRuleSummary rule = (obj as CheckPointAccessRuleSummary);
+                    if (rule.RuleNumber == 0)
+                    {
+                        rule.RuleNumber = this.Position;
+                    }
+                }
+
+                return obj;
             }
         }
 

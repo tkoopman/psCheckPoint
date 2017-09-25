@@ -6,23 +6,21 @@ namespace psCheckPoint.Objects.AccessRule
     /// <summary>
     /// <para type="description">Details of a Check Point Access Rule</para>
     /// </summary>
-    public class CheckPointAccessRule : CheckPointObject
+    public class CheckPointAccessRule : CheckPointAccessRuleSummary
     {
         /// <summary>
         /// JSON Constructor for Access Rule
         /// </summary>
         [JsonConstructor]
-        private CheckPointAccessRule(string name, string uID, string type, CheckPointDomain domain,
-            CheckPointObject action, CheckPointObject[] destination, bool destinationNegate, bool enabled, CheckPointObject inlineLayer, CheckPointObject[] installOn, string layer, CheckPointMetaInfo metaInfo, CheckPointObject[] service, bool serviceNegate, CheckPointObject[] source, bool sourceNegate, CheckPointObject[] time, CheckPointObject[] vPN, string comments) :
-            base(name, uID, type, domain)
+        private CheckPointAccessRule(string name, string uID, string type, CheckPointDomain domain, bool enabled, string layer, int ruleNumber,
+            CheckPointObject action, CheckPointObject[] destination, bool destinationNegate, CheckPointObject inlineLayer, CheckPointObject[] installOn, CheckPointMetaInfo metaInfo, CheckPointObject[] service, bool serviceNegate, CheckPointObject[] source, bool sourceNegate, CheckPointObject[] time, CheckPointObject[] vPN, string comments) :
+            base(name, uID, type, domain, enabled, layer, ruleNumber)
         {
             Action = action;
             Destination = destination;
             DestinationNegate = destinationNegate;
-            Enabled = enabled;
             InlineLayer = inlineLayer;
             InstallOn = installOn;
-            Layer = layer;
             MetaInfo = metaInfo;
             Service = service;
             ServiceNegate = serviceNegate;
@@ -58,13 +56,6 @@ namespace psCheckPoint.Objects.AccessRule
         [DefaultValue(false)]
         public bool DestinationNegate { get; private set; }
 
-        /// <summary>
-        /// <para type="description">Enable/Disable the rule.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "enabled", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        [DefaultValue(false)]
-        public bool Enabled { get; private set; }
-
         //TODO hits
 
         /// <summary>
@@ -78,13 +69,6 @@ namespace psCheckPoint.Objects.AccessRule
         /// </summary>
         [JsonProperty(PropertyName = "install-on", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         public CheckPointObject[] InstallOn { get; private set; }
-
-        /// <summary>
-        /// <para type="description">N/A</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "layer", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        [DefaultValue("")]
-        public string Layer { get; private set; }
 
         /// <summary>
         /// <para type="description">Object metadata.</para>
