@@ -1,5 +1,17 @@
 ﻿var menuCount = 1;
-var urlParams = new URLSearchParams(window.location.search);
+var urlParams;
+(window.onpopstate = function () {
+    var match,
+        pl     = /\+/g,  // Regex for replacing addition symbol with a space
+        search = /([^&=]+)=?([^&]*)/g,
+        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+        query  = window.location.search.substring(1);
+
+    urlParams = {};
+    while (match = search.exec(query))
+       urlParams[decode(match[1])] = decode(match[2]);
+})();
+
 var displayName;
 
 function createMenu(jsonTitle, jsonFile = "content.json") {
@@ -15,7 +27,7 @@ function createMenu(jsonTitle, jsonFile = "content.json") {
                     ProcessChapter(chapter, menu, "", false);
                 }
 
-                SetActiveMenu(urlParams.get("Menu"));
+                SetActiveMenu(urlParams["Menu"]);
             }
         }
     };
@@ -92,7 +104,7 @@ function makeSafeName(name) {
 }
 
 function ShowContent() {
-    var name = urlParams.get("Content");
+    var name = urlParams["Content"];
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
