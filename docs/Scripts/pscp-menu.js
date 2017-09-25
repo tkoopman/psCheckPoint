@@ -14,7 +14,7 @@ var urlParams;
 
 var displayName;
 
-function createMenu(jsonTitle, jsonFile = "content.json") {
+function createMenu(jsonTitle, jsonFile) {
     displayName = jsonTitle;
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
