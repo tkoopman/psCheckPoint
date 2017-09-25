@@ -69,7 +69,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### psCheckPoint.Objects.CheckPointObjects`1[[psCheckPoint.Objects.AccessLayer.CheckPointAccessLayer, psCheckPoint, Version=0.5.0.0, Culture=neutral, PublicKeyToken=null]]
+### psCheckPoint.Objects.CheckPointObjects`1[[psCheckPoint.Objects.AccessLayer.CheckPointAccessLayer, psCheckPoint, Version=0.5.1.0, Culture=neutral, PublicKeyToken=null]]
 Result from commands that return multiple objects.
 
 ## NOTES

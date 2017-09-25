@@ -1031,8 +1031,8 @@
           },
           {
             "Name": "show-access-rulebase",
-            "Class": null,
-            "Cmdlet": null
+            "Class": "GetCheckPointAccessRuleBase",
+            "Cmdlet": "Get-CheckPointAccessRuleBase"
           },
           {
             "Name": "show-access-rule",
