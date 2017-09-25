@@ -77,7 +77,7 @@ function ProcessCmdlet(cmdlet, menu, location) {
     var m = document.createElement("LI");
     m.id = makeSafeName(cmdlet["Name"]);
     m.className = "cmdlet"
-    if (m.id === urlParams.get("API")) {
+    if (m.id === urlParams["API"]) {
         m.className += " active";
     }
 
