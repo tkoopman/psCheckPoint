@@ -91,8 +91,8 @@ function makeSafeName(name) {
     return name.replace(/[^a-z0-9]/g, '');
 }
 
-function ShowContent(name) {
-    if (name === null) { return; }
+function ShowContent() {
+    var name = urlParams.get("Content");
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
