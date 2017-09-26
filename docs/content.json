@@ -1644,13 +1644,13 @@
       },
       {
         "Name": "show-task",
-        "Class": null,
-        "Cmdlet": null
+        "Class": "GetCheckPointTask",
+        "Cmdlet": "Get-CheckPointTask"
       },
       {
         "Name": "run-script",
-        "Class": null,
-        "Cmdlet": null
+        "Class": "InvokeCheckPointScript",
+        "Cmdlet": "Invoke-CheckPointScript"
       },
       {
         "Name": "show-unused-objects",
@@ -1694,8 +1694,8 @@
       },
       {
         "Name": "show-commands",
-        "Class": null,
-        "Cmdlet": null
+        "Class": "GetCheckPointCommands",
+        "Cmdlet": "Get-CheckPointCommands"
       },
       {
         "Name": "put-file",

@@ -87,9 +87,13 @@
     <Compile Include="Objects\CheckPointObjectsBase.cs" />
     <Compile Include="Objects\GetCheckPointFullObject.cs" />
     <Compile Include="Objects\ICheckPointObjectSummary.cs" />
+    <Compile Include="Objects\Misc\CheckPointTask.cs" />
     <Compile Include="Objects\Misc\CheckPointWhereUsed.cs" />
+    <Compile Include="Objects\Misc\GetCheckPointCommands.cs" />
     <Compile Include="Objects\Misc\GetCheckPointObjects.cs" />
+    <Compile Include="Objects\Misc\GetCheckPointTask.cs" />
     <Compile Include="Objects\Misc\GetCheckPointWhereUsed.cs" />
+    <Compile Include="Objects\Misc\InvokeCheckPointScript.cs" />
     <Compile Include="Objects\ServiceGroup\CheckPointServiceGroup.cs" />
     <Compile Include="Objects\ServiceGroup\GetCheckPointServiceGroup.cs" />
     <Compile Include="Objects\ServiceGroup\GetCheckPointServiceGroups.cs" />
