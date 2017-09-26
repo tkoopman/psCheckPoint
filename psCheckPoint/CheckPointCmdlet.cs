@@ -80,6 +80,13 @@ namespace psCheckPoint
 
                 WriteObject(result);
             }
+            else if (result is CheckPointTasks)
+            {
+                foreach (CheckPointTask task in result as CheckPointTasks)
+                {
+                    WriteObject(task);
+                }
+            }
             else if (result is CheckPointObject)
             {
                 WriteVerbose($"{Command}: {(string)(typeof(CheckPointObject).GetProperty("Name").GetValue(result))}");
