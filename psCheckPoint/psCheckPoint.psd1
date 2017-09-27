@@ -11,7 +11,7 @@
 RootModule = 'psCheckPoint.dll'
 
 # Version number of this module.
-ModuleVersion = '0.5.2'
+ModuleVersion = '0.5.3'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()

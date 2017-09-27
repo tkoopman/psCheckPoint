@@ -1,7 +1,5 @@
 using Newtonsoft.Json;
 using psCheckPoint.Objects;
-using psCheckPoint.Objects.AccessRule;
-using psCheckPoint.Objects.Misc;
 using psCheckPoint.Session;
 using System;
 using System.Collections;
@@ -54,7 +52,7 @@ namespace psCheckPoint
         /// <summary>
         /// <para type="description">Process results from the Web-API call</para>
         /// </summary>
-        protected virtual void ProcessRecordResponse(string JSON)
+        protected virtual T ProcessRecordResponse(string JSON)
         {
             // Debug Output Request
             WriteDebug($@"JSON Response
@@ -62,40 +60,16 @@ namespace psCheckPoint
 
             T result = JsonConvert.DeserializeObject<T>(JSON);
 
-            if (result is CheckPointMessage)
-            {
-                WriteVerbose((string)(typeof(CheckPointMessage).GetProperty("Message").GetValue(result)));
-            }
-            else if (result is CheckPointWhereUsed)
-            {
-                WriteObject(result);
-            }
-            else if (result is CheckPointAccessRuleBase)
-            {
-                CheckPointAccessRuleBase ruleBase = (result as CheckPointAccessRuleBase);
-                foreach (CheckPointAccessRuleSummary rule in ruleBase.RuleBase)
-                {
-                    rule.Layer = ruleBase.UID;
-                }
+            return result;
+        }
 
-                WriteObject(result);
-            }
-            else if (result is CheckPointTasks)
-            {
-                foreach (CheckPointTask task in result as CheckPointTasks)
-                {
-                    WriteObject(task);
-                }
-            }
-            else if (result is CheckPointObject)
+        protected virtual void WriteRecordResponse(T result)
+        {
+            if (result is CheckPointObject)
             {
                 WriteVerbose($"{Command}: {(string)(typeof(CheckPointObject).GetProperty("Name").GetValue(result))}");
-                WriteObject(result);
             }
-            else
-            {
-                WriteObject(result);
-            }
+            WriteObject(result);
         }
 
         /// <summary>
@@ -121,7 +95,8 @@ namespace psCheckPoint
                         WriteDebug($@"JSON Response
 {strJson}");
 
-                        ProcessRecordResponse(strJson);
+                        T result = ProcessRecordResponse(strJson);
+                        WriteRecordResponse(result);
                     }
                     else
                     {

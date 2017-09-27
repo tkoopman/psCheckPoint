@@ -41,5 +41,10 @@ namespace psCheckPoint.Session
             }
             return base.GetJSON();
         }
+
+        protected override void WriteRecordResponse(CheckPointMessage result)
+        {
+            WriteVerbose(result.Message);
+        }
     }
 }

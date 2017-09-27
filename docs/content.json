@@ -1475,13 +1475,13 @@
     "Cmdlets": [
       {
         "Name": "verify-policy",
-        "Class": null,
-        "Cmdlet": null
+        "Class": "TestCheckPointPolicy",
+        "Cmdlet": "Test-CheckPointPolicy"
       },
       {
         "Name": "install-policy",
-        "Class": null,
-        "Cmdlet": null
+        "Class": "InstallCheckPointPolicy",
+        "Cmdlet": "Install-CheckPointPolicy"
       }
     ],
     "SubChapters": [

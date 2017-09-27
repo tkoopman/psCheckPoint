@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace psCheckPoint.Objects.Misc
 {
     [JsonObject]
-    public class CheckPointTask : CheckPointObjectFull, IEnumerable<CheckPointTaskDetails>
+    public class CheckPointTask : CheckPointObjectFull
     {
         [JsonConstructor]
         private CheckPointTask(string name, string uID, string type, CheckPointDomain domain, string icon, CheckPointMetaInfo metaInfo, bool readOnly, CheckPointObject[] tags, string color, string comments,
@@ -46,16 +46,6 @@ namespace psCheckPoint.Objects.Misc
 
         [JsonProperty(PropertyName = "task-details")]
         public List<CheckPointTaskDetails> TaskDetails { get; private set; }
-
-        public IEnumerator<CheckPointTaskDetails> GetEnumerator()
-        {
-            return ((IEnumerable<CheckPointTaskDetails>)TaskDetails).GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return ((IEnumerable<CheckPointTaskDetails>)TaskDetails).GetEnumerator();
-        }
     }
 
     public class CheckPointTaskDetails : CheckPointObjectFull
@@ -100,7 +90,7 @@ namespace psCheckPoint.Objects.Misc
         {
             get
             {
-                return System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(ResponseMessage64));
+                return (ResponseMessage64 == null) ? null : System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(ResponseMessage64));
             }
         }
 
@@ -111,7 +101,7 @@ namespace psCheckPoint.Objects.Misc
         {
             get
             {
-                return System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(ResponseError64));
+                return (ResponseError64 == null) ? null : System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(ResponseError64));
             }
         }
     }

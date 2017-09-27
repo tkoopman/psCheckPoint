@@ -10,7 +10,7 @@ namespace psCheckPoint.Objects.AddressRange
     /// <example>
     /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointAddressRange")]
-    public class RemoveCheckPointAddressRange : RemoveCheckPointObject<CheckPointMessage>
+    public class RemoveCheckPointAddressRange : RemoveCheckPointObject
     {
         /// <summary>
         /// <para type="description">Check Point Web-API command that should be called.</para>
