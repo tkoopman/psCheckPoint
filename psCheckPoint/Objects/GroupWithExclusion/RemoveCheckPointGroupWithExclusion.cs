@@ -10,7 +10,7 @@ namespace psCheckPoint.Objects.GroupWithExclusion
     /// <example>
     /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointGroupWithExclusion")]
-    public class RemoveCheckPointGroupWithExclusion : RemoveCheckPointObject<CheckPointMessage>
+    public class RemoveCheckPointGroupWithExclusion : RemoveCheckPointObject
     {
         /// <summary>
         /// <para type="description">Check Point Web-API command that should be called.</para>

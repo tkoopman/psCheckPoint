@@ -11,7 +11,7 @@ namespace psCheckPoint.Objects.ServiceGroup
     ///   <code>Remove-CheckPointGroup -Session $Session -Name Test1 -Verbose</code>
     /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointServiceGroup")]
-    public class RemoveCheckPointServiceGroup : RemoveCheckPointObject<CheckPointMessage>
+    public class RemoveCheckPointServiceGroup : RemoveCheckPointObject
     {
         /// <summary>
         /// <para type="description">Check Point Web-API command that should be called.</para>

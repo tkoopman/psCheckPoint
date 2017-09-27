@@ -11,7 +11,7 @@ namespace psCheckPoint.Objects.Host
     ///   <code>Remove-CheckPointHost -Session $Session -Name Test1 -Verbose</code>
     /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointHost")]
-    public class RemoveCheckPointHost : RemoveCheckPointObject<CheckPointMessage>
+    public class RemoveCheckPointHost : RemoveCheckPointObject
     {
         /// <summary>
         /// <para type="description">Check Point Web-API command that should be called.</para>

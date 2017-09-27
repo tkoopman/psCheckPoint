@@ -55,5 +55,15 @@ namespace psCheckPoint.Objects.AccessRule
         [JsonProperty(PropertyName = "use-object-dictionary", DefaultValueHandling = DefaultValueHandling.Include)]
         [DefaultValue(true)]
         protected bool UseObjectDictionary { get; set; } = false;
+
+        protected override void WriteRecordResponse(CheckPointAccessRuleBase result)
+        {
+            foreach (CheckPointAccessRuleSummary rule in result.RuleBase)
+            {
+                rule.Layer = result.UID;
+            }
+
+            base.WriteRecordResponse(result);
+        }
     }
 }

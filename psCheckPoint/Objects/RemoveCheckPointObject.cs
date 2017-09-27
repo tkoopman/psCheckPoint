@@ -7,7 +7,7 @@ namespace psCheckPoint.Objects
     /// <summary>
     /// <para type="description">Base class for Remove-CheckPoint*ObjectName* classes</para>
     /// </summary>
-    public abstract class RemoveCheckPointObject<T> : CheckPointCmdlet<T>
+    public abstract class RemoveCheckPointObject : CheckPointCmdlet<CheckPointMessage>
     {
         /// <summary>
         /// <para type="description">Object unique identifier.</para>
@@ -45,5 +45,10 @@ namespace psCheckPoint.Objects
         [JsonConverter(typeof(SwitchJsonConverter))]
         [Parameter]
         public SwitchParameter IgnoreErrors { get; set; }
+
+        protected override void WriteRecordResponse(CheckPointMessage result)
+        {
+            WriteVerbose(result.Message);
+        }
     }
 }

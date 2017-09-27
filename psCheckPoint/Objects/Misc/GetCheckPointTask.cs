@@ -27,5 +27,13 @@ namespace psCheckPoint.Objects.Misc
         [JsonProperty(PropertyName = "details-level", DefaultValueHandling = DefaultValueHandling.Include)]
         [DefaultValue("standard")]
         protected string DetailsLevel { get; set; } = "full";
+
+        protected override void WriteRecordResponse(CheckPointTasks result)
+        {
+            foreach (CheckPointTask task in result)
+            {
+                WriteObject(task);
+            }
+        }
     }
 }

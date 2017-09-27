@@ -10,7 +10,7 @@ namespace psCheckPoint.Objects.SecurityZone
     /// <example>
     /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointSecurityZone")]
-    public class RemoveCheckPointSecurityZone : RemoveCheckPointObject<CheckPointMessage>
+    public class RemoveCheckPointSecurityZone : RemoveCheckPointObject
     {
         /// <summary>
         /// <para type="description">Check Point Web-API command that should be called.</para>
