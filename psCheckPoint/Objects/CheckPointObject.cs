@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using psCheckPoint.Objects.AddressRange;
+using psCheckPoint.Objects.Application;
 using psCheckPoint.Objects.Group;
 using psCheckPoint.Objects.GroupWithExclusion;
 using psCheckPoint.Objects.Host;
@@ -120,6 +121,11 @@ namespace psCheckPoint.Objects
                 case "address-range":
                     {
                         r = GetCheckPointObject<CheckPointAddressRange>(Session, "Get-CheckPointAddressRange", typeof(GetCheckPointAddressRange));
+                        break;
+                    }
+                case "application-site":
+                    {
+                        r = GetCheckPointObject<CheckPointApplication>(Session, "Get-CheckPointApplication", typeof(GetCheckPointApplication));
                         break;
                     }
                 case "group":

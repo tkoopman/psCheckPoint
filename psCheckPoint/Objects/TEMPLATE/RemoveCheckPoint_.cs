@@ -10,7 +10,7 @@ namespace psCheckPoint.Objects._
     /// <example>
     /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPoint_")]
-    public class RemoveCheckPoint_ : RemoveCheckPointObject<CheckPointMessage>
+    public class RemoveCheckPoint_ : RemoveCheckPointObject
     {
         public override string Command { get { return "delete-_"; } }
     }
