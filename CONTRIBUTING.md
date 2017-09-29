@@ -10,6 +10,10 @@ Also please follow the below guidelines when contributing.
 psCheckPoint is an open source project and we love to receive contributions from our community — you!
 There are many ways to contribute, from writing tutorials or blog posts, improving the documentation, submitting bug reports and feature requests or writing code which can be incorporated into psCheckPoint itself.
 
+## Pester
+
+Pester is used for testing psCheckPoint. While older commands may not yet have Pester test files for them, any command added or edited from now on must have a matching test file created and maintained to test basic functionality.
+
 ## Support
 Please, don't use the issue tracker for support questions. You can ask support question on [psCheckPoint's CHECKMATES page](https://community.checkpoint.com/docs/DOC-2163) or via <psCheckPoint@koopmail.net>.
 

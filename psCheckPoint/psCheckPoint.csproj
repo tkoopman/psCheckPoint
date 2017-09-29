@@ -179,6 +179,12 @@
     <Compile Include="Objects\ServiceTCP\NewCheckPointServiceTCP.cs" />
     <Compile Include="Objects\ServiceTCP\RemoveCheckPointServiceTCP.cs" />
     <Compile Include="Objects\ServiceTCP\SetCheckPointServiceTCP.cs" />
+    <Compile Include="Objects\Application\CheckPointApplication.cs" />
+    <Compile Include="Objects\Application\GetCheckPointApplication.cs" />
+    <Compile Include="Objects\Application\GetCheckPointApplications.cs" />
+    <Compile Include="Objects\Application\NewCheckPointApplication.cs" />
+    <Compile Include="Objects\Application\RemoveCheckPointApplication.cs" />
+    <Compile Include="Objects\Application\SetCheckPointApplication.cs" />
     <Compile Include="Session\CheckPointSession.cs" />
     <Compile Include="Session\SendCheckPointKeepAlive.cs" />
     <Compile Include="Session\PublishCheckPointSession.cs" />

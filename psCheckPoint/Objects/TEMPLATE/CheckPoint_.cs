@@ -12,12 +12,6 @@ namespace psCheckPoint.Objects._
         /// <para type="description">How much details are returned depends on the details-level field of the request. This table shows the level of detail shown when details-level is set to standard.</para>
         /// </summary>
         [JsonProperty(PropertyName = "groups", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        public CheckPointObject[] Groups { get; set; }
-    }
-
-    protected override void Refresh(CheckPointObject obj)
-    {
-        base.Refresh(obj);
-        CheckPoint_ o = (CheckPoint_)obj;
+        public CheckPointObject[] Groups { get; private set; }
     }
 }
