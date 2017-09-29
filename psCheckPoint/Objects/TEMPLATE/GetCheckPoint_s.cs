@@ -11,7 +11,7 @@ namespace psCheckPoint.Objects._
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPoint_s")]
     [OutputType(typeof(CheckPointObjects<CheckPoint_>))]
-    public class GetCheckPoint_s : GetCheckPointObjects<CheckPoint_>
+    public class GetCheckPoint_s : GetCheckPointObjects
     {
         public override string Command { get { return "show-_s"; } }
     }
