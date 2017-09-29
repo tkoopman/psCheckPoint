@@ -865,28 +865,28 @@
         "Cmdlets": [
           {
             "Name": "add-application-site",
-            "Class": null,
-            "Cmdlet": null
+            "Class": "NewCheckPointApplication",
+            "Cmdlet": "New-CheckPointApplication"
           },
           {
             "Name": "show-application-site",
-            "Class": null,
-            "Cmdlet": null
+            "Class": "GetCheckPointApplication",
+            "Cmdlet": "Get-CheckPointApplication"
           },
           {
             "Name": "set-application-site",
-            "Class": null,
-            "Cmdlet": null
+            "Class": "SetCheckPointApplication",
+            "Cmdlet": "Set-CheckPointApplication"
           },
           {
             "Name": "delete-application-site",
-            "Class": null,
-            "Cmdlet": null
+            "Class": "RemoveCheckPointApplication",
+            "Cmdlet": "Remove-CheckPointApplication"
           },
           {
             "Name": "show-application-sites",
-            "Class": null,
-            "Cmdlet": null
+            "Class": "GetCheckPointApplications",
+            "Cmdlet": "Get-CheckPointApplications"
           }
         ],
         "SubChapters": []

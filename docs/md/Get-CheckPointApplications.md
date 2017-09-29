@@ -1,4 +1,4 @@
-# Get-CheckPointGroups
+# Get-CheckPointApplications
 
 ## SYNOPSIS
 Retrieve all objects.
@@ -6,7 +6,7 @@ Retrieve all objects.
 ## SYNTAX
 
 ```
-Get-CheckPointGroups [-UID <Int32>] [-Name <Int32>] [-Session] <CheckPointSession>
+Get-CheckPointApplications [-UID <Int32>] [-Name <Int32>] [-Session] <CheckPointSession>
 ```
 
 ## DESCRIPTION
@@ -15,7 +15,7 @@ Get-CheckPointGroups [-UID <Int32>] [-Name <Int32>] [-Session] <CheckPointSessio
 
 ### ----------  EXAMPLE 1  ----------
 ```
-$cpGroups = Get-CheckPointGroups -Session $Session
+
 ```
 
 ## PARAMETERS
@@ -69,7 +69,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### psCheckPoint.Objects.CheckPointObjects`1[[psCheckPoint.Objects.CheckPointObject, psCheckPoint, Version=0.5.4.0, Culture=neutral, PublicKeyToken=null]]
+### psCheckPoint.Objects.CheckPointObjects`1[[psCheckPoint.Objects.Application.CheckPointApplication, psCheckPoint, Version=0.5.4.0, Culture=neutral, PublicKeyToken=null]]
 Result from commands that return multiple objects.
 
 ## NOTES
