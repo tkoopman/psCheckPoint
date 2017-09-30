@@ -1,6 +1,7 @@
 ## Ignore psCheckPoint Specific Files
 TorNodesCache.csv
 Pester.Settings.json
+launchSettings.json
 
 ## Ignore Pester Settings file as it contains passwords
 Pester.Settings.json
