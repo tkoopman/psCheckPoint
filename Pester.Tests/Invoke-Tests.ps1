@@ -17,6 +17,12 @@ $secpasswd = ConvertTo-SecureString $Settings.Management.Password -AsPlainText -
 $mycreds = New-Object System.Management.Automation.PSCredential ($Settings.Management.User, $secpasswd)
 Set-Variable -Scope Global -Name Session -Description "psCheckPoint Pester Session" -Option readonly -Value $(Open-CheckPointSession -NoCertificateValidation -ManagementServer $Settings.Management.Server -Credentials $mycreds -SessionName Pester -SessionDescription "psCheckPoint Pester Testing")
 
+# Launch PowerShell Core Tests
+if ($PSEdition -eq 'Desktop' -and $(Test-Path $Settings.psCore)) {
+	Write-Host "Starting PowerShell Core Tests"
+	& 'cmd' "/c start ""PowerShell Core Tests"" ""$($Settings.psCore)"" -NoExit -Command ..\..\Invoke-Tests.ps1"
+}
+
 # Run the tests. By default all tests matching *.Tests.ps1 will be executed.
 # See https://github.com/pester/Pester for more information.
 Invoke-Pester

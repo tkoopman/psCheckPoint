@@ -33,20 +33,5 @@ namespace psCheckPoint.IA
         /// </summary>
         [Parameter]
         public SwitchParameter NoCertificateValidation { get; set; }
-
-        /// <summary>
-        /// Provides a one-time, preprocessing functionality for the cmdlet.
-        /// </summary>
-        protected override void BeginProcessing()
-        {
-            if (NoCertificateValidation.IsPresent)
-            {
-                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(delegate { return true; });
-            }
-            else
-            {
-                ServicePointManager.ServerCertificateValidationCallback = null;
-            }
-        }
     }
 }

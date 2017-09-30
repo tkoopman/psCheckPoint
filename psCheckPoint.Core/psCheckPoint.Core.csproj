@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>bin\Debug\netcoreapp1.1\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -22,6 +22,7 @@
   <ItemGroup>
     <Compile Include="..\psCheckPoint\*.cs" Link="%(FileName)" />
     <Compile Include="..\psCheckPoint\Session\*.cs" Link="Session\%(FileName)" />
+    <Compile Include="..\psCheckPoint\IA\*.cs" Link="IA\%(FileName)" />
     <Compile Include="..\psCheckPoint\Objects\*.cs" Link="Objects\%(FileName)" />
     <Compile Include="..\psCheckPoint\Objects\AccessLayer\*.cs" Link="Objects\AccessLayer\%(FileName)" />
     <Compile Include="..\psCheckPoint\Objects\AccessRule\*.cs" Link="Objects\AccessRule\%(FileName)" />
@@ -48,6 +49,6 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy $(OutDir)\psCheckPoint.Core.dll $(SolutionDir)\psCheckPoint\bin\$(ConfigurationName)\" />
+    <Exec Command="copy $(OutDir)\psCheckPoint.Core.dll $(SolutionDir)\psCheckPoint\bin\$(ConfigurationName)\&#xD;&#xA;copy $(OutDir)\psCheckPoint.Core.dll $(SolutionDir)\Pester.Tests\bin\$(ConfigurationName)\" />
   </Target>
 </Project>

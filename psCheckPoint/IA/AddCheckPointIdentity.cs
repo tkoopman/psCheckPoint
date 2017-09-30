@@ -121,7 +121,7 @@ namespace psCheckPoint.IA
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
-            batch = new Batch<Identity, AddIdentityResponse>(Gateway, SharedSecret, "add-identity");
+            batch = new Batch<Identity, AddIdentityResponse>(Gateway, SharedSecret, "add-identity", NoCertificateValidation.IsPresent);
         }
 
         /// <summary>

@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
-using psCheckPoint;
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Security;
 using System.Text;
 
 namespace psCheckPoint.IA
@@ -12,14 +13,32 @@ namespace psCheckPoint.IA
     [JsonObject(MemberSerialization.OptIn)]
     internal class Batch<RequestType, ResponseType> : IDisposable
     {
-        private HttpClient client = new HttpClient();
+        private HttpClient client;
 
-        public Batch(string gateway, string sharedSecret, string command)
+        public Batch(string gateway, string sharedSecret, string command, bool NoCertificateValidation)
         {
             Gateway = gateway;
             SharedSecret = sharedSecret;
             Command = command;
 
+            HttpClientHandler handler = new HttpClientHandler();
+#if NETCOREAPP1_1
+            if (NoCertificateValidation)
+            {
+                handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => { return true; };
+            }
+#else
+            if (NoCertificateValidation)
+            {
+                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(delegate { return true; });
+            }
+            else
+            {
+                ServicePointManager.ServerCertificateValidationCallback = null;
+            }
+#endif
+
+            client = new HttpClient(handler);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 

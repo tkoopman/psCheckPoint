@@ -12,7 +12,7 @@ namespace psCheckPoint.IA
     ///   <code>Get-CheckPointIdentity -Gateway 192.168.1.1 -SharedSecret *** -NoCertificateValidation -IPAddress 192.168.1.2</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointIdentity")]
-    [OutputType(typeof(AddIdentityResponse))]
+    [OutputType(typeof(GetIdentityResponse))]
     public class GetCheckPointIdentity : CheckPointIACmdlet
     {
         /// <summary>
@@ -29,7 +29,7 @@ namespace psCheckPoint.IA
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
-            batch = new Batch<GetIdentity, GetIdentityResponse>(Gateway, SharedSecret, "show-identity");
+            batch = new Batch<GetIdentity, GetIdentityResponse>(Gateway, SharedSecret, "show-identity", NoCertificateValidation.IsPresent);
         }
 
         /// <summary>

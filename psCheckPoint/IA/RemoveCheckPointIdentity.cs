@@ -61,7 +61,7 @@ namespace psCheckPoint.IA
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
-            batch = new Batch<RemoveIdentity, RemoveIdentityResponse>(Gateway, SharedSecret, "delete-identity");
+            batch = new Batch<RemoveIdentity, RemoveIdentityResponse>(Gateway, SharedSecret, "delete-identity", NoCertificateValidation.IsPresent);
         }
 
         /// <summary>

@@ -7,5 +7,6 @@
   "IAGateway": {
     "Server": "192.168.1.1",
     "SharedSecret": "password"
-  }
+  },
+  "psCore": "C:\\Program Files\\PowerShell\\6.0.0-beta.7\\powershell.exe"
 }
