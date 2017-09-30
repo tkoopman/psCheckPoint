@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "psCheckPoint", "psCheckPoint\psCheckPoint.csproj", "{4FF88B87-441A-4419-91C7-13041E60D0C0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B462651E-1EDC-4361-8592-8030A2EB93EE} = {B462651E-1EDC-4361-8592-8030A2EB93EE}
+	EndProjectSection
 EndProject
 Project("{F5034706-568F-408A-B7B3-4D38C6DB8A32}") = "Examples", "Examples\Examples.pssproj", "{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}"
 EndProject
@@ -33,6 +36,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "docs", "docs\", "{6B33799D-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pester.Tests", "Pester.Tests\Pester.Tests.csproj", "{B3392EB1-982D-4F6D-9BBE-4A92D229F3DB}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "psCheckPoint.Core", "psCheckPoint.Core\psCheckPoint.Core.csproj", "{B462651E-1EDC-4361-8592-8030A2EB93EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +64,10 @@ Global
 		{B3392EB1-982D-4F6D-9BBE-4A92D229F3DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3392EB1-982D-4F6D-9BBE-4A92D229F3DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3392EB1-982D-4F6D-9BBE-4A92D229F3DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B462651E-1EDC-4361-8592-8030A2EB93EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B462651E-1EDC-4361-8592-8030A2EB93EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B462651E-1EDC-4361-8592-8030A2EB93EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B462651E-1EDC-4361-8592-8030A2EB93EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -137,6 +137,13 @@ namespace psCheckPoint.Session
 
             try
             {
+                HttpClientHandler handler = new HttpClientHandler();
+#if NETCOREAPP1_1
+                if (NoCertificateValidation.IsPresent)
+                {
+                    handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => { return true; };
+                }
+#else
                 if (NoCertificateValidation.IsPresent)
                 {
                     ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(delegate { return true; });
@@ -145,7 +152,8 @@ namespace psCheckPoint.Session
                 {
                     ServicePointManager.ServerCertificateValidationCallback = null;
                 }
-                using (HttpClient client = new HttpClient())
+#endif
+                using (HttpClient client = new HttpClient(handler))
                 {
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     using (HttpResponseMessage response = client.PostAsync($"https://{ManagementServer}:{ManagementPort}/web_api/login", new StringContent(strJson, Encoding.UTF8, "application/json")).Result)
@@ -160,6 +168,7 @@ namespace psCheckPoint.Session
 
                             CheckPointSession session = JsonConvert.DeserializeObject<CheckPointSession>(strJson);
                             session.EnableCompression = !NoCompression.IsPresent;
+                            session.NoCertificateValidation = NoCertificateValidation.IsPresent;
                             WriteObject(session);
                         }
                         else

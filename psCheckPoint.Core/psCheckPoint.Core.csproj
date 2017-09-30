@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <RootNamespace>psCheckPoint</RootNamespace>
+    <Version>0.6.0</Version>
+    <Authors>Tim Koopman</Authors>
+    <Company />
+    <Description />
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>bin\Debug\netcoreapp1.1\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\psCheckPoint\*.cs" Link="%(FileName)" />
+    <Compile Include="..\psCheckPoint\Session\*.cs" Link="Session\%(FileName)" />
+    <Compile Include="..\psCheckPoint\Objects\*.cs" Link="Objects\%(FileName)" />
+    <Compile Include="..\psCheckPoint\Objects\AccessLayer\*.cs" Link="Objects\AccessLayer\%(FileName)" />
+    <Compile Include="..\psCheckPoint\Objects\AccessRule\*.cs" Link="Objects\AccessRule\%(FileName)" />
+    <Compile Include="..\psCheckPoint\Objects\AddressRange\*.cs" Link="Objects\AddressRange\%(FileName)" />
+    <Compile Include="..\psCheckPoint\Objects\Application\*.cs" Link="Objects\Application\%(FileName)" />
+    <Compile Include="..\psCheckPoint\Objects\Group\*.cs" Link="Objects\Group\%(FileName)" />
+    <Compile Include="..\psCheckPoint\Objects\GroupWithExclusion\*.cs" Link="Objects\GroupWithExclusion\%(FileName)" />
+    <Compile Include="..\psCheckPoint\Objects\Host\*.cs" Link="Objects\Host\%(FileName)" />
+    <Compile Include="..\psCheckPoint\Objects\Misc\*.cs" Link="Objects\Misc\%(FileName)" />
+    <Compile Include="..\psCheckPoint\Objects\MulticastAddressRange\*.cs" Link="Objects\MulticastAddressRange\%(FileName)" />
+    <Compile Include="..\psCheckPoint\Objects\Network\*.cs" Link="Objects\Network\%(FileName)" />
+    <Compile Include="..\psCheckPoint\Objects\Policy\*.cs" Link="Objects\Policy\%(FileName)" />
+    <Compile Include="..\psCheckPoint\Objects\SecurityZone\*.cs" Link="Objects\SecurityZone\%(FileName)" />
+    <Compile Include="..\psCheckPoint\Objects\Service\*.cs" Link="Objects\Service\%(FileName)" />
+    <Compile Include="..\psCheckPoint\Objects\ServiceGroup\*.cs" Link="Objects\ServiceGroup\%(FileName)" />
+    <Compile Include="..\psCheckPoint\Objects\ServiceTCP\*.cs" Link="Objects\ServiceTCP\%(FileName)" />
+    <Compile Include="..\psCheckPoint\Objects\ServiceUDP\*.cs" Link="Objects\ServiceUDP\%(FileName)" />
+    <Compile Include="..\psCheckPoint\Objects\Session\*.cs" Link="Objects\Session\%(FileName)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.PowerShell.NanoServer.NetCore.Library" Version="1.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="XmlDoc2CmdletDoc" Version="0.2.9" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy $(OutDir)\psCheckPoint.Core.dll $(SolutionDir)\psCheckPoint\bin\$(ConfigurationName)\" />
+  </Target>
+</Project>
