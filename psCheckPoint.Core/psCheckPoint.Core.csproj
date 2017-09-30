@@ -10,6 +10,15 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>bin\Debug\netcoreapp1.1\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="..\psCheckPoint\*.cs" Link="%(FileName)" />
     <Compile Include="..\psCheckPoint\Session\*.cs" Link="Session\%(FileName)" />
@@ -36,5 +45,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.PowerShell.NanoServer.NetCore.Library" Version="1.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="XmlDoc2CmdletDoc" Version="0.2.9" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy $(OutDir)\psCheckPoint.Core.dll $(SolutionDir)\psCheckPoint\bin\$(ConfigurationName)\" />
+  </Target>
 </Project>
