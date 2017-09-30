@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Management.Automation;
 using System.Reflection;
@@ -11,6 +12,7 @@ using System.Web;
 #elif NETCOREAPP1_1
 
 using System.Text.Encodings.Web;
+using System.Runtime.InteropServices;
 
 #endif
 
@@ -125,13 +127,42 @@ namespace psCheckPoint.Extra.Export
                 File.WriteAllText(Out, html);
                 if (Open.IsPresent)
                 {
-                    System.Diagnostics.Process.Start(Out);
+                    OpenBrowser(Out);
                 }
             }
             else
             {
                 WriteObject(html);
             }
+        }
+
+        private void OpenBrowser(string url)
+        {
+#if NETFULL
+                Process.Start(url);
+#elif NETCOREAPP1_1
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                Process.Start(new ProcessStartInfo("cmd", $"/c start {url}"));
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                //TODO Needs Testing
+                WriteWarning("Using -Open on Linux is currently untested. Please let us know if this works or not.");
+                Process.Start("xdg-open", url);
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                //TODO Needs Testing
+                WriteWarning("Using -Open on OSX is currently untested. Please let us know if this works or not.");
+                Process.Start("open", url);
+            }
+            else
+            {
+                WriteWarning($"Using -Open is currently unsupported on {RuntimeInformation.OSDescription}. Please log issue ticket to add support.");
+                WriteWarning($"You will need to open the file manually. File name: {url}");
+            }
+#endif
         }
     }
 }
