@@ -8,13 +8,20 @@
 
 @{
 # Script module or binary module file associated with this manifest.
-RootModule = 'psCheckPoint.dll'
+RootModule = if($PSEdition -eq 'Core')
+{
+'psCheckPoint.Core.dll'
+}
+else # Desktop
+{
+'psCheckPoint.dll'
+}
 
 # Version number of this module.
-ModuleVersion = '0.5.4'
+ModuleVersion = '0.6.0'
 
 # Supported PSEditions
-# CompatiblePSEditions = @()
+CompatiblePSEditions = @('Desktop', 'Core')
 
 # ID used to uniquely identify this module
 GUID = 'b98e04a4-aebf-4b76-9f0e-448d4145a8b1'
@@ -41,7 +48,7 @@ Description = 'Commands for accessing Check Point Web-API Calls'
 # PowerShellHostVersion = ''
 
 # Minimum version of Microsoft .NET Framework required by this module. This prerequisite is valid for the PowerShell Desktop edition only.
-DotNetFrameworkVersion = '4.5'
+# DotNetFrameworkVersion = '4.5'
 
 # Minimum version of the common language runtime (CLR) required by this module. This prerequisite is valid for the PowerShell Desktop edition only.
 # CLRVersion = ''
@@ -109,7 +116,7 @@ PrivateData = @{
 } # End of PrivateData hashtable
 
 # HelpInfo URI of this module
-HelpInfoURI = 'https://github.com/tkoopman/psCheckPoint/wiki'
+HelpInfoURI = 'https://tkoopman.github.io/psCheckPoint/'
 
 # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
 # DefaultCommandPrefix = ''

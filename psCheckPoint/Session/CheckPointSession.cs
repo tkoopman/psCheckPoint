@@ -88,6 +88,8 @@ namespace psCheckPoint.Session
 
         internal bool EnableCompression { get; set; } = true;
 
+        internal bool NoCertificateValidation { get; set; } = false;
+
         private HttpClient _httpClient = null;
 
         internal HttpClient GetHttpClient()
@@ -99,6 +101,13 @@ namespace psCheckPoint.Session
                 {
                     handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
                 }
+
+#if NETCOREAPP1_1
+                if (NoCertificateValidation)
+                {
+                    handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => { return true; };
+                }
+#endif
 
                 _httpClient = new HttpClient(handler)
                 {

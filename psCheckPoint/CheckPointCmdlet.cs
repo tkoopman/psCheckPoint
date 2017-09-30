@@ -67,7 +67,7 @@ namespace psCheckPoint
         {
             if (result is CheckPointObject)
             {
-                WriteVerbose($"{Command}: {(string)(typeof(CheckPointObject).GetProperty("Name").GetValue(result))}");
+                WriteVerbose($"{Command}: {(result as CheckPointObject).Name}");
             }
             WriteObject(result);
         }
