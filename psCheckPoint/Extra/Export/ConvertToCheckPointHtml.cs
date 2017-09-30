@@ -3,7 +3,16 @@ using System;
 using System.IO;
 using System.Management.Automation;
 using System.Reflection;
+
+#if NETFULL
+
 using System.Web;
+
+#elif NETCOREAPP1_1
+
+using System.Text.Encodings.Web;
+
+#endif
 
 namespace psCheckPoint.Extra.Export
 {
@@ -69,10 +78,11 @@ namespace psCheckPoint.Extra.Export
             if (String.IsNullOrWhiteSpace(Template))
             {
                 // Load default template
-                Assembly _assembly = Assembly.GetExecutingAssembly();
-                StreamReader _html = new StreamReader(_assembly.GetManifestResourceStream("psCheckPoint.Extra.Export.ExportTemplate.html"));
-                html = _html.ReadToEnd();
-                _html.Close();
+                Assembly _assembly = typeof(psCheckPoint.Extra.Export.ConvertToCheckPointHtml).GetTypeInfo().Assembly;
+                using (StreamReader _html = new StreamReader(_assembly.GetManifestResourceStream("psCheckPoint.Extra.Export.ExportTemplate.html")))
+                {
+                    html = _html.ReadToEnd();
+                }
             }
             else
             {
@@ -97,7 +107,11 @@ namespace psCheckPoint.Extra.Export
             }
             else if (this.ParameterSetName.Equals("ES5") || html.Contains("\"{JSON}\""))
             {
+#if NETFULL
                 json = HttpUtility.JavaScriptStringEncode(json);
+#elif NETCOREAPP1_1
+                json = JavaScriptEncoder.Default.Encode(json);
+#endif
             }
 
             html = html.Replace("{JSON}", json);

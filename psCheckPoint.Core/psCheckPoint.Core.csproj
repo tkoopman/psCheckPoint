@@ -22,6 +22,7 @@
   <ItemGroup>
     <Compile Include="..\psCheckPoint\*.cs" Link="%(FileName)" />
     <Compile Include="..\psCheckPoint\Session\*.cs" Link="Session\%(FileName)" />
+    <Compile Include="..\psCheckPoint\Extra\Export\*.cs" Link="Extra\Export\%(FileName)" />
     <Compile Include="..\psCheckPoint\IA\*.cs" Link="IA\%(FileName)" />
     <Compile Include="..\psCheckPoint\Objects\*.cs" Link="Objects\%(FileName)" />
     <Compile Include="..\psCheckPoint\Objects\AccessLayer\*.cs" Link="Objects\AccessLayer\%(FileName)" />
@@ -41,6 +42,12 @@
     <Compile Include="..\psCheckPoint\Objects\ServiceTCP\*.cs" Link="Objects\ServiceTCP\%(FileName)" />
     <Compile Include="..\psCheckPoint\Objects\ServiceUDP\*.cs" Link="Objects\ServiceUDP\%(FileName)" />
     <Compile Include="..\psCheckPoint\Objects\Session\*.cs" Link="Objects\Session\%(FileName)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\psCheckPoint\Extra\Export\ExportTemplate.html">
+      <LogicalName>psCheckPoint.Extra.Export.ExportTemplate.html</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

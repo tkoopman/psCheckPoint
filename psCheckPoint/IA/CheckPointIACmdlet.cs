@@ -1,6 +1,4 @@
 ﻿using System.Management.Automation;
-using System.Net;
-using System.Net.Security;
 
 namespace psCheckPoint.IA
 {
