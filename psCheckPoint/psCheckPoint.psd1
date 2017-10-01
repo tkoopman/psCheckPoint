@@ -18,7 +18,7 @@ else # Desktop
 }
 
 # Version number of this module.
-ModuleVersion = '$Env:APPVEYOR_BUILD_VERSION'
+ModuleVersion = $Env:APPVEYOR_BUILD_VERSION
 
 # Supported PSEditions
 CompatiblePSEditions = @('Desktop', 'Core')
