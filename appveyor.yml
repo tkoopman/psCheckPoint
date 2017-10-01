@@ -32,7 +32,7 @@ test_script:
 - ps: |
     cd .\Pester.Tests\bin\Release
     ..\..\Invoke-Tests.ps1
-    cd ..\..
+    cd $env:APPVEYOR_BUILD_FOLDER
     .\AppVeyor-Deploy.ps1
 artifacts:
 - path: psCheckPoint.zip
