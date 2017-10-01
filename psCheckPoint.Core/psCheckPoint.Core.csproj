@@ -3,11 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <RootNamespace>psCheckPoint</RootNamespace>
-    <Version>0.6.0</Version>
+    <Version>1.0.0.0</Version>
     <Authors>Tim Koopman</Authors>
     <Company />
-    <Description />
+    <Description>PowerShell Commands for Check Point R80 Web-API</Description>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/tkoopman/psCheckPoint/</PackageProjectUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
