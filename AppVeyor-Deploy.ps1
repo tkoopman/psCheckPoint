@@ -5,7 +5,7 @@
 
 # Bump Version
 	Try {
-		$ModFileName = "'$env:APPVEYOR_BUILD_FOLDER'\psCheckPoint\bin\Release\psCheckPoint.psd1"
+		$ModFileName = "$env:APPVEYOR_BUILD_FOLDER\psCheckPoint\bin\Release\psCheckPoint.psd1"
         $ModManifest = Get-Content -Path $ModFileName
         $BumpedManifest = $ModManifest -replace '\$Env:APPVEYOR_BUILD_VERSION', "'$Env:APPVEYOR_BUILD_VERSION'"
         Remove-Item -Path $ModFileName
@@ -24,13 +24,13 @@
 # Zip Release
 	Add-Type -assembly "system.io.compression.filesystem"
 
-	$source = "'$env:APPVEYOR_BUILD_FOLDER'\psCheckPoint\bin\Release\"
-	$destination = "'$env:APPVEYOR_BUILD_FOLDER'\psCheckPoint.zip"
+	$source = "$env:APPVEYOR_BUILD_FOLDER\psCheckPoint\bin\Release\"
+	$destination = "$env:APPVEYOR_BUILD_FOLDER\psCheckPoint.zip"
 	If(Test-path $destination) {Remove-item $destination}
 	[io.compression.zipfile]::CreateFromDirectory($Source, $destination) 
 
 # Deploy
-    Expand-Archive -Path "'$env:APPVEYOR_BUILD_FOLDER'\psCheckPoint.zip" -DestinationPath 'C:\Users\appveyor\Documents\WindowsPowerShell\Modules\psCheckPoint\' -Verbose
+    Expand-Archive -Path "$env:APPVEYOR_BUILD_FOLDER\psCheckPoint.zip" -DestinationPath 'C:\Users\appveyor\Documents\WindowsPowerShell\Modules\psCheckPoint\' -Verbose
     Import-Module -Name 'psCheckPoint' -Verbose -Force
     Write-Host "Available Package Provider:" -ForegroundColor Yellow
     Get-PackageProvider -ListAvailable
