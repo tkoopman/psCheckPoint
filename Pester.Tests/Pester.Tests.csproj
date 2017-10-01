@@ -46,12 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Invoke-Tests.ps1" />
-    <None Include="Pester.Settings.json.Example">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Pester.Settings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="Pester.Settings.json.Example" />
+    <None Include="Pester.Settings.json" />
     <None Include="README.md" />
     <None Include="Start-Debug.ps1" />
     <None Include="Post-Build.ps1" />

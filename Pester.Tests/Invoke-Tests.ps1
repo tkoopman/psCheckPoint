@@ -12,7 +12,7 @@ Import-Module  .\psCheckPoint.psd1
 Import-Module Pester
 
 # psCheckPoint Test Variables
-Set-Variable -Scope Global -Name Settings -Description "psCheckPoint Pester Settings" -Option readonly -Value $(Get-Content "Pester.Settings.json" | ConvertFrom-Json)
+Set-Variable -Scope Global -Name Settings -Description "psCheckPoint Pester Settings" -Option readonly -Value $(Get-Content "..\..\Pester.Settings.json" | ConvertFrom-Json)
 $secpasswd = ConvertTo-SecureString $Settings.Management.Password -AsPlainText -Force
 $mycreds = New-Object System.Management.Automation.PSCredential ($Settings.Management.User, $secpasswd)
 Set-Variable -Scope Global -Name Session -Description "psCheckPoint Pester Session" -Option readonly -Value $(Open-CheckPointSession -NoCertificateValidation -ManagementServer $Settings.Management.Server -Credentials $mycreds -SessionName Pester -SessionDescription "psCheckPoint Pester Testing")
