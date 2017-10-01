@@ -1,7 +1,4 @@
 version: 0.6.{build}
-branches:
-  only:
-  - master
 only_commits:
   files:
   - psCheckPoint/
@@ -31,6 +28,6 @@ environment:
 test_script:
 - ps: |
     cd $env:APPVEYOR_BUILD_FOLDER
-    .\AppVeyor-Deploy.ps1
+    .\AppVeyor-Test-Deploy.ps1
 artifacts:
 - path: psCheckPoint.zip
