@@ -7,7 +7,7 @@ before_build:
 build:
   verbosity: minimal
 after_build:
-- cmd: 7z a -tzip psCheckPoint.zip %APPVEYOR_BUILD_FOLDER%\Pester.Tests\bin\Release\*
+- cmd: 7z a -tzip psCheckPoint.zip %APPVEYOR_BUILD_FOLDER%\psCheckPoint\bin\Release\*
 environment:
   cpSettings:
     secure: ze8KkJ0VqpFU6X2o4Y0WUS9Ki2MgwjYWhV58NlJMeyR7iH69pBB4mJv/DnhgwfOCLp+Iefih7rEz61jXfzcnrbPkLzLUWIxZLL1u4HrL7iswBcb9wXd2CqFNgJECIukRiYErehzn4GD4kjgP9PdOo/VrA4gUlgVuix46tVJF4ttRFofX3hUJEACqmk86bu4xF0/i8PFTvzcnZ5pbzrQZoYuFKXKTfym4jQN8yLXl+zxZIhbU47Ths4nBrIY7w7K7qhLzfKlVJaD+c5KcscQh1BVXiLDFmnf2TCgg197zFV8vekSBs9HzhTeeG6xufVTW4Ie39Vq6IU9Y27/JHhbYuZzihxKixsVyzHdhrdZh7fc=
