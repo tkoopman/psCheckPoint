@@ -1,11 +1,11 @@
-version: 0.1.{build}
-#branches:
-#  only:
-#  - master
-#only_commits:
-#  files:
-#  - psCheckPoint/
-#  - psCheckPoint.Core/
+version: 0.6.{build}
+branches:
+  only:
+  - master
+only_commits:
+  files:
+  - psCheckPoint/
+  - psCheckPoint.Core/
 image: Visual Studio 2017
 assembly_info:
   patch: true
