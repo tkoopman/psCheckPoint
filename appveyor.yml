@@ -1,5 +1,15 @@
 version: 0.6.{build}
 image: Visual Studio 2017
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
 configuration: Release
 platform: Any CPU
 before_build:
