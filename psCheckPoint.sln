@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "psCheckPoint", "psCheckPoint\psCheckPoint.csproj", "{4FF88B87-441A-4419-91C7-13041E60D0C0}"
-	ProjectSection(ProjectDependencies) = postProject
-		{B462651E-1EDC-4361-8592-8030A2EB93EE} = {B462651E-1EDC-4361-8592-8030A2EB93EE}
-	EndProjectSection
 EndProject
 Project("{F5034706-568F-408A-B7B3-4D38C6DB8A32}") = "Examples", "Examples\Examples.pssproj", "{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}"
 EndProject
