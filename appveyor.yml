@@ -30,8 +30,6 @@ environment:
     secure: 8U0FY4Wh+zyJriYPpUsyFXTmoc+upnrqrV3+u5mEkBCttmytqIqk3hQe475ck5aJ
 test_script:
 - ps: |
-    cd .\Pester.Tests\bin\Release
-    ..\..\Invoke-Tests.ps1
     cd $env:APPVEYOR_BUILD_FOLDER
     .\AppVeyor-Deploy.ps1
 artifacts:

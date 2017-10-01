@@ -21,6 +21,10 @@
         Throw $MsgParams.Message
     }
 
+# Run Tests
+    cd "$env:APPVEYOR_BUILD_FOLDER\Pester.Tests\bin\Release\"
+    ..\..\Invoke-Tests.ps1
+
 # Zip Release
 	Add-Type -assembly "system.io.compression.filesystem"
 
