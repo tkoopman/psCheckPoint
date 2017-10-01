@@ -1,16 +1,10 @@
-[CmdletBinding(SupportsShouldProcess=$true)]
-param()
+# Debugging
+    Write-Host "Listing Env Vars for debugging:" -ForegroundColor Yellow
+    # Filter Results to prevent exposing secure vars.
+    Get-ChildItem -Path "Env:*" | Where-Object { $_.name -notmatch "(NuGetToken|CoverallsToken|cpSettings)"} | Sort-Object -Property Name | Format-Table
 
-Invoke-DebuggingOutput
-Invoke-AppVeyorBumpVersion
-Invoke-ZipRelease
-Invoke-AppVeyorPSGallery
-
-Function Invoke-AppVeyorBumpVersion {
-    [CmdletBinding()]
-    Param()
-
-    Try {
+# Bump Version
+	Try {
 		$ModFileName = "'$env:APPVEYOR_BUILD_FOLDER'\psCheckPoint\bin\Release\psCheckPoint.psd1"
         $ModManifest = Get-Content -Path $ModFileName
         $BumpedManifest = $ModManifest -replace '\$Env:APPVEYOR_BUILD_VERSION', "'$Env:APPVEYOR_BUILD_VERSION'"
@@ -26,29 +20,16 @@ Function Invoke-AppVeyorBumpVersion {
         Add-AppveyorMessage @MsgParams
         Throw $MsgParams.Message
     }
-}
 
-Function Invoke-ZipRelease {
-	[CmdletBinding()]
-    Param()
-
+# Zip Release
 	Add-Type -assembly "system.io.compression.filesystem"
 
 	$source = "'$env:APPVEYOR_BUILD_FOLDER'\psCheckPoint\bin\Release\"
 	$destination = "'$env:APPVEYOR_BUILD_FOLDER'\psCheckPoint.zip"
 	If(Test-path $destination) {Remove-item $destination}
 	[io.compression.zipfile]::CreateFromDirectory($Source, $destination) 
-}
 
-Function Invoke-DebuggingOutput {
-    Write-Host "Listing Env Vars for debugging:" -ForegroundColor Yellow
-    # Filter Results to prevent exposing secure vars.
-    Get-ChildItem -Path "Env:*" | Where-Object { $_.name -notmatch "(NuGetToken|CoverallsToken|cpSettings)"} | Sort-Object -Property Name | Format-Table
-}
-
-Function Invoke-AppVeyorPSGallery {
-    [CmdletBinding()]
-    Param()
+# Deploy
     Expand-Archive -Path "'$env:APPVEYOR_BUILD_FOLDER'\psCheckPoint.zip" -DestinationPath 'C:\Users\appveyor\Documents\WindowsPowerShell\Modules\psCheckPoint\' -Verbose
     Import-Module -Name 'psCheckPoint' -Verbose -Force
     Write-Host "Available Package Provider:" -ForegroundColor Yellow
@@ -82,4 +63,3 @@ Function Invoke-AppVeyorPSGallery {
         Add-AppveyorMessage @MsgParams
         Throw $MsgParams.Message
     }
-}
