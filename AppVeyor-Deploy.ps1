@@ -10,6 +10,9 @@
         $BumpedManifest = $ModManifest -replace '\$Env:APPVEYOR_BUILD_VERSION', "'$Env:APPVEYOR_BUILD_VERSION'"
         Remove-Item -Path $ModFileName
         Out-File -FilePath $ModFileName -InputObject $BumpedManifest -NoClobber -Encoding utf8 -Force
+		$ModFileName = "$env:APPVEYOR_BUILD_FOLDER\Pester.Tests\bin\Release\psCheckPoint.psd1"
+		Remove-Item -Path $ModFileName
+        Out-File -FilePath $ModFileName -InputObject $BumpedManifest -NoClobber -Encoding utf8 -Force
     }
     Catch {
         $MsgParams = @{
