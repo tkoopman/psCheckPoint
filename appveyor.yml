@@ -12,4 +12,5 @@ environment:
 test_script:
 - ps: >-
     cd .\Pester.Tests\bin\Release
+    
     ..\..\Invoke-Tests.ps1
