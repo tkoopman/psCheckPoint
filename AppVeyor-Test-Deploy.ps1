@@ -55,7 +55,7 @@
     Try {
         If ($env:APPVEYOR_REPO_BRANCH -eq 'master') {
             Write-Host "try to publish module" -ForegroundColor Yellow
-            Publish-Module -Name 'psCheckPoint' -NuGetApiKey $env:NuGetToken -Verbose -WhatIf
+            Publish-Module -Name 'psCheckPoint' -NuGetApiKey $env:NuGetToken -Verbose -Force
         }
         Else {
             Write-Host "Skip publishing to PS Gallery because we are on $($env:APPVEYOR_REPO_BRANCH) branch." -ForegroundColor Yellow
