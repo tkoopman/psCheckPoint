@@ -32,8 +32,8 @@ if ($PSEdition -eq 'Desktop' -and $(Test-Path $Settings.psCore)) {
 # Run the tests. By default all tests matching *.Tests.ps1 will be executed.
 # See https://github.com/pester/Pester for more information.
 if ($AppVeyor) {
-	$res = Invoke-Pester -OutputFormat NUnitXml -OutputFile TestsResults.xml -PassThru
-	(New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestsResults.xml))
+	$res = Invoke-Pester -OutputFormat NUnitXml -OutputFile ..\..\TestsResults.xml -PassThru
+	(New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path ..\..\TestsResults.xml))
 } else {
 	Invoke-Pester
 }
