@@ -10,7 +10,7 @@ namespace psCheckPoint.Objects.GroupWithExclusion
     /// <example>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointGroupsWithExclusion")]
-    [OutputType(typeof(CheckPointObjects<CheckPointObject>))]
+    [OutputType(typeof(CheckPointObjects))]
     public class GetCheckPointGroupsWithExclusion : GetCheckPointObjects
     {
         /// <summary>

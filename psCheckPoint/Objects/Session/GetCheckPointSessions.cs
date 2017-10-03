@@ -11,8 +11,8 @@ namespace psCheckPoint.Objects.Session
     /// <example>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointSessions")]
-    [OutputType(typeof(CheckPointObjects<CheckPointSession>))]
-    public class GetCheckPointSessions : GetCheckPointObjectsBase<CheckPointObjects<CheckPointSession>>
+    [OutputType(typeof(CheckPointSessions))]
+    public class GetCheckPointSessions : GetCheckPointObjectsBase<CheckPointSessions>
     {
         /// <summary>
         /// Default constructor the changes GetCheckPointObjects.DetailsLevel default setting

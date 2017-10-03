@@ -11,7 +11,7 @@ namespace psCheckPoint.Objects.AccessLayer
     /// <code>Get-CheckPointAccessLayers -Session $Session</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointAccessLayers")]
-    [OutputType(typeof(CheckPointObjects<CheckPointAccessLayer>))]
+    [OutputType(typeof(CheckPointAccessLayers))]
     public class GetCheckPointAccessLayers : GetCheckPointObjectsBase<CheckPointAccessLayers>
     {
         /// <summary>

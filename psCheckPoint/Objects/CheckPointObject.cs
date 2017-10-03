@@ -1,20 +1,12 @@
 ﻿using Newtonsoft.Json;
-using psCheckPoint.Objects.AddressRange;
-using psCheckPoint.Objects.Application;
-using psCheckPoint.Objects.Group;
-using psCheckPoint.Objects.GroupWithExclusion;
-using psCheckPoint.Objects.Host;
-using psCheckPoint.Objects.MulticastAddressRange;
-using psCheckPoint.Objects.Network;
-using psCheckPoint.Objects.ServiceGroup;
-using psCheckPoint.Objects.ServiceTCP;
-using psCheckPoint.Objects.ServiceUDP;
 using psCheckPoint.Session;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Management.Automation;
+using System.Reflection;
 
 namespace psCheckPoint.Objects
 {
@@ -23,6 +15,22 @@ namespace psCheckPoint.Objects
     /// </summary>
     public class CheckPointObject : ICheckPointObjectSummary
     {
+        private static readonly Dictionary<string, Object2FullDetails> _Object2FullDetails = new Dictionary<string, Object2FullDetails>
+        {
+            { "access-layer",            new Object2FullDetails( "Get-CheckPointAccessLayer",           typeof(AccessLayer.GetCheckPointAccessLayer) )                     },
+            { "address-range",           new Object2FullDetails( "Get-CheckPointAddressRange",          typeof(AddressRange.GetCheckPointAddressRange) )                   },
+            { "application-site",        new Object2FullDetails( "Get-CheckPointApplication",           typeof(Application.GetCheckPointApplication) )                     },
+            { "group",                   new Object2FullDetails( "Get-CheckPointGroup",                 typeof(Group.GetCheckPointGroup) )                                 },
+            { "group-with-exclusion",    new Object2FullDetails( "Get-CheckPointGroupWithExclusion",    typeof(GroupWithExclusion.GetCheckPointGroupWithExclusion) )       },
+            { "host",                    new Object2FullDetails( "Get-CheckPointHost",                  typeof(Host.GetCheckPointHost) )                                   },
+            { "multicast-address-range", new Object2FullDetails( "Get-CheckPointMulticastAddressRange", typeof(MulticastAddressRange.GetCheckPointMulticastAddressRange) ) },
+            { "network",                 new Object2FullDetails( "Get-CheckPointNetwork",               typeof(Network.GetCheckPointNetwork) )                             },
+            { "security-zone",           new Object2FullDetails( "Get-CheckPointSecurityZone",          typeof(SecurityZone.GetCheckPointSecurityZone) )                   },
+            { "service-group",           new Object2FullDetails( "Get-CheckPointServiceGroup",          typeof(ServiceGroup.GetCheckPointServiceGroup) )                   },
+            { "service-tcp",             new Object2FullDetails( "Get-CheckPointServiceTCP",            typeof(ServiceTCP.GetCheckPointServiceTCP) )                       },
+            { "service-udp",             new Object2FullDetails( "Get-CheckPointServiceUDP",            typeof(ServiceUDP.GetCheckPointServiceUDP) )                       }
+        };
+
         /// <summary>
         /// JSON Constructor for Check Point Object Summary
         /// </summary>
@@ -110,72 +118,16 @@ namespace psCheckPoint.Objects
         /// <returns>Full details of object. If psCheckPoint doesn't implement the commands to get the full details of this object yet, returns this. If object not found then returns null.</returns>
         public virtual CheckPointObject ToFullObj(CheckPointSession Session)
         {
-            CheckPointObject r;
-            switch (this.Type)
+            if (_Object2FullDetails.Keys.Contains(this.Type))
             {
-                case "access-rule":
-                    {
-                        // Should never hit here as method overridden by CheckPointAccessRuleSummary
-                        return this;
-                    }
-                case "address-range":
-                    {
-                        r = GetCheckPointObject<CheckPointAddressRange>(Session, "Get-CheckPointAddressRange", typeof(GetCheckPointAddressRange));
-                        break;
-                    }
-                case "application-site":
-                    {
-                        r = GetCheckPointObject<CheckPointApplication>(Session, "Get-CheckPointApplication", typeof(GetCheckPointApplication));
-                        break;
-                    }
-                case "group":
-                    {
-                        r = GetCheckPointObject<CheckPointGroup>(Session, "Get-CheckPointGroup", typeof(GetCheckPointGroup));
-                        break;
-                    }
-                case "group-with-exclusion":
-                    {
-                        r = GetCheckPointObject<CheckPointGroupWithExclusion>(Session, "Get-CheckPointGroupWithExclusion", typeof(GetCheckPointGroupWithExclusion));
-                        break;
-                    }
-                case "host":
-                    {
-                        r = GetCheckPointObject<CheckPointHost>(Session, "Get-CheckPointHost", typeof(GetCheckPointHost));
-                        break;
-                    }
-                case "multicast-address-range":
-                    {
-                        r = GetCheckPointObject<CheckPointMulticastAddressRange>(Session, "Get-CheckPointMulticastAddressRange", typeof(GetCheckPointMulticastAddressRange));
-                        break;
-                    }
-                case "network":
-                    {
-                        r = GetCheckPointObject<CheckPointNetwork>(Session, "Get-CheckPointNetwork", typeof(GetCheckPointNetwork));
-                        break;
-                    }
-                case "service-group":
-                    {
-                        r = GetCheckPointObject<CheckPointServiceGroup>(Session, "Get-CheckPointServiceGroup", typeof(GetCheckPointServiceGroup));
-                        break;
-                    }
-                case "service-tcp":
-                    {
-                        r = GetCheckPointObject<CheckPointServiceTCP>(Session, "Get-CheckPointServiceTCP", typeof(GetCheckPointServiceTCP));
-                        break;
-                    }
-                case "service-udp":
-                    {
-                        r = GetCheckPointObject<CheckPointServiceUDP>(Session, "Get-CheckPointServiceUDP", typeof(GetCheckPointServiceUDP));
-                        break;
-                    }
-                default:
-                    {
-                        r = this;
-                        break;
-                    }
-            }
+                Object2FullDetails O2F = _Object2FullDetails[this.Type];
 
-            return r;
+                return GetCheckPointObject(Session, O2F.psCmdletName, O2F.psCmdletType);
+            }
+            else
+            {
+                return this;
+            }
         }
 
         /// <summary>
@@ -198,9 +150,9 @@ namespace psCheckPoint.Objects
             }
         }
 
-        private T GetCheckPointObject<T>(CheckPointSession Session, string psCmdletName, Type psCmdlet) where T : CheckPointObject
+        private CheckPointObject GetCheckPointObject(CheckPointSession Session, string psCmdletName, Type psCmdlet)
         {
-            if (this is T) { return (T)this; }
+            if (!(this is CheckPointObject)) { return this; }
 
             using (PowerShell PSI = PowerShell.Create())
             {
@@ -208,9 +160,33 @@ namespace psCheckPoint.Objects
                 PSI.AddParameter("Session", Session);
                 PSI.AddParameter("UID", this.UID);
 
-                Collection<T> results = PSI.Invoke<T>();
+                Collection<CheckPointObject> results = PSI.Invoke<CheckPointObject>();
                 return results.First();
             }
         }
+
+        public static IEnumerable<Type> FindDerivedTypes(Assembly assembly, Type baseType)
+        {
+            TypeInfo baseTypeInfo = baseType.GetTypeInfo();
+            bool isClass = baseTypeInfo.IsClass, isInterface = baseTypeInfo.IsInterface;
+
+            return
+                from type in assembly.DefinedTypes
+                where isClass ? type.IsSubclassOf(baseType) :
+                      isInterface ? type.ImplementedInterfaces.Contains(baseTypeInfo.AsType()) : false
+                select type.AsType();
+        }
+    }
+
+    public class Object2FullDetails
+    {
+        public Object2FullDetails(string psCmdletName, Type psCmdletType)
+        {
+            this.psCmdletName = psCmdletName ?? throw new ArgumentNullException(nameof(psCmdletName));
+            this.psCmdletType = psCmdletType ?? throw new ArgumentNullException(nameof(psCmdletType));
+        }
+
+        public string psCmdletName { get; private set; }
+        public Type psCmdletType { get; private set; }
     }
 }

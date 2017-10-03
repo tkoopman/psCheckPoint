@@ -11,7 +11,7 @@ namespace psCheckPoint.Objects.ServiceGroup
     ///   <code></code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointServiceGroups")]
-    [OutputType(typeof(CheckPointObjects<CheckPointObject>))]
+    [OutputType(typeof(CheckPointObjects))]
     public class GetCheckPointServiceGroups : GetCheckPointObjects
     {
         /// <summary>

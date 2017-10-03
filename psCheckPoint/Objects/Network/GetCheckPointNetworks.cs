@@ -11,7 +11,7 @@ namespace psCheckPoint.Objects.Network
     ///   <code>$cpNetworks = Get-CheckPointNetworks -Session $Session</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointNetworks")]
-    [OutputType(typeof(CheckPointObjects<CheckPointObject>))]
+    [OutputType(typeof(CheckPointObjects))]
     public class GetCheckPointNetworks : GetCheckPointObjects
     {
         /// <summary>

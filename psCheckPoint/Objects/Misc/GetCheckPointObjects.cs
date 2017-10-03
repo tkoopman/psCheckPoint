@@ -13,7 +13,7 @@ namespace psCheckPoint.Objects.Misc
     /// <code>Get-CheckPointObjects -Session $Session -Filter "O365 OR Office365"</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointObjects")]
-    [OutputType(typeof(CheckPointObjects<CheckPointObject>))]
+    [OutputType(typeof(CheckPointObjects))]
     public class GetCheckPointObjects : psCheckPoint.Objects.GetCheckPointObjects
     {
         /// <summary>

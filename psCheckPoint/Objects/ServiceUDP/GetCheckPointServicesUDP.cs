@@ -11,8 +11,8 @@ namespace psCheckPoint.Objects.ServiceUDP
     /// <example>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointServicesUDP")]
-    [OutputType(typeof(CheckPointObjects<CheckPointService>))]
-    public class GetCheckPointServicesUDP : GetCheckPointObjectsBase<CheckPointObjects<CheckPointService>>
+    [OutputType(typeof(CheckPointServices))]
+    public class GetCheckPointServicesUDP : GetCheckPointObjectsBase<CheckPointServices>
     {
         /// <summary>
         /// <para type="description">Check Point Web-API command that should be called.</para>

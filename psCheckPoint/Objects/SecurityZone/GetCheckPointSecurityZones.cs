@@ -10,7 +10,7 @@ namespace psCheckPoint.Objects.SecurityZone
     /// <example>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointSecurityZones")]
-    [OutputType(typeof(CheckPointObjects<CheckPointObject>))]
+    [OutputType(typeof(CheckPointObjects))]
     public class GetCheckPointSecurityZones : GetCheckPointObjects
     {
         /// <summary>
