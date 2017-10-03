@@ -97,7 +97,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: O, b, j, e, c, t
+Default value: Object
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -121,7 +121,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### psCheckPoint.Objects.CheckPointObjects`1[[psCheckPoint.Objects.CheckPointObject, psCheckPoint, Version=0.5.4.0, Culture=neutral, PublicKeyToken=null]]
+### psCheckPoint.Objects.CheckPointObjects
 Result from commands that return multiple objects.
 
 ## NOTES
