@@ -11,7 +11,7 @@ namespace psCheckPoint.Objects.Host
     ///   <code>$cpHosts = Get-CheckPointHosts -Session $Session</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointHosts")]
-    [OutputType(typeof(CheckPointObjects<CheckPointObject>))]
+    [OutputType(typeof(CheckPointObjects))]
     public class GetCheckPointHosts : GetCheckPointObjects
     {
         /// <summary>

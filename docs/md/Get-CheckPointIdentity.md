@@ -103,7 +103,7 @@ Identity IP
 
 ## OUTPUTS
 
-### psCheckPoint.IA.AddIdentityResponse
+### psCheckPoint.IA.GetIdentityResponse
 
 ## NOTES
 

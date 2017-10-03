@@ -144,10 +144,12 @@
     <Compile Include="Objects\ServiceUDP\NewCheckPointServiceUDP.cs" />
     <Compile Include="Objects\ServiceUDP\RemoveCheckPointServiceUDP.cs" />
     <Compile Include="Objects\ServiceUDP\SetCheckPointServiceUDP.cs" />
+    <Compile Include="Objects\Service\CheckPointServices.cs" />
     <Compile Include="Objects\Service\CheckPointService.cs" />
     <Compile Include="Objects\Service\CheckPointServiceBase.cs" />
     <Compile Include="Objects\Service\NewCheckPointService.cs" />
     <Compile Include="Objects\Service\SetCheckPointService.cs" />
+    <Compile Include="Objects\Session\CheckPointSessions.cs" />
     <Compile Include="Objects\SetCheckPointObject.cs" />
     <Compile Include="Objects\Host\RemoveCheckPointHost.cs" />
     <Compile Include="Objects\RemoveCheckPointObject.cs" />

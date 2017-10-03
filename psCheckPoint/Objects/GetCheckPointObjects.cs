@@ -7,7 +7,7 @@ namespace psCheckPoint.Objects
     /// <summary>
     /// <para type="description">Base class for Get-CheckPoint*ObjectName*s classes</para>
     /// </summary>
-    public abstract class GetCheckPointObjects : GetCheckPointObjectsBase<CheckPointObjects<CheckPointObject>>
+    public abstract class GetCheckPointObjects : GetCheckPointObjectsBase<CheckPointObjects>
     {
     }
 

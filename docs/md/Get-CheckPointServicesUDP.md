@@ -69,7 +69,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### psCheckPoint.Objects.CheckPointObjects`1[[psCheckPoint.Objects.Service.CheckPointService, psCheckPoint, Version=0.5.4.0, Culture=neutral, PublicKeyToken=null]]
+### psCheckPoint.Objects.Service.CheckPointServices
 Result from commands that return multiple objects.
 
 ## NOTES

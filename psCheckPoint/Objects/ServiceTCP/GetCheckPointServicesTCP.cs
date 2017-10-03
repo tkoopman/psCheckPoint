@@ -11,8 +11,8 @@ namespace psCheckPoint.Objects.ServiceTCP
     /// <example>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointServicesTCP")]
-    [OutputType(typeof(CheckPointObjects<CheckPointService>))]
-    public class GetCheckPointServicesTCP : GetCheckPointObjectsBase<CheckPointObjects<CheckPointService>>
+    [OutputType(typeof(CheckPointServices))]
+    public class GetCheckPointServicesTCP : GetCheckPointObjectsBase<CheckPointServices>
     {
         /// <summary>
         /// <para type="description">Check Point Web-API command that should be called.</para>

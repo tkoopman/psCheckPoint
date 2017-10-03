@@ -10,7 +10,7 @@ namespace psCheckPoint.Objects.Application
     /// <example>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointApplications")]
-    [OutputType(typeof(CheckPointObjects<CheckPointApplication>))]
+    [OutputType(typeof(CheckPointObjects))]
     public class GetCheckPointApplications : GetCheckPointObjects
     {
         public override string Command { get { return "show-application-sites"; } }

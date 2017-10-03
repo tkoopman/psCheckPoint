@@ -7,7 +7,7 @@
 	Try {
 		$ModFileName = "$env:APPVEYOR_BUILD_FOLDER\psCheckPoint\bin\Release\psCheckPoint.psd1"
         $ModManifest = Get-Content -Path $ModFileName
-        $BumpedManifest = $ModManifest -replace '\$Env:APPVEYOR_BUILD_VERSION', "'$Env:APPVEYOR_BUILD_VERSION'"
+        $BumpedManifest = $ModManifest -replace "'0.0.0'", "'$Env:APPVEYOR_BUILD_VERSION'"
         Remove-Item -Path $ModFileName
         Out-File -FilePath $ModFileName -InputObject $BumpedManifest -NoClobber -Encoding utf8 -Force
 		$ModFileName = "$env:APPVEYOR_BUILD_FOLDER\Pester.Tests\bin\Release\psCheckPoint.psd1"

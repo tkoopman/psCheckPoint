@@ -10,7 +10,7 @@ namespace psCheckPoint.Objects.AddressRange
     /// <example>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointAddressRanges")]
-    [OutputType(typeof(CheckPointObjects<CheckPointAddressRange>))]
+    [OutputType(typeof(CheckPointObjects))]
     public class GetCheckPointAddressRanges : GetCheckPointObjects
     {
         /// <summary>

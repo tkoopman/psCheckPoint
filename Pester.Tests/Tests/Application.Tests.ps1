@@ -1,50 +1,50 @@
 ﻿Describe "Basic.Application" {
 	Context "New-CheckPointApplication" {
-		It "Add testing application" {
+		It "Add" {
 			New-CheckPointApplication -Session $Session -Name PesterApplication -PrimaryCategory "Low Risk" -UrlList www.google.com,www.bing.com  | Should BeOfType psCheckPoint.Objects.Application.CheckPointApplication
 		}
 
-		It "Add application again - duplicate name & ip" {
+		It "Add duplicate" {
 			New-CheckPointApplication -Session $Session -Name PesterApplication -PrimaryCategory "Low Risk" -UrlList www.google.com,www.bing.com   | Should BeOfType psCheckPoint.CheckPointError
 		}
 	}
 
 	Context "Get-CheckPointApplication" {
-		It "Get testing application" {
+		It "Get" {
 			Get-CheckPointApplication -Session $Session -Name PesterApplication | Should BeOfType psCheckPoint.Objects.Application.CheckPointApplication
 		}
 
-		It "Get non-existing application" {
+		It "Get non-existing" {
 			Get-CheckPointApplication -Session $Session -Name NotPesterApplication | Should BeOfType psCheckPoint.CheckPointError
 		}
 	}
 
 	Context "Set-CheckPointApplication" {
-		It "Set testing application" {
+		It "Set" {
 			Set-CheckPointApplication -Session $Session -Name PesterApplication -Color Red | Should BeOfType psCheckPoint.Objects.Application.CheckPointApplication
 		}
 
-		It "Set non-existing application" {
+		It "Set non-existing" {
 			Set-CheckPointApplication -Session $Session -Name NotPesterApplication -Color Red | Should BeOfType psCheckPoint.CheckPointError
 		}
 	}
 
 	Context "Get-CheckPointApplications" {
-		It "Get applications" {
+		It "Get" {
 			$(Get-CheckPointApplications -Session $Session).Objects[0] | Should BeOfType psCheckPoint.Objects.CheckPointObject
 		}
 
-		It "Get applications full object" {
+		It "Get full object" {
 			$(Get-CheckPointApplications -Session $Session).Objects[0] | Get-CheckPointFullObject -Session $Session | Should BeOfType psCheckPoint.Objects.Application.CheckPointApplication
 		}
 	}
 
 	Context "Remove-CheckPointApplication" {
-		It "Remove testing application" {
+		It "Remove" {
 			Remove-CheckPointApplication -Session $Session -Name PesterApplication | Should Not BeOfType psCheckPoint.CheckPointError
 		}
 
-		It "Remove non-existing application" {
+		It "Remove non-existing" {
 			Remove-CheckPointApplication -Session $Session -Name PesterApplication | Should BeOfType psCheckPoint.CheckPointError
 		}
 	}
