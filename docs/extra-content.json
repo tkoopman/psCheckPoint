@@ -16,6 +16,17 @@
     "SubChapters": []
   },
   {
+    "Name": "Misc. Commands",
+    "Cmdlets": [
+      {
+        "Name": "Wait-CheckPointTask",
+        "Class": "WaitCheckPointTask",
+        "Cmdlet": "Wait-CheckPointTask"
+      }
+    ],
+    "SubChapters": []
+  },
+  {
     "Name": "Misc.",
     "Cmdlets": [
       {

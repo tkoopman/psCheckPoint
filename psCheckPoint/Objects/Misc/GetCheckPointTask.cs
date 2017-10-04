@@ -18,7 +18,7 @@ namespace psCheckPoint.Objects.Misc
         /// <para type="description">Unique identifier of task</para>
         /// </summary>
         [JsonProperty(PropertyName = "task-id")]
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         public string TaskID { get; set; }
 
         /// <summary>
