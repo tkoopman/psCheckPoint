@@ -47,11 +47,14 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 
 ## INPUTS
+
+### System.String
+Unique identifier of task
 
 ## OUTPUTS
 

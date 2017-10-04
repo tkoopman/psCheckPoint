@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Objects\Misc\WaitCheckPointTask.cs" />
     <Compile Include="IA\AddCheckPointIdentity.cs" />
     <Compile Include="IA\Batch.cs" />
     <Compile Include="IA\CheckPointIACmdlet.cs" />

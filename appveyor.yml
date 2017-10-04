@@ -1,4 +1,5 @@
 version: 0.6.{build}
+skip_tags: true
 only_commits:
   files:
   - psCheckPoint/
