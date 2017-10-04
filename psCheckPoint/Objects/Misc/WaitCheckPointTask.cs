@@ -30,6 +30,7 @@ namespace psCheckPoint.Objects.Misc
         public int Timeout { get; set; } = 300;
 
         private Stopwatch watch;
+        private ProgressRecord progress;
 
         protected override void WriteRecordResponse(CheckPointTasks result)
         {
@@ -56,6 +57,12 @@ namespace psCheckPoint.Objects.Misc
             else
             {
                 WriteVerbose($"Task {task.ProgressPercentage}% complete");
+
+                if (progress == null) { progress = new ProgressRecord(1, task.TaskName, task.Comments); }
+                progress.PercentComplete = task.ProgressPercentage;
+                progress.StatusDescription = task.Comments;
+                WriteProgress(progress);
+
                 Thread.Sleep(SleepTime * 1000);
                 this.ProcessRecord();
             }

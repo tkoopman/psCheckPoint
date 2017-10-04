@@ -3,8 +3,7 @@
     "psCheckPoint.Core": {
       "commandName": "Executable",
       "executablePath": "C:\\Program Files\\PowerShell\\6.0.0-beta.7\\powershell.exe",
-      "commandLineArgs": "-NoLogo -NoExit -Command \"Import-Module .\\psCheckPoint.Core.dll; $Session = Open-CheckPointSession -NoCertificateValidation -ManagementServer 165.86.71.13\"",
-      "workingDirectory": "C:\\Users\\tim\\source\\repos\\psCheckPoint\\psCheckPoint.Core\\bin\\Debug\\netcoreapp1.1"
+      "commandLineArgs": "-NoLogo -NoExit -Command \"Import-Module .\\bin\\Debug\\netcoreapp1.1\\psCheckPoint.Core.dll; $Session = Open-CheckPointSession -NoCertificateValidation -ManagementServer 165.86.71.13\""
     }
   }
 }
