@@ -7,12 +7,12 @@ Retrieve existing object using object name or uid.
 
 ### By UID
 ```
-Get-CheckPointHost -UID <String> [-Session] <CheckPointSession>
+Get-CheckPointHost -UID <String> [-Session <CheckPointSession>]
 ```
 
 ### By Name
 ```
-Get-CheckPointHost [-Name] <String> [-Session] <CheckPointSession>
+Get-CheckPointHost [-Name] <String> [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -21,7 +21,7 @@ Get-CheckPointHost [-Name] <String> [-Session] <CheckPointSession>
 
 ### ----------  EXAMPLE 1  ----------
 ```
-$cpHost = Get-CheckPointHost -Session $Session -Name Test1
+$cpHost = Get-CheckPointHost -Name Test1
 ```
 
 ## PARAMETERS
@@ -49,8 +49,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

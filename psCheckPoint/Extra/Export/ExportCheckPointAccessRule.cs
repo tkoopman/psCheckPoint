@@ -30,11 +30,11 @@ namespace psCheckPoint.Extra.Export
     /// <para type="description">    * An array or list of objects of any mixture of above</para>
     /// </summary>
     /// <example>
-    /// <code>Export-CheckPointObjects -Session $Session -Verbose $InputObject1 $InputObject2 ... $InputObjectX | ConvertTo-CheckPointHtml -Open</code>
+    /// <code>Export-CheckPointObjects -Verbose $InputObject1 $InputObject2 ... $InputObjectX | ConvertTo-CheckPointHtml -Open</code>
     /// </example>
     [Cmdlet(VerbsData.Export, "CheckPointObjects")]
     [OutputType(typeof(CheckPointExportSet))]
-    public class ExportCheckPointObjects : Cmdlet
+    public class ExportCheckPointObjects : PSCmdlet
     {
         /// <summary>
         /// <para type="description">Session object from Open-CheckPointSession</para>

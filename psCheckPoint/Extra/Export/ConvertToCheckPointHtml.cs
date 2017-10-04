@@ -24,7 +24,7 @@ namespace psCheckPoint.Extra.Export
     /// <para type="description">Pipe results from Export-CheckPointObjects to here to create a HTML report of the exported data.</para>
     /// </summary>
     /// <example>
-    /// <code>Export-CheckPointObjects -Session $Session -Verbose $InputObject | ConvertTo-CheckPointHtml -Open</code>
+    /// <code>Export-CheckPointObjects -Verbose $InputObject | ConvertTo-CheckPointHtml -Open</code>
     /// </example>
     [Cmdlet(VerbsData.ConvertTo, "CheckPointHtml", DefaultParameterSetName = "ES0")]
     [OutputType(typeof(string))]
@@ -139,7 +139,7 @@ namespace psCheckPoint.Extra.Export
         private void OpenBrowser(string url)
         {
 #if NETFULL
-                Process.Start(url);
+            Process.Start(url);
 #elif NETCOREAPP1_1
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {

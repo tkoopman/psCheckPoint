@@ -1,11 +1,12 @@
-# Test-CheckPointPolicy
+# Remove-CheckPointHostInterface
 
 ## SYNOPSIS
+Remove host interface.
 
 ## SYNTAX
 
 ```
-Test-CheckPointPolicy -PolicyPackage <String> [-Session <CheckPointSession>]
+Remove-CheckPointHostInterface [-Host] <PSObject> [-Name] <String> [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -21,8 +22,23 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -PolicyPackage
-The name of the Policy Package to be installed.
+### -Host
+Host object (Name, UID or Host Object)
+
+```yaml
+Type: PSObject
+Parameter Sets: (All)
+Aliases: 
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: True (ByPropertyName, ByValue)
+Accept wildcard characters: False
+```
+
+### -Name
+Interface name.
 
 ```yaml
 Type: String
@@ -30,7 +46,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: True
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -53,7 +69,13 @@ Accept wildcard characters: False
 
 ## INPUTS
 
+### System.Management.Automation.PSObject
+Host object (Name, UID or Host Object)
+
 ## OUTPUTS
+
+### psCheckPoint.Objects.Host.CheckPointHost
+Details of a Check Point Host
 
 ## NOTES
 

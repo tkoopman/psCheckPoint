@@ -1,7 +1,7 @@
 ﻿Describe "Basic.ServiceTCP" {
 	Context "New-CheckPointServiceTCP" {
 		It "Add" {
-			New-CheckPointServiceTCP -Session $Session -Name PesterTCP -Port 1227 | Should BeOfType psCheckPoint.Objects.ServiceTCP.CheckPointServiceTCP
+			New-CheckPointServiceTCP -Session $Session -Name PesterTCP -Port 1227 -PassThru | Should BeOfType psCheckPoint.Objects.ServiceTCP.CheckPointServiceTCP
 		}
 
 		It "Add duplicate" {
@@ -21,7 +21,7 @@
 
 	Context "Set-CheckPointServiceTCP" {
 		It "Set" {
-			Set-CheckPointServiceTCP -Session $Session -Name PesterTCP -Color Red | Should BeOfType psCheckPoint.Objects.ServiceTCP.CheckPointServiceTCP
+			Set-CheckPointServiceTCP -Session $Session -Name PesterTCP -Color Red -PassThru | Should BeOfType psCheckPoint.Objects.ServiceTCP.CheckPointServiceTCP
 		}
 
 		It "Set non-existing" {

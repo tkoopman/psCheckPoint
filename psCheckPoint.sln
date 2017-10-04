@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.26929.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "psCheckPoint", "psCheckPoint\psCheckPoint.csproj", "{4FF88B87-441A-4419-91C7-13041E60D0C0}"
 EndProject
@@ -37,6 +37,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "psCheckPoint.Core", "psChec
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ED43769F-45B6-439A-BF34-00561EB1E7F4}"
 	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
 		AppVeyor-Test-Deploy.ps1 = AppVeyor-Test-Deploy.ps1
 		appveyor.yml = appveyor.yml
 		README.md = README.md

@@ -1,7 +1,7 @@
 ﻿Describe "Basic.AccessLayer" {
 	Context "New-CheckPointAccessLayer" {
 		It "Add" {
-			New-CheckPointAccessLayer -Session $Session -Name PesterAccessLayer  | Should BeOfType psCheckPoint.Objects.AccessLayer.CheckPointAccessLayer
+			New-CheckPointAccessLayer -Session $Session -Name PesterAccessLayer -PassThru  | Should BeOfType psCheckPoint.Objects.AccessLayer.CheckPointAccessLayer
 		}
 
 		# Seems Check Point allows Access Layers with duplicate names
@@ -22,7 +22,7 @@
 
 	Context "Set-CheckPointAccessLayer" {
 		It "Set" {
-			Set-CheckPointAccessLayer -Session $Session -Name PesterAccessLayer -Color Red | Should BeOfType psCheckPoint.Objects.AccessLayer.CheckPointAccessLayer
+			Set-CheckPointAccessLayer -Session $Session -Name PesterAccessLayer -Color Red -PassThru | Should BeOfType psCheckPoint.Objects.AccessLayer.CheckPointAccessLayer
 		}
 
 		It "Set non-existing" {

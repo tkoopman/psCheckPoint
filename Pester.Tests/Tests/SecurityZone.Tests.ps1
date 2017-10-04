@@ -1,7 +1,7 @@
 ﻿Describe "Basic.SecurityZone" {
 	Context "New-CheckPointSecurityZone" {
 		It "Add" {
-			New-CheckPointSecurityZone -Session $Session -Name PesterSZ | Should BeOfType psCheckPoint.Objects.SecurityZone.CheckPointSecurityZone
+			New-CheckPointSecurityZone -Session $Session -Name PesterSZ -PassThru | Should BeOfType psCheckPoint.Objects.SecurityZone.CheckPointSecurityZone
 		}
 
 		It "Add duplicate" {
@@ -21,7 +21,7 @@
 
 	Context "Set-CheckPointSecurityZone" {
 		It "Set" {
-			Set-CheckPointSecurityZone -Session $Session -Name PesterSZ -Color Red | Should BeOfType psCheckPoint.Objects.SecurityZone.CheckPointSecurityZone
+			Set-CheckPointSecurityZone -Session $Session -Name PesterSZ -Color Red -PassThru | Should BeOfType psCheckPoint.Objects.SecurityZone.CheckPointSecurityZone
 		}
 
 		It "Set non-existing" {

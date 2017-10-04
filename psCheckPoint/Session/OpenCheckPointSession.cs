@@ -15,12 +15,15 @@ namespace psCheckPoint.Session
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>$Session = Open-CheckPointSession -ManagementServer 192.168.1.1</code>
+    ///   <code>Open-CheckPointSession -ManagementServer 192.168.1.1</code>
+    /// </example>
+    /// <example>
+    ///   <code>$Session = Open-CheckPointSession -ManagementServer 192.168.1.1 -PassThru</code>
     /// </example>
     [JsonObject(MemberSerialization.OptIn)]
     [Cmdlet(VerbsCommon.Open, "CheckPointSession")]
     [OutputType(typeof(CheckPointSession))]
-    public class OpenCheckPointSession : Cmdlet
+    public class OpenCheckPointSession : PSCmdlet
     {
         /// <summary>
         /// <para type="description">IP or Hostname of the Check point Management Server</para>
@@ -120,6 +123,12 @@ namespace psCheckPoint.Session
         public SwitchParameter NoCompression { get; set; }
 
         /// <summary>
+        /// <para type="description">Return the session and do not store it for automatic use.</para>
+        /// </summary>
+        [Parameter]
+        public SwitchParameter PassThru { get; set; }
+
+        /// <summary>
         /// Provides a record-by-record processing functionality for the cmdlet.
         /// </summary>
         protected override void ProcessRecord()
@@ -169,7 +178,15 @@ namespace psCheckPoint.Session
                             CheckPointSession session = JsonConvert.DeserializeObject<CheckPointSession>(strJson);
                             session.EnableCompression = !NoCompression.IsPresent;
                             session.NoCertificateValidation = NoCertificateValidation.IsPresent;
-                            WriteObject(session);
+
+                            if (PassThru.IsPresent)
+                            {
+                                WriteObject(session);
+                            }
+                            else
+                            {
+                                SessionState.PSVariable.Set("CheckPointSession", session);
+                            }
                         }
                         else
                         {

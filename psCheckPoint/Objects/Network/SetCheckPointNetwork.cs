@@ -10,7 +10,7 @@ namespace psCheckPoint.Objects.Network
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>$cpNetwork = Set-CheckPointNetwork -Session $Session -Name Test1 -NewName Test2 -Tags TestTag</code>
+    ///   <code>Set-CheckPointNetwork -Name Test1 -NewName Test2 -Tags TestTag</code>
     /// </example>
     [Cmdlet(VerbsCommon.Set, "CheckPointNetwork")]
     [OutputType(typeof(CheckPointNetwork))]

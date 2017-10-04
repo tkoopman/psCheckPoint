@@ -6,7 +6,7 @@ Log out of a session.
 ## SYNTAX
 
 ```
-Reset-CheckPointSession [-ResetSession <CheckPointSession>] [-Session] <CheckPointSession>
+Reset-CheckPointSession [-ResetSession <CheckPointSession>] [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -15,7 +15,7 @@ Reset-CheckPointSession [-ResetSession <CheckPointSession>] [-Session] <CheckPoi
 
 ### ----------  EXAMPLE 1  ----------
 ```
-Close-CheckPointSession -Session $Session
+Reset-CheckPointSession
 ```
 
 ## PARAMETERS
@@ -43,8 +43,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

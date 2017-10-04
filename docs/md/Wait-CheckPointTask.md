@@ -6,7 +6,7 @@ Waits for task to complete.
 ## SYNTAX
 
 ```
-Wait-CheckPointTask [-SleepTime <Int32>] [-Timeout <Int32>] -TaskID <String> [-Session] <CheckPointSession>
+Wait-CheckPointTask [-SleepTime <Int32>] [-Timeout <Int32>] -TaskID <String> [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -16,7 +16,7 @@ Waits for task to complete then returns the completed task details.
 
 ### ----------  EXAMPLE 1  ----------
 ```
-Install-CheckPointPolicy -Session $Session -PolicyPackage Standard -Targets MyGateway | Wait-CheckPointTask -Session $Session -Verbose
+Install-CheckPointPolicy -PolicyPackage Standard -Targets MyGateway | Wait-CheckPointTask -Verbose
 ```
 
 ## PARAMETERS
@@ -29,8 +29,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

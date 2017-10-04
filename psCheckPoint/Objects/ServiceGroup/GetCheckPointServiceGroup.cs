@@ -8,7 +8,7 @@ namespace psCheckPoint.Objects.ServiceGroup
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>$cpGroup = Get-CheckPointGroup -Session $Session -Name Test1</code>
+    ///   <code>Get-CheckPointGroup -Name Test1</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointServiceGroup")]
     [OutputType(typeof(CheckPointServiceGroup))]

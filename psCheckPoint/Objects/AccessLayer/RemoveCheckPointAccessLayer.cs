@@ -8,7 +8,7 @@ namespace psCheckPoint.Objects.AccessLayer
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code>Remove-CheckPointAccessLayer -Session $Session -Name Network</code>
+    /// <code>Remove-CheckPointAccessLayer -Name Network</code>
     /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointAccessLayer")]
     public class RemoveCheckPointAccessLayer : RemoveCheckPointObject

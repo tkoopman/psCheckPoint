@@ -6,7 +6,7 @@ Retrieve all objects.
 ## SYNTAX
 
 ```
-Get-CheckPointGroups [-UID <Int32>] [-Name <Int32>] [-Session] <CheckPointSession>
+Get-CheckPointGroups [-UID <Int32>] [-Name <Int32>] [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -15,7 +15,7 @@ Get-CheckPointGroups [-UID <Int32>] [-Name <Int32>] [-Session] <CheckPointSessio
 
 ### ----------  EXAMPLE 1  ----------
 ```
-$cpGroups = Get-CheckPointGroups -Session $Session
+Get-CheckPointGroups
 ```
 
 ## PARAMETERS
@@ -43,8 +43,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

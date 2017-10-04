@@ -7,17 +7,17 @@ Retrieve existing object using object name or uid.
 
 ### By Application ID
 ```
-Get-CheckPointApplication -ApplicationID <String> [-Session] <CheckPointSession>
+Get-CheckPointApplication -ApplicationID <String> [-Session <CheckPointSession>]
 ```
 
 ### By UID
 ```
-Get-CheckPointApplication -UID <String> [-Session] <CheckPointSession>
+Get-CheckPointApplication -UID <String> [-Session <CheckPointSession>]
 ```
 
 ### By Name
 ```
-Get-CheckPointApplication [-Name] <String> [-Session] <CheckPointSession>
+Get-CheckPointApplication [-Name] <String> [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -69,8 +69,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

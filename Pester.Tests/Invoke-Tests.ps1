@@ -21,7 +21,7 @@ if ($AppVeyor) {
 }
 $secpasswd = ConvertTo-SecureString $Settings.Management.Password -AsPlainText -Force
 $mycreds = New-Object System.Management.Automation.PSCredential ($Settings.Management.User, $secpasswd)
-Set-Variable -Scope Global -Name Session -Description "psCheckPoint Pester Session" -Option readonly -Value $(Open-CheckPointSession -NoCertificateValidation -ManagementServer $Settings.Management.Server -Credentials $mycreds -SessionName Pester -SessionDescription "psCheckPoint Pester Testing")
+Set-Variable -Scope Global -Name Session -Description "psCheckPoint Pester Session" -Option readonly -Value $(Open-CheckPointSession -NoCertificateValidation -ManagementServer $Settings.Management.Server -Credentials $mycreds -SessionName Pester -SessionDescription "psCheckPoint Pester Testing" -PassThru)
 
 # Launch PowerShell Core Tests
 if ($PSEdition -eq 'Desktop' -and $(Test-Path $Settings.psCore)) {

@@ -4,9 +4,7 @@ This example shows output from using the module psCheckPoint to export rules and
 ##### Command run to produce this [export.html](http://htmlpreview.github.io/?https://github.com/tkoopman/psCheckPoint/blob/master/Examples/ExportToHtml/Export.html) file
 
 ```powershell
-$(ForEach($rule in 1,2,3,4){$rule | Get-CheckPointAccessRule -Session $Session -Layer ExportNetwork}) |
-  Export-CheckPointObjects -Session $Session -Verbose |
+$(ForEach($rule in 1,2,3,4){$rule | Get-CheckPointAccessRule -Layer ExportNetwork}) |
+  Export-CheckPointObjects -Verbose |
   ConvertTo-CheckPointHtml -Open
 ```
-
-`$Session` is your current logged in session.

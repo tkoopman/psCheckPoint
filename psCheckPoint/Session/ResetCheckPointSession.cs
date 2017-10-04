@@ -9,7 +9,7 @@ namespace psCheckPoint.Session
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Close-CheckPointSession -Session $Session</code>
+    ///   <code>Reset-CheckPointSession</code>
     /// </example>
     [Cmdlet(VerbsCommon.Reset, "CheckPointSession")]
     public class ResetCheckPointSession : CheckPointCmdlet<CheckPointMessage>

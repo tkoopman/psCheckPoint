@@ -1,7 +1,7 @@
 ﻿Describe "Basic.ServiceUDP" {
 	Context "New-CheckPointServiceUDP" {
 		It "Add" {
-			New-CheckPointServiceUDP -Session $Session -Name PesterUDP -Port 1227 | Should BeOfType psCheckPoint.Objects.ServiceUDP.CheckPointServiceUDP
+			New-CheckPointServiceUDP -Session $Session -Name PesterUDP -Port 1227 -PassThru | Should BeOfType psCheckPoint.Objects.ServiceUDP.CheckPointServiceUDP
 		}
 
 		It "Add duplicate" {
@@ -21,7 +21,7 @@
 
 	Context "Set-CheckPointServiceUDP" {
 		It "Set" {
-			Set-CheckPointServiceUDP -Session $Session -Name PesterUDP -Color Red | Should BeOfType psCheckPoint.Objects.ServiceUDP.CheckPointServiceUDP
+			Set-CheckPointServiceUDP -Session $Session -Name PesterUDP -Color Red -PassThru | Should BeOfType psCheckPoint.Objects.ServiceUDP.CheckPointServiceUDP
 		}
 
 		It "Set non-existing" {

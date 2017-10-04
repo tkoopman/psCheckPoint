@@ -7,17 +7,17 @@ Retrieve existing object using object name or uid.
 
 ### By UID
 ```
-Get-CheckPointAccessRule -UID <String> [-Layer] <String> [-Session] <CheckPointSession>
+Get-CheckPointAccessRule -UID <String> [-Layer] <String> [-Session <CheckPointSession>]
 ```
 
 ### By Name
 ```
-Get-CheckPointAccessRule [-Name] <String> [-Layer] <String> [-Session] <CheckPointSession>
+Get-CheckPointAccessRule [-Name] <String> [-Layer] <String> [-Session <CheckPointSession>]
 ```
 
 ### By Rule Number
 ```
-Get-CheckPointAccessRule -RuleNumber <Int32> [-Layer] <String> [-Session] <CheckPointSession>
+Get-CheckPointAccessRule -RuleNumber <Int32> [-Layer] <String> [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -87,8 +87,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

@@ -11,7 +11,7 @@ Set-CheckPointApplication [-GroupAction <MembershipActions>] [-Groups <String[]>
  [-UrlAction <MembershipActions>] [-ApplicationSignatureAction <MembershipActions>]
  [-AdditionalCategoriesAction <MembershipActions>] [-AdditionalCategories <String[]>] [-Description <String>]
  [-UrlsDefinedAsRegularExpression] [-NewName <String>] [-Tags <String[]>] [-Comments <String>]
- [-IgnoreWarnings] [-IgnoreErrors] [-Color <String>] [-Session] <CheckPointSession>
+ [-IgnoreWarnings] [-IgnoreErrors] [-PassThru] [-Color <String>] [-Session <CheckPointSession>]
 ```
 
 ### By URLs
@@ -20,7 +20,7 @@ Set-CheckPointApplication [-GroupAction <MembershipActions>] [-Groups <String[]>
  [-UrlAction <MembershipActions>] [-UrlList <String[]>] [-ApplicationSignatureAction <MembershipActions>]
  [-AdditionalCategoriesAction <MembershipActions>] [-AdditionalCategories <String[]>] [-Description <String>]
  [-UrlsDefinedAsRegularExpression] [-NewName <String>] [-Tags <String[]>] [-Comments <String>]
- [-IgnoreWarnings] [-IgnoreErrors] [-Color <String>] [-Session] <CheckPointSession>
+ [-IgnoreWarnings] [-IgnoreErrors] [-PassThru] [-Color <String>] [-Session <CheckPointSession>]
 ```
 
 ### By Application Signature
@@ -29,8 +29,8 @@ Set-CheckPointApplication [-GroupAction <MembershipActions>] [-Groups <String[]>
  [-UrlAction <MembershipActions>] [-ApplicationSignatureAction <MembershipActions>]
  [-ApplicationSignature <String[]>] [-AdditionalCategoriesAction <MembershipActions>]
  [-AdditionalCategories <String[]>] [-Description <String>] [-UrlsDefinedAsRegularExpression]
- [-NewName <String>] [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors]
- [-Color <String>] [-Session] <CheckPointSession>
+ [-NewName <String>] [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-PassThru]
+ [-Color <String>] [-Session <CheckPointSession>]
 ```
 
 ### By UID
@@ -39,7 +39,7 @@ Set-CheckPointApplication [-GroupAction <MembershipActions>] [-Groups <String[]>
  [-UrlAction <MembershipActions>] [-ApplicationSignatureAction <MembershipActions>]
  [-AdditionalCategoriesAction <MembershipActions>] [-AdditionalCategories <String[]>] [-Description <String>]
  [-UrlsDefinedAsRegularExpression] -UID <String> [-NewName <String>] [-Tags <String[]>] [-Comments <String>]
- [-IgnoreWarnings] [-IgnoreErrors] [-Color <String>] [-Session] <CheckPointSession>
+ [-IgnoreWarnings] [-IgnoreErrors] [-PassThru] [-Color <String>] [-Session <CheckPointSession>]
 ```
 
 ### By Name
@@ -48,7 +48,7 @@ Set-CheckPointApplication [-GroupAction <MembershipActions>] [-Groups <String[]>
  [-UrlAction <MembershipActions>] [-ApplicationSignatureAction <MembershipActions>]
  [-AdditionalCategoriesAction <MembershipActions>] [-AdditionalCategories <String[]>] [-Description <String>]
  [-UrlsDefinedAsRegularExpression] [-Name] <String> [-NewName <String>] [-Tags <String[]>] [-Comments <String>]
- [-IgnoreWarnings] [-IgnoreErrors] [-Color <String>] [-Session] <CheckPointSession>
+ [-IgnoreWarnings] [-IgnoreErrors] [-PassThru] [-Color <String>] [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -271,6 +271,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -PassThru
+Return the updated object.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -PrimaryCategory
 Each application is assigned to one primary category based on its most defining aspect.
 
@@ -294,8 +309,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

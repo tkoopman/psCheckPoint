@@ -6,7 +6,7 @@ Retrieve existing object using object name or uid.
 ## SYNTAX
 
 ```
-Get-CheckPointSession -UID <String> [-Session] <CheckPointSession>
+Get-CheckPointSession [-UID <String>] [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -15,7 +15,7 @@ Get-CheckPointSession -UID <String> [-Session] <CheckPointSession>
 
 ### ----------  EXAMPLE 1  ----------
 ```
-
+Get-CheckPointSession
 ```
 
 ## PARAMETERS
@@ -28,8 +28,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -37,13 +37,14 @@ Accept wildcard characters: False
 
 ### -UID
 Session unique identifier.
+If not provided the current logged in session UID will be used.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName, ByValue)
@@ -54,6 +55,7 @@ Accept wildcard characters: False
 
 ### System.String
 Session unique identifier.
+If not provided the current logged in session UID will be used.
 
 ## OUTPUTS
 

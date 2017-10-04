@@ -25,7 +25,7 @@ Input objects could be of the following types:
 
 ### ----------  EXAMPLE 1  ----------
 ```
-Export-CheckPointObjects -Session $Session -Verbose $InputObject1 $InputObject2 ... $InputObjectX | ConvertTo-CheckPointHtml -Open
+Export-CheckPointObjects -Verbose $InputObject1 $InputObject2 ... $InputObjectX | ConvertTo-CheckPointHtml -Open
 ```
 
 ## PARAMETERS

@@ -8,7 +8,7 @@ namespace psCheckPoint.Objects.Network
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Remove-CheckPointNetwork -Session $Session -Name Test1 -Verbose</code>
+    ///   <code>Remove-CheckPointNetwork -Name Test1 -Verbose</code>
     /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointNetwork")]
     public class RemoveCheckPointNetwork : RemoveCheckPointObject

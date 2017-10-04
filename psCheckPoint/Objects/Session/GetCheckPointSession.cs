@@ -9,6 +9,7 @@ namespace psCheckPoint.Objects.Session
     /// <para type="description"></para>
     /// </summary>
     /// <example>
+    /// <code>Get-CheckPointSession</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointSession")]
     [OutputType(typeof(CheckPointSession))]
@@ -20,10 +21,20 @@ namespace psCheckPoint.Objects.Session
         public override string Command { get { return "show-session"; } }
 
         /// <summary>
-        /// <para type="description">Session unique identifier.</para>
+        /// <para type="description">Session unique identifier. If not provided the current logged in session UID will be used.</para>
         /// </summary>
         [JsonProperty(PropertyName = "uid", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
+        [Parameter(ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
         public string UID { get; set; }
+
+        protected override void BeginProcessing()
+        {
+            base.BeginProcessing();
+
+            if (UID == null)
+            {
+                UID = Session.UID;
+            }
+        }
     }
 }

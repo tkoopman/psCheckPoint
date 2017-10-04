@@ -9,7 +9,7 @@ namespace psCheckPoint.Session
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Close-CheckPointSession -Session $Session</code>
+    ///   <code>Close-CheckPointSession</code>
     /// </example>
     [Cmdlet(VerbsCommon.Close, "CheckPointSession")]
     public class CloseCheckPointSession : CheckPointCmdlet<CheckPointMessage>
@@ -19,6 +19,20 @@ namespace psCheckPoint.Session
         /// </summary>
         [Parameter]
         public SwitchParameter ContinueSessionInSmartconsole { get; set; }
+
+        private bool IsPSSession = false;
+
+        protected override void BeginProcessing()
+        {
+            IsPSSession = (Session == null);
+            base.BeginProcessing();
+        }
+
+        protected override void EndProcessing()
+        {
+            Session.Dispose();
+            if (IsPSSession) { SessionState.PSVariable.Remove("CheckPointSession"); }
+        }
 
         /// <summary>
         /// <para type="description">Check Point Web-API command that should be called.</para>

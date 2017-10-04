@@ -11,16 +11,16 @@ namespace psCheckPoint.Objects
     /// <para type="description">Use this to return the full objects for each summary.</para>
     /// </summary>
     /// <example>
-    /// <code>Get-CheckPointGroups -Session $Session | Get-CheckPointFullObject -Session $Session</code>
+    /// <code>Get-CheckPointGroups | Get-CheckPointFullObject</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointFullObject")]
     [OutputType(typeof(CheckPointObject))]
-    public class GetCheckPointFullObject : Cmdlet
+    public class GetCheckPointFullObject : PSCmdlet
     {
         /// <summary>
         /// <para type="description">Session object from Open-CheckPointSession</para>
         /// </summary>
-        [Parameter(Position = 0, Mandatory = true)]
+        [Parameter]
         public CheckPointSession Session { get; set; }
 
         /// <summary>
@@ -28,6 +28,18 @@ namespace psCheckPoint.Objects
         /// </summary>
         [Parameter(Mandatory = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
         public PSObject Object { get; set; }
+
+        protected override void BeginProcessing()
+        {
+            if (Session == null)
+            {
+                Session = SessionState.PSVariable.GetValue("CheckPointSession") as CheckPointSession;
+                if (Session == null)
+                {
+                    throw new PSArgumentNullException("Session");
+                }
+            }
+        }
 
         /// <summary>
         /// Provides a record-by-record processing functionality for the cmdlet.

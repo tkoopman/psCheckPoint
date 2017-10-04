@@ -7,7 +7,7 @@ Find objects by Filter.
 
 ```
 Get-CheckPointObjects [-Filter <String>] [-IPOnly] [-Type <String>] [-UID <Int32>] [-Name <Int32>]
- [-Session] <CheckPointSession>
+ [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -18,7 +18,7 @@ Filters are same as what can be used in Smart Console
 
 ### ----------  EXAMPLE 1  ----------
 ```
-Get-CheckPointObjects -Session $Session -Filter "O365 OR Office365"
+Get-CheckPointObjects -Filter "O365 OR Office365"
 ```
 
 ## PARAMETERS
@@ -80,8 +80,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

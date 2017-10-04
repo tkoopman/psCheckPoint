@@ -1,7 +1,7 @@
 ﻿Describe "Basic.Application" {
 	Context "New-CheckPointApplication" {
 		It "Add" {
-			New-CheckPointApplication -Session $Session -Name PesterApplication -PrimaryCategory "Low Risk" -UrlList www.google.com,www.bing.com  | Should BeOfType psCheckPoint.Objects.Application.CheckPointApplication
+			New-CheckPointApplication -Session $Session -Name PesterApplication -PrimaryCategory "Low Risk" -UrlList www.google.com,www.bing.com -PassThru  | Should BeOfType psCheckPoint.Objects.Application.CheckPointApplication
 		}
 
 		It "Add duplicate" {
@@ -21,7 +21,7 @@
 
 	Context "Set-CheckPointApplication" {
 		It "Set" {
-			Set-CheckPointApplication -Session $Session -Name PesterApplication -Color Red | Should BeOfType psCheckPoint.Objects.Application.CheckPointApplication
+			Set-CheckPointApplication -Session $Session -Name PesterApplication -Color Red -PassThru | Should BeOfType psCheckPoint.Objects.Application.CheckPointApplication
 		}
 
 		It "Set non-existing" {

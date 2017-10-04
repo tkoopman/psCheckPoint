@@ -28,10 +28,10 @@ namespace psCheckPoint.Objects.Host
         public PSObject Host { get; set; }
 
         [JsonProperty(PropertyName = "name", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        private string HostName { get; set; }
+        private string HostName = null;
 
         [JsonProperty(PropertyName = "uid", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        private string HostUID { get; set; }
+        private string HostUID = null;
 
         [JsonProperty(PropertyName = "interfaces", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         protected Hashtable Interfaces { get; set; }
@@ -45,19 +45,7 @@ namespace psCheckPoint.Objects.Host
         [OnSerializing]
         protected void OnSerializing(StreamingContext context)
         {
-            if (Host.BaseObject is CheckPointObject)
-            {
-                HostUID = (Host.BaseObject as CheckPointObject).UID;
-            }
-            else if (Host.BaseObject is string)
-            {
-                string str = (Host.BaseObject as string);
-                HostName = str;
-            }
-            else
-            {
-                throw new PSInvalidCastException("Host is invalid type.");
-            }
+            SetInputIdentifier(Host, "host", out HostUID, out HostName);
 
             Interfaces = new Hashtable
             {

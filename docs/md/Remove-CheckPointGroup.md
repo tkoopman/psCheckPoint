@@ -7,12 +7,12 @@ Delete existing object using object name or uid.
 
 ### By UID
 ```
-Remove-CheckPointGroup -UID <String> [-IgnoreWarnings] [-IgnoreErrors] [-Session] <CheckPointSession>
+Remove-CheckPointGroup -UID <String> [-IgnoreWarnings] [-IgnoreErrors] [-Session <CheckPointSession>]
 ```
 
 ### By Name
 ```
-Remove-CheckPointGroup [-Name] <String> [-IgnoreWarnings] [-IgnoreErrors] [-Session] <CheckPointSession>
+Remove-CheckPointGroup [-Name] <String> [-IgnoreWarnings] [-IgnoreErrors] [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -21,7 +21,7 @@ Remove-CheckPointGroup [-Name] <String> [-IgnoreWarnings] [-IgnoreErrors] [-Sess
 
 ### ----------  EXAMPLE 1  ----------
 ```
-Remove-CheckPointGroup -Session $Session -Name Test1 -Verbose
+Remove-CheckPointGroup -Name Test1 -Verbose
 ```
 
 ## PARAMETERS
@@ -81,8 +81,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

@@ -9,16 +9,16 @@ Create new object.
 ```
 New-CheckPointApplication [-Groups <String[]>] -PrimaryCategory <String> -UrlList <String[]>
  [-AdditionalCategories <String[]>] [-Description <String>] [-UrlsDefinedAsRegularExpression] -Name <String>
- [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-Color <String>]
- [-Session] <CheckPointSession>
+ [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-PassThru] [-Color <String>]
+ [-Session <CheckPointSession>]
 ```
 
 ### By Application Signature
 ```
 New-CheckPointApplication [-Groups <String[]>] -PrimaryCategory <String> -ApplicationSignature <String[]>
  [-AdditionalCategories <String[]>] [-Description <String>] [-UrlsDefinedAsRegularExpression] -Name <String>
- [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-Color <String>]
- [-Session] <CheckPointSession>
+ [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-PassThru] [-Color <String>]
+ [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -171,6 +171,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -PassThru
+Return the updated object.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -PrimaryCategory
 Each application is assigned to one primary category based on its most defining aspect.
 
@@ -194,8 +209,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

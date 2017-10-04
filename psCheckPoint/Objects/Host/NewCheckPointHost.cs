@@ -9,7 +9,7 @@ namespace psCheckPoint.Objects.Host
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>$cpHost = New-CheckPointHost -Session $Session -Name Test1 -ipAddress 1.2.3.4</code>
+    ///   <code>New-CheckPointHost -Name Test1 -ipAddress 1.2.3.4</code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "CheckPointHost")]
     [OutputType(typeof(CheckPointHost))]

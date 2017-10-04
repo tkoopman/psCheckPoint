@@ -1,7 +1,7 @@
 ﻿Describe "Basic.ServiceGroup" {
 	Context "New-CheckPointServiceGroup" {
 		It "Add" {
-			New-CheckPointServiceGroup -Session $Session -Name PesterServiceGroup | Should BeOfType psCheckPoint.Objects.ServiceGroup.CheckPointServiceGroup
+			New-CheckPointServiceGroup -Session $Session -Name PesterServiceGroup -PassThru | Should BeOfType psCheckPoint.Objects.ServiceGroup.CheckPointServiceGroup
 		}
 
 		It "Add duplicate" {
@@ -21,7 +21,7 @@
 
 	Context "Set-CheckPointServiceGroup" {
 		It "Set" {
-			Set-CheckPointServiceGroup -Session $Session -Name PesterServiceGroup -Color Red | Should BeOfType psCheckPoint.Objects.ServiceGroup.CheckPointServiceGroup
+			Set-CheckPointServiceGroup -Session $Session -Name PesterServiceGroup -Color Red -PassThru | Should BeOfType psCheckPoint.Objects.ServiceGroup.CheckPointServiceGroup
 		}
 
 		It "Set non-existing" {

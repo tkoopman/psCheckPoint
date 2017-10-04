@@ -6,7 +6,7 @@ Retrieve full object details from object summary.
 ## SYNTAX
 
 ```
-Get-CheckPointFullObject [-Session] <CheckPointSession> -Object <PSObject>
+Get-CheckPointFullObject [-Session <CheckPointSession>] -Object <PSObject>
 ```
 
 ## DESCRIPTION
@@ -18,7 +18,7 @@ Use this to return the full objects for each summary.
 
 ### ----------  EXAMPLE 1  ----------
 ```
-Get-CheckPointGroups -Session $Session | Get-CheckPointFullObject -Session $Session
+Get-CheckPointGroups | Get-CheckPointFullObject
 ```
 
 ## PARAMETERS
@@ -46,8 +46,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

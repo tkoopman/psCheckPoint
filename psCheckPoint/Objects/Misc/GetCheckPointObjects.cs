@@ -10,7 +10,7 @@ namespace psCheckPoint.Objects.Misc
     /// <para type="description">Can find many different types of objects based on a filter. Filters are same as what can be used in Smart Console</para>
     /// </summary>
     /// <example>
-    /// <code>Get-CheckPointObjects -Session $Session -Filter "O365 OR Office365"</code>
+    /// <code>Get-CheckPointObjects -Filter "O365 OR Office365"</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointObjects")]
     [OutputType(typeof(CheckPointObjects))]

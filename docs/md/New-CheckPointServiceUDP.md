@@ -10,7 +10,7 @@ New-CheckPointServiceUDP [-AcceptReplies] [-KeepConnectionsOpenAfterPolicyInstal
  [-MatchByProtocolSignature] [-MatchForAny] [-OverrideDefaultSettings] [-Port <String>] [-Protocol <String>]
  [-SessionTimeout <Int32>] [-SourcePort <String>] [-SyncConnectionsOnCluster] [-UseDefaultSessionTimeout]
  [-Groups <String[]>] [-SetIfExists] -Name <String> [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings]
- [-IgnoreErrors] [-Color <String>] [-Session] <CheckPointSession>
+ [-IgnoreErrors] [-PassThru] [-Color <String>] [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -197,6 +197,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -PassThru
+Return the updated object.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Port
 The number of the port used to provide this service.
 To specify a port range, place a hyphen between the lowest and highest port numbers, for example 44-55.
@@ -237,8 +252,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

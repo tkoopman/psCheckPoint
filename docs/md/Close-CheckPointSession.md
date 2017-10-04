@@ -6,7 +6,7 @@ Log out of a session.
 ## SYNTAX
 
 ```
-Close-CheckPointSession [-ContinueSessionInSmartconsole] [-Session] <CheckPointSession>
+Close-CheckPointSession [-ContinueSessionInSmartconsole] [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -15,7 +15,7 @@ Close-CheckPointSession [-ContinueSessionInSmartconsole] [-Session] <CheckPointS
 
 ### ----------  EXAMPLE 1  ----------
 ```
-Close-CheckPointSession -Session $Session
+Close-CheckPointSession
 ```
 
 ## PARAMETERS
@@ -45,8 +45,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

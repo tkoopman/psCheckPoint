@@ -8,13 +8,13 @@ Delete existing object using object name or uid.
 ### By UID
 ```
 Remove-CheckPointGroupWithExclusion -UID <String> [-IgnoreWarnings] [-IgnoreErrors]
- [-Session] <CheckPointSession>
+ [-Session <CheckPointSession>]
 ```
 
 ### By Name
 ```
 Remove-CheckPointGroupWithExclusion [-Name] <String> [-IgnoreWarnings] [-IgnoreErrors]
- [-Session] <CheckPointSession>
+ [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -83,8 +83,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

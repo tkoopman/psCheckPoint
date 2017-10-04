@@ -11,7 +11,7 @@ namespace psCheckPoint.Session
     /// <para type="synopsis">Response from Open-CheckPointSession</para>
     /// <para type="description">Used across other Check Point Web API Calls</para>
     /// </summary>
-    public class CheckPointSession
+    public class CheckPointSession : IDisposable
     {
         /// <summary>
         /// JSON Constructor for logged in Check Point Session
@@ -118,6 +118,12 @@ namespace psCheckPoint.Session
             }
 
             return _httpClient;
+        }
+
+        public void Dispose()
+        {
+            ((IDisposable)_httpClient).Dispose();
+            _httpClient = null;
         }
     }
 }

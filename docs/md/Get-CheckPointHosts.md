@@ -6,7 +6,7 @@ Retrieve all objects.
 ## SYNTAX
 
 ```
-Get-CheckPointHosts [-UID <Int32>] [-Name <Int32>] [-Session] <CheckPointSession>
+Get-CheckPointHosts [-UID <Int32>] [-Name <Int32>] [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -15,7 +15,7 @@ Get-CheckPointHosts [-UID <Int32>] [-Name <Int32>] [-Session] <CheckPointSession
 
 ### ----------  EXAMPLE 1  ----------
 ```
-$cpHosts = Get-CheckPointHosts -Session $Session
+Get-CheckPointHosts
 ```
 
 ## PARAMETERS
@@ -43,8 +43,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

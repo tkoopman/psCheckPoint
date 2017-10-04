@@ -9,7 +9,7 @@ Log in to the server with user name and password.
 Open-CheckPointSession [-ManagementServer] <String> [-ManagementPort <Int32>] [-Credentials] <PSCredential>
  [-ReadOnly] [-ContinueLastSession] [-Domain <String>] [-EnterLastPublishedSession] [-SessionComments <String>]
  [-SessionDescription <String>] [-SessionName <String>] [-SessionTimeout <Int32>] [-NoCertificateValidation]
- [-NoCompression]
+ [-NoCompression] [-PassThru]
 ```
 
 ## DESCRIPTION
@@ -18,7 +18,12 @@ Open-CheckPointSession [-ManagementServer] <String> [-ManagementPort <Int32>] [-
 
 ### ----------  EXAMPLE 1  ----------
 ```
-$Session = Open-CheckPointSession -ManagementServer 192.168.1.1
+Open-CheckPointSession -ManagementServer 192.168.1.1
+```
+
+### ----------  EXAMPLE 2  ----------
+```
+$Session = Open-CheckPointSession -ManagementServer 192.168.1.1 -PassThru
 ```
 
 ## PARAMETERS
@@ -138,6 +143,21 @@ Accept wildcard characters: False
 
 ### -NoCompression
 Do not enable HTTP compression.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PassThru
+Return the session and do not store it for automatic use.
 
 ```yaml
 Type: SwitchParameter

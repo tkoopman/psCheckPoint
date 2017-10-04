@@ -10,7 +10,7 @@ namespace psCheckPoint.Objects.ServiceGroup
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>$cpGroup = Set-CheckPointGroup -Session $Session -Name Test1 -NewName Test2 -Tags TestTag</code>
+    ///   <code>Set-CheckPointGroup -Name Test1 -NewName Test2 -Tags TestTag</code>
     /// </example>
     [Cmdlet(VerbsCommon.Set, "CheckPointServiceGroup")]
     [OutputType(typeof(CheckPointServiceGroup))]
