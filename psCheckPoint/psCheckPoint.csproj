@@ -57,6 +57,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Objects\Host\RemoveCheckPointHostInterface.cs" />
+    <Compile Include="Objects\Host\NewCheckPointHostInterface.cs" />
     <Compile Include="Objects\Misc\WaitCheckPointTask.cs" />
     <Compile Include="IA\AddCheckPointIdentity.cs" />
     <Compile Include="IA\Batch.cs" />
