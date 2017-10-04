@@ -16,23 +16,17 @@
     "SubChapters": []
   },
   {
-    "Name": "Misc. Commands",
-    "Cmdlets": [
-      {
-        "Name": "Wait-CheckPointTask",
-        "Class": "WaitCheckPointTask",
-        "Cmdlet": "Wait-CheckPointTask"
-      }
-    ],
-    "SubChapters": []
-  },
-  {
     "Name": "Misc.",
     "Cmdlets": [
       {
         "Name": "Get-CheckPointFullObject",
         "Class": "GetCheckPointFullObject",
         "Cmdlet": "Get-CheckPointFullObject"
+      },
+      {
+        "Name": "Wait-CheckPointTask",
+        "Class": "WaitCheckPointTask",
+        "Cmdlet": "Wait-CheckPointTask"
       }
     ],
     "SubChapters": []

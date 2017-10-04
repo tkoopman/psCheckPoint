@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace psCheckPoint.Objects.Misc
 {
-    /// <extra category="Misc. Commands">Wait-CheckPointTask</extra>
+    /// <extra category="Misc.">Wait-CheckPointTask</extra>
     /// <summary>
     /// <para type="synopsis">Waits for task to complete.</para>
     /// <para type="description">Waits for task to complete then returns the completed task details.</para>
