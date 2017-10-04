@@ -7,12 +7,12 @@ Retrieve existing object using object name or uid.
 
 ### By UID
 ```
-Get-CheckPointServiceTCP -UID <String> [-Session] <CheckPointSession>
+Get-CheckPointServiceTCP -UID <String> [-Session <CheckPointSession>]
 ```
 
 ### By Name
 ```
-Get-CheckPointServiceTCP [-Name] <String> [-Session] <CheckPointSession>
+Get-CheckPointServiceTCP [-Name] <String> [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -49,8 +49,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

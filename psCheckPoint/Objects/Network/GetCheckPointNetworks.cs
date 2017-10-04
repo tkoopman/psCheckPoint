@@ -8,7 +8,7 @@ namespace psCheckPoint.Objects.Network
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>$cpNetworks = Get-CheckPointNetworks -Session $Session</code>
+    ///   <code>Get-CheckPointNetworks</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointNetworks")]
     [OutputType(typeof(CheckPointObjects))]

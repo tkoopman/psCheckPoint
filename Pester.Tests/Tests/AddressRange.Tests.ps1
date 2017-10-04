@@ -1,7 +1,7 @@
 ﻿Describe "Basic.AddressRange" {
 	Context "New-CheckPointAddressRange" {
 		It "Add" {
-			New-CheckPointAddressRange -Session $Session -Name PesterAR -IPAddressFirst 192.168.1.2 -IPAddressLast 192.168.1.5 | Should BeOfType psCheckPoint.Objects.AddressRange.CheckPointAddressRange
+			New-CheckPointAddressRange -Session $Session -Name PesterAR -IPAddressFirst 192.168.1.2 -IPAddressLast 192.168.1.5 -PassThru | Should BeOfType psCheckPoint.Objects.AddressRange.CheckPointAddressRange
 		}
 
 		It "Add duplicate" {
@@ -21,7 +21,7 @@
 
 	Context "Set-CheckPointAddressRange" {
 		It "Set" {
-			Set-CheckPointAddressRange -Session $Session -Name PesterAR -Color Red | Should BeOfType psCheckPoint.Objects.AddressRange.CheckPointAddressRange
+			Set-CheckPointAddressRange -Session $Session -Name PesterAR -Color Red -PassThru | Should BeOfType psCheckPoint.Objects.AddressRange.CheckPointAddressRange
 		}
 
 		It "Set non-existing" {

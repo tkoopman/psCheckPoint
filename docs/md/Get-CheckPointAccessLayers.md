@@ -6,7 +6,7 @@ Retrieve all objects.
 ## SYNTAX
 
 ```
-Get-CheckPointAccessLayers [-UID <Int32>] [-Name <Int32>] [-Session] <CheckPointSession>
+Get-CheckPointAccessLayers [-UID <Int32>] [-Name <Int32>] [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -15,7 +15,7 @@ Get-CheckPointAccessLayers [-UID <Int32>] [-Name <Int32>] [-Session] <CheckPoint
 
 ### ----------  EXAMPLE 1  ----------
 ```
-Get-CheckPointAccessLayers -Session $Session
+Get-CheckPointAccessLayers
 ```
 
 ## PARAMETERS
@@ -43,8 +43,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

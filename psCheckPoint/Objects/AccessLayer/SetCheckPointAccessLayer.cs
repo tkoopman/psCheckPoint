@@ -10,7 +10,7 @@ namespace psCheckPoint.Objects.AccessLayer
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code>Set-CheckPointAccessLayer -Session $Session -Name Network -ApplicationsAndUrlFiltering $true</code>
+    /// <code>Set-CheckPointAccessLayer -Name Network -ApplicationsAndUrlFiltering $true</code>
     /// </example>
     [Cmdlet(VerbsCommon.Set, "CheckPointAccessLayer")]
     [OutputType(typeof(CheckPointAccessLayer))]

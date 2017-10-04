@@ -8,26 +8,29 @@ Create new object.
 ### IPv4 or IPv6
 ```
 New-CheckPointHost -IPAddress <String> [-Groups <String[]>] [-SetIfExists] -Name <String> [-Tags <String[]>]
- [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-Color <String>] [-Session] <CheckPointSession>
+ [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-PassThru] [-Color <String>]
+ [-Session <CheckPointSession>]
 ```
 
 ### IPv4 & IPv6
 ```
 New-CheckPointHost -IPv4Address <String> -IPv6Address <String> [-Groups <String[]>] [-SetIfExists]
- -Name <String> [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-Color <String>]
- [-Session] <CheckPointSession>
+ -Name <String> [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-PassThru]
+ [-Color <String>] [-Session <CheckPointSession>]
 ```
 
 ### IPv4
 ```
 New-CheckPointHost -IPv4Address <String> [-Groups <String[]>] [-SetIfExists] -Name <String> [-Tags <String[]>]
- [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-Color <String>] [-Session] <CheckPointSession>
+ [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-PassThru] [-Color <String>]
+ [-Session <CheckPointSession>]
 ```
 
 ### IPv6
 ```
 New-CheckPointHost -IPv6Address <String> [-Groups <String[]>] [-SetIfExists] -Name <String> [-Tags <String[]>]
- [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-Color <String>] [-Session] <CheckPointSession>
+ [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-PassThru] [-Color <String>]
+ [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -36,7 +39,7 @@ New-CheckPointHost -IPv6Address <String> [-Groups <String[]>] [-SetIfExists] -Na
 
 ### ----------  EXAMPLE 1  ----------
 ```
-$cpHost = New-CheckPointHost -Session $Session -Name Test1 -ipAddress 1.2.3.4
+New-CheckPointHost -Name Test1 -ipAddress 1.2.3.4
 ```
 
 ## PARAMETERS
@@ -181,6 +184,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -PassThru
+Return the updated object.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Session
 Session object from Open-CheckPointSession
 
@@ -189,8 +207,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

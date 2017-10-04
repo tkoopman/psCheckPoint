@@ -11,7 +11,7 @@ namespace psCheckPoint.Objects.Misc
     /// <para type="description">Waits for task to complete then returns the completed task details.</para>
     /// </summary>
     /// <example>
-    ///   <code>Install-CheckPointPolicy -Session $Session -PolicyPackage Standard -Targets MyGateway | Wait-CheckPointTask -Session $Session -Verbose</code>
+    ///   <code>Install-CheckPointPolicy -PolicyPackage Standard -Targets MyGateway | Wait-CheckPointTask -Verbose</code>
     /// </example>
     [Cmdlet(VerbsLifecycle.Wait, "CheckPointTask")]
     public class WaitCheckPointTask : GetCheckPointTask

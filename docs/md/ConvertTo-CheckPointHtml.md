@@ -29,7 +29,7 @@ Pipe results from Export-CheckPointObjects to here to create a HTML report of th
 
 ### ----------  EXAMPLE 1  ----------
 ```
-Export-CheckPointObjects -Session $Session -Verbose $InputObject | ConvertTo-CheckPointHtml -Open
+Export-CheckPointObjects -Verbose $InputObject | ConvertTo-CheckPointHtml -Open
 ```
 
 ## PARAMETERS

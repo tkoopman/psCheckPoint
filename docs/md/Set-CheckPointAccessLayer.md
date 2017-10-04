@@ -10,7 +10,7 @@ Edit existing object using object name or uid.
 Set-CheckPointAccessLayer [-ApplicationsAndUrlFiltering <Boolean>] [-ContentAwareness <Boolean>]
  [-DetectUsingXForwardFor <Boolean>] [-Firewall <Boolean>] [-MobileAccess <Boolean>] [-Shared <Boolean>]
  -UID <String> [-NewName <String>] [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors]
- [-Color <String>] [-Session] <CheckPointSession>
+ [-PassThru] [-Color <String>] [-Session <CheckPointSession>]
 ```
 
 ### By Name
@@ -18,7 +18,7 @@ Set-CheckPointAccessLayer [-ApplicationsAndUrlFiltering <Boolean>] [-ContentAwar
 Set-CheckPointAccessLayer [-ApplicationsAndUrlFiltering <Boolean>] [-ContentAwareness <Boolean>]
  [-DetectUsingXForwardFor <Boolean>] [-Firewall <Boolean>] [-MobileAccess <Boolean>] [-Shared <Boolean>]
  [-Name] <String> [-NewName <String>] [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors]
- [-Color <String>] [-Session] <CheckPointSession>
+ [-PassThru] [-Color <String>] [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -27,7 +27,7 @@ Set-CheckPointAccessLayer [-ApplicationsAndUrlFiltering <Boolean>] [-ContentAwar
 
 ### ----------  EXAMPLE 1  ----------
 ```
-Set-CheckPointAccessLayer -Session $Session -Name Network -ApplicationsAndUrlFiltering $true
+Set-CheckPointAccessLayer -Name Network -ApplicationsAndUrlFiltering $true
 ```
 
 ## PARAMETERS
@@ -200,6 +200,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -PassThru
+Return the updated object.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Session
 Session object from Open-CheckPointSession
 
@@ -208,8 +223,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

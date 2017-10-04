@@ -1,7 +1,7 @@
 ﻿Describe "Basic.MulticastAddressRange" {
 	Context "New-CheckPointMulticastAddressRange" {
 		It "Add" {
-			New-CheckPointMulticastAddressRange -Session $Session -Name PesterMAR -IPAddress 224.5.6.7 | Should BeOfType psCheckPoint.Objects.MulticastAddressRange.CheckPointMulticastAddressRange
+			New-CheckPointMulticastAddressRange -Session $Session -Name PesterMAR -IPAddress 224.5.6.7 -PassThru | Should BeOfType psCheckPoint.Objects.MulticastAddressRange.CheckPointMulticastAddressRange
 		}
 
 		It "Add duplicate" {
@@ -21,7 +21,7 @@
 
 	Context "Set-CheckPointMulticastAddressRange" {
 		It "Set" {
-			Set-CheckPointMulticastAddressRange -Session $Session -Name PesterMAR -Color Red | Should BeOfType psCheckPoint.Objects.MulticastAddressRange.CheckPointMulticastAddressRange
+			Set-CheckPointMulticastAddressRange -Session $Session -Name PesterMAR -Color Red -PassThru | Should BeOfType psCheckPoint.Objects.MulticastAddressRange.CheckPointMulticastAddressRange
 		}
 
 		It "Set non-existing" {

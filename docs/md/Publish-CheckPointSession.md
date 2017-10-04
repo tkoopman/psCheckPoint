@@ -6,7 +6,7 @@ All the changes done by this user will be seen by all users only after publish i
 ## SYNTAX
 
 ```
-Publish-CheckPointSession [-PublishSession <CheckPointSession>] [-Session] <CheckPointSession>
+Publish-CheckPointSession [-PublishSession <CheckPointSession>] [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -15,7 +15,7 @@ Publish-CheckPointSession [-PublishSession <CheckPointSession>] [-Session] <Chec
 
 ### ----------  EXAMPLE 1  ----------
 ```
-Publish-CheckPointSession -Session $Session
+Publish-CheckPointSession
 ```
 
 ## PARAMETERS
@@ -43,8 +43,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

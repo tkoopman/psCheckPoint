@@ -13,7 +13,7 @@ namespace psCheckPoint.Objects.Misc
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code>Get-CheckPointWhereUsed -Session $Session -Name http</code>
+    /// <code>Get-CheckPointWhereUsed -Name http</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointWhereUsed", DefaultParameterSetName = "By Object")]
     [OutputType(typeof(CheckPointWhereUsed))]

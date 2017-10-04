@@ -8,7 +8,7 @@ namespace psCheckPoint.Objects.ServiceGroup
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Remove-CheckPointGroup -Session $Session -Name Test1 -Verbose</code>
+    ///   <code>Remove-CheckPointGroup -Name Test1 -Verbose</code>
     /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointServiceGroup")]
     public class RemoveCheckPointServiceGroup : RemoveCheckPointObject

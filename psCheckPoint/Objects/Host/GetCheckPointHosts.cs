@@ -8,7 +8,7 @@ namespace psCheckPoint.Objects.Host
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>$cpHosts = Get-CheckPointHosts -Session $Session</code>
+    ///   <code>Get-CheckPointHosts</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointHosts")]
     [OutputType(typeof(CheckPointObjects))]

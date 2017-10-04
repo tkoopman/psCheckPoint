@@ -7,12 +7,12 @@ Delete existing object using object name or uid.
 
 ### By UID
 ```
-Remove-CheckPointAccessLayer -UID <String> [-IgnoreWarnings] [-IgnoreErrors] [-Session] <CheckPointSession>
+Remove-CheckPointAccessLayer -UID <String> [-IgnoreWarnings] [-IgnoreErrors] [-Session <CheckPointSession>]
 ```
 
 ### By Name
 ```
-Remove-CheckPointAccessLayer [-Name] <String> [-IgnoreWarnings] [-IgnoreErrors] [-Session] <CheckPointSession>
+Remove-CheckPointAccessLayer [-Name] <String> [-IgnoreWarnings] [-IgnoreErrors] [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -21,7 +21,7 @@ Remove-CheckPointAccessLayer [-Name] <String> [-IgnoreWarnings] [-IgnoreErrors] 
 
 ### ----------  EXAMPLE 1  ----------
 ```
-Remove-CheckPointAccessLayer -Session $Session -Name Network
+Remove-CheckPointAccessLayer -Name Network
 ```
 
 ## PARAMETERS
@@ -81,8 +81,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

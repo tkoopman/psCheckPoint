@@ -6,6 +6,7 @@ using System.Collections;
 using System.Management.Automation;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace psCheckPoint
 {
@@ -28,7 +29,7 @@ namespace psCheckPoint
     /// <para type="description">Base class for other Cmdlets that call a Web-API</para>
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public abstract class CheckPointCmdlet<T> : Cmdlet
+    public abstract class CheckPointCmdlet<T> : PSCmdlet
     {
         /// <summary>
         /// <para type="description">Check Point Web-API command that should be called.</para>
@@ -38,7 +39,7 @@ namespace psCheckPoint
         /// <summary>
         /// <para type="description">Session object from Open-CheckPointSession</para>
         /// </summary>
-        [Parameter(Position = 0, Mandatory = true)]
+        [Parameter()]
         public CheckPointSession Session { get; set; }
 
         /// <summary>
@@ -70,6 +71,18 @@ namespace psCheckPoint
                 WriteVerbose($"{Command}: {(result as CheckPointObject).Name}");
             }
             WriteObject(result);
+        }
+
+        protected override void BeginProcessing()
+        {
+            if (Session == null)
+            {
+                Session = SessionState.PSVariable.GetValue("CheckPointSession") as CheckPointSession;
+                if (Session == null)
+                {
+                    throw new PSArgumentNullException("Session");
+                }
+            }
         }
 
         /// <summary>
@@ -172,6 +185,42 @@ namespace psCheckPoint
                 }
             }
             else { return null; }
+        }
+
+        protected static bool IsUID(string input)
+        {
+            return Regex.IsMatch(input, @"^\w{8}-\w{4}-\w{4}-\w{4}-\w{12}$");
+        }
+
+        protected static void SetInputIdentifier(PSObject input, string type, out string uid, out string name)
+        {
+            uid = null;
+            name = null;
+
+            if (input.BaseObject is CheckPointObject)
+            {
+                if ((input.BaseObject as CheckPointObject).Type != type)
+                {
+                    throw new PSInvalidCastException("Input is of invalid type.");
+                }
+                uid = (input.BaseObject as CheckPointObject).UID;
+            }
+            else if (input.BaseObject is string)
+            {
+                string str = (input.BaseObject as string);
+                if (IsUID(str))
+                {
+                    uid = str;
+                }
+                else
+                {
+                    name = str;
+                }
+            }
+            else
+            {
+                throw new PSInvalidCastException("Input is of invalid type.");
+            }
         }
     }
 }

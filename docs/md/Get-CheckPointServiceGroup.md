@@ -7,12 +7,12 @@ Retrieve existing object using object name or uid.
 
 ### By UID
 ```
-Get-CheckPointServiceGroup -UID <String> [-Session] <CheckPointSession>
+Get-CheckPointServiceGroup -UID <String> [-Session <CheckPointSession>]
 ```
 
 ### By Name
 ```
-Get-CheckPointServiceGroup [-Name] <String> [-Session] <CheckPointSession>
+Get-CheckPointServiceGroup [-Name] <String> [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -21,7 +21,7 @@ Get-CheckPointServiceGroup [-Name] <String> [-Session] <CheckPointSession>
 
 ### ----------  EXAMPLE 1  ----------
 ```
-$cpGroup = Get-CheckPointGroup -Session $Session -Name Test1
+Get-CheckPointGroup -Name Test1
 ```
 
 ## PARAMETERS
@@ -49,8 +49,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

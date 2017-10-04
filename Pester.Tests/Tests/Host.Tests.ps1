@@ -1,11 +1,21 @@
 ﻿Describe "Basic.Host" {
 	Context "New-CheckPointHost" {
 		It "Add" {
-			New-CheckPointHost -Session $Session -Name PesterHost -IPAddress 192.168.1.2 | Should BeOfType psCheckPoint.Objects.Host.CheckPointHost
+			New-CheckPointHost -Session $Session -Name PesterHost -IPAddress 192.168.1.2 -PassThru | Should BeOfType psCheckPoint.Objects.Host.CheckPointHost
 		}
 
 		It "Add duplicate" {
 			New-CheckPointHost -Session $Session -Name PesterHost -IPAddress 192.168.1.2 | Should BeOfType psCheckPoint.CheckPointError
+		}
+	}
+
+	Context "New-CheckPointHostInterface" {
+		It "Add" {
+			New-CheckPointHostInterface -Session $Session -Host PesterHost -Name eth0 -Subnet4 192.168.1.2 -MaskLength4 24 | Should BeOfType psCheckPoint.Objects.Host.CheckPointHost
+		}
+
+		It "Add duplicate" {
+			New-CheckPointHostInterface -Session $Session -Host PesterHost -Name eth0 -Subnet4 192.168.1.2 -MaskLength4 24 | Should BeOfType psCheckPoint.CheckPointError
 		}
 	}
 
@@ -21,7 +31,7 @@
 
 	Context "Set-CheckPointHost" {
 		It "Set" {
-			Set-CheckPointHost -Session $Session -Name PesterHost -Color Red | Should BeOfType psCheckPoint.Objects.Host.CheckPointHost
+			Set-CheckPointHost -Session $Session -Name PesterHost -Color Red -PassThru | Should BeOfType psCheckPoint.Objects.Host.CheckPointHost
 		}
 
 		It "Set non-existing" {

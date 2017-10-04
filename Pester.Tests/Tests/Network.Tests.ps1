@@ -1,7 +1,7 @@
 ﻿Describe "Basic.Network" {
 	Context "New-CheckPointNetwork" {
 		It "Add" {
-			New-CheckPointNetwork -Session $Session -Name PesterNet -Subnet 192.168.100.0 -MaskLength 24 | Should BeOfType psCheckPoint.Objects.Network.CheckPointNetwork
+			New-CheckPointNetwork -Session $Session -Name PesterNet -Subnet 192.168.100.0 -MaskLength 24 -PassThru | Should BeOfType psCheckPoint.Objects.Network.CheckPointNetwork
 		}
 
 		It "Add duplicate" {
@@ -21,7 +21,7 @@
 
 	Context "Set-CheckPointNetwork" {
 		It "Set" {
-			Set-CheckPointNetwork -Session $Session -Name PesterNet -Color Red | Should BeOfType psCheckPoint.Objects.Network.CheckPointNetwork
+			Set-CheckPointNetwork -Session $Session -Name PesterNet -Color Red -PassThru | Should BeOfType psCheckPoint.Objects.Network.CheckPointNetwork
 		}
 
 		It "Set non-existing" {

@@ -8,7 +8,7 @@ namespace psCheckPoint.Objects.Host
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Remove-CheckPointHost -Session $Session -Name Test1 -Verbose</code>
+    ///   <code>Remove-CheckPointHost -Name Test1 -Verbose</code>
     /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointHost")]
     public class RemoveCheckPointHost : RemoveCheckPointObject

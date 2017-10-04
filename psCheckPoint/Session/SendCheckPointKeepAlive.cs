@@ -8,7 +8,7 @@ namespace psCheckPoint.Session
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Send-CheckPointKeepAlive -Session $Session</code>
+    ///   <code>Send-CheckPointKeepAlive</code>
     /// </example>
     [Cmdlet(VerbsCommunications.Send, "CheckPointKeepAlive")]
     public class SendCheckPointKeepAlive : CheckPointCmdlet<CheckPointMessage>

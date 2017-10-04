@@ -72,5 +72,20 @@ namespace psCheckPoint.Objects
         [JsonConverter(typeof(SwitchJsonConverter))]
         [Parameter]
         public SwitchParameter IgnoreErrors { get; set; }
+
+        /// <summary>
+        /// <para type="description">Return the updated object.</para>
+        /// </summary>
+        [Parameter]
+        public SwitchParameter PassThru { get; set; }
+
+        protected override void WriteRecordResponse(T result)
+        {
+            if (result is CheckPointObject)
+            {
+                WriteVerbose($"{Command}: {(result as CheckPointObject).Name}");
+            }
+            if (PassThru.IsPresent) { WriteObject(result); }
+        }
     }
 }

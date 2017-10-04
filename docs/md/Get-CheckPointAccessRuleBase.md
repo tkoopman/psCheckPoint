@@ -7,12 +7,12 @@ Shows the entire Access Rules layer.
 
 ### By UID
 ```
-Get-CheckPointAccessRuleBase -UID <String> [-Filter <String>] [-Session] <CheckPointSession>
+Get-CheckPointAccessRuleBase -UID <String> [-Filter <String>] [-Session <CheckPointSession>]
 ```
 
 ### By Name
 ```
-Get-CheckPointAccessRuleBase [-Name] <String> [-Filter <String>] [-Session] <CheckPointSession>
+Get-CheckPointAccessRuleBase [-Name] <String> [-Filter <String>] [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -74,8 +74,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

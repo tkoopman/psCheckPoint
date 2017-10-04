@@ -1,19 +1,13 @@
-# Invoke-CheckPointScript
+# New-CheckPointHostInterface
 
 ## SYNOPSIS
+Create new host interface.
 
 ## SYNTAX
 
-### By Inline Script
 ```
-Invoke-CheckPointScript -ScriptName <String> -Script <String> [-Args <String>] -Targets <String[]>
- [-Comments <String>] [-Session <CheckPointSession>]
-```
-
-### By Script File
-```
-Invoke-CheckPointScript -ScriptName <String> -ScriptFile <String> [-Args <String>] -Targets <String[]>
- [-Comments <String>] [-Session <CheckPointSession>]
+New-CheckPointHostInterface [-Host] <PSObject> [-Name] <String> [-Subnet4 <String>] [-Subnet6 <String>]
+ [-MaskLength4 <Int32>] [-MaskLength6 <Int32>] [-Color <String>] [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -29,13 +23,14 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -Args
-Script arguments.
+### -Color
+Color of the object.
+Should be one of existing colors.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases: Colour
 
 Required: False
 Position: Named
@@ -44,53 +39,53 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Comments
-Comments string
+### -Host
+Host object (Name, UID or Host Object)
 
 ```yaml
-Type: String
+Type: PSObject
+Parameter Sets: (All)
+Aliases: 
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: True (ByPropertyName, ByValue)
+Accept wildcard characters: False
+```
+
+### -MaskLength4
+IPv4 network mask length.
+
+```yaml
+Type: Int32
 Parameter Sets: (All)
 Aliases: 
 
 Required: False
 Position: Named
-Default value: None
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Script
-Script Body
+### -MaskLength6
+IPv4 network mask length.
 
 ```yaml
-Type: String
-Parameter Sets: By Inline Script
+Type: Int32
+Parameter Sets: (All)
 Aliases: 
 
-Required: True
+Required: False
 Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -ScriptFile
-Load Script Body from File
-
-```yaml
-Type: String
-Parameter Sets: By Script File
-Aliases: 
-
-Required: True
-Position: Named
-Default value: None
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ScriptName
-Script Name.
+### -Name
+Interface name.
 
 ```yaml
 Type: String
@@ -98,7 +93,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: True
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -119,16 +114,30 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Targets
-On what targets to execute this command.
-Targets may be identified by their name, or object unique identifier.
+### -Subnet4
+IPv4 network address.
 
 ```yaml
-Type: String[]
+Type: String
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Subnet6
+IPv6 network address.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -137,10 +146,13 @@ Accept wildcard characters: False
 
 ## INPUTS
 
-### System.String
-Script Body
+### System.Management.Automation.PSObject
+Host object (Name, UID or Host Object)
 
 ## OUTPUTS
+
+### psCheckPoint.Objects.Host.CheckPointHost
+Details of a Check Point Host
 
 ## NOTES
 

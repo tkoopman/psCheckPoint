@@ -6,7 +6,7 @@
 
 ```
 Install-CheckPointPolicy -PolicyPackage <String> [-Access] [-DisableInstallOnAllClusterMembersOrFail]
- [-PrepareOnly] [-Revision <String>] [-Targets <String[]>] [-ThreatPrevention] [-Session] <CheckPointSession>
+ [-PrepareOnly] [-Revision <String>] [-Targets <String[]>] [-ThreatPrevention] [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -105,8 +105,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

@@ -7,12 +7,12 @@ Retrieve existing object using object name or uid.
 
 ### By UID
 ```
-Get-CheckPointAccessLayer -UID <String> [-Session] <CheckPointSession>
+Get-CheckPointAccessLayer -UID <String> [-Session <CheckPointSession>]
 ```
 
 ### By Name
 ```
-Get-CheckPointAccessLayer [-Name] <String> [-Session] <CheckPointSession>
+Get-CheckPointAccessLayer [-Name] <String> [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -21,7 +21,7 @@ Get-CheckPointAccessLayer [-Name] <String> [-Session] <CheckPointSession>
 
 ### ----------  EXAMPLE 1  ----------
 ```
-Get-CheckPointAccessLayer -Session $Session -Name Network
+Get-CheckPointAccessLayer -Name Network
 ```
 
 ## PARAMETERS
@@ -49,8 +49,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

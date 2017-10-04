@@ -8,7 +8,7 @@ namespace psCheckPoint.Objects.AccessLayer
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code>Get-CheckPointAccessLayers -Session $Session</code>
+    /// <code>Get-CheckPointAccessLayers</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointAccessLayers")]
     [OutputType(typeof(CheckPointAccessLayers))]

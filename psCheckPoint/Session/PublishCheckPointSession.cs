@@ -9,7 +9,7 @@ namespace psCheckPoint.Session
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Publish-CheckPointSession -Session $Session</code>
+    ///   <code>Publish-CheckPointSession</code>
     /// </example>
     [Cmdlet(VerbsData.Publish, "CheckPointSession")]
     public class PublishCheckPointSession : CheckPointCmdlet<CheckPointMessage>

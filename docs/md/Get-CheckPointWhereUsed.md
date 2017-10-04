@@ -8,19 +8,19 @@ Searches for usage of the target object in other objects and rules.
 ### By Object (Default)
 ```
 Get-CheckPointWhereUsed -Object <CheckPointObject> [-Indirect] [-IndirectMaxDepth <Int32>]
- [-Session] <CheckPointSession>
+ [-Session <CheckPointSession>]
 ```
 
 ### By UID
 ```
 Get-CheckPointWhereUsed -UID <String> [-ByUID] [-Indirect] [-IndirectMaxDepth <Int32>]
- [-Session] <CheckPointSession>
+ [-Session <CheckPointSession>]
 ```
 
 ### By Name
 ```
 Get-CheckPointWhereUsed -Name <String> [-ByName] [-Indirect] [-IndirectMaxDepth <Int32>]
- [-Session] <CheckPointSession>
+ [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -29,7 +29,7 @@ Get-CheckPointWhereUsed -Name <String> [-ByName] [-Indirect] [-IndirectMaxDepth 
 
 ### ----------  EXAMPLE 1  ----------
 ```
-Get-CheckPointWhereUsed -Session $Session -Name http
+Get-CheckPointWhereUsed -Name http
 ```
 
 ## PARAMETERS
@@ -134,8 +134,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

@@ -10,7 +10,8 @@ Edit existing object using object name or uid.
 Set-CheckPointAddressRange [-IPAddressFirst <String>] [-IPAddressLast <String>] [-IPv4AddressFirst <String>]
  [-IPv4AddressLast <String>] [-IPv6AddressFirst <String>] [-IPv6AddressLast <String>]
  [-GroupAction <MembershipActions>] [-Groups <String[]>] -UID <String> [-NewName <String>] [-Tags <String[]>]
- [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-Color <String>] [-Session] <CheckPointSession>
+ [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-PassThru] [-Color <String>]
+ [-Session <CheckPointSession>]
 ```
 
 ### By Name
@@ -18,8 +19,8 @@ Set-CheckPointAddressRange [-IPAddressFirst <String>] [-IPAddressLast <String>] 
 Set-CheckPointAddressRange [-IPAddressFirst <String>] [-IPAddressLast <String>] [-IPv4AddressFirst <String>]
  [-IPv4AddressLast <String>] [-IPv6AddressFirst <String>] [-IPv6AddressLast <String>]
  [-GroupAction <MembershipActions>] [-Groups <String[]>] [-Name] <String> [-NewName <String>]
- [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-Color <String>]
- [-Session] <CheckPointSession>
+ [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-PassThru] [-Color <String>]
+ [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -253,6 +254,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -PassThru
+Return the updated object.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Session
 Session object from Open-CheckPointSession
 
@@ -261,8 +277,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

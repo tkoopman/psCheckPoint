@@ -57,7 +57,7 @@ namespace psCheckPoint.IA
         [JsonProperty(PropertyName = "requests")]
         public List<RequestType> Requests { get; set; } = new List<RequestType>(10);
 
-        public void Post(Cmdlet cmdlet)
+        public void Post(PSCmdlet cmdlet)
         {
             string URL = $"https://{Gateway}/_IA_API/v1.0/{Command}";
 

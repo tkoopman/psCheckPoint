@@ -7,8 +7,8 @@ Create new object.
 
 ```
 New-CheckPointServiceGroup [-Members <String[]>] [-Groups <String[]>] [-SetIfExists] -Name <String>
- [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-Color <String>]
- [-Session] <CheckPointSession>
+ [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-PassThru] [-Color <String>]
+ [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -131,6 +131,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -PassThru
+Return the updated object.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Session
 Session object from Open-CheckPointSession
 
@@ -139,8 +154,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
