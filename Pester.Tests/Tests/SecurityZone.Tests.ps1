@@ -5,7 +5,7 @@
 		}
 
 		It "Add duplicate" {
-			New-CheckPointSecurityZone -Session $Session -Name PesterSZ | Should BeOfType psCheckPoint.CheckPointError
+			{ New-CheckPointSecurityZone -Session $Session -Name PesterSZ -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -15,7 +15,7 @@
 		}
 
 		It "Get non-existing" {
-			Get-CheckPointSecurityZone -Session $Session -Name NotPesterSZ | Should BeOfType psCheckPoint.CheckPointError
+			{ Get-CheckPointSecurityZone -Session $Session -Name NotPesterSZ -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -25,7 +25,7 @@
 		}
 
 		It "Set non-existing" {
-			Set-CheckPointSecurityZone -Session $Session -Name NotPesterSZ -Color Red | Should BeOfType psCheckPoint.CheckPointError
+			{ Set-CheckPointSecurityZone -Session $Session -Name NotPesterSZ -Color Red -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -41,11 +41,11 @@
 
 	Context "Remove-CheckPointSecurityZone" {
 		It "Remove" {
-			Remove-CheckPointSecurityZone -Session $Session -Name PesterSZ | Should Not BeOfType psCheckPoint.CheckPointError
+			{ Remove-CheckPointSecurityZone -Session $Session -Name PesterSZ -ErrorAction Stop } | Should Not Throw
 		}
 
 		It "Remove non-existing" {
-			Remove-CheckPointSecurityZone -Session $Session -Name PesterSZ | Should BeOfType psCheckPoint.CheckPointError
+			{ Remove-CheckPointSecurityZone -Session $Session -Name PesterSZ -ErrorAction Stop } | Should Throw
 		}
 	}
 }

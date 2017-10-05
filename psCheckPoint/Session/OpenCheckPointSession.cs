@@ -194,7 +194,7 @@ namespace psCheckPoint.Session
                             strJson = response.Content.ReadAsStringAsync().Result;
                             WriteDebug(strJson);
                             CheckPointError error = JsonConvert.DeserializeObject<CheckPointError>(strJson);
-                            WriteObject(error);
+                            CheckPointError.GenerateError(this, error);
                         }
                     }
                 }

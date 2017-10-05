@@ -5,7 +5,7 @@
 		}
 
 		It "Add duplicate" {
-			New-CheckPointAddressRange -Session $Session -Name PesterAR -IPAddressFirst 192.168.1.2 -IPAddressLast 192.168.1.5 | Should BeOfType psCheckPoint.CheckPointError
+			{ New-CheckPointAddressRange -Session $Session -Name PesterAR -IPAddressFirst 192.168.1.2 -IPAddressLast 192.168.1.5 -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -15,7 +15,7 @@
 		}
 
 		It "Get non-existing" {
-			Get-CheckPointAddressRange -Session $Session -Name NotPesterAR | Should BeOfType psCheckPoint.CheckPointError
+			{ Get-CheckPointAddressRange -Session $Session -Name NotPesterAR -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -25,7 +25,7 @@
 		}
 
 		It "Set non-existing" {
-			Set-CheckPointAddressRange -Session $Session -Name NotPesterAR -Color Red | Should BeOfType psCheckPoint.CheckPointError
+			{ Set-CheckPointAddressRange -Session $Session -Name NotPesterAR -Color Red -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -41,11 +41,11 @@
 
 	Context "Remove-CheckPointAddressRange" {
 		It "Remove" {
-			Remove-CheckPointAddressRange -Session $Session -Name PesterAR | Should Not BeOfType psCheckPoint.CheckPointError
+			{ Remove-CheckPointAddressRange -Session $Session -Name PesterAR -ErrorAction Stop } | Should Not Throw
 		}
 
 		It "Remove non-existing" {
-			Remove-CheckPointAddressRange -Session $Session -Name PesterAR | Should BeOfType psCheckPoint.CheckPointError
+			{ Remove-CheckPointAddressRange -Session $Session -Name PesterAR -ErrorAction Stop } | Should Throw
 		}
 	}
 }

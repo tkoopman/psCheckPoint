@@ -5,7 +5,7 @@
 		}
 
 		It "Add duplicate" {
-			New-CheckPointServiceGroup -Session $Session -Name PesterServiceGroup | Should BeOfType psCheckPoint.CheckPointError
+			{ New-CheckPointServiceGroup -Session $Session -Name PesterServiceGroup -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -15,7 +15,7 @@
 		}
 
 		It "Get non-existing" {
-			Get-CheckPointServiceGroup -Session $Session -Name NotPesterServiceGroup | Should BeOfType psCheckPoint.CheckPointError
+			{ Get-CheckPointServiceGroup -Session $Session -Name NotPesterServiceGroup -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -25,7 +25,7 @@
 		}
 
 		It "Set non-existing" {
-			Set-CheckPointServiceGroup -Session $Session -Name NotPesterServiceGroup -Color Red | Should BeOfType psCheckPoint.CheckPointError
+			{ Set-CheckPointServiceGroup -Session $Session -Name NotPesterServiceGroup -Color Red -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -41,11 +41,11 @@
 
 	Context "Remove-CheckPointServiceGroup" {
 		It "Remove" {
-			Remove-CheckPointServiceGroup -Session $Session -Name PesterServiceGroup | Should Not BeOfType psCheckPoint.CheckPointError
+			{ Remove-CheckPointServiceGroup -Session $Session -Name PesterServiceGroup -ErrorAction Stop } | Should Not Throw
 		}
 
 		It "Remove non-existing" {
-			Remove-CheckPointServiceGroup -Session $Session -Name PesterServiceGroup | Should BeOfType psCheckPoint.CheckPointError
+			{ Remove-CheckPointServiceGroup -Session $Session -Name PesterServiceGroup -ErrorAction Stop } | Should Throw
 		}
 	}
 }

@@ -5,7 +5,7 @@
 		}
 
 		It "Add duplicate" {
-			New-CheckPointServiceTCP -Session $Session -Name PesterTCP -Port 1227 | Should BeOfType psCheckPoint.CheckPointError
+			{ New-CheckPointServiceTCP -Session $Session -Name PesterTCP -Port 1227 -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -15,7 +15,7 @@
 		}
 
 		It "Get non-existing" {
-			Get-CheckPointServiceTCP -Session $Session -Name NotPesterTCP | Should BeOfType psCheckPoint.CheckPointError
+			{ Get-CheckPointServiceTCP -Session $Session -Name NotPesterTCP -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -25,7 +25,7 @@
 		}
 
 		It "Set non-existing" {
-			Set-CheckPointServiceTCP -Session $Session -Name NotPesterTCP -Color Red | Should BeOfType psCheckPoint.CheckPointError
+			{ Set-CheckPointServiceTCP -Session $Session -Name NotPesterTCP -Color Red -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -41,11 +41,11 @@
 
 	Context "Remove-CheckPointServiceTCP" {
 		It "Remove" {
-			Remove-CheckPointServiceTCP -Session $Session -Name PesterTCP | Should Not BeOfType psCheckPoint.CheckPointError
+			{ Remove-CheckPointServiceTCP -Session $Session -Name PesterTCP -ErrorAction Stop } | Should Not Throw
 		}
 
 		It "Remove non-existing" {
-			Remove-CheckPointServiceTCP -Session $Session -Name PesterTCP | Should BeOfType psCheckPoint.CheckPointError
+			{ Remove-CheckPointServiceTCP -Session $Session -Name PesterTCP -ErrorAction Stop } | Should Throw
 		}
 	}
 }
