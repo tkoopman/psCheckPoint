@@ -30,19 +30,17 @@ $MSO365 = "Microsoft_Office365"
 # Login to Check Point API to get Session ID
 Write-Verbose " *** Log in to Check Point Smart Center API *** "
 $Session = Open-CheckPointSession -SessionName $MSO365 -SessionComments "Microsoft Office365 Filler" -SessionTimeOut 1800 -NoCertificateValidation -PassThru
-if (-not $Session -or $Session.Code) {
+if (-not $Session) {
 	# Failed login
-	Write-Error "Failed to login to SmartConsole. $Session"
 	exit
 }
 
-$Group = Get-CheckPointGroup -Session $Session -Name $MSO365 -Verbose:$false
-if ($Group.Code) {
+$Group = Get-CheckPointGroup -Session $Session -Name $MSO365 -Verbose:$false -ErrorAction SilentlyContinue
+if (-not $Group) {
 	# Main group does not exist. Create it
 	Write-Verbose "Creating main group $MSO365"
 	$Group = New-CheckPointGroup -Session $Session -Name $MSO365 -Tag $MSO365 -Color $Color -Comments "$GroupComments" -PassThru
-	if ($Group.Code) {
-		Write-Error "Failed to create group $MSO365. $Group"
+	if (-not $Group) {
 		exit
 	}
 } else {
@@ -60,15 +58,14 @@ ForEach ($Product in $O365.products.product) {
 	$GroupName = $MSO365 + "_" + $Product.Name
 
 	# Check if group exists and get existing members
-	$Group = Get-CheckPointGroup -Session $Session -Name $GroupName -Verbose:$false
+	$Group = Get-CheckPointGroup -Session $Session -Name $GroupName -Verbose:$false -ErrorAction SilentlyContinue
 
-	if ($Group.Code) {
+	if (-not $Group) {
 		#Group not found
 		Write-Verbose "Creating product group $GroupName"
 		$Group = New-CheckPointGroup -Session $Session -Name $GroupName -Tag $MSO365 -Groups $MSO365 -Color $Color -Comments "$GroupComments" -Verbose:$false -PassThru
 		$Existing = @()
-		if ($Group.Code) {
-			Write-Error "Failed to create group $GroupName. $Group"
+		if (-not $Group) {
 			exit
 		}
 	} else {
@@ -144,24 +141,24 @@ ForEach ($Product in $O365.products.product) {
 				# New entry. Add to group
 				# Check if object exists already
 				if ($IsNetwork) {
-					$Obj = Get-CheckPointNetwork -Session $Session -Name $ObjName -Verbose:$false
+					$Obj = Get-CheckPointNetwork -Session $Session -Name $ObjName -Verbose:$false -ErrorAction SilentlyContinue
 				} else {
-					$Obj = Get-CheckPointHost -Session $Session -Name $ObjName -Verbose:$false
+					$Obj = Get-CheckPointHost -Session $Session -Name $ObjName -Verbose:$false -ErrorAction SilentlyContinue
 				}
-				if ($Obj.Code) {
+				if (-not $Obj) {
 					# Create New Object
 					if ($IsNetwork) {
 						$Network = $ObjIP.split("/")[0]
 						$MaskLength = $ObjIP.split("/")[1]
 						Write-Verbose "Creating network $ObjName in $GroupName"
 						$Obj = New-CheckPointNetwork -Session $Session -Name $ObjName -Subnet $Network -MaskLength $MaskLength -Groups $GroupName -Tags $MSO365 -Color $Color -Comments "$Comments" -IgnoreWarnings:$IgnoreWarnings.IsPresent -Verbose:$false -PassThru
-						if ($Obj.Code) {
+						if (-not $Obj) {
 							Write-Warning "Failed to create network $ObjName in $GroupName. $Obj"
 						}
 					} else {
 						Write-Verbose "Creating host $ObjName in $GroupName"
 						$Obj = New-CheckPointHost -Session $Session -Name $ObjName -ipAddress $ObjIP -Groups $GroupName -Tags $MSO365 -Comments "$Comments" -Color $Color -IgnoreWarnings:$IgnoreWarnings.IsPresent -Verbose:$false -PassThru
-						if ($Obj.Code) {
+						if (-not $Obj) {
 							Write-Warning "Failed to create host $ObjName in $GroupName. $Obj"
 						}
 					}
@@ -185,32 +182,27 @@ ForEach ($Product in $O365.products.product) {
 	}
 	if ($ToAdd.Count -gt 0) {
 		$Obj = Set-CheckPointGroup -Session $Session -Name $GroupName -Members $ToAdd -MemberAction Add -Verbose:$false -PassThru
-		if ($Obj.Code) {
+		if (-not $Obj) {
 			Write-Warning "Failed to add new group members to $GroupName. $Obj"
 		}
 	}
 	if ($ToRemove.Count -gt 0) {
 		$Obj = Set-CheckPointGroup -Session $Session -Name $GroupName -Members $ToRemove -MemberAction Remove -Verbose:$false -PassThru
-		if ($Obj.Code) {
+		if (-not $Obj) {
 			Write-Warning "Failed to remove old group members from $GroupName. $Obj"
 		}
 	}
 }
 
+$Removed = $Removed | Select -Unique
 ForEach($Name in $Removed) {
 	$used = Get-CheckPointWhereUsed -Session $Session -Name $Name
 	if ($used.UsedDirectly.Total -eq 0) {
 		Write-Verbose "Deleting $Name"
 		if ($Name -like "*/*") {
-			$Msg = Remove-CheckPointNetwork -Session $Session -Name $Name -Verbose:$false
-			if ($Msg.Code) {
-				Write-Warning "Failed to remove unused network $Name. $Msg"
-			}
+			Remove-CheckPointNetwork -Session $Session -Name $Name -Verbose:$false
 		} else {
-			$Msg = Remove-CheckPointHost -Session $Session -Name $Name -Verbose:$false
-			if ($Msg.Code) {
-				Write-Warning "Failed to remove unused host $Name. $Msg"
-			}
+			Remove-CheckPointHost -Session $Session -Name $Name -Verbose:$false
 		}
 	}
 }
