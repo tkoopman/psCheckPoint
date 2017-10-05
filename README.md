@@ -6,7 +6,7 @@ Module will help you use PowerShell to manage your Check Point firewall environm
 
 Documentation can be found at https://tkoopman.github.io/psCheckPoint/
 
-psCheckPoint works in both the full desktop verion of PowerShell, as well as PowerShell Core (Win, Linux, OSx).
+psCheckPoint works in both the full desktop verion of PowerShell, as well as PowerShell Core (Win, Linux, OSX).
 
 ## Installation
 `Install-Module -Name psCheckPoint [-Scope CurrentUser]`
