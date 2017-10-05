@@ -6,9 +6,15 @@ Module will help you use PowerShell to manage your Check Point firewall environm
 
 Documentation can be found at https://tkoopman.github.io/psCheckPoint/
 
-# Installation
+psCheckPoint works in both the full desktop verion of PowerShell, as well as PowerShell Core (Win, Linux, OSx).
+
+## Installation
 `Install-Module -Name psCheckPoint [-Scope CurrentUser]`
 
-NOTE: If you have psCheckPointIA module installed, uninstall before installing psCheckPoint v0.5.0+ as they have been merged into the one module, and psCheckPointIA is now deprecated. 
+## Update
+`Update-Module -Name psCheckPoint`
+
+### psCheckPointIA Deprecated
+NOTE: If you have psCheckPointIA module installed, uninstall before installing or updating to psCheckPoint v0.5.0+ as they have been merged into the one module, and psCheckPointIA is now deprecated. 
 
 `Uninstall-Module psCheckPointIA`
