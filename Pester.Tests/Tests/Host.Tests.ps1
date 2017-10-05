@@ -5,7 +5,7 @@
 		}
 
 		It "Add duplicate" {
-			New-CheckPointHost -Session $Session -Name PesterHost -IPAddress 192.168.1.2 | Should BeOfType psCheckPoint.CheckPointError
+			{ New-CheckPointHost -Session $Session -Name PesterHost -IPAddress 192.168.1.2 -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -15,7 +15,7 @@
 		}
 
 		It "Add duplicate" {
-			New-CheckPointHostInterface -Session $Session -Host PesterHost -Name eth0 -Subnet4 192.168.1.2 -MaskLength4 24 | Should BeOfType psCheckPoint.CheckPointError
+			{ New-CheckPointHostInterface -Session $Session -Host PesterHost -Name eth0 -Subnet4 192.168.1.2 -MaskLength4 24 -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -25,7 +25,7 @@
 		}
 
 		It "Get non-existing" {
-			Get-CheckPointHost -Session $Session -Name NotPesterHost | Should BeOfType psCheckPoint.CheckPointError
+			{ Get-CheckPointHost -Session $Session -Name NotPesterHost -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -35,7 +35,7 @@
 		}
 
 		It "Set non-existing" {
-			Set-CheckPointHost -Session $Session -Name NotPesterHost -Color Red | Should BeOfType psCheckPoint.CheckPointError
+			{ Set-CheckPointHost -Session $Session -Name NotPesterHost -Color Red -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -51,11 +51,11 @@
 
 	Context "Remove-CheckPointHost" {
 		It "Remove" {
-			Remove-CheckPointHost -Session $Session -Name PesterHost | Should Not BeOfType psCheckPoint.CheckPointError
+			{ Remove-CheckPointHost -Session $Session -Name PesterHost -ErrorAction Stop } | Should Not Throw
 		}
 
 		It "Remove non-existing" {
-			Remove-CheckPointHost -Session $Session -Name PesterHost | Should BeOfType psCheckPoint.CheckPointError
+			{ Remove-CheckPointHost -Session $Session -Name PesterHost -ErrorAction Stop } | Should Throw
 		}
 	}
 }

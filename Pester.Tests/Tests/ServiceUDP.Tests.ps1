@@ -5,7 +5,7 @@
 		}
 
 		It "Add duplicate" {
-			New-CheckPointServiceUDP -Session $Session -Name PesterUDP -Port 1227 | Should BeOfType psCheckPoint.CheckPointError
+			{ New-CheckPointServiceUDP -Session $Session -Name PesterUDP -Port 1227 -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -15,7 +15,7 @@
 		}
 
 		It "Get non-existing" {
-			Get-CheckPointServiceUDP -Session $Session -Name NotPesterUDP | Should BeOfType psCheckPoint.CheckPointError
+			{ Get-CheckPointServiceUDP -Session $Session -Name NotPesterUDP -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -25,7 +25,7 @@
 		}
 
 		It "Set non-existing" {
-			Set-CheckPointServiceUDP -Session $Session -Name NotPesterUDP -Color Red | Should BeOfType psCheckPoint.CheckPointError
+			{ Set-CheckPointServiceUDP -Session $Session -Name NotPesterUDP -Color Red -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -41,11 +41,11 @@
 
 	Context "Remove-CheckPointServiceUDP" {
 		It "Remove" {
-			Remove-CheckPointServiceUDP -Session $Session -Name PesterUDP | Should Not BeOfType psCheckPoint.CheckPointError
+			{ Remove-CheckPointServiceUDP -Session $Session -Name PesterUDP -ErrorAction Stop } | Should Not Throw
 		}
 
 		It "Remove non-existing" {
-			Remove-CheckPointServiceUDP -Session $Session -Name PesterUDP | Should BeOfType psCheckPoint.CheckPointError
+			{ Remove-CheckPointServiceUDP -Session $Session -Name PesterUDP -ErrorAction Stop } | Should Throw
 		}
 	}
 }

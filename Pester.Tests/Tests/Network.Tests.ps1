@@ -5,7 +5,7 @@
 		}
 
 		It "Add duplicate" {
-			New-CheckPointNetwork -Session $Session -Name PesterNet -Subnet 192.168.100.0 -MaskLength 24 | Should BeOfType psCheckPoint.CheckPointError
+			{ New-CheckPointNetwork -Session $Session -Name PesterNet -Subnet 192.168.100.0 -MaskLength 24 -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -15,7 +15,7 @@
 		}
 
 		It "Get non-existing" {
-			Get-CheckPointNetwork -Session $Session -Name NotPesterNet | Should BeOfType psCheckPoint.CheckPointError
+			{ Get-CheckPointNetwork -Session $Session -Name NotPesterNet -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -25,7 +25,7 @@
 		}
 
 		It "Set non-existing" {
-			Set-CheckPointNetwork -Session $Session -Name NotPesterNet -Color Red | Should BeOfType psCheckPoint.CheckPointError
+			{ Set-CheckPointNetwork -Session $Session -Name NotPesterNet -Color Red -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -41,11 +41,11 @@
 
 	Context "Remove-CheckPointNetwork" {
 		It "Remove" {
-			Remove-CheckPointNetwork -Session $Session -Name PesterNet | Should Not BeOfType psCheckPoint.CheckPointError
+			{ Remove-CheckPointNetwork -Session $Session -Name PesterNet -ErrorAction Stop } | Should Not Throw
 		}
 
 		It "Remove non-existing" {
-			Remove-CheckPointNetwork -Session $Session -Name PesterNet | Should BeOfType psCheckPoint.CheckPointError
+			{ Remove-CheckPointNetwork -Session $Session -Name PesterNet -ErrorAction Stop } | Should Throw
 		}
 	}
 }

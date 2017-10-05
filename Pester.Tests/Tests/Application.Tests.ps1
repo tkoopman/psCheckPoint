@@ -5,7 +5,7 @@
 		}
 
 		It "Add duplicate" {
-			New-CheckPointApplication -Session $Session -Name PesterApplication -PrimaryCategory "Low Risk" -UrlList www.google.com,www.bing.com   | Should BeOfType psCheckPoint.CheckPointError
+			{ New-CheckPointApplication -Session $Session -Name PesterApplication -PrimaryCategory "Low Risk" -UrlList www.google.com,www.bing.com -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -15,7 +15,7 @@
 		}
 
 		It "Get non-existing" {
-			Get-CheckPointApplication -Session $Session -Name NotPesterApplication | Should BeOfType psCheckPoint.CheckPointError
+			{ Get-CheckPointApplication -Session $Session -Name NotPesterApplication -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -25,7 +25,7 @@
 		}
 
 		It "Set non-existing" {
-			Set-CheckPointApplication -Session $Session -Name NotPesterApplication -Color Red | Should BeOfType psCheckPoint.CheckPointError
+			{ Set-CheckPointApplication -Session $Session -Name NotPesterApplication -Color Red -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -41,11 +41,11 @@
 
 	Context "Remove-CheckPointApplication" {
 		It "Remove" {
-			Remove-CheckPointApplication -Session $Session -Name PesterApplication | Should Not BeOfType psCheckPoint.CheckPointError
+			{ Remove-CheckPointApplication -Session $Session -Name PesterApplication -ErrorAction Stop } | Should Not Throw
 		}
 
 		It "Remove non-existing" {
-			Remove-CheckPointApplication -Session $Session -Name PesterApplication | Should BeOfType psCheckPoint.CheckPointError
+			{ Remove-CheckPointApplication -Session $Session -Name PesterApplication -ErrorAction Stop } | Should Throw
 		}
 	}
 }

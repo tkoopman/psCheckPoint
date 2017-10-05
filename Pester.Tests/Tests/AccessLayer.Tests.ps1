@@ -6,7 +6,7 @@
 
 		# Seems Check Point allows Access Layers with duplicate names
 		#It "Add duplicate" {
-		#	New-CheckPointAccessLayer -Session $Session -Name PesterAccessLayer | Should BeOfType psCheckPoint.CheckPointError
+		#	{ New-CheckPointAccessLayer -Session $Session -Name PesterAccessLayer -ErrorAction Stop } | Should Throw
 		#}
 	}
 
@@ -16,7 +16,7 @@
 		}
 
 		It "Get non-existing" {
-			Get-CheckPointAccessLayer -Session $Session -Name NotPesterAccessLayer | Should BeOfType psCheckPoint.CheckPointError
+			{ Get-CheckPointAccessLayer -Session $Session -Name NotPesterAccessLayer -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -26,7 +26,7 @@
 		}
 
 		It "Set non-existing" {
-			Set-CheckPointAccessLayer -Session $Session -Name NotPesterAccessLayer -Color Red | Should BeOfType psCheckPoint.CheckPointError
+			{ Set-CheckPointAccessLayer -Session $Session -Name NotPesterAccessLayer -Color Red -ErrorAction Stop } | Should Throw
 		}
 	}
 
@@ -42,11 +42,11 @@
 
 	Context "Remove-CheckPointAccessLayer" {
 		It "Remove" {
-			Remove-CheckPointAccessLayer -Session $Session -Name PesterAccessLayer | Should Not BeOfType psCheckPoint.CheckPointError
+			{ Remove-CheckPointAccessLayer -Session $Session -Name PesterAccessLayer -ErrorAction Stop } | Should Not Throw
 		}
 
 		It "Remove non-existing" {
-			Remove-CheckPointAccessLayer -Session $Session -Name PesterAccessLayer | Should BeOfType psCheckPoint.CheckPointError
+			{ Remove-CheckPointAccessLayer -Session $Session -Name PesterAccessLayer -ErrorAction Stop } | Should Throw
 		}
 	}
 }

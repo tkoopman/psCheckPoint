@@ -115,12 +115,12 @@ namespace psCheckPoint
                     {
                         if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
                         {
-                            WriteWarning($"Server returned status code: {(int)response.StatusCode} [{response.StatusCode}]");
+                            WriteVerbose($"Server returned status code: {(int)response.StatusCode} [{response.StatusCode}]");
                         }
                         strJson = response.Content.ReadAsStringAsync().Result;
                         WriteDebug(strJson);
                         CheckPointError error = JsonConvert.DeserializeObject<CheckPointError>(strJson);
-                        WriteObject(error);
+                        GenerateError(error);
                     }
                 }
             }
@@ -129,6 +129,11 @@ namespace psCheckPoint
                 while (e.InnerException != null) e = e.InnerException;
                 WriteError(new ErrorRecord(e, e.Message, ErrorCategory.ConnectionError, this));
             }
+        }
+
+        protected virtual void GenerateError(CheckPointError error)
+        {
+            CheckPointError.GenerateError(this, error);
         }
 
         /// <summary>
