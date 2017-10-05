@@ -132,7 +132,9 @@ namespace DocGen
 
             if (cmdExtras.ContainsKey((string)chapter["name"]))
             {
-                foreach (APICmdlet cmd in cmdExtras[(string)chapter["name"]])
+                List<APICmdlet> list = cmdExtras[(string)chapter["name"]];
+                list.Sort();
+                foreach (APICmdlet cmd in list)
                 {
                     new OutputCmdlet(c, cmd.cmdlet, cmd.type.Name, cmd.cmdlet);
                 }
@@ -180,8 +182,8 @@ namespace DocGen
 
                 foreach (XElement api in member.Descendants("api"))
                 {
-                    string cmd = (api.Attribute("cmd") == null) ? null : api.Attribute("cmd").Value;
-                    string parent = (api.Attribute("parent") == null) ? null : api.Attribute("parent").Value;
+                    string cmd = api.Attribute("cmd")?.Value;
+                    string parent = api.Attribute("parent")?.Value;
                     string cmdlet = api.Value;
 
                     if (cmd != null)
@@ -262,7 +264,7 @@ namespace DocGen
         }
     }
 
-    internal class APICmdlet
+    internal class APICmdlet : IComparable
     {
         internal APICmdlet(string apicmd, string cmdlet, Type type)
         {
@@ -274,6 +276,11 @@ namespace DocGen
         internal string apicmd { get; set; }
         internal string cmdlet { get; set; }
         internal Type type { get; set; }
+
+        public int CompareTo(object obj)
+        {
+            return cmdlet.CompareTo((obj as APICmdlet).cmdlet);
+        }
     }
 
     internal class OutputChapter
