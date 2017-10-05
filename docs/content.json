@@ -114,6 +114,16 @@
             "Name": "show-hosts",
             "Class": "GetCheckPointHosts",
             "Cmdlet": "Get-CheckPointHosts"
+          },
+          {
+            "Name": "Remove-CheckPointHostInterface",
+            "Class": "RemoveCheckPointHostInterface",
+            "Cmdlet": "Remove-CheckPointHostInterface"
+          },
+          {
+            "Name": "New-CheckPointHostInterface",
+            "Class": "NewCheckPointHostInterface",
+            "Cmdlet": "New-CheckPointHostInterface"
           }
         ],
         "SubChapters": []

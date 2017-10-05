@@ -14,6 +14,7 @@ namespace DocGen
     internal class content_json
     {
         private static Dictionary<string, APICmdlet> cmds;
+        private static Dictionary<string, List<APICmdlet>> cmdExtras;
 
         private static void Main(string[] args)
         {
@@ -36,7 +37,7 @@ namespace DocGen
 
         private static void CreateContentJson(string path)
         {
-            cmds = getImplementedCmdlets();
+            getImplementedCmdlets();
             OutputChapter output = new OutputChapter("chapters");
 
             // Get List of all Check Point API calls
@@ -128,6 +129,15 @@ namespace DocGen
             {
                 ProcessCommandData(cmd, c);
             }
+
+            if (cmdExtras.ContainsKey((string)chapter["name"]))
+            {
+                foreach (APICmdlet cmd in cmdExtras[(string)chapter["name"]])
+                {
+                    new OutputCmdlet(c, cmd.cmdlet, cmd.type.Name, cmd.cmdlet);
+                }
+            }
+
             if (chapter["sub-chapters"] != null)
             {
                 foreach (dynamic subChapter in chapter["sub-chapters"])
@@ -151,7 +161,7 @@ namespace DocGen
             }
         }
 
-        private static Dictionary<string, APICmdlet> getImplementedCmdlets()
+        private static void getImplementedCmdlets()
         {
             XDocument doc = XDocument.Parse(File.ReadAllText("psCheckPoint.xml"));
 
@@ -159,7 +169,8 @@ namespace DocGen
                         .Where(c => c.Descendants("api").Any())
                         .ToList();
 
-            Dictionary<string, APICmdlet> cmds = new Dictionary<string, APICmdlet>();
+            cmds = new Dictionary<string, APICmdlet>();
+            cmdExtras = new Dictionary<string, List<APICmdlet>>();
 
             foreach (XElement member in members)
             {
@@ -169,14 +180,29 @@ namespace DocGen
 
                 foreach (XElement api in member.Descendants("api"))
                 {
-                    string cmd = api.Attribute("cmd").Value;
+                    string cmd = (api.Attribute("cmd") == null) ? null : api.Attribute("cmd").Value;
+                    string parent = (api.Attribute("parent") == null) ? null : api.Attribute("parent").Value;
                     string cmdlet = api.Value;
 
-                    cmds[cmd] = new APICmdlet(cmd, cmdlet, t);
+                    if (cmd != null)
+                    {
+                        cmds[cmd] = new APICmdlet(cmd, cmdlet, t);
+                    }
+                    else if (parent != null)
+                    {
+                        if (cmdExtras.ContainsKey(parent))
+                        {
+                            cmdExtras[parent].Add(new APICmdlet(cmdlet, cmdlet, t));
+                        }
+                        else
+                        {
+                            cmdExtras[parent] = new List<APICmdlet>() {
+                                new APICmdlet(cmdlet, cmdlet, t)
+                            };
+                        }
+                    }
                 }
             }
-
-            return cmds;
         }
 
         private static Dictionary<string, ExtraCmdlet> getImplementedExtraCmdlets()

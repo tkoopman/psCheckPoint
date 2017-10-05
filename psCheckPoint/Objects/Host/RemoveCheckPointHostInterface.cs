@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Host
 {
-    /// <api cmd="set-host">Set-CheckPointHost</api>
+    /// <api parent="Host">Remove-CheckPointHostInterface</api>
     /// <summary>
     /// <para type="synopsis">Remove host interface.</para>
     /// <para type="description"></para>
