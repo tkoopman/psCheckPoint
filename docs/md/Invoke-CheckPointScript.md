@@ -1,31 +1,32 @@
 # Invoke-CheckPointScript
 
 ## SYNOPSIS
+Run script on gateways
 
 ## SYNTAX
 
 ### By Inline Script
 ```
-Invoke-CheckPointScript -ScriptName <String> -Script <String> [-Args <String>] -Targets <String[]>
+Invoke-CheckPointScript -ScriptName <String> -Script <String> [-Args <String>] -Targets <PSObject>
  [-Comments <String>] [-Session <CheckPointSession>]
 ```
 
 ### By Script File
 ```
-Invoke-CheckPointScript -ScriptName <String> -ScriptFile <String> [-Args <String>] -Targets <String[]>
+Invoke-CheckPointScript -ScriptName <String> -ScriptFile <String> [-Args <String>] -Targets <PSObject>
  [-Comments <String>] [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
+Run a script on target gateways.
+After completing you can get any output from script by looking at the task details.
 
 ## EXAMPLES
 
-### Example 1
+### ----------  EXAMPLE 1  ----------
 ```
-PS C:\> {{ Add example code here }}
+$(Invoke-CheckPointScript -ScriptName "Get Configuration" -Script "clish -c 'Show Configuration'" -Targets fwm-devbtpp001 | Wait-CheckPointTask).TaskDetails.ResponseMessage
 ```
-
-{{ Add example description here }}
 
 ## PARAMETERS
 
@@ -70,7 +71,7 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -124,14 +125,14 @@ On what targets to execute this command.
 Targets may be identified by their name, or object unique identifier.
 
 ```yaml
-Type: String[]
+Type: PSObject
 Parameter Sets: (All)
 Aliases: 
 
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -139,6 +140,10 @@ Accept wildcard characters: False
 
 ### System.String
 Script Body
+
+### System.Management.Automation.PSObject
+On what targets to execute this command.
+Targets may be identified by their name, or object unique identifier.
 
 ## OUTPUTS
 

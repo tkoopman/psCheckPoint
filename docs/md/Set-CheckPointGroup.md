@@ -27,7 +27,7 @@ Set-CheckPointGroup [-MemberAction <MembershipActions>] [-Members <String[]>]
 
 ### ----------  EXAMPLE 1  ----------
 ```
-$cpGroup = Set-CheckPointGroup -Name Test1 -NewName Test2 -Tags TestTag
+Set-CheckPointGroup -Name Test1 -NewName Test2 -Tags TestTag
 ```
 
 ## PARAMETERS

@@ -293,8 +293,8 @@
           },
           {
             "Name": "show-simple-gateway",
-            "Class": null,
-            "Cmdlet": null
+            "Class": "GetCheckPointSimpleGateway",
+            "Cmdlet": "Get-CheckPointSimpleGateway"
           },
           {
             "Name": "set-simple-gateway",
@@ -308,8 +308,8 @@
           },
           {
             "Name": "show-simple-gateways",
-            "Class": null,
-            "Cmdlet": null
+            "Class": "GetCheckPointSimpleGateways",
+            "Cmdlet": "Get-CheckPointSimpleGateways"
           }
         ],
         "SubChapters": []
