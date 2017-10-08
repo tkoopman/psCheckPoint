@@ -10,7 +10,7 @@ namespace psCheckPoint.Objects.Group
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>$cpGroup = Set-CheckPointGroup -Name Test1 -NewName Test2 -Tags TestTag</code>
+    ///   <code>Set-CheckPointGroup -Name Test1 -NewName Test2 -Tags TestTag</code>
     /// </example>
     [Cmdlet(VerbsCommon.Set, "CheckPointGroup")]
     [OutputType(typeof(CheckPointGroup))]

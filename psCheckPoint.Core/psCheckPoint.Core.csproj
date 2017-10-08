@@ -43,6 +43,7 @@
     <Compile Include="..\psCheckPoint\Objects\ServiceTCP\*.cs" Link="Objects\ServiceTCP\%(FileName)" />
     <Compile Include="..\psCheckPoint\Objects\ServiceUDP\*.cs" Link="Objects\ServiceUDP\%(FileName)" />
     <Compile Include="..\psCheckPoint\Objects\Session\*.cs" Link="Objects\Session\%(FileName)" />
+    <Compile Include="..\psCheckPoint\Objects\SimpleGateway\*.cs" Link="Objects\SimpleGateway\%(FileName)" />
   </ItemGroup>
 
   <ItemGroup>

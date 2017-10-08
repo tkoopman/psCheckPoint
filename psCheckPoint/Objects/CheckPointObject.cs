@@ -28,7 +28,8 @@ namespace psCheckPoint.Objects
             { "security-zone",           new Object2FullDetails( "Get-CheckPointSecurityZone",          typeof(SecurityZone.GetCheckPointSecurityZone) )                   },
             { "service-group",           new Object2FullDetails( "Get-CheckPointServiceGroup",          typeof(ServiceGroup.GetCheckPointServiceGroup) )                   },
             { "service-tcp",             new Object2FullDetails( "Get-CheckPointServiceTCP",            typeof(ServiceTCP.GetCheckPointServiceTCP) )                       },
-            { "service-udp",             new Object2FullDetails( "Get-CheckPointServiceUDP",            typeof(ServiceUDP.GetCheckPointServiceUDP) )                       }
+            { "service-udp",             new Object2FullDetails( "Get-CheckPointServiceUDP",            typeof(ServiceUDP.GetCheckPointServiceUDP) )                       },
+            { "simple-gateway",          new Object2FullDetails( "Get-CheckPointSimpleGateway",         typeof(SimpleGateway.GetCheckPointSimpleGateway) )                 }
         };
 
         /// <summary>

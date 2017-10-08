@@ -191,6 +191,9 @@
     <Compile Include="Objects\Application\NewCheckPointApplication.cs" />
     <Compile Include="Objects\Application\RemoveCheckPointApplication.cs" />
     <Compile Include="Objects\Application\SetCheckPointApplication.cs" />
+    <Compile Include="Objects\SimpleGateway\CheckPointSimpleGateway.cs" />
+    <Compile Include="Objects\SimpleGateway\GetCheckPointSimpleGateway.cs" />
+    <Compile Include="Objects\SimpleGateway\GetCheckPointSimpleGateways.cs" />
     <Compile Include="Session\CheckPointSession.cs" />
     <Compile Include="Session\SendCheckPointKeepAlive.cs" />
     <Compile Include="Session\PublishCheckPointSession.cs" />

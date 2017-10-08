@@ -29,17 +29,20 @@
     <Folder Include="ImportExcel\" />
     <Folder Include="CloseSessions\" />
     <Folder Include="ExportToHtml\" />
+    <Folder Include="SaveConfigurations\" />
     <Folder Include="Office365 Groups\" />
     <Folder Include="Tor_IA\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CloseSessions\CloseSessions.ps1" />
+    <Compile Include="SaveConfigurations\SaveConfigs.ps1" />
     <Compile Include="ImportExcel\Import.ps1" />
     <Compile Include="Office365 Groups\O365_Import.ps1" />
     <Compile Include="Tor_IA\AddTorIdentities.ps1" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="CloseSessions\README.md" />
+    <Content Include="SaveConfigurations\README.md" />
     <Content Include="ExportToHtml\Export.html" />
     <Content Include="ImportExcel\Import.xlsx" />
     <Content Include="ExportToHtml\README.md" />
