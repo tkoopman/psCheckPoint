@@ -16,7 +16,7 @@ Waits for task to complete then returns the completed task details.
 
 ### ----------  EXAMPLE 1  ----------
 ```
-Install-CheckPointPolicy -PolicyPackage Standard -Targets MyGateway | Wait-CheckPointTask -Verbose
+Install-CheckPointPolicy -PolicyPackage Standard -Targets MyGateway | Wait-CheckPointTask
 ```
 
 ## PARAMETERS

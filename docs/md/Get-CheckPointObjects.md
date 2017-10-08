@@ -5,9 +5,15 @@ Find objects by Filter.
 
 ## SYNTAX
 
+### Filter (Default)
 ```
-Get-CheckPointObjects [-Filter <String>] [-IPOnly] [-Type <String>] [-UID <Int32>] [-Name <Int32>]
+Get-CheckPointObjects [-Filter <String>] [-IPOnly] [-Type <String>] [-Limit <Int32>] [-Offset <Int32>]
  [-Session <CheckPointSession>]
+```
+
+### Unused
+```
+Get-CheckPointObjects [-Unused] [-Limit <Int32>] [-Offset <Int32>] [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -21,6 +27,11 @@ Filters are same as what can be used in Smart Console
 Get-CheckPointObjects -Filter "O365 OR Office365"
 ```
 
+### ----------  EXAMPLE 2  ----------
+```
+Get-CheckPointObjects -Unused
+```
+
 ## PARAMETERS
 
 ### -Filter
@@ -32,7 +43,7 @@ To use IP search only, set the "ip-only" parameter to true.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Filter
 Aliases: 
 
 Required: False
@@ -47,7 +58,7 @@ If using "filter", use this field to search objects by their IP address only, wi
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Filter
 Aliases: 
 
 Required: False
@@ -57,7 +68,22 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Name
+### -Limit
+No more than that many results will be returned.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: 50
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Offset
 Skip that many results before beginning to return them.
 
 ```yaml
@@ -92,7 +118,7 @@ The objects' type
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Filter
 Aliases: 
 
 Required: False
@@ -102,17 +128,17 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -UID
-No more than that many results will be returned.
+### -Unused
+Retrieve all unused objects.
 
 ```yaml
-Type: Int32
-Parameter Sets: (All)
+Type: SwitchParameter
+Parameter Sets: Unused
 Aliases: 
 
 Required: False
 Position: Named
-Default value: 50
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

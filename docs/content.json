@@ -1664,8 +1664,8 @@
       },
       {
         "Name": "show-unused-objects",
-        "Class": null,
-        "Cmdlet": null
+        "Class": "GetCheckPointObjects",
+        "Cmdlet": "Get-CheckPointObjects"
       },
       {
         "Name": "export",
@@ -1699,8 +1699,8 @@
       },
       {
         "Name": "show-object",
-        "Class": null,
-        "Cmdlet": null
+        "Class": "GetCheckPointObject",
+        "Cmdlet": "Get-CheckPointObject"
       },
       {
         "Name": "show-commands",

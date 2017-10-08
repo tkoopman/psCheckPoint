@@ -23,14 +23,14 @@ namespace psCheckPoint.Objects
         [PSDefaultValue(Value = 50)]
         [Parameter]
         [ValidateRange(1, 500)]
-        public int UID { get; set; } = 50;
+        public int Limit { get; set; } = 50;
 
         /// <summary>
         /// <para type="description">Skip that many results before beginning to return them.</para>
         /// </summary>
         [JsonProperty(PropertyName = "offset", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter]
-        public int Name { get; set; } = 0;
+        public int Offset { get; set; } = 0;
 
         //TODO order
 

@@ -6,7 +6,7 @@ Retrieve all objects.
 ## SYNTAX
 
 ```
-Get-CheckPointNetworks [-UID <Int32>] [-Name <Int32>] [-Session <CheckPointSession>]
+Get-CheckPointNetworks [-Limit <Int32>] [-Offset <Int32>] [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -20,7 +20,22 @@ Get-CheckPointNetworks
 
 ## PARAMETERS
 
-### -Name
+### -Limit
+No more than that many results will be returned.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: 50
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Offset
 Skip that many results before beginning to return them.
 
 ```yaml
@@ -46,21 +61,6 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -UID
-No more than that many results will be returned.
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: 50
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
