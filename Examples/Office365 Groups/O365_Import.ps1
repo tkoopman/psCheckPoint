@@ -171,13 +171,16 @@ ForEach ($Product in $O365.products.product) {
 							$i = $MSList.Add("$($MSO365)_$($Entry)")
 						}
 					} ElseIf ($Type -eq "URL") {
-						if ($PrintURLs.IsPresent) {
-							Write-Host " Hostname ($GroupName) : $Entry"
-						}
 						if ($IncludeNonMSURLs.IsPresent) {
 							$i = $MSURLList.Add($Entry)
+							if ($PrintURLs.IsPresent) {
+								New-Object PSObject -Property @{"Product" = $Product.Name; "URL" = $Entry}
+							}
 						} ElseIf (like $Entry  $IncludeURLs) {
 							$i = $MSURLList.Add($Entry)
+							if ($PrintURLs.IsPresent) {
+								New-Object PSObject -Property @{"Product" = $Product.Name; "URL" = $Entry}
+							}
 						} else {
 							$Split = $Entry.Split(".")
 							$DomainName = "$($Split[-2]).$($Split[-1])"
@@ -190,6 +193,9 @@ ForEach ($Product in $O365.products.product) {
 								$IsMS = (@(Compare-Object $DomainNS $MSNS -includeequal -excludedifferent).count -gt 0)
 								if ($IsMS) {
 									$i = $MSURLList.Add($Entry)
+									if ($PrintURLs.IsPresent) {
+										New-Object PSObject -Property @{"Product" = $Product.Name; "URL" = $Entry}
+									}
 								} else {
 									#Write-Verbose "Excluding URL $Entry as domain $DomainName not Microsoft."
 								}
