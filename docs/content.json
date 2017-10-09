@@ -906,28 +906,28 @@
         "Cmdlets": [
           {
             "Name": "add-application-site-category",
-            "Class": null,
-            "Cmdlet": null
+            "Class": "NewCheckPointApplicationCategory",
+            "Cmdlet": "New-CheckPointApplicationCategory"
           },
           {
             "Name": "show-application-site-category",
-            "Class": null,
-            "Cmdlet": null
+            "Class": "GetCheckPointApplicationCategory",
+            "Cmdlet": "Get-CheckPointApplicationCategory"
           },
           {
             "Name": "set-application-site-category",
-            "Class": null,
-            "Cmdlet": null
+            "Class": "SetCheckPointApplication",
+            "Cmdlet": "Set-CheckPointApplicationCategory"
           },
           {
             "Name": "delete-application-site-category",
-            "Class": null,
-            "Cmdlet": null
+            "Class": "RemoveCheckPointApplicationCategory",
+            "Cmdlet": "Remove-CheckPointApplicationCategory"
           },
           {
             "Name": "show-application-site-categories",
-            "Class": null,
-            "Cmdlet": null
+            "Class": "GetCheckPointApplicationCategories",
+            "Cmdlet": "Get-CheckPointApplicationCategories"
           }
         ],
         "SubChapters": []

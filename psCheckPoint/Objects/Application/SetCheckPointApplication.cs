@@ -11,7 +11,7 @@ namespace psCheckPoint.Objects.Application
     /// </summary>
     /// <example>
     /// </example>
-    [Cmdlet(VerbsCommon.Set, "CheckPointApplication", DefaultParameterSetName = "Base Details Only")]
+    [Cmdlet(VerbsCommon.Set, "CheckPointApplication")]
     [OutputType(typeof(CheckPointApplication))]
     public class SetCheckPointApplication : SetCheckPointObject<CheckPointApplication>
     {
