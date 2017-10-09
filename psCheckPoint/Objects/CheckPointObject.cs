@@ -17,19 +17,20 @@ namespace psCheckPoint.Objects
     {
         private static readonly Dictionary<string, Object2FullDetails> _Object2FullDetails = new Dictionary<string, Object2FullDetails>
         {
-            { "access-layer",            new Object2FullDetails( "Get-CheckPointAccessLayer",           typeof(AccessLayer.GetCheckPointAccessLayer) )                     },
-            { "address-range",           new Object2FullDetails( "Get-CheckPointAddressRange",          typeof(AddressRange.GetCheckPointAddressRange) )                   },
-            { "application-site",        new Object2FullDetails( "Get-CheckPointApplication",           typeof(Application.GetCheckPointApplication) )                     },
-            { "group",                   new Object2FullDetails( "Get-CheckPointGroup",                 typeof(Group.GetCheckPointGroup) )                                 },
-            { "group-with-exclusion",    new Object2FullDetails( "Get-CheckPointGroupWithExclusion",    typeof(GroupWithExclusion.GetCheckPointGroupWithExclusion) )       },
-            { "host",                    new Object2FullDetails( "Get-CheckPointHost",                  typeof(Host.GetCheckPointHost) )                                   },
-            { "multicast-address-range", new Object2FullDetails( "Get-CheckPointMulticastAddressRange", typeof(MulticastAddressRange.GetCheckPointMulticastAddressRange) ) },
-            { "network",                 new Object2FullDetails( "Get-CheckPointNetwork",               typeof(Network.GetCheckPointNetwork) )                             },
-            { "security-zone",           new Object2FullDetails( "Get-CheckPointSecurityZone",          typeof(SecurityZone.GetCheckPointSecurityZone) )                   },
-            { "service-group",           new Object2FullDetails( "Get-CheckPointServiceGroup",          typeof(ServiceGroup.GetCheckPointServiceGroup) )                   },
-            { "service-tcp",             new Object2FullDetails( "Get-CheckPointServiceTCP",            typeof(ServiceTCP.GetCheckPointServiceTCP) )                       },
-            { "service-udp",             new Object2FullDetails( "Get-CheckPointServiceUDP",            typeof(ServiceUDP.GetCheckPointServiceUDP) )                       },
-            { "simple-gateway",          new Object2FullDetails( "Get-CheckPointSimpleGateway",         typeof(SimpleGateway.GetCheckPointSimpleGateway) )                 }
+            { "access-layer",              new Object2FullDetails( "Get-CheckPointAccessLayer",           typeof(AccessLayer.GetCheckPointAccessLayer) )                     },
+            { "address-range",             new Object2FullDetails( "Get-CheckPointAddressRange",          typeof(AddressRange.GetCheckPointAddressRange) )                   },
+            { "application-site",          new Object2FullDetails( "Get-CheckPointApplication",           typeof(Application.GetCheckPointApplication) )                     },
+            { "application-site-category", new Object2FullDetails( "Get-CheckPointApplicationCategory",   typeof(ApplicationCategory.GetCheckPointApplicationCategory) )     },
+            { "group",                     new Object2FullDetails( "Get-CheckPointGroup",                 typeof(Group.GetCheckPointGroup) )                                 },
+            { "group-with-exclusion",      new Object2FullDetails( "Get-CheckPointGroupWithExclusion",    typeof(GroupWithExclusion.GetCheckPointGroupWithExclusion) )       },
+            { "host",                      new Object2FullDetails( "Get-CheckPointHost",                  typeof(Host.GetCheckPointHost) )                                   },
+            { "multicast-address-range",   new Object2FullDetails( "Get-CheckPointMulticastAddressRange", typeof(MulticastAddressRange.GetCheckPointMulticastAddressRange) ) },
+            { "network",                   new Object2FullDetails( "Get-CheckPointNetwork",               typeof(Network.GetCheckPointNetwork) )                             },
+            { "security-zone",             new Object2FullDetails( "Get-CheckPointSecurityZone",          typeof(SecurityZone.GetCheckPointSecurityZone) )                   },
+            { "service-group",             new Object2FullDetails( "Get-CheckPointServiceGroup",          typeof(ServiceGroup.GetCheckPointServiceGroup) )                   },
+            { "service-tcp",               new Object2FullDetails( "Get-CheckPointServiceTCP",            typeof(ServiceTCP.GetCheckPointServiceTCP) )                       },
+            { "service-udp",               new Object2FullDetails( "Get-CheckPointServiceUDP",            typeof(ServiceUDP.GetCheckPointServiceUDP) )                       },
+            { "simple-gateway",            new Object2FullDetails( "Get-CheckPointSimpleGateway",         typeof(SimpleGateway.GetCheckPointSimpleGateway) )                 }
         };
 
         /// <summary>

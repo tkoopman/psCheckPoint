@@ -57,6 +57,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Objects\ApplicationCategory\CheckPointApplicationCategory.cs" />
+    <Compile Include="Objects\ApplicationCategory\GetCheckPointApplicationCategory.cs" />
+    <Compile Include="Objects\ApplicationCategory\GetCheckPointApplicationCategories.cs" />
+    <Compile Include="Objects\ApplicationCategory\NewCheckPointApplicationCategory.cs" />
+    <Compile Include="Objects\ApplicationCategory\RemoveCheckPointApplicationCategory.cs" />
+    <Compile Include="Objects\ApplicationCategory\SetCheckPointApplicationCategory.cs" />
     <Compile Include="Objects\Host\RemoveCheckPointHostInterface.cs" />
     <Compile Include="Objects\Host\NewCheckPointHostInterface.cs" />
     <Compile Include="Objects\Misc\GetCheckPointObject.cs" />

@@ -30,6 +30,7 @@
     <Compile Include="..\psCheckPoint\Objects\AccessRule\*.cs" Link="Objects\AccessRule\%(FileName)" />
     <Compile Include="..\psCheckPoint\Objects\AddressRange\*.cs" Link="Objects\AddressRange\%(FileName)" />
     <Compile Include="..\psCheckPoint\Objects\Application\*.cs" Link="Objects\Application\%(FileName)" />
+    <Compile Include="..\psCheckPoint\Objects\ApplicationCategory\*.cs" Link="Objects\ApplicationCategory\%(FileName)" />
     <Compile Include="..\psCheckPoint\Objects\Group\*.cs" Link="Objects\Group\%(FileName)" />
     <Compile Include="..\psCheckPoint\Objects\GroupWithExclusion\*.cs" Link="Objects\GroupWithExclusion\%(FileName)" />
     <Compile Include="..\psCheckPoint\Objects\Host\*.cs" Link="Objects\Host\%(FileName)" />

@@ -12,11 +12,45 @@
 param(
 	[switch]$NoIPv4,
 	[switch]$NoIPv6,
+	[switch]$NoApplications,
+	[switch]$IncludeNonMSURLs,
 	[switch]$PrintURLs,
 	[switch]$Publish,
 	[switch]$IgnoreWarnings,
-	[string]$Color = "red"
+	[string]$Color = "red",
+	[string[]]$MSNS = @(
+		"azure-dns.com",
+		"azure-dns.info",
+		"azure-dns.net",
+		"azure-dns.org",
+		"azuredns-cloud.net",
+		"microsoftonline.com",
+		"msedge.net",
+		"msft.net",
+		"o365filtering.com",
+		"s-msedge.net"
+	),
+	[string[]]$IncludeURLs = @(
+		"*.edgekey.net",
+		"*.edgesuite.net",
+		"*.onedrive.com",
+		"*.onenote.com",
+		"*.outlook.dev",
+		"*.sway.com",
+		"*.sway-cdn.com"
+		"*.sway-extensions.com",
+		"*.tific.com",
+		"*.uservoice.com",
+		"*.yammerusercontent.com",
+		"aka.ms",
+		"sway.com"
+	)
 )
+
+function like([string]$str,[string[]]$patterns){
+    foreach($pattern in $patterns) { if($str -like $pattern) { return $true; } }
+    return $false;
+}
 
 # Download Microsoft Cloud IP Ranges and Names into Object
 $O365IPAddresses = "https://support.content.office.net/en-us/static/O365IPAddresses.xml"
@@ -26,6 +60,8 @@ $Updated = ([datetime]::parseexact($O365.products.updated,"M/d/yyyy",[System.Glo
 $Comments = "Microsoft Office365 added $Updated"
 $GroupComments = "Microsoft Office365 updated $Updated"
 $MSO365 = "Microsoft_Office365"
+$MSO365APP = "Microsoft_Office365_URLS"
+$MSO365CATEGORY = "Microsoft Office365"
 
 # Login to Check Point API to get Session ID
 Write-Verbose " *** Log in to Check Point Smart Center API *** "
@@ -50,14 +86,24 @@ if (-not $Group) {
 	}
 }
 
+if (-not $NoApplications.IsPresent) {
+	$Category = Get-CheckPointApplicationCategory -Session $Session -Name $MSO365CATEGORY -Verbose:$false -ErrorAction SilentlyContinue
+	if (-not $Category) {
+		Write-Verbose "Creating O365 category $MSO365CATEGORY"
+		$Category = New-CheckPointApplicationCategory -Session $Session -Name $MSO365CATEGORY -Tag $MSO365 -Color $Color -Comments "Microsoft Office365 URLs" -PassThru
+		if (-not $Category) {
+			exit
+		}
+	}
+}
+
 # Will keep track of hosts removed from groups.
 #After processing we can check these to see if any should be deleted.
 $Removed = New-Object System.Collections.ArrayList
 
 ForEach ($Product in $O365.products.product) {
-	$GroupName = $MSO365 + "_" + $Product.Name
-
 	# Check if group exists and get existing members
+	$GroupName = $MSO365 + "_" + $Product.Name
 	$Group = Get-CheckPointGroup -Session $Session -Name $GroupName -Verbose:$false -ErrorAction SilentlyContinue
 
 	if (-not $Group) {
@@ -82,7 +128,21 @@ ForEach ($Product in $O365.products.product) {
 		}
 	}
 
+	# App Group for URLs
+	$AppGroupName = $MSO365APP + "_" + $Product.Name
+	$AppGroup = Get-CheckPointApplication -Session $Session -Name $AppGroupName -Verbose:$false -ErrorAction SilentlyContinue
+	if (-not $AppGroup) {
+		$AppExisting = @()
+	} else {
+		$AppExisting = $AppGroup.UrlList
+		$Count = $AppExisting.Count
+		if ($Count -eq 0) {
+			$AppExisting = @()
+		}
+	}
+
 	$MSList = New-Object System.Collections.ArrayList
+	$MSURLList = New-Object System.Collections.ArrayList
 	ForEach ($AddressList in $Product.addresslist) {
 		$Type = $AddressList.type
 		if (($Type -eq "IPv4" -and $NoIPv4.IsPresent) -or ($Type -eq "IPv6" -and $NoIPv6.IsPresent)) {
@@ -114,6 +174,27 @@ ForEach ($Product in $O365.products.product) {
 						if ($PrintURLs.IsPresent) {
 							Write-Host " Hostname ($GroupName) : $Entry"
 						}
+						if ($IncludeNonMSURLs.IsPresent) {
+							$i = $MSURLList.Add($Entry)
+						} ElseIf (like $Entry  $IncludeURLs) {
+							$i = $MSURLList.Add($Entry)
+						} else {
+							$Split = $Entry.Split(".")
+							$DomainName = "$($Split[-2]).$($Split[-1])"
+							$DomainNS = $(Resolve-DnsName -Type NS -DnsOnly -Name $DomainName -ErrorAction SilentlyContinue -Verbose:$false).NameHost
+							if ($DomainNS.Count -eq 0) {
+								#Write-Verbose "Excluding URL $Entry. Could not find NS servers for domain $DomainName."
+							} else {
+								$Split = $DomainNS[0].Split(".")
+								$DomainNS = $DomainNS | ForEach {"$($_.Split(".")[-2]).$($_.Split(".")[-1])"}
+								$IsMS = (@(Compare-Object $DomainNS $MSNS -includeequal -excludedifferent).count -gt 0)
+								if ($IsMS) {
+									$i = $MSURLList.Add($Entry)
+								} else {
+									#Write-Verbose "Excluding URL $Entry as domain $DomainName not Microsoft."
+								}
+							}
+						}
 					}
 				}
 			}
@@ -124,6 +205,10 @@ ForEach ($Product in $O365.products.product) {
 	$MSList = $MSList | Select -Unique
 	if ($MSList.Count -eq 0) {
 		$MSList = @()
+	}
+	$MSURLList = $MSURLList | Select -Unique
+	if ($MSURLList.Count -eq 0) {
+		$MSURLList = @()
 	}
 
 	$Diff = Compare-Object -ReferenceObject $MSList -DifferenceObject $Existing -IncludeEqual -Verbose:$false
@@ -190,6 +275,60 @@ ForEach ($Product in $O365.products.product) {
 		$Obj = Set-CheckPointGroup -Session $Session -Name $GroupName -Members $ToRemove -MemberAction Remove -Verbose:$false -PassThru
 		if (-not $Obj) {
 			Write-Warning "Failed to remove old group members from $GroupName. $Obj"
+		}
+	}
+
+	# Process URLs
+	if (-not $NoApplications.IsPresent) {
+		$ToAdd = New-Object System.Collections.ArrayList
+		$ToRemove = New-Object System.Collections.ArrayList
+
+		$Diff = Compare-Object -ReferenceObject $MSURLList -DifferenceObject $AppExisting -IncludeEqual -Verbose:$false
+
+		ForEach($Entry in $Diff) {
+			$URL = $Entry.InputObject
+
+			switch ($Entry.SideIndicator)
+			{
+				"<=" {
+					# New URL. Add to application
+					Write-Verbose "Adding $URL from $AppGroupName"
+					$i = $ToAdd.Add($URL)
+				}
+				"=>" {
+					# No longer required. Remove from application
+					Write-Verbose "Removing $URL from $AppGroupName"
+					$i = $ToRemove.Add($URL)
+				}
+				"==" {
+					# Already in application. No change needed
+					#Write-Verbose "Leaving $ObjName in $AppGroupName"
+				}
+			}
+		}
+
+		if ($ToAdd.Count -gt 0) {
+			if ($AppGroup) {
+				$Obj = Set-CheckPointApplication -Session $Session -Name $AppGroupName -UrlList $ToAdd -UrlAction Add -Comments $GroupComments -Verbose:$false -PassThru
+				if (-not $Obj) {
+					Write-Warning "Failed to add new URLs to $AppGroupName."
+				}
+			} else {
+				$Obj = New-CheckPointApplication -Session $Session -Name $AppGroupName -Tag $MSO365 -Color $Color -Comments "$GroupComments" -UrlList $ToAdd -PrimaryCategory $MSO365CATEGORY -Verbose:$false -PassThru
+				if (-not $Obj) {
+					Write-Warning "Failed to create $AppGroupName."
+				}
+			}
+		}
+		if ($ToRemove.Count -gt 0) {
+			if ($ToRemove.Count -eq $AppGroup.UrlList.Count) {
+				Remove-CheckPointApplication -Session $Session -Name $AppGroupName
+			} else {
+				$Obj = Set-CheckPointApplication -Session $Session -Name $AppGroupName -UrlList $ToRemove -Comments "$GroupComments" -UrlAction Remove -Verbose:$false -PassThru
+				if (-not $Obj) {
+					Write-Warning "Failed to remove old URLs from $AppGroupName."
+				}
+			}
 		}
 	}
 }
