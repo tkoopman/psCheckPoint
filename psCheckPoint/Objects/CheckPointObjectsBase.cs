@@ -8,7 +8,7 @@ namespace psCheckPoint.Objects
     /// <para type="description">Result from commands that return multiple objects.</para>
     /// </summary>
     [JsonObject]
-    public abstract class CheckPointObjectsBase<T> : IEnumerable<T>
+    public abstract class CheckPointObjectsBase<T> : ICheckPointObjects, IEnumerable<T>
     {
         /// <summary>
         /// <para type="description">From which element number the query was done.</para>

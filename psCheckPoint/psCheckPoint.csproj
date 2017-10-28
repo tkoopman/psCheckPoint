@@ -65,6 +65,7 @@
     <Compile Include="Objects\ApplicationCategory\SetCheckPointApplicationCategory.cs" />
     <Compile Include="Objects\Host\RemoveCheckPointHostInterface.cs" />
     <Compile Include="Objects\Host\NewCheckPointHostInterface.cs" />
+    <Compile Include="Objects\ICheckPointObjects.cs" />
     <Compile Include="Objects\Misc\GetCheckPointObject.cs" />
     <Compile Include="Objects\Misc\WaitCheckPointTask.cs" />
     <Compile Include="IA\AddCheckPointIdentity.cs" />
