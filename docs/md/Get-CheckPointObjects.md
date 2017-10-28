@@ -5,15 +5,26 @@ Find objects by Filter.
 
 ## SYNTAX
 
-### Filter (Default)
+### Limit + Filter (Default)
 ```
-Get-CheckPointObjects [-Filter <String>] [-IPOnly] [-Type <String>] [-Limit <Int32>] [-Offset <Int32>]
+Get-CheckPointObjects [-Limit <Int32>] [-Offset <Int32>] [-Filter <String>] [-IPOnly] [-Type <String>]
  [-Session <CheckPointSession>]
 ```
 
-### Unused
+### Limit + Unused
 ```
-Get-CheckPointObjects [-Unused] [-Limit <Int32>] [-Offset <Int32>] [-Session <CheckPointSession>]
+Get-CheckPointObjects [-Limit <Int32>] [-Offset <Int32>] [-Unused] [-Session <CheckPointSession>]
+```
+
+### All + Filter
+```
+Get-CheckPointObjects [-Limit <Int32>] [-All] [-Filter <String>] [-IPOnly] [-Type <String>]
+ [-Session <CheckPointSession>]
+```
+
+### All + Unused
+```
+Get-CheckPointObjects [-Limit <Int32>] [-All] [-Unused] [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -34,6 +45,21 @@ Get-CheckPointObjects -Unused
 
 ## PARAMETERS
 
+### -All
+Get All Records
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: All + Filter, All + Unused
+Aliases: 
+
+Required: True
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Filter
 Search expression to filter objects by.
 The provided text should be exactly the same as it would be given in Smart Console.
@@ -43,7 +69,7 @@ To use IP search only, set the "ip-only" parameter to true.
 
 ```yaml
 Type: String
-Parameter Sets: Filter
+Parameter Sets: Limit + Filter, All + Filter
 Aliases: 
 
 Required: False
@@ -58,7 +84,7 @@ If using "filter", use this field to search objects by their IP address only, wi
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Filter
+Parameter Sets: Limit + Filter, All + Filter
 Aliases: 
 
 Required: False
@@ -88,7 +114,7 @@ Skip that many results before beginning to return them.
 
 ```yaml
 Type: Int32
-Parameter Sets: (All)
+Parameter Sets: Limit + Filter, Limit + Unused
 Aliases: 
 
 Required: False
@@ -118,7 +144,7 @@ The objects' type
 
 ```yaml
 Type: String
-Parameter Sets: Filter
+Parameter Sets: Limit + Filter, All + Filter
 Aliases: 
 
 Required: False
@@ -133,10 +159,10 @@ Retrieve all unused objects.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Unused
+Parameter Sets: Limit + Unused, All + Unused
 Aliases: 
 
-Required: False
+Required: True
 Position: Named
 Default value: False
 Accept pipeline input: False

@@ -5,8 +5,14 @@ Retrieve all objects.
 
 ## SYNTAX
 
+### Limit
 ```
 Get-CheckPointApplicationCategories [-Limit <Int32>] [-Offset <Int32>] [-Session <CheckPointSession>]
+```
+
+### All
+```
+Get-CheckPointApplicationCategories [-Limit <Int32>] [-All] [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -19,6 +25,21 @@ Get-CheckPointApplicationCategories [-Limit <Int32>] [-Offset <Int32>] [-Session
 ```
 
 ## PARAMETERS
+
+### -All
+Get All Records
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: All
+Aliases: 
+
+Required: True
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Limit
 No more than that many results will be returned.
@@ -40,7 +61,7 @@ Skip that many results before beginning to return them.
 
 ```yaml
 Type: Int32
-Parameter Sets: (All)
+Parameter Sets: Limit
 Aliases: 
 
 Required: False
