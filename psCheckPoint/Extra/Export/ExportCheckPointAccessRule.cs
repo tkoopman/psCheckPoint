@@ -34,14 +34,8 @@ namespace psCheckPoint.Extra.Export
     /// </example>
     [Cmdlet(VerbsData.Export, "CheckPointObjects")]
     [OutputType(typeof(CheckPointExportSet))]
-    public class ExportCheckPointObjects : PSCmdlet
+    public class ExportCheckPointObjects : CheckPointCmdletBase
     {
-        /// <summary>
-        /// <para type="description">Session object from Open-CheckPointSession</para>
-        /// </summary>
-        [Parameter(Position = 0, Mandatory = true)]
-        public CheckPointSession Session { get; set; }
-
         /// <summary>
         /// <para type="description">Input objects to start export from.</para>
         /// </summary>

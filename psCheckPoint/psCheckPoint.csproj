@@ -57,6 +57,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CheckPointCmdletBase.cs" />
+    <Compile Include="Extra\Sync\InvokeCheckPointGroupSync.cs" />
+    <Compile Include="Extra\Sync\Member.cs" />
+    <Compile Include="Extra\Sync\NewSyncMember.cs" />
     <Compile Include="Objects\ApplicationCategory\CheckPointApplicationCategory.cs" />
     <Compile Include="Objects\ApplicationCategory\GetCheckPointApplicationCategory.cs" />
     <Compile Include="Objects\ApplicationCategory\GetCheckPointApplicationCategories.cs" />
@@ -171,6 +175,16 @@
     <Compile Include="Objects\Host\GetCheckPointHost.cs" />
     <Compile Include="Objects\Host\NewCheckPointHost.cs" />
     <Compile Include="Objects\NewCheckPointObject.cs" />
+    <None Include="Views\CheckPointObjects.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\CheckPointObject.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Views\SyncAction.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Objects\TEMPLATE\CheckPoint_.cs" />
     <None Include="Objects\TEMPLATE\GetCheckPoint_.cs" />
     <None Include="Objects\TEMPLATE\GetCheckPoint_s.cs" />

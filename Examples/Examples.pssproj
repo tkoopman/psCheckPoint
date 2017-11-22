@@ -30,14 +30,16 @@
     <Folder Include="CloseSessions\" />
     <Folder Include="ExportToHtml\" />
     <Folder Include="SaveConfigurations\" />
-    <Folder Include="Office365 Groups\" />
+    <Folder Include="GroupSync\" />
     <Folder Include="Tor_IA\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CloseSessions\CloseSessions.ps1" />
     <Compile Include="SaveConfigurations\SaveConfigs.ps1" />
     <Compile Include="ImportExcel\Import.ps1" />
-    <Compile Include="Office365 Groups\O365_Import.ps1" />
+    <Compile Include="GroupSync\AWS_Group_Sync.ps1" />
+    <Compile Include="GroupSync\Azure_Group_Sync.ps1" />
+    <Compile Include="GroupSync\Office365_Group_Sync.ps1" />
     <Compile Include="Tor_IA\AddTorIdentities.ps1" />
   </ItemGroup>
   <ItemGroup>
@@ -47,7 +49,7 @@
     <Content Include="ImportExcel\Import.xlsx" />
     <Content Include="ExportToHtml\README.md" />
     <Content Include="ImportExcel\README.md" />
-    <Content Include="Office365 Groups\README.md" />
+    <Content Include="GroupSync\README.md" />
     <Content Include="Tor_IA\README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -79,9 +79,12 @@ namespace psCheckPoint.Objects.MulticastAddressRange
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public string[] Groups { get; set; }
 
-        [OnSerializing]
-        private void OnSerializing(StreamingContext context)
+        /// <summary>
+        /// <para type="description">Called when object is being serialized. Used for processing Group Actions.</para>
+        /// </summary>
+        protected override void OnSerializing()
         {
+            base.OnSerializing();
             _groups = ProcessGroupAction(GroupAction, Groups);
         }
     }
