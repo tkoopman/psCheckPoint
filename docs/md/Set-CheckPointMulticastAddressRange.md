@@ -10,8 +10,8 @@ Edit existing object using object name or uid.
 Set-CheckPointMulticastAddressRange [-IPAddressFirst <String>] [-IPAddressLast <String>]
  [-IPv4AddressFirst <String>] [-IPv4AddressLast <String>] [-IPv6AddressFirst <String>]
  [-IPv6AddressLast <String>] [-GroupAction <MembershipActions>] [-Groups <String[]>] -UID <String>
- [-NewName <String>] [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-PassThru]
- [-Color <String>] [-Session <CheckPointSession>]
+ [-NewName <String>] [-TagAction <MembershipActions>] [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings]
+ [-IgnoreErrors] [-PassThru] [-Color <String>] [-Session <CheckPointSession>]
 ```
 
 ### By Name
@@ -19,8 +19,8 @@ Set-CheckPointMulticastAddressRange [-IPAddressFirst <String>] [-IPAddressLast <
 Set-CheckPointMulticastAddressRange [-IPAddressFirst <String>] [-IPAddressLast <String>]
  [-IPv4AddressFirst <String>] [-IPv4AddressLast <String>] [-IPv6AddressFirst <String>]
  [-IPv6AddressLast <String>] [-GroupAction <MembershipActions>] [-Groups <String[]>] [-Name] <String>
- [-NewName <String>] [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-PassThru]
- [-Color <String>] [-Session <CheckPointSession>]
+ [-NewName <String>] [-TagAction <MembershipActions>] [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings]
+ [-IgnoreErrors] [-PassThru] [-Color <String>] [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -280,6 +280,24 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TagAction
+Action to take with tags.
+
+Possible values: Replace, Add, Remove
+
+```yaml
+Type: MembershipActions
+Parameter Sets: (All)
+Aliases: 
+Accepted values: Replace, Add, Remove
+
+Required: False
+Position: Named
+Default value: Replace
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

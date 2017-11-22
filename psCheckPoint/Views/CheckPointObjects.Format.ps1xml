@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+  <DefaultSettings>
+    <EnumerableExpansions>
+      <EnumerableExpansion>
+        <EntrySelectedBy>
+          <TypeName>psCheckPoint.Objects.CheckPointObjects</TypeName>
+        </EntrySelectedBy>
+        <Expand>CoreOnly</Expand>
+      </EnumerableExpansion>
+    </EnumerableExpansions>
+  </DefaultSettings>
+  <ViewDefinitions>
+    <View>
+      <Name>CheckPointObjects</Name>
+      <ViewSelectedBy>
+        <TypeName>psCheckPoint.Objects.CheckPointObjects</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <PropertyName>From</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>To</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Total</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Objects</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>

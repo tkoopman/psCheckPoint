@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.ComponentModel;
 using System.Management.Automation;
+using System.Runtime.Serialization;
 
 namespace psCheckPoint.Objects
 {
@@ -37,18 +38,20 @@ namespace psCheckPoint.Objects
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public string NewName { get; set; }
 
+        [JsonProperty(PropertyName = "tags", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        private dynamic _tags;
+
+        /// <summary>
+        /// <para type="description">Action to take with tags.</para>
+        /// </summary>
+        [Parameter]
+        public MembershipActions TagAction { get; set; } = MembershipActions.Replace;
+
         /// <summary>
         /// <para type="description">Collection of tag identifiers.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "tags", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Tags
-        {
-            get { return _tags; }
-            set { _tags = CreateArray(value); }
-        }
-
-        private string[] _tags;
+        public string[] Tags { get; set; }
 
         /// <summary>
         /// <para type="description">Comments string.</para>
@@ -86,6 +89,20 @@ namespace psCheckPoint.Objects
                 WriteVerbose($"{Command}: {(result as CheckPointObject).Name}");
             }
             if (PassThru.IsPresent) { WriteObject(result); }
+        }
+
+        [OnSerializing]
+        private void OnSerializing(StreamingContext context)
+        {
+            OnSerializing();
+        }
+
+        /// <summary>
+        /// <para type="description">Called when object is being serialized. Used for processing Group Actions.</para>
+        /// </summary>
+        protected virtual void OnSerializing()
+        {
+            _tags = ProcessGroupAction(TagAction, Tags);
         }
     }
 }

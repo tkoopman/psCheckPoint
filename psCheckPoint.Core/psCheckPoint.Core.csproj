@@ -24,6 +24,7 @@
     <Compile Include="..\psCheckPoint\*.cs" Link="%(FileName)" />
     <Compile Include="..\psCheckPoint\Session\*.cs" Link="Session\%(FileName)" />
     <Compile Include="..\psCheckPoint\Extra\Export\*.cs" Link="Extra\Export\%(FileName)" />
+    <Compile Include="..\psCheckPoint\Extra\Sync\*.cs" Link="Extra\Sync\%(FileName)" />
     <Compile Include="..\psCheckPoint\IA\*.cs" Link="IA\%(FileName)" />
     <Compile Include="..\psCheckPoint\Objects\*.cs" Link="Objects\%(FileName)" />
     <Compile Include="..\psCheckPoint\Objects\AccessLayer\*.cs" Link="Objects\AccessLayer\%(FileName)" />
