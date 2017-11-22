@@ -6,9 +6,9 @@ Export input objects and any other object used by input objects.
 ## SYNTAX
 
 ```
-Export-CheckPointObjects [-Session] <CheckPointSession> -Object <PSObject> [-Depth <Int32>]
- [-ExcludeByName <String[]>] [-ExcludeByType <String[]>] [-ExcludeDetailsByName <String[]>]
- [-ExcludeDetailsByType <String[]>] [-SkipWhereUsed] [-IndirectWhereUsed]
+Export-CheckPointObjects -Object <PSObject> [-Depth <Int32>] [-ExcludeByName <String[]>]
+ [-ExcludeByType <String[]>] [-ExcludeDetailsByName <String[]>] [-ExcludeDetailsByType <String[]>]
+ [-SkipWhereUsed] [-IndirectWhereUsed] [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -143,8 +143,8 @@ Type: CheckPointSession
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

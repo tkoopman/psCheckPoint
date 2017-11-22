@@ -8,15 +8,15 @@ Edit existing object using object name or uid.
 ### By UID
 ```
 Set-CheckPointGroupWithExclusion [-Include <String>] [-Except <String>] -UID <String> [-NewName <String>]
- [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-PassThru] [-Color <String>]
- [-Session <CheckPointSession>]
+ [-TagAction <MembershipActions>] [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors]
+ [-PassThru] [-Color <String>] [-Session <CheckPointSession>]
 ```
 
 ### By Name
 ```
 Set-CheckPointGroupWithExclusion [-Include <String>] [-Except <String>] [-Name] <String> [-NewName <String>]
- [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-PassThru] [-Color <String>]
- [-Session <CheckPointSession>]
+ [-TagAction <MembershipActions>] [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors]
+ [-PassThru] [-Color <String>] [-Session <CheckPointSession>]
 ```
 
 ## DESCRIPTION
@@ -179,6 +179,24 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TagAction
+Action to take with tags.
+
+Possible values: Replace, Add, Remove
+
+```yaml
+Type: MembershipActions
+Parameter Sets: (All)
+Aliases: 
+Accepted values: Replace, Add, Remove
+
+Required: False
+Position: Named
+Default value: Replace
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

@@ -16,6 +16,22 @@
     "SubChapters": []
   },
   {
+    "Name": "Group Sync Commands",
+    "Cmdlets": [
+      {
+        "Name": "Invoke-CheckPointGroupSync",
+        "Class": "InvokeCheckPointGroupSync",
+        "Cmdlet": "Invoke-CheckPointGroupSync"
+      },
+      {
+        "Name": "New-SyncMember",
+        "Class": "NewSyncMember",
+        "Cmdlet": "New-SyncMember"
+      }
+    ],
+    "SubChapters": []
+  },
+  {
     "Name": "Misc.",
     "Cmdlets": [
       {
