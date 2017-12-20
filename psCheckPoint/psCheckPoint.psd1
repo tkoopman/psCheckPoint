@@ -70,8 +70,12 @@ RequiredAssemblies = 'Newtonsoft.Json.dll'
 
 # Format files (.ps1xml) to be loaded when importing this module
 FormatsToProcess = @(
+	'Views\CheckPointHost.Format.ps1xml',
 	'Views\CheckPointObject.Format.ps1xml',
 	'Views\CheckPointObjects.Format.ps1xml',
+	'Views\CheckPointService.Format.ps1xml',
+	'Views\CheckPointServiceTCP.Format.ps1xml',
+	'Views\CheckPointServiceUDP.Format.ps1xml',
 	'Views\SyncAction.Format.ps1xml'
 )
 
