@@ -175,6 +175,22 @@
     <Compile Include="Objects\Host\GetCheckPointHost.cs" />
     <Compile Include="Objects\Host\NewCheckPointHost.cs" />
     <Compile Include="Objects\NewCheckPointObject.cs" />
+    <None Include="Views\CheckPointServiceUDP.Format.ps1xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\CheckPointServiceTCP.Format.ps1xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\CheckPointService.Format.ps1xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\CheckPointHost.Format.ps1xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Views\CheckPointObjects.Format.ps1xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -60,12 +60,12 @@
     <Content Include="Tests\Application.Tests.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Tests\IA.Tests.ps1">
+    <None Include="Tests\IA.Tests.ps1.Disabled">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tests\Export.Tests.ps1">
+    </None>
+    <None Include="Tests\Export.Tests.ps1.Disabled">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Content Include="Tests\AccessLayer.Tests.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

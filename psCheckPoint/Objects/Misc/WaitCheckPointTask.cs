@@ -47,11 +47,19 @@ namespace psCheckPoint.Objects.Misc
             if (task.ProgressPercentage == 100)
             {
                 WriteVerbose($"Task {task.ProgressPercentage}% complete. Exiting.");
+                progress.PercentComplete = 100;
+                progress.StatusDescription = task.Comments;
+                progress.RecordType = ProgressRecordType.Completed;
+                WriteProgress(progress);
                 WriteObject(task);
             }
             else if (watch.ElapsedMilliseconds >= Timeout * 1000)
             {
                 WriteVerbose($"Task {task.ProgressPercentage}% complete. Timeout reached, exiting.");
+                progress.PercentComplete = task.ProgressPercentage;
+                progress.StatusDescription = "Wait timeout reached, exiting.";
+                progress.RecordType = ProgressRecordType.Completed;
+                WriteProgress(progress);
                 WriteObject(task);
             }
             else
