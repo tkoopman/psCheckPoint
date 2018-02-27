@@ -58,7 +58,13 @@ namespace psCheckPoint.Objects.Policy
         /// </summary>
         [JsonProperty(PropertyName = "targets", NullValueHandling = NullValueHandling.Ignore)]
         [Parameter]
-        public string[] Targets { get; set; }
+        public string[] Targets
+        {
+            get { return _targets; }
+            set { _targets = CreateArray(value); }
+        }
+
+        private string[] _targets;
 
         /// <summary>
         /// <para type="description">Set to be true in order to install the threat prevention policy.</para>
