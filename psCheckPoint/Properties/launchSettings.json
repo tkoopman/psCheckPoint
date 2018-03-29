@@ -3,19 +3,21 @@
     "psCheckPoint_net45": {
       "commandName": "Executable",
       "executablePath": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-      "commandLineArgs": "-NoLogo -NoExit -Command $(SolutionDir)\\LoadModule.ps1;Open-CheckPointSession -ManagementServer $env:ManagementServer -NoCertificateValidation",
+      "commandLineArgs": "-NoExit -NoLogo -ExecutionPolicy RemoteSigned -command \". $env:APPVEYOR_BUILD_FOLDER\\run\\start-debug.ps1\"",
       "workingDirectory": "$(ProjectDir)\\bin\\$(ConfigurationName)",
       "environmentVariables": {
-        "ManagementServer": "192.168.1.1"
+        "APPVEYOR_BUILD_FOLDER": "$(SolutionDir)",
+        "Configuration": "$(ConfigurationName)"
       }
     },
-    "psCheckPoint_netstandard2.0": {
+    "psCheckPoint_netstandard1.6": {
       "commandName": "Executable",
       "executablePath": "C:\\Program Files\\PowerShell\\6.0.2\\pwsh.exe",
-      "commandLineArgs": "-NoLogo -NoExit -Command $(SolutionDir)\\LoadModule.ps1;Open-CheckPointSession -ManagementServer $env:ManagementServer -NoCertificateValidation",
+      "commandLineArgs": "-NoExit -NoLogo -ExecutionPolicy RemoteSigned -command \". $env:APPVEYOR_BUILD_FOLDER\\run\\start-debug.ps1\"",
       "workingDirectory": "$(ProjectDir)\\bin\\$(ConfigurationName)",
       "environmentVariables": {
-        "ManagementServer": "192.168.1.1"
+        "APPVEYOR_BUILD_FOLDER": "$(SolutionDir)",
+        "Configuration": "$(ConfigurationName)"
       }
     }
   }

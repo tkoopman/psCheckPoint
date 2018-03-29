@@ -35,7 +35,7 @@ before_build:
 build:
   verbosity: minimal
 environment:
-  cpSettings:
+  Settings_json:
     secure: ze8KkJ0VqpFU6X2o4Y0WUS9Ki2MgwjYWhV58NlJMeyR7iH69pBB4mJv/DnhgwfOCLp+Iefih7rEz61jXfzcnrbPkLzLUWIxZLL1u4HrL7iswBcb9wXd2CqFNgJECIukRiYErehzn4GD4kjgP9PdOo/VrA4gUlgVuix46tVJF4ttRFofX3hUJEACqmk86bu4xF0/i8PFTvzcnZ5pbzrQZoYuFKXKTfym4jQN8yLXl+zxZIhbU47Ths4nBrIY7w7K7qhLzfKlVJaD+c5KcscQh1BVXiLDFmnf2TCgg197zFV8vekSBs9HzhTeeG6xufVTW4Ie39Vq6IU9Y27/JHhbYuZzihxKixsVyzHdhrdZh7fc=
   NuGetToken:
     secure: 8U0FY4Wh+zyJriYPpUsyFXTmoc+upnrqrV3+u5mEkBCttmytqIqk3hQe475ck5aJ
