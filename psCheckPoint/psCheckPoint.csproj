@@ -289,5 +289,9 @@
     <Reference Include="System.Management" />
     <PackageReference Include="System.Management.Automation.dll" Version="10.0.10586" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)' == 'netstandard1.6'">
+    <Exec Command="%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy RemoteSigned -Command &quot;$(SolutionDir)\run\post-build-netstandard1.6.ps1 -TargetDir '$(TargetDir)' -SolutionDir '$(SolutionDir)'&quot;" />
+  </Target>
   
 </Project>

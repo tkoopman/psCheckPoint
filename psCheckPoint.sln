@@ -49,6 +49,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "run", "run", "{F417636E-03DA-44B1-BE14-CA4053C02162}"
 	ProjectSection(SolutionItems) = preProject
 		run\init.ps1 = run\init.ps1
+		run\post-build-netstandard1.6.ps1 = run\post-build-netstandard1.6.ps1
 		run\Settings.json = run\Settings.json
 		run\Settings.json.Example = run\Settings.json.Example
 		run\start-debug.ps1 = run\start-debug.ps1
