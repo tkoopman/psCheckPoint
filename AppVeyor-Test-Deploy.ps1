@@ -1,7 +1,7 @@
 # Debugging
-    Write-Host "Listing Env Vars for debugging:" -ForegroundColor Yellow
+#    Write-Host "Listing Env Vars for debugging:" -ForegroundColor Yellow
     # Filter Results to prevent exposing secure vars.
-    Get-ChildItem -Path "Env:*" | Where-Object { $_.name -notmatch "(NuGetToken|CoverallsToken|cpSettings)"} | Sort-Object -Property Name | Format-Table
+#    Get-ChildItem -Path "Env:*" | Where-Object { $_.name -notmatch "(NuGetToken|CoverallsToken|cpSettings)"} | Sort-Object -Property Name | Format-Table
 
 # Bump Version
 	Try {

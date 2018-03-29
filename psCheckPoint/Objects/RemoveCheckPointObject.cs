@@ -1,54 +1,67 @@
-﻿using Newtonsoft.Json;
+﻿using Koopman.CheckPoint.Common;
+using System.Collections;
 using System.ComponentModel;
 using System.Management.Automation;
+using System.Reflection;
 
 namespace psCheckPoint.Objects
 {
     /// <summary>
     /// <para type="description">Base class for Remove-CheckPoint*ObjectName* classes</para>
     /// </summary>
-    public abstract class RemoveCheckPointObject : CheckPointCmdlet<CheckPointMessage>
+    public abstract class RemoveCheckPointObject : CheckPointCmdletBase
     {
         /// <summary>
-        /// <para type="description">Object unique identifier.</para>
+        /// <para type="description">Object name or UID.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "uid", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(Mandatory = true, ParameterSetName = "By UID", ValueFromPipelineByPropertyName = true)]
-        public string UID { get; set; }
+        [Parameter(ParameterSetName = "By Value", Position = 1, Mandatory = true, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true)]
+        [Alias("Name", "UID")]
+        public string Value { get; set; }
 
         /// <summary>
-        /// <para type="description">Object name.</para>
+        /// <para type="description">Object to delete.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "name", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(Position = 1, Mandatory = true, ParameterSetName = "By Name", ValueFromPipelineByPropertyName = true, ValueFromPipeline = true)]
-        public string Name { get; set; }
+        [Parameter(ParameterSetName = "By Object", Position = 1, Mandatory = true, ValueFromPipeline = true)]
+        public PSObject Object { get; set; }
 
         /// <summary>
-        /// <para type="description">The level of detail for some of the fields in the response can vary from showing only the UID value of the object to a fully detailed representation of the object.</para>
+        /// <para type="description">Apply changes ignoring warnings or errors.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "details-level", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [DefaultValue("standard")]
-        protected string DetailsLevel { get; set; } = "standard";
-
-        /// <summary>
-        /// <para type="description">Apply changes ignoring warnings.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ignore-warnings", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [JsonConverter(typeof(SwitchJsonConverter))]
         [Parameter]
-        public SwitchParameter IgnoreWarnings { get; set; }
+        public Koopman.CheckPoint.Ignore Ignore { get; set; } = Koopman.CheckPoint.Ignore.No;
 
-        /// <summary>
-        /// <para type="description">Apply changes ignoring errors. You won't be able to publish such a changes. If ignore-warnings flag was omitted - warnings will also be ignored.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ignore-errors", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [JsonConverter(typeof(SwitchJsonConverter))]
-        [Parameter]
-        public SwitchParameter IgnoreErrors { get; set; }
-
-        protected override void WriteRecordResponse(CheckPointMessage result)
+        /// <inheritdoc/>
+        protected override void ProcessRecord()
         {
-            WriteVerbose(result.Message);
+            if (ParameterSetName.Equals("By Value"))
+            {
+                Remove(Value);
+            }
+            else
+            {
+                ProcessObject(Object);
+            }
         }
+
+        private void ProcessObject(object obj)
+        {
+            if (obj is ObjectBase) Remove((obj as ObjectBase).GetMembershipID());
+            else if (obj is PSObject) ProcessObject((obj as PSObject).BaseObject);
+            else if (obj is IEnumerable)
+            {
+                foreach (object o in (obj as IEnumerable))
+                {
+                    ProcessObject(o);
+                }
+            }
+            else
+                throw new CmdletInvocationException($"Invalid object type: {obj.GetType()}");
+        }
+
+        /// <summary>
+        /// Removes the specified object.
+        /// </summary>
+        /// <param name="value">The name or UID of the object to remove.</param>
+        protected abstract void Remove(string value);
     }
 }

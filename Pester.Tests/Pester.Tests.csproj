@@ -57,64 +57,58 @@
     <Content Include="Tests\Host.Tests.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Tests\Application.Tests.ps1">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <None Include="Tests\IA.Tests.ps1.Disabled">
+    <None Include="Tests\Application.Tests.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Tests\Export.Tests.ps1.Disabled">
+    <None Include="Tests\IA.Tests.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="Tests\AccessLayer.Tests.ps1">
+    <None Include="Tests\Export.Tests.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tests\AddressRange.Tests.ps1">
+    </None>
+    <None Include="Tests\AccessLayer.Tests.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tests\Group.Tests.ps1">
+    </None>
+    <None Include="Tests\AddressRange.Tests.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tests\MulticastAddressRange.Tests.ps1">
+    </None>
+    <None Include="Tests\Group.Tests.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tests\Network.Tests.ps1">
+    </None>
+    <None Include="Tests\MulticastAddressRange.Tests.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tests\SecurityZone.Tests.ps1">
+    </None>
+    <None Include="Tests\Network.Tests.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tests\ServiceGroup.Tests.ps1">
+    </None>
+    <None Include="Tests\SecurityZone.Tests.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tests\ServiceTCP.Tests.ps1">
+    </None>
+    <None Include="Tests\ServiceGroup.Tests.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tests\ServiceUDP.Tests.ps1">
+    </None>
+    <None Include="Tests\ServiceTCP.Tests.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tests\MiscObject.Tests.ps1">
+    </None>
+    <None Include="Tests\ServiceUDP.Tests.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tests\SimpleGateway.Tests.ps1">
+    </None>
+    <None Include="Tests\MiscObject.Tests.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tests\ApplicationCategory.Tests.ps1">
+    </None>
+    <None Include="Tests\SimpleGateway.Tests.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
+    <None Include="Tests\ApplicationCategory.Tests.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\psCheckPoint\psCheckPoint.csproj">
-      <Project>{4ff88b87-441a-4419-91c7-13041e60d0c0}</Project>
-      <Name>psCheckPoint</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy RemoteSigned -command "&amp; '$(ProjectDir)Post-Build.ps1'  -TargetDir '$(TargetDir)'"</PostBuildEvent>
+    <PostBuildEvent>%25SystemRoot%25\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy RemoteSigned -command "&amp; '$(ProjectDir)Post-Build.ps1'  -TargetDir '$(TargetDir)'" -SolutionDir '$(SolutionDir)' -ConfigurationName '$(ConfigurationName)'"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

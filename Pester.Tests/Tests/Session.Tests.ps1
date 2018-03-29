@@ -4,7 +4,7 @@
 		$s = $sessions | where {$_.UID -eq $Session.UID}
 
 		It "Confirm Get-CheckPointSessions returns current session" {
-			$s | Should BeOfType psCheckPoint.Objects.Session.CheckPointSession
+			$s | Should BeOfType Koopman.CheckPoint.SessionInfo
 		}
 
 		It "Confirm Application" {
@@ -12,7 +12,7 @@
 		}
 
 		It "Confirm Connection Mode" {
-			$s.ConnectionMode | Should be "read write"
+			$s.ConnectionMode | Should be "ReadWrite"
 		}
 
 		It "Confirm Description" {
@@ -24,7 +24,7 @@
 		$s = Get-CheckPointSession -Session $Session
 
 		It "Confirm Get-CheckPointSessions returns current session" {
-			$s | Should BeOfType psCheckPoint.Objects.Session.CheckPointSession
+			$s | Should BeOfType Koopman.CheckPoint.SessionInfo
 		}
 
 		It "Confirm Application" {
@@ -32,7 +32,7 @@
 		}
 
 		It "Confirm Connection Mode" {
-			$s.ConnectionMode | Should be "read write"
+			$s.ConnectionMode | Should be "ReadWrite"
 		}
 
 		It "Confirm Description" {
@@ -48,7 +48,7 @@
 		$s = Get-CheckPointSession
 
 		It "Confirm Get-CheckPointSessions returns current session" {
-			$s | Should BeOfType psCheckPoint.Objects.Session.CheckPointSession
+			$s | Should BeOfType Koopman.CheckPoint.SessionInfo
 		}
 
 		It "Confirm Application" {
@@ -56,7 +56,7 @@
 		}
 
 		It "Confirm Connection Mode" {
-			$s.ConnectionMode | Should be "read write"
+			$s.ConnectionMode | Should be "ReadWrite"
 		}
 
 		It "Confirm Description" {

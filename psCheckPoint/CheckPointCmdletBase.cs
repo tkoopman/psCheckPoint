@@ -1,15 +1,9 @@
-using Newtonsoft.Json;
-using psCheckPoint.Objects;
-using psCheckPoint.Session;
 using System;
-using System.Collections;
 using System.Management.Automation;
-using System.Net.Http;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace psCheckPoint
 {
+    /*
     /// <summary>
     /// <para type="description">Action to take when changing membership of object.</para>
     /// </summary>
@@ -24,24 +18,25 @@ namespace psCheckPoint
         /// <summary>Remove items from existing membership</summary>
         Remove
     };
+    */
 
     /// <summary>
     /// <para type="description">Base class for other Cmdlets that call a Web-API</para>
     /// </summary>
-    [JsonObject(MemberSerialization.OptIn)]
     public abstract class CheckPointCmdletBase : PSCmdlet
     {
         /// <summary>
         /// <para type="description">Session object from Open-CheckPointSession</para>
         /// </summary>
         [Parameter()]
-        public CheckPointSession Session { get; set; }
+        public Koopman.CheckPoint.Session Session { get; set; }
 
+        /// <inheritdoc/>
         protected override void BeginProcessing()
         {
             if (Session == null)
             {
-                Session = SessionState.PSVariable.GetValue("CheckPointSession") as CheckPointSession;
+                Session = SessionState.PSVariable.GetValue("CheckPointSession") as Koopman.CheckPoint.Session;
                 if (Session == null)
                 {
                     throw new PSArgumentNullException("Session");
@@ -53,7 +48,7 @@ namespace psCheckPoint
         /// <para type="description">Used by Cmdlet parameters that accept arrays</para>
         /// <para type="description">Allows arrays to also be accepted in CSV format with either a , (comma) or ; (semicolon) separator.</para>
         /// </summary>
-        protected static string[] CreateArray(String[] values)
+        protected static string[] CreateArray(string[] values)
         {
             if (values == null)
             {
@@ -70,7 +65,7 @@ namespace psCheckPoint
                 return values;
             }
         }
-
+        /*
         /// <summary>
         /// <para type="description">Used OnSerializing Events in Set methods to control how set will process groups based on action.</para>
         /// </summary>
@@ -140,5 +135,6 @@ namespace psCheckPoint
                 throw new PSInvalidCastException("Input is of invalid type.");
             }
         }
+        */
     }
 }

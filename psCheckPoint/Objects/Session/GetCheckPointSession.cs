@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 
 namespace psCheckPoint.Objects.Session
 {
@@ -12,29 +11,19 @@ namespace psCheckPoint.Objects.Session
     /// <code>Get-CheckPointSession</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointSession")]
-    [OutputType(typeof(CheckPointSession))]
-    public class GetCheckPointSession : CheckPointCmdlet<CheckPointSession>
+    [OutputType(typeof(Koopman.CheckPoint.SessionInfo))]
+    public class GetCheckPointSession : CheckPointCmdletBase
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "show-session"; } }
-
         /// <summary>
         /// <para type="description">Session unique identifier. If not provided the current logged in session UID will be used.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "uid", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
         public string UID { get; set; }
 
-        protected override void BeginProcessing()
+        /// <inheritdoc/>
+        protected override void ProcessRecord()
         {
-            base.BeginProcessing();
-
-            if (UID == null)
-            {
-                UID = Session.UID;
-            }
+            WriteObject(Session.FindSession(UID));
         }
     }
 }

@@ -11,16 +11,12 @@ namespace psCheckPoint.Session
     ///   <code>Send-CheckPointKeepAlive</code>
     /// </example>
     [Cmdlet(VerbsCommunications.Send, "CheckPointKeepAlive")]
-    public class SendCheckPointKeepAlive : CheckPointCmdlet<CheckPointMessage>
+    public class SendCheckPointKeepAlive : CheckPointCmdletBase
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "keepalive"; } }
-
-        protected override void WriteRecordResponse(CheckPointMessage result)
+        /// <inheritdoc/>
+        protected override void ProcessRecord()
         {
-            WriteVerbose(result.Message);
+            Session.SendKeepAlive();
         }
     }
 }

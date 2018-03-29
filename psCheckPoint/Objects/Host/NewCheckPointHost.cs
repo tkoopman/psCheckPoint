@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.Linq;
 using System.Management.Automation;
+using Koopman.CheckPoint;
 
 namespace psCheckPoint.Objects.Host
 {
@@ -12,18 +14,13 @@ namespace psCheckPoint.Objects.Host
     ///   <code>New-CheckPointHost -Name Test1 -ipAddress 1.2.3.4</code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "CheckPointHost")]
-    [OutputType(typeof(CheckPointHost))]
-    public class NewCheckPointHost : NewCheckPointObject<CheckPointHost>
+    [OutputType(typeof(Koopman.CheckPoint.Host))]
+    public class NewCheckPointHost : NewCheckPointObject
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "add-host"; } }
 
         /// <summary>
         /// <para type="description">IPv4 or IPv6 address. If both addresses are required use ipv4-address and ipv6-address fields explicitly.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "ip-address", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ParameterSetName = "IPv4 or IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [AllowNull]
         public string IPAddress { get; set; }
@@ -31,7 +28,6 @@ namespace psCheckPoint.Objects.Host
         /// <summary>
         /// <para type="description">IPv4 address.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "ipv4-address", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ParameterSetName = "IPv4 & IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Parameter(ParameterSetName = "IPv4", Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [AllowNull]
@@ -40,20 +36,14 @@ namespace psCheckPoint.Objects.Host
         /// <summary>
         /// <para type="description">IPv6 address.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "ipv6-address", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ParameterSetName = "IPv4 & IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Parameter(ParameterSetName = "IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [AllowNull]
         public string IPv6Address { get; set; }
 
-        //TODO interfaces
-        //TODO nat-settings
-        //TODO host-servers
-
         /// <summary>
         /// <para type="description">Collection of group identifiers.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "groups", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public string[] Groups
         {
@@ -62,5 +52,35 @@ namespace psCheckPoint.Objects.Host
         }
 
         private string[] _groups;
+
+        /// <inheritdoc/>
+        protected override void ProcessRecord()
+        {
+            if (ParameterSetName.Equals("IPv4 or IPv6"))
+            {
+                var ip = System.Net.IPAddress.Parse(IPAddress);
+                if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                    IPv6Address = IPAddress;
+                else
+                    IPv4Address = IPAddress;
+            }
+            var host = new Koopman.CheckPoint.Host(Session)
+            {
+                Name = Name,
+                Color = Color,
+                Comments = Comments,
+                IPv4Address = (String.IsNullOrWhiteSpace(IPv4Address)) ? null : System.Net.IPAddress.Parse(IPv4Address),
+                IPv6Address = (String.IsNullOrWhiteSpace(IPv6Address)) ? null : System.Net.IPAddress.Parse(IPv6Address)
+            };
+            foreach (var g in Groups ?? Enumerable.Empty<string>())
+                host.Groups.Add(g);
+            foreach (var t in Tags ?? Enumerable.Empty<string>())
+                host.Tags.Add(t);
+
+            //TODO Set if exists
+            host.AcceptChanges(Ignore);
+
+            WriteObject(host);
+        }
     }
 }

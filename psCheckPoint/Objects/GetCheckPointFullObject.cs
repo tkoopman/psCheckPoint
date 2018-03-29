@@ -1,4 +1,5 @@
-﻿using psCheckPoint.Session;
+﻿using Koopman.CheckPoint;
+using Koopman.CheckPoint.Common;
 using System.Collections;
 using System.Management.Automation;
 
@@ -14,32 +15,19 @@ namespace psCheckPoint.Objects
     /// <code>Get-CheckPointGroups | Get-CheckPointFullObject</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointFullObject")]
-    [OutputType(typeof(CheckPointObject))]
     public class GetCheckPointFullObject : PSCmdlet
     {
-        /// <summary>
-        /// <para type="description">Session object from Open-CheckPointSession</para>
-        /// </summary>
-        [Parameter]
-        public CheckPointSession Session { get; set; }
-
         /// <summary>
         /// <para type="description">Input objects to start export from.</para>
         /// </summary>
         [Parameter(Mandatory = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
         public PSObject Object { get; set; }
 
-        protected override void BeginProcessing()
-        {
-            if (Session == null)
-            {
-                Session = SessionState.PSVariable.GetValue("CheckPointSession") as CheckPointSession;
-                if (Session == null)
-                {
-                    throw new PSArgumentNullException("Session");
-                }
-            }
-        }
+        /// <summary>
+        /// <para type="description">The level of detail for some of the fields in the response can vary from showing only the UID value of the object to a fully detailed representation of the object.</para>
+        /// </summary>
+        [Parameter]
+        public DetailLevels DetailsLevel { get; set; } = DetailLevels.Standard;
 
         /// <summary>
         /// Provides a record-by-record processing functionality for the cmdlet.
@@ -51,9 +39,10 @@ namespace psCheckPoint.Objects
 
         private void Process(object obj)
         {
-            if (obj is ICheckPointObjectSummary)
+            if (obj is ObjectBase)
             {
-                WriteObject((obj as ICheckPointObjectSummary).ToFullObj(Session));
+                (obj as ObjectBase).Reload(detailLevel: DetailsLevel);
+                WriteObject(obj);
             }
             else if (obj is PSObject)
             {

@@ -1,22 +1,33 @@
-version: 0.7.{build}
-skip_tags: true
-skip_commits:
-  message: /!build/  
-only_commits:
-  files:
-  - psCheckPoint/
-  - psCheckPoint.Core/
+version: 0.0.{build}
+skip_non_tags: true
 image: Visual Studio 2017
+init:
+  - ps: |
+      $InfoVer = $env:APPVEYOR_REPO_TAG_NAME.TrimStart("v");
+      $Ver = $InfoVer.Split("-")[0];
+      $Prerelease = $InfoVer.Contains("-")
+      if ($Prerelease) 
+      {
+        $Ver = "$($Ver).$($env:APPVEYOR_BUILD_NUMBER)"
+      }
+      Set-AppveyorBuildVariable -Name "InfomationalVersion" -Value $InfoVer
+      Set-AppveyorBuildVariable -Name "FileVersion" -Value $Ver
+      Set-AppveyorBuildVariable -Name "PreRelease" -Value $Prerelease
+      Update-AppveyorBuild -Version $InfoVer
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
-  assembly_version: '{version}'
-  assembly_file_version: '{version}'
+  assembly_version: $(FileVersion)
+  assembly_file_version: $(FileVersion)
+  assembly_informational_version: $(InfomationalVersion)
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
-  version: '{version}'
-  package_version: '{version}'
+  version: $(FileVersion)
+  package_version: $(InfomationalVersion)
+  assembly_version: $(FileVersion)
+  file_version: $(FileVersion)
+  informational_version: $(InfomationalVersion)
 configuration: Release
 platform: Any CPU
 before_build:

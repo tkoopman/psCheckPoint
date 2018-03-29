@@ -11,12 +11,32 @@ namespace psCheckPoint.Objects.Host
     ///   <code>Get-CheckPointHosts</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointHosts")]
-    [OutputType(typeof(CheckPointObjects))]
+    [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.Host>))]
     public class GetCheckPointHosts : GetCheckPointObjects
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "show-hosts"; } }
+        /// <inheritdoc/>
+        protected override void ProcessRecord()
+        {
+            var results = Session.FindAllHosts(
+                limit: Limit,
+                offset: Offset
+                );
+
+            if (ParameterSetName == "Limit")
+            {
+                WriteObject(results, false);
+            }
+            else
+            {
+                while (results != null)
+                {
+                    foreach (object r in results)
+                    {
+                        WriteObject(r);
+                    }
+                    results = results.NextPage();
+                }
+            }
+        }
     }
 }

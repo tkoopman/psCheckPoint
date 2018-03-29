@@ -11,28 +11,39 @@ namespace psCheckPoint.Objects.Session
     /// <example>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointSessions")]
-    [OutputType(typeof(CheckPointSessions))]
-    public class GetCheckPointSessions : GetCheckPointObjectsBase<CheckPointSessions>
+    [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.SessionInfo>))]
+    public class GetCheckPointSessions : GetCheckPointObjects
     {
-        /// <summary>
-        /// Default constructor the changes GetCheckPointObjects.DetailsLevel default setting
-        /// </summary>
-        public GetCheckPointSessions()
-        {
-            DetailsLevel = "full";
-        }
-
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "show-sessions"; } }
-
         /// <summary>
         /// <para type="description">Show a list of published sessions.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "view-published-sessions", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [JsonConverter(typeof(SwitchJsonConverter))]
         [Parameter]
         public SwitchParameter ViewPublishedSessions { get; set; }
+
+        /// <inheritdoc/>
+        protected override void ProcessRecord()
+        {
+            var results = Session.FindAllSessions(
+                viewPublishedSessions: ViewPublishedSessions.IsPresent,
+                limit: Limit,
+                offset: Offset
+                );
+
+            if (ParameterSetName == "Limit")
+            {
+                WriteObject(results, false);
+            }
+            else
+            {
+                while (results != null)
+                {
+                    foreach (object r in results)
+                    {
+                        WriteObject(r);
+                    }
+                    results = results.NextPage();
+                }
+            }
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 
 namespace psCheckPoint.Session
 {
@@ -12,39 +11,19 @@ namespace psCheckPoint.Session
     ///   <code>Publish-CheckPointSession</code>
     /// </example>
     [Cmdlet(VerbsData.Publish, "CheckPointSession")]
-    public class PublishCheckPointSession : CheckPointCmdlet<CheckPointMessage>
+    public class PublishCheckPointSession : CheckPointCmdletBase
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "publish"; } }
 
         /// <summary>
         /// <para type="description">Publish none active session</para>
         /// </summary>
         [Parameter(ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ValueFromRemainingArguments = true)]
-        public psCheckPoint.Objects.Session.CheckPointSession PublishSession { get; set; }
+        public Koopman.CheckPoint.SessionInfo PublishSession { get; set; }
 
-        /// <summary>
-        /// <para type="description">Publish none active session UID</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "uid", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        protected string UID { get; set; }
-
-        internal override string GetJSON()
+        /// <inheritdoc/>
+        protected override void ProcessRecord()
         {
-            // Check if we need to pass UID of session to publish
-            // By not sending any UID API will publish current session.
-            if (PublishSession != null)
-            {
-                UID = PublishSession.UID;
-            }
-            return base.GetJSON();
-        }
-
-        protected override void WriteRecordResponse(CheckPointMessage result)
-        {
-            WriteVerbose(result.Message);
+            Session.Publish(PublishSession?.UID);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿using Koopman.CheckPoint;
+using System.Management.Automation;
 
 namespace psCheckPoint.Objects.Host
 {
@@ -11,12 +12,13 @@ namespace psCheckPoint.Objects.Host
     ///   <code>$cpHost = Get-CheckPointHost -Name Test1</code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointHost")]
-    [OutputType(typeof(CheckPointHost))]
-    public class GetCheckPointHost : GetCheckPointObject<CheckPointHost>
+    [OutputType(typeof(Koopman.CheckPoint.Host))]
+    public class GetCheckPointHost : GetCheckPointObject
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "show-host"; } }
+        /// <inheritdoc/>
+        protected override void ProcessRecord()
+        {
+            WriteObject(Session.FindHost(Value, DetailsLevel));
+        }
     }
 }

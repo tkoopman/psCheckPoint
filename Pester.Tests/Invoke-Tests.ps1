@@ -6,7 +6,7 @@ This script will run on debug to execute the Pester tests.
 $env:PSModulePath = (Resolve-Path .).Path + ";" + $env:PSModulePath
 
 # Optionally; load the module under test:
-Import-Module  .\psCheckPoint.psd1
+..\..\..\LoadModule.ps1
 
 # Load Pester. We assume it can be found in one of the module paths.
 Import-Module Pester

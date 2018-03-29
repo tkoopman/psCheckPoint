@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using psCheckPoint.Objects;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Management.Automation;
 
 namespace psCheckPoint
@@ -8,19 +6,24 @@ namespace psCheckPoint
     /// <summary>
     /// <para type="description">Base class for New-CheckPoint*ObjectName* classes</para>
     /// </summary>
-    public abstract class NewCheckPointCmdlet<T> : CheckPointColorCmdlet<T>
+    public abstract class NewCheckPointCmdlet : CheckPointCmdletBase
     {
         /// <summary>
         /// <para type="description">Object name. Should be unique in the domain.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
         [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true)]
         public string Name { get; set; }
 
         /// <summary>
+        /// <para type="description">Color of the object. Should be one of existing colors.</para>
+        /// </summary>
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        [Alias("Colour")]
+        public Koopman.CheckPoint.Colors Color { get; set; } = Koopman.CheckPoint.Colors.Black;
+
+        /// <summary>
         /// <para type="description">Collection of tag identifiers.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "tags", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public string[] Tags
         {
@@ -33,32 +36,14 @@ namespace psCheckPoint
         /// <summary>
         /// <para type="description">Comments string.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "comments", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public string Comments { get; set; }
 
         /// <summary>
-        /// <para type="description">The level of detail for some of the fields in the response can vary from showing only the UID value of the object to a fully detailed representation of the object.</para>
+        /// <para type="description">Apply changes ignoring warnings or errors.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "details-level", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [DefaultValue("standard")]
-        protected string DetailsLevel { get; set; } = "standard";
-
-        /// <summary>
-        /// <para type="description">Apply changes ignoring warnings.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ignore-warnings", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [JsonConverter(typeof(SwitchJsonConverter))]
         [Parameter]
-        public SwitchParameter IgnoreWarnings { get; set; }
-
-        /// <summary>
-        /// <para type="description">Apply changes ignoring errors. You won't be able to publish such a changes. If ignore-warnings flag was omitted - warnings will also be ignored.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ignore-errors", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [JsonConverter(typeof(SwitchJsonConverter))]
-        [Parameter]
-        public SwitchParameter IgnoreErrors { get; set; }
+        public Koopman.CheckPoint.Ignore Ignore { get; set; } = Koopman.CheckPoint.Ignore.No;
 
         /// <summary>
         /// <para type="description">Return the updated object.</para>
@@ -66,13 +51,13 @@ namespace psCheckPoint
         [Parameter]
         public SwitchParameter PassThru { get; set; }
 
-        protected override void WriteRecordResponse(T result)
+        /// <summary>
+        /// Writes the object only if PassThru is set.
+        /// </summary>
+        /// <param name="result">The result.</param>
+        public new void WriteObject(object result)
         {
-            if (result is CheckPointObject)
-            {
-                WriteVerbose($"{Command}: {(result as CheckPointObject).Name}");
-            }
-            if (PassThru.IsPresent) { WriteObject(result); }
+            if (PassThru.IsPresent) { base.WriteObject(result); }
         }
     }
 }

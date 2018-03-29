@@ -13,9 +13,10 @@ namespace psCheckPoint.Objects.Host
     [Cmdlet(VerbsCommon.Remove, "CheckPointHost")]
     public class RemoveCheckPointHost : RemoveCheckPointObject
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "delete-host"; } }
+        /// <inheritdoc/>
+        protected override void Remove(string value)
+        {
+            Session.DeleteHost(value, Ignore);
+        }
     }
 }

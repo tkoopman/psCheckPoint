@@ -1,0 +1,22 @@
+{
+  "profiles": {
+    "psCheckPoint_net45": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "commandLineArgs": "-NoLogo -NoExit -Command $(SolutionDir)\\LoadModule.ps1;Open-CheckPointSession -ManagementServer $env:ManagementServer -NoCertificateValidation",
+      "workingDirectory": "$(ProjectDir)\\bin\\$(ConfigurationName)",
+      "environmentVariables": {
+        "ManagementServer": "192.168.1.1"
+      }
+    },
+    "psCheckPoint_netstandard2.0": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Program Files\\PowerShell\\6.0.2\\pwsh.exe",
+      "commandLineArgs": "-NoLogo -NoExit -Command $(SolutionDir)\\LoadModule.ps1;Open-CheckPointSession -ManagementServer $env:ManagementServer -NoCertificateValidation",
+      "workingDirectory": "$(ProjectDir)\\bin\\$(ConfigurationName)",
+      "environmentVariables": {
+        "ManagementServer": "192.168.1.1"
+      }
+    }
+  }
+}
