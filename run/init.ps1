@@ -15,7 +15,7 @@ Set-Variable -Scope Global -Name CPLogin -Description "psCheckPoint Login Creden
 if($PSEdition -eq 'Core') {
 	$xml = [xml](Get-Content $SolutionDir\psCheckPoint\psCheckPoint.csproj);
 	$CheckPointNETVer = $($xml.Project.ItemGroup.PackageReference| where {$_.Include -eq "CheckPoint.NET"}).Version;
-	$CheckPointNETDir = "$PackagesDir\checkpoint.net\$CheckPointNETVer\lib\";
+	$CheckPointNETDir = "$PackagesDir\checkpoint.net\$CheckPointNETVer\lib";
 	
 	Write-Host -ForegroundColor Yellow "Import-Module $CheckPointNETDir\netstandard1.6\CheckPoint.NET.dll -Force";
 	Import-Module $CheckPointNETDir\netstandard1.6\CheckPoint.NET.dll -Force;
