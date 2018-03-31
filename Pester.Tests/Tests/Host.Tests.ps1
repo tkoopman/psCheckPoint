@@ -30,11 +30,11 @@
 	}
 
 	Context "Set-CheckPointHost" {
-		It "Set" -Skip {
-			Set-CheckPointHost -Session $Session -Name PesterHost -Color Red -PassThru | Should BeOfType Koopman.CheckPoint.Host
+		It "Set" {
+			Set-CheckPointHost -Session $Session -Name PesterHost -Color Red -IPAddress 10.1.1.100 -PassThru | Should BeOfType Koopman.CheckPoint.Host
 		}
 
-		It "Set non-existing" -Skip {
+		It "Set non-existing" {
 			{ Set-CheckPointHost -Session $Session -Name NotPesterHost -Color Red -ErrorAction Stop } | Should Throw "not found"
 		}
 	}

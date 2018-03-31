@@ -19,7 +19,8 @@ namespace psCheckPoint.Objects.Host
         {
             var results = Session.FindAllHosts(
                 limit: Limit,
-                offset: Offset
+                offset: Offset,
+                detailLevel: DetailsLevel
                 );
 
             if (ParameterSetName == "Limit")

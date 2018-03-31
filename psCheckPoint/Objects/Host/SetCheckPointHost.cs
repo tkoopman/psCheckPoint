@@ -1,5 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Koopman.CheckPoint.FastUpdate;
 using System.Management.Automation;
+using System.Net;
 using System.Runtime.Serialization;
 
 namespace psCheckPoint.Objects.Host
@@ -10,44 +11,21 @@ namespace psCheckPoint.Objects.Host
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Set-CheckPointHost -Name Test1 -NewName Test2 -Tags TestTag</code>
+    /// <code>
+    /// Set-CheckPointHost -Name Test1 -NewName Test2 -Tags TestTag
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Set, "CheckPointHost")]
-    [OutputType(typeof(CheckPointHost))]
-    public class SetCheckPointHost : SetCheckPointObject<CheckPointHost>
+    [OutputType(typeof(Koopman.CheckPoint.Host))]
+    public class SetCheckPointHost : SetCheckPointCmdlet
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "set-host"; } }
+        #region Fields
 
-        /// <summary>
-        /// <para type="description">IPv4 or IPv6 address. If both addresses are required use ipv4-address and ipv6-address fields explicitly.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ip-address", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string IPAddress { get; set; }
+        private string[] _groups;
 
-        /// <summary>
-        /// <para type="description">IPv4 address.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ipv4-address", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string IPv4Address { get; set; }
+        #endregion Fields
 
-        /// <summary>
-        /// <para type="description">IPv6 address.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ipv6-address", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string IPv6Address { get; set; }
-
-        //TODO interfaces
-        //TODO nat-settings
-        //TODO host-servers
-
-        [JsonProperty(PropertyName = "groups", NullValueHandling = NullValueHandling.Ignore)]
-        private dynamic _groups;
+        #region Properties
 
         /// <summary>
         /// <para type="description">Action to take with groups.</para>
@@ -57,18 +35,100 @@ namespace psCheckPoint.Objects.Host
 
         /// <summary>
         /// <para type="description">Collection of group identifiers.</para>
-        /// <para type="description">Groups listed will be either Added, Removed or replace the current list of group membership based on GroupAction parameter.</para>
+        /// <para type="description">
+        /// Groups listed will be either Added, Removed or replace the current list of group
+        /// membership based on GroupAction parameter.
+        /// </para>
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Groups { get; set; }
+        public string[] Groups { get => _groups; set => _groups = CreateArray(value); }
 
         /// <summary>
-        /// <para type="description">Called when object is being serialized. Used for processing Group Actions.</para>
+        /// <para type="description">Host object, name or UID.</para>
         /// </summary>
-        protected override void OnSerializing()
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
+        [Alias("Name", "UID")]
+        public new PSObject Host { get => Object; set => Object = value; }
+
+        /// <summary>
+        /// <para type="description">
+        /// IPv4 or IPv6 address. If both addresses are required use ipv4-address and ipv6-address
+        /// fields explicitly.
+        /// </para>
+        /// </summary>
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        public IPAddress IPAddress { get; set; }
+
+        /// <summary>
+        /// <para type="description">IPv4 address.</para>
+        /// </summary>
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        public IPAddress IPv4Address { get; set; }
+
+        /// <summary>
+        /// <para type="description">IPv6 address.</para>
+        /// </summary>
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        public IPAddress IPv6Address { get; set; }
+
+        /// <inheritdoc />
+        protected override string InputName => nameof(Host);
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void Set(string value)
         {
-            base.OnSerializing();
-            _groups = ProcessGroupAction(GroupAction, Groups);
+            var host = Session.UpdateHost(value);
+
+            // Only change values user called
+            foreach (var p in MyInvocation.BoundParameters.Keys)
+            {
+                switch (p)
+                {
+                    case nameof(Host): break;
+                    case nameof(GroupAction):
+                        if (GroupAction == MembershipActions.Replace && Groups == null)
+                            host.Groups.Clear();
+                        break;
+
+                    case nameof(Groups):
+                        host.Groups.Add(GroupAction, Groups);
+                        break;
+
+                    case nameof(IPAddress):
+                        if (IPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                            host.IPv6Address = IPAddress;
+                        else
+                            host.IPv4Address = IPAddress;
+                        break;
+
+                    case nameof(TagAction):
+                        if (TagAction == MembershipActions.Replace && Tags == null)
+                            host.Tags.Clear();
+                        break;
+
+                    case nameof(Tags):
+                        host.Tags.Add(TagAction, Tags);
+                        break;
+
+                    case nameof(NewName):
+                        host.Name = NewName;
+                        break;
+
+                    default:
+                        host.SetProperty(p, MyInvocation.BoundParameters[p]);
+                        break;
+                }
+            }
+
+            host.AcceptChanges(Ignore);
+
+            WriteObject(host);
         }
     }
+
+    #endregion Methods
 }

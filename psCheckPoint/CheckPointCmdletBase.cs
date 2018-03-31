@@ -3,50 +3,49 @@ using System.Management.Automation;
 
 namespace psCheckPoint
 {
-    /*
     /// <summary>
     /// <para type="description">Action to take when changing membership of object.</para>
     /// </summary>
     public enum MembershipActions
     {
-        /// <summary>Replace existing membership with new items</summary>
+        /// <summary>
+        /// Replace existing membership with new items
+        /// </summary>
         Replace,
 
-        /// <summary>Add new items to existing membership</summary>
+        /// <summary>
+        /// Add new items to existing membership
+        /// </summary>
         Add,
 
-        /// <summary>Remove items from existing membership</summary>
+        /// <summary>
+        /// Remove items from existing membership
+        /// </summary>
         Remove
     };
-    */
 
     /// <summary>
     /// <para type="description">Base class for other Cmdlets that call a Web-API</para>
     /// </summary>
     public abstract class CheckPointCmdletBase : PSCmdlet
     {
+        #region Properties
+
         /// <summary>
         /// <para type="description">Session object from Open-CheckPointSession</para>
         /// </summary>
         [Parameter()]
         public Koopman.CheckPoint.Session Session { get; set; }
 
-        /// <inheritdoc/>
-        protected override void BeginProcessing()
-        {
-            if (Session == null)
-            {
-                Session = SessionState.PSVariable.GetValue("CheckPointSession") as Koopman.CheckPoint.Session;
-                if (Session == null)
-                {
-                    throw new PSArgumentNullException("Session");
-                }
-            }
-        }
+        #endregion Properties
+
+        #region Methods
 
         /// <summary>
         /// <para type="description">Used by Cmdlet parameters that accept arrays</para>
-        /// <para type="description">Allows arrays to also be accepted in CSV format with either a , (comma) or ; (semicolon) separator.</para>
+        /// <para type="description">
+        /// Allows arrays to also be accepted in CSV format with either a , (comma) or ; (semicolon) separator.
+        /// </para>
         /// </summary>
         protected static string[] CreateArray(string[] values)
         {
@@ -65,9 +64,27 @@ namespace psCheckPoint
                 return values;
             }
         }
+
+        /// <inheritdoc />
+        protected override void BeginProcessing()
+        {
+            if (Session == null)
+            {
+                Session = SessionState.PSVariable.GetValue("CheckPointSession") as Koopman.CheckPoint.Session;
+                if (Session == null)
+                {
+                    throw new PSArgumentNullException("Session");
+                }
+            }
+        }
+
+        #endregion Methods
+
         /*
         /// <summary>
-        /// <para type="description">Used OnSerializing Events in Set methods to control how set will process groups based on action.</para>
+        /// <para type="description">
+        /// Used OnSerializing Events in Set methods to control how set will process groups based on action.
+        /// </para>
         /// </summary>
         protected static dynamic ProcessGroupAction(MembershipActions action, String[] values)
         {

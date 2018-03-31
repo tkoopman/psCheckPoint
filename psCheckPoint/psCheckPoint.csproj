@@ -91,7 +91,6 @@
     <Compile Remove="Objects\Group\SetCheckPointGroup.cs" />
     <Compile Remove="Objects\Host\NewCheckPointHostInterface.cs" />
     <Compile Remove="Objects\Host\RemoveCheckPointHostInterface.cs" />
-    <Compile Remove="Objects\Host\SetCheckPointHost.cs" />
     <Compile Remove="Objects\Misc\CheckPointTask.cs" />
     <Compile Remove="Objects\Misc\CheckPointWhereUsed.cs" />
     <Compile Remove="Objects\Misc\GetCheckPointCommands.cs" />
@@ -144,7 +143,6 @@
     <Compile Remove="Objects\Service\CheckPointServices.cs" />
     <Compile Remove="Objects\Service\NewCheckPointService.cs" />
     <Compile Remove="Objects\Service\SetCheckPointService.cs" />
-    <Compile Remove="Objects\SetCheckPointObject.cs" />
     <Compile Remove="Objects\SimpleGateway\CheckPointSimpleGateway.cs" />
     <Compile Remove="Objects\SimpleGateway\GetCheckPointSimpleGateway.cs" />
     <Compile Remove="Objects\SimpleGateway\GetCheckPointSimpleGateways.cs" />
@@ -216,7 +214,6 @@
     <None Include="Objects\Group\SetCheckPointGroup.cs" />
     <None Include="Objects\Host\NewCheckPointHostInterface.cs" />
     <None Include="Objects\Host\RemoveCheckPointHostInterface.cs" />
-    <None Include="Objects\Host\SetCheckPointHost.cs" />
     <None Include="Objects\Misc\CheckPointTask.cs" />
     <None Include="Objects\Misc\CheckPointWhereUsed.cs" />
     <None Include="Objects\Misc\GetCheckPointCommands.cs" />
@@ -269,14 +266,13 @@
     <None Include="Objects\Service\CheckPointServices.cs" />
     <None Include="Objects\Service\NewCheckPointService.cs" />
     <None Include="Objects\Service\SetCheckPointService.cs" />
-    <None Include="Objects\SetCheckPointObject.cs" />
     <None Include="Objects\SimpleGateway\CheckPointSimpleGateway.cs" />
     <None Include="Objects\SimpleGateway\GetCheckPointSimpleGateway.cs" />
     <None Include="Objects\SimpleGateway\GetCheckPointSimpleGateways.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CheckPoint.NET" Version="0.1.6" />
+    <PackageReference Include="CheckPoint.NET" Version="0.1.7" />
   </ItemGroup>
   
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">

@@ -8,15 +8,35 @@ namespace psCheckPoint.Objects.Host
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Remove-CheckPointHost -Name Test1 -Verbose</code>
+    /// <code>
+    /// Remove-CheckPointHost -Name Test1 -Verbose
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointHost")]
     public class RemoveCheckPointHost : RemoveCheckPointObject
     {
-        /// <inheritdoc/>
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Host object, name or UID.</para>
+        /// </summary>
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
+        [Alias("Name", "UID")]
+        public new PSObject Host { get => Object; set => Object = value; }
+
+        /// <inheritdoc />
+        protected override string InputName => nameof(Host);
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
         protected override void Remove(string value)
         {
             Session.DeleteHost(value, Ignore);
         }
+
+        #endregion Methods
     }
 }
