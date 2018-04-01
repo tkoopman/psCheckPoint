@@ -2,9 +2,9 @@
 <Configuration>
   <ViewDefinitions>
     <View>
-      <Name>CheckPointService</Name>
+      <Name>Address Range</Name>
       <ViewSelectedBy>
-        <TypeName>psCheckPoint.Objects.Service.CheckPointService</TypeName>
+        <TypeName>Koopman.CheckPoint.AddressRange</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>
@@ -13,12 +13,20 @@
             <Width>40</Width>
           </TableColumnHeader>
           <TableColumnHeader>
-            <Label>Type</Label>
-            <Width>15</Width>
+            <Label>IPv4AddressFirst</Label>
+            <Width>18</Width>
           </TableColumnHeader>
           <TableColumnHeader>
-            <Label>Port</Label>
-            <Width>15</Width>
+            <Label>IPv4AddressLast</Label>
+            <Width>18</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>IPv6AddressFirst</Label>
+            <Width>18</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>IPv6AddressLast</Label>
+            <Width>18</Width>
           </TableColumnHeader>
         </TableHeaders>
         <TableRowEntries>
@@ -28,10 +36,16 @@
                 <PropertyName>Name</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>Type</PropertyName>
+                <PropertyName>IPv4AddressFirst</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>Port</PropertyName>
+                <PropertyName>IPv4AddressLast</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>IPv6AddressFirst</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>IPv6AddressLast</PropertyName>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>
@@ -39,9 +53,9 @@
       </TableControl>
     </View>
     <View>
-      <Name>CheckPointService List</Name>
+      <Name>Network List</Name>
       <ViewSelectedBy>
-        <TypeName>psCheckPoint.Objects.Service.CheckPointService</TypeName>
+        <TypeName>Koopman.CheckPoint.AddressRange</TypeName>
       </ViewSelectedBy>
       <ListControl>
         <ListEntries>
@@ -51,13 +65,19 @@
                 <PropertyName>Name</PropertyName>
               </ListItem>
               <ListItem>
-                <PropertyName>Type</PropertyName>
+                <PropertyName>Name</PropertyName>
               </ListItem>
               <ListItem>
-                <PropertyName>Port</PropertyName>
+                <PropertyName>IPv4AddressFirst</PropertyName>
               </ListItem>
               <ListItem>
-                <PropertyName>Comments</PropertyName>
+                <PropertyName>IPv4AddressLast</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>IPv6AddressFirst</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>IPv6AddressLast</PropertyName>
               </ListItem>
             </ListItems>
           </ListEntry>

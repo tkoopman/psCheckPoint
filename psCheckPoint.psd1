@@ -70,12 +70,10 @@ PowerShellVersion = '5.1'
 
 # Format files (.ps1xml) to be loaded when importing this module
 FormatsToProcess = @(
-	'Views\CheckPointHost.Format.ps1xml',
-	'Views\CheckPointObject.Format.ps1xml',
-	'Views\CheckPointObjects.Format.ps1xml',
-	'Views\CheckPointService.Format.ps1xml',
-	'Views\CheckPointServiceTCP.Format.ps1xml',
-	'Views\CheckPointServiceUDP.Format.ps1xml',
+	'Views\AddressRange.Format.ps1xml',
+	'Views\Host.Format.ps1xml',
+	'Views\Network.Format.ps1xml',
+	'Views\Summary.Format.ps1xml',
 	'Views\SyncAction.Format.ps1xml'
 )
 

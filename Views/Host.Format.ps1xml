@@ -4,7 +4,7 @@
     <View>
       <Name>CheckPointHost</Name>
       <ViewSelectedBy>
-        <TypeName>psCheckPoint.Objects.Host.CheckPointHost</TypeName>
+        <TypeName>Koopman.CheckPoint.Host</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>
@@ -17,7 +17,7 @@
             <Width>15</Width>
           </TableColumnHeader>
           <TableColumnHeader>
-            <Label>Groups</Label>
+            <Label>IPv6Address</Label>
             <Width>30</Width>
           </TableColumnHeader>
         </TableHeaders>
@@ -31,7 +31,7 @@
                 <PropertyName>IPv4Address</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>Groups</PropertyName>
+                <PropertyName>IPv6Address</PropertyName>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>
@@ -41,7 +41,7 @@
     <View>
       <Name>CheckPointHost List</Name>
       <ViewSelectedBy>
-        <TypeName>psCheckPoint.Objects.Host.CheckPointHost</TypeName>
+        <TypeName>Koopman.CheckPoint.Host</TypeName>
       </ViewSelectedBy>
       <ListControl>
         <ListEntries>
@@ -55,12 +55,6 @@
               </ListItem>
               <ListItem>
                 <PropertyName>IPv6Address</PropertyName>
-              </ListItem>
-              <ListItem>
-                <PropertyName>Groups</PropertyName>
-              </ListItem>
-              <ListItem>
-                <PropertyName>Comments</PropertyName>
               </ListItem>
             </ListItems>
           </ListEntry>

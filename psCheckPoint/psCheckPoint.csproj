@@ -59,12 +59,6 @@
     <Compile Remove="Objects\AccessRule\CheckPointAccessRuleSummary.cs" />
     <Compile Remove="Objects\AccessRule\GetCheckPointAccessRule.cs" />
     <Compile Remove="Objects\AccessRule\GetCheckPointAccessRuleBase.cs" />
-    <Compile Remove="Objects\AddressRange\CheckPointAddressRange.cs" />
-    <Compile Remove="Objects\AddressRange\GetCheckPointAddressRange.cs" />
-    <Compile Remove="Objects\AddressRange\GetCheckPointAddressRanges.cs" />
-    <Compile Remove="Objects\AddressRange\NewCheckPointAddressRange.cs" />
-    <Compile Remove="Objects\AddressRange\RemoveCheckPointAddressRange.cs" />
-    <Compile Remove="Objects\AddressRange\SetCheckPointAddressRange.cs" />
     <Compile Remove="Objects\ApplicationCategory\CheckPointApplicationCategory.cs" />
     <Compile Remove="Objects\ApplicationCategory\GetCheckPointApplicationCategories.cs" />
     <Compile Remove="Objects\ApplicationCategory\GetCheckPointApplicationCategory.cs" />
@@ -176,12 +170,6 @@
     <None Include="Objects\AccessRule\CheckPointAccessRuleSummary.cs" />
     <None Include="Objects\AccessRule\GetCheckPointAccessRule.cs" />
     <None Include="Objects\AccessRule\GetCheckPointAccessRuleBase.cs" />
-    <None Include="Objects\AddressRange\CheckPointAddressRange.cs" />
-    <None Include="Objects\AddressRange\GetCheckPointAddressRange.cs" />
-    <None Include="Objects\AddressRange\GetCheckPointAddressRanges.cs" />
-    <None Include="Objects\AddressRange\NewCheckPointAddressRange.cs" />
-    <None Include="Objects\AddressRange\RemoveCheckPointAddressRange.cs" />
-    <None Include="Objects\AddressRange\SetCheckPointAddressRange.cs" />
     <None Include="Objects\ApplicationCategory\CheckPointApplicationCategory.cs" />
     <None Include="Objects\ApplicationCategory\GetCheckPointApplicationCategories.cs" />
     <None Include="Objects\ApplicationCategory\GetCheckPointApplicationCategory.cs" />

@@ -1,5 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System.Linq;
 using System.Management.Automation;
+using System.Net;
 
 namespace psCheckPoint.Objects.AddressRange
 {
@@ -9,72 +10,117 @@ namespace psCheckPoint.Objects.AddressRange
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code></code>
+    /// <code></code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "CheckPointAddressRange")]
-    [OutputType(typeof(CheckPointAddressRange))]
-    public class NewCheckPointAddressRange : NewCheckPointObject<CheckPointAddressRange>
+    [OutputType(typeof(Koopman.CheckPoint.AddressRange))]
+    public class NewCheckPointAddressRange : NewCheckPointObject
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "add-address-range"; } }
+        #region Fields
 
-        /// <summary>
-        /// <para type="description">First IP address in the range. If both IPv4 and IPv6 address ranges are required, use the ipv4-address-first and the ipv6-address-first fields instead.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ip-address-first", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string IPAddressFirst { get; set; }
+        private string[] _groups;
 
-        /// <summary>
-        /// <para type="description">Last IP address in the range. If both IPv4 and IPv6 address ranges are required, use the ipv4-address-first and the ipv6-address-first fields instead.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ip-address-last", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string IPAddressLast { get; set; }
+        #endregion Fields
 
-        /// <summary>
-        /// <para type="description">First IPv4 address in the range.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ipv4-address-first", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string IPv4AddressFirst { get; set; }
-
-        /// <summary>
-        /// <para type="description">Last IPv4 address in the range.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ipv4-address-last", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string IPv4AddressLast { get; set; }
-
-        /// <summary>
-        /// <para type="description">First IPv6 address in the range.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ipv6-address-first", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string IPv6AddressFirst { get; set; }
-
-        /// <summary>
-        /// <para type="description">Last IPv6 address in the range.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ipv6-address-last", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string IPv6AddressLast { get; set; }
-
-        //TODO nat-settings
+        #region Properties
 
         /// <summary>
         /// <para type="description">Collection of group identifiers.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "groups", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public string[] Groups
         {
-            get { return _groups; }
-            set { _groups = CreateArray(value); }
+            get => _groups;
+            set => _groups = CreateArray(value);
         }
 
-        private string[] _groups;
+        /// <summary>
+        /// <para type="description">
+        /// First IP address in the range. If both IPv4 and IPv6 address ranges are required, use the
+        /// ipv4-address-first and the ipv6-address-first fields instead.
+        /// </para>
+        /// </summary>
+        [Parameter(ParameterSetName = "IPv4 or IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        public IPAddress IPAddressFirst { get; set; }
+
+        /// <summary>
+        /// <para type="description">
+        /// Last IP address in the range. If both IPv4 and IPv6 address ranges are required, use the
+        /// ipv4-address-first and the ipv6-address-first fields instead.
+        /// </para>
+        /// </summary>
+        [Parameter(ParameterSetName = "IPv4 or IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        public IPAddress IPAddressLast { get; set; }
+
+        /// <summary>
+        /// <para type="description">First IPv4 address in the range.</para>
+        /// </summary>
+        [Parameter(ParameterSetName = "IPv4 and IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [Parameter(ParameterSetName = "IPv4", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        public IPAddress IPv4AddressFirst { get; set; }
+
+        /// <summary>
+        /// <para type="description">Last IPv4 address in the range.</para>
+        /// </summary>
+        [Parameter(ParameterSetName = "IPv4 and IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [Parameter(ParameterSetName = "IPv4", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        public IPAddress IPv4AddressLast { get; set; }
+
+        /// <summary>
+        /// <para type="description">First IPv6 address in the range.</para>
+        /// </summary>
+        [Parameter(ParameterSetName = "IPv4 and IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [Parameter(ParameterSetName = "IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        public IPAddress IPv6AddressFirst { get; set; }
+
+        /// <summary>
+        /// <para type="description">Last IPv6 address in the range.</para>
+        /// </summary>
+        [Parameter(ParameterSetName = "IPv4 and IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [Parameter(ParameterSetName = "IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        public IPAddress IPv6AddressLast { get; set; }
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord()
+        {
+            if (ParameterSetName.StartsWith("IPv4 or IPv6"))
+            {
+                if (IPAddressFirst.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                {
+                    IPv6AddressFirst = IPAddressFirst;
+                    IPv6AddressLast = IPAddressLast;
+                }
+                else
+                {
+                    IPv4AddressFirst = IPAddressFirst;
+                    IPv4AddressLast = IPAddressLast;
+                }
+            }
+            var addressRange = new Koopman.CheckPoint.AddressRange(Session, SetIfExists.IsPresent)
+            {
+                Name = Name,
+                Color = Color,
+                Comments = Comments,
+                IPv4AddressFirst = IPv4AddressFirst,
+                IPv4AddressLast = IPv4AddressLast,
+                IPv6AddressFirst = IPv6AddressFirst,
+                IPv6AddressLast = IPv6AddressLast
+            };
+
+            foreach (var g in Groups ?? Enumerable.Empty<string>())
+                addressRange.Groups.Add(g);
+            foreach (var t in Tags ?? Enumerable.Empty<string>())
+                addressRange.Tags.Add(t);
+
+            addressRange.AcceptChanges(Ignore);
+
+            WriteObject(addressRange);
+        }
+
+        #endregion Methods
     }
 }

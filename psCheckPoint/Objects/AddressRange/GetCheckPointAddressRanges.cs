@@ -7,15 +7,39 @@ namespace psCheckPoint.Objects.AddressRange
     /// <para type="synopsis">Retrieve all objects.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example>
-    /// </example>
+    /// <example></example>
     [Cmdlet(VerbsCommon.Get, "CheckPointAddressRanges")]
-    [OutputType(typeof(CheckPointObjects))]
+    [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.AddressRange>))]
     public class GetCheckPointAddressRanges : GetCheckPointObjects
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "show-address-ranges"; } }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord()
+        {
+            var results = Session.FindAllAddressRanges(
+                limit: Limit,
+                offset: Offset,
+                detailLevel: DetailsLevel
+                );
+
+            if (ParameterSetName == "Limit")
+            {
+                WriteObject(results, false);
+            }
+            else
+            {
+                while (results != null)
+                {
+                    foreach (var r in results)
+                    {
+                        WriteObject(r);
+                    }
+                    results = results.NextPage();
+                }
+            }
+        }
+
+        #endregion Methods
     }
 }

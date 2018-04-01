@@ -2,9 +2,9 @@
 <Configuration>
   <ViewDefinitions>
     <View>
-      <Name>CheckPointServiceTCP</Name>
+      <Name>Network</Name>
       <ViewSelectedBy>
-        <TypeName>psCheckPoint.Objects.ServiceTCP.CheckPointServiceTCP</TypeName>
+        <TypeName>Koopman.CheckPoint.Network</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>
@@ -13,16 +13,20 @@
             <Width>40</Width>
           </TableColumnHeader>
           <TableColumnHeader>
-            <Label>Type</Label>
+            <Label>Subnet4</Label>
             <Width>15</Width>
           </TableColumnHeader>
           <TableColumnHeader>
-            <Label>Port</Label>
-            <Width>15</Width>
+            <Label>Prefix</Label>
+            <Width>6</Width>
           </TableColumnHeader>
           <TableColumnHeader>
-            <Label>Groups</Label>
+            <Label>Subnet6</Label>
             <Width>30</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Prefix</Label>
+            <Width>6</Width>
           </TableColumnHeader>
         </TableHeaders>
         <TableRowEntries>
@@ -32,13 +36,16 @@
                 <PropertyName>Name</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>Type</PropertyName>
+                <PropertyName>Subnet4</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>Port</PropertyName>
+                <PropertyName>if ($_.MaskLength4 -ge 0) { $_.MaskLength4 }</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>Groups</PropertyName>
+                <PropertyName>Subnet6</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>if ($_.MaskLength6 -ge 0) { $_.MaskLength6 }</ScriptBlock>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>
@@ -46,9 +53,9 @@
       </TableControl>
     </View>
     <View>
-      <Name>CheckPointServiceTCP List</Name>
+      <Name>Network List</Name>
       <ViewSelectedBy>
-        <TypeName>psCheckPoint.Objects.ServiceTCP.CheckPointServiceTCP</TypeName>
+        <TypeName>Koopman.CheckPoint.Network</TypeName>
       </ViewSelectedBy>
       <ListControl>
         <ListEntries>
@@ -58,31 +65,21 @@
                 <PropertyName>Name</PropertyName>
               </ListItem>
               <ListItem>
-                <PropertyName>Type</PropertyName>
+                <PropertyName>Subnet4</PropertyName>
               </ListItem>
               <ListItem>
-                <PropertyName>Port</PropertyName>
+                <Label>MaskLength4</Label>
+                <ScriptBlock>if ($_.MaskLength4 -ge 0) { $_.MaskLength4 }</ScriptBlock>
               </ListItem>
               <ListItem>
-                <PropertyName>Groups</PropertyName>
+                <PropertyName>SubnetMask</PropertyName>
               </ListItem>
               <ListItem>
-                <PropertyName>Protocol</PropertyName>
+                <PropertyName>Subnet6</PropertyName>
               </ListItem>
               <ListItem>
-                <PropertyName>MatchByProtocolSignature</PropertyName>
-              </ListItem>
-              <ListItem>
-                <PropertyName>MatchForAny</PropertyName>
-              </ListItem>
-              <ListItem>
-                <PropertyName>UseDefaultSessionTimeout</PropertyName>
-              </ListItem>
-              <ListItem>
-                <PropertyName>SessionTimeout</PropertyName>
-              </ListItem>
-              <ListItem>
-                <PropertyName>Comments</PropertyName>
+                <Label>MaskLength6</Label>
+                <ScriptBlock>if ($_.MaskLength6 -ge 0) { $_.MaskLength6 }</ScriptBlock>
               </ListItem>
             </ListItems>
           </ListEntry>

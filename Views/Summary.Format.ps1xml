@@ -2,9 +2,9 @@
 <Configuration>
   <ViewDefinitions>
     <View>
-      <Name>CheckPointObject</Name>
+      <Name>Summary</Name>
       <ViewSelectedBy>
-        <TypeName>psCheckPoint.Objects.CheckPointObject</TypeName>
+        <TypeName>Koopman.CheckPoint.ObjectSummary</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>

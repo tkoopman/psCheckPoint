@@ -57,12 +57,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "run", "run", "{F417636E-03D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Views", "Views", "{A738C4E9-3A3A-4826-89D8-425E448FAE15}"
 	ProjectSection(SolutionItems) = preProject
-		Views\CheckPointHost.Format.ps1xml = Views\CheckPointHost.Format.ps1xml
-		Views\CheckPointObject.Format.ps1xml = Views\CheckPointObject.Format.ps1xml
-		Views\CheckPointObjects.Format.ps1xml = Views\CheckPointObjects.Format.ps1xml
-		Views\CheckPointService.Format.ps1xml = Views\CheckPointService.Format.ps1xml
-		Views\CheckPointServiceTCP.Format.ps1xml = Views\CheckPointServiceTCP.Format.ps1xml
-		Views\CheckPointServiceUDP.Format.ps1xml = Views\CheckPointServiceUDP.Format.ps1xml
+		Views\AddressRange.Format.ps1xml = Views\AddressRange.Format.ps1xml
+		Views\Host.Format.ps1xml = Views\Host.Format.ps1xml
+		Views\Network.Format.ps1xml = Views\Network.Format.ps1xml
+		Views\Summary.Format.ps1xml = Views\Summary.Format.ps1xml
 		Views\SyncAction.Format.ps1xml = Views\SyncAction.Format.ps1xml
 	EndProjectSection
 EndProject

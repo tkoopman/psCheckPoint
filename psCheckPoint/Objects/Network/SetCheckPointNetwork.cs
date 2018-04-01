@@ -48,7 +48,7 @@ namespace psCheckPoint.Objects.Network
         /// </para>
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Groups { get => _groups; set => CreateArray(value); }
+        public string[] Groups { get => _groups; set => _groups = CreateArray(value); }
 
         /// <summary>
         /// <para type="description">
@@ -77,7 +77,7 @@ namespace psCheckPoint.Objects.Network
         /// </summary>
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
         [Alias("Name", "UID")]
-        public new PSObject Network { get => Object; set => Object = value; }
+        public PSObject Network { get => Object; set => Object = value; }
 
         /// <summary>
         /// <para type="description">
