@@ -106,12 +106,6 @@
     <Compile Remove="Objects\MulticastAddressRange\NewCheckPointMulticastAddressRange.cs" />
     <Compile Remove="Objects\MulticastAddressRange\RemoveCheckPointMulticastAddressRange.cs" />
     <Compile Remove="Objects\MulticastAddressRange\SetCheckPointMulticastAddressRange.cs" />
-    <Compile Remove="Objects\Network\CheckPointNetwork.cs" />
-    <Compile Remove="Objects\Network\GetCheckPointNetwork.cs" />
-    <Compile Remove="Objects\Network\GetCheckPointNetworks.cs" />
-    <Compile Remove="Objects\Network\NewCheckPointNetwork.cs" />
-    <Compile Remove="Objects\Network\RemoveCheckPointNetwork.cs" />
-    <Compile Remove="Objects\Network\SetCheckPointNetwork.cs" />
     <Compile Remove="Objects\Policy\InstallCheckPointPolicy.cs" />
     <Compile Remove="Objects\Policy\TestCheckPointPolicy.cs" />
     <Compile Remove="Objects\SecurityZone\CheckPointSecurityZone.cs" />
@@ -229,12 +223,6 @@
     <None Include="Objects\MulticastAddressRange\NewCheckPointMulticastAddressRange.cs" />
     <None Include="Objects\MulticastAddressRange\RemoveCheckPointMulticastAddressRange.cs" />
     <None Include="Objects\MulticastAddressRange\SetCheckPointMulticastAddressRange.cs" />
-    <None Include="Objects\Network\CheckPointNetwork.cs" />
-    <None Include="Objects\Network\GetCheckPointNetwork.cs" />
-    <None Include="Objects\Network\GetCheckPointNetworks.cs" />
-    <None Include="Objects\Network\NewCheckPointNetwork.cs" />
-    <None Include="Objects\Network\RemoveCheckPointNetwork.cs" />
-    <None Include="Objects\Network\SetCheckPointNetwork.cs" />
     <None Include="Objects\Policy\InstallCheckPointPolicy.cs" />
     <None Include="Objects\Policy\TestCheckPointPolicy.cs" />
     <None Include="Objects\SecurityZone\CheckPointSecurityZone.cs" />

@@ -8,13 +8,17 @@ namespace psCheckPoint.Objects.Host
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Get-CheckPointHosts</code>
+    /// <code>
+    /// Get-CheckPointHosts
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointHosts")]
     [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.Host>))]
     public class GetCheckPointHosts : GetCheckPointObjects
     {
-        /// <inheritdoc/>
+        #region Methods
+
+        /// <inheritdoc />
         protected override void ProcessRecord()
         {
             var results = Session.FindAllHosts(
@@ -31,7 +35,7 @@ namespace psCheckPoint.Objects.Host
             {
                 while (results != null)
                 {
-                    foreach (object r in results)
+                    foreach (var r in results)
                     {
                         WriteObject(r);
                     }
@@ -39,5 +43,7 @@ namespace psCheckPoint.Objects.Host
                 }
             }
         }
+
+        #endregion Methods
     }
 }

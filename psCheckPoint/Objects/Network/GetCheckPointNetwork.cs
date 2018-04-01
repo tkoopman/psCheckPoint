@@ -8,15 +8,22 @@ namespace psCheckPoint.Objects.Network
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Get-CheckPointNetwork -Name Test1</code>
+    /// <code>
+    /// Get-CheckPointNetwork -Name Test1
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointNetwork")]
-    [OutputType(typeof(CheckPointNetwork))]
-    public class GetCheckPointNetwork : GetCheckPointObject<CheckPointNetwork>
+    [OutputType(typeof(Koopman.CheckPoint.Network))]
+    public class GetCheckPointNetwork : GetCheckPointObject
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "show-network"; } }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord()
+        {
+            WriteObject(Session.FindNetwork(Value, DetailsLevel));
+        }
+
+        #endregion Methods
     }
 }
