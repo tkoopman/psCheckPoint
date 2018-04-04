@@ -58,6 +58,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Views", "Views", "{A738C4E9-3A3A-4826-89D8-425E448FAE15}"
 	ProjectSection(SolutionItems) = preProject
 		Views\AddressRange.Format.ps1xml = Views\AddressRange.Format.ps1xml
+		Views\Group.Format.ps1xml = Views\Group.Format.ps1xml
+		Views\GroupWithExclusion.Format.ps1xml = Views\GroupWithExclusion.Format.ps1xml
 		Views\Host.Format.ps1xml = Views\Host.Format.ps1xml
 		Views\Network.Format.ps1xml = Views\Network.Format.ps1xml
 		Views\Summary.Format.ps1xml = Views\Summary.Format.ps1xml
