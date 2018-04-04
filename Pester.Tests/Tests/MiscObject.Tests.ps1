@@ -1,5 +1,5 @@
 ﻿Describe "Basic.MiscObject" {
-	$PesterHost = New-CheckPointHost -Session $Session -Name PesterObject2 -IPAddress 192.168.3.22 -PassThru
+	$PesterHost = New-CheckPointHost -Session $Session -Name PesterObject -IPAddress 192.168.3.22 -PassThru
 	Context "Get-CheckPointObject" {
 		It "Get" -Skip {
 			Get-CheckPointObject -Session $Session -UID $PesterHost.UID | Get-CheckPointFullObject -Session $Session | Should BeOfType Koopman.CheckPoint.Host

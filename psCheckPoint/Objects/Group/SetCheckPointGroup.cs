@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 using System.Runtime.Serialization;
+using Koopman.CheckPoint.FastUpdate;
 
 namespace psCheckPoint.Objects.Group
 {
@@ -10,35 +10,29 @@ namespace psCheckPoint.Objects.Group
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Set-CheckPointGroup -Name Test1 -NewName Test2 -Tags TestTag</code>
+    /// <code>
+    /// Set-CheckPointGroup -Name Test1 -NewName Test2 -Tags TestTag
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Set, "CheckPointGroup")]
-    [OutputType(typeof(CheckPointGroup))]
-    public class SetCheckPointGroup : SetCheckPointObject<CheckPointGroup>
+    [OutputType(typeof(Koopman.CheckPoint.Group))]
+    public class SetCheckPointGroup : SetCheckPointCmdlet
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "set-group"; } }
+        #region Fields
 
-        [JsonProperty(PropertyName = "members", NullValueHandling = NullValueHandling.Ignore)]
-        private dynamic _members;
+        private string[] _groups;
+        private string[] _members;
 
-        /// <summary>
-        /// <para type="description">Action to take with members.</para>
-        /// </summary>
-        [Parameter]
-        public MembershipActions MemberAction { get; set; } = MembershipActions.Replace;
+        #endregion Fields
+
+        #region Properties
 
         /// <summary>
-        /// <para type="description">Collection of Network objects identified by the name or UID.</para>
-        /// <para type="description">Members listed will be either Added, Removed or replace the current list of members based on MemberAction parameter.</para>
+        /// <para type="description">Group object, name or UID.</para>
         /// </summary>
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Members { get; set; }
-
-        [JsonProperty(PropertyName = "groups", NullValueHandling = NullValueHandling.Ignore)]
-        private dynamic _groups;
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
+        [Alias("Name", "UID")]
+        public PSObject Group { get => Object; set => Object = value; }
 
         /// <summary>
         /// <para type="description">Action to take with groups.</para>
@@ -48,19 +42,91 @@ namespace psCheckPoint.Objects.Group
 
         /// <summary>
         /// <para type="description">Collection of group identifiers.</para>
-        /// <para type="description">Groups listed will be either Added, Removed or replace the current list of group membership based on GroupAction parameter.</para>
+        /// <para type="description">
+        /// Groups listed will be either Added, Removed or replace the current list of group
+        /// membership based on GroupAction parameter.
+        /// </para>
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Groups { get; set; }
+        public string[] Groups { get => _groups; set => _groups = CreateArray(value); }
 
         /// <summary>
-        /// <para type="description">Called when object is being serialized. Used for processing Group Actions.</para>
+        /// <para type="description">Action to take with members.</para>
         /// </summary>
-        protected override void OnSerializing()
+        [Parameter]
+        public MembershipActions MemberAction { get; set; } = MembershipActions.Replace;
+
+        /// <summary>
+        /// <para type="description">Collection of Network objects identified by the name or UID.</para>
+        /// <para type="description">
+        /// Members listed will be either Added, Removed or replace the current list of members based
+        /// on MemberAction parameter.
+        /// </para>
+        /// </summary>
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        public string[] Members { get => _members; set => _members = CreateArray(value); }
+
+        /// <inheritdoc />
+        protected override string InputName => nameof(Group);
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void Set(string value)
         {
-            base.OnSerializing();
-            _groups = ProcessGroupAction(GroupAction, Groups);
-            _members = ProcessGroupAction(MemberAction, Members);
+            var group = Session.UpdateGroup(value);
+
+            // Only change values user called
+            foreach (var p in MyInvocation.BoundParameters.Keys)
+            {
+                switch (p)
+                {
+                    case nameof(Group): break;
+
+                    case nameof(GroupAction):
+                        if (GroupAction == MembershipActions.Replace && Groups == null)
+                            group.Groups.Clear();
+                        break;
+
+                    case nameof(Groups):
+                        group.Groups.Add(GroupAction, Groups);
+                        break;
+
+                    case nameof(MemberAction):
+                        if (MemberAction == MembershipActions.Replace && Groups == null)
+                            group.Members.Clear();
+                        break;
+
+                    case nameof(Members):
+                        group.Members.Add(MemberAction, Members);
+                        break;
+
+                    case nameof(TagAction):
+                        if (TagAction == MembershipActions.Replace && Tags == null)
+                            group.Tags.Clear();
+                        break;
+
+                    case nameof(Tags):
+                        group.Tags.Add(TagAction, Tags);
+                        break;
+
+                    case nameof(NewName):
+                        group.Name = NewName;
+                        break;
+
+                    default:
+                        group.SetProperty(p, MyInvocation.BoundParameters[p]);
+                        break;
+                }
+            }
+
+            group.AcceptChanges(Ignore);
+
+            WriteObject(group);
         }
+
+        #endregion Methods
     }
 }

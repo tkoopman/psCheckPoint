@@ -8,15 +8,22 @@ namespace psCheckPoint.Objects.Group
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>$cpGroup = Get-CheckPointGroup -Name Test1</code>
+    /// <code>
+    /// $cpGroup = Get-CheckPointGroup -Name Test1
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointGroup")]
-    [OutputType(typeof(CheckPointGroup))]
-    public class GetCheckPointGroup : GetCheckPointObject<CheckPointGroup>
+    [OutputType(typeof(Koopman.CheckPoint.Group))]
+    public class GetCheckPointGroup : GetCheckPointObject
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "show-group"; } }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord()
+        {
+            WriteObject(Session.FindGroup(Value, DetailsLevel));
+        }
+
+        #endregion Methods
     }
 }

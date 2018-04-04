@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Linq;
 using System.Management.Automation;
 
 namespace psCheckPoint.Objects.Group
@@ -9,41 +9,59 @@ namespace psCheckPoint.Objects.Group
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code></code>
+    /// <code></code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "CheckPointGroup")]
-    [OutputType(typeof(CheckPointGroup))]
-    public class NewCheckPointGroup : NewCheckPointObject<CheckPointGroup>
+    [OutputType(typeof(Koopman.CheckPoint.Group))]
+    public class NewCheckPointGroup : NewCheckPointObject
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "add-group"; } }
-
-        /// <summary>
-        /// <para type="description">Collection of group identifiers.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "members", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Members
-        {
-            get { return _members; }
-            set { _members = CreateArray(value); }
-        }
-
-        private string[] _members;
-
-        /// <summary>
-        /// <para type="description">Collection of group identifiers.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "groups", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Groups
-        {
-            get { return _groups; }
-            set { _groups = CreateArray(value); }
-        }
+        #region Fields
 
         private string[] _groups;
+        private string[] _members;
+
+        #endregion Fields
+
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Collection of group identifiers.</para>
+        /// </summary>
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        public string[] Groups { get => _groups; set => _groups = CreateArray(value); }
+
+        /// <summary>
+        /// <para type="description">Collection of group identifiers.</para>
+        /// </summary>
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        public string[] Members { get => _members; set => _members = CreateArray(value); }
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord()
+        {
+            var group = new Koopman.CheckPoint.Group(Session, SetIfExists.IsPresent)
+            {
+                Name = Name,
+                Color = Color,
+                Comments = Comments
+            };
+
+            foreach (var g in Groups ?? Enumerable.Empty<string>())
+                group.Groups.Add(g);
+            foreach (var m in Members ?? Enumerable.Empty<string>())
+                group.Members.Add(m);
+            foreach (var t in Tags ?? Enumerable.Empty<string>())
+                group.Tags.Add(t);
+
+            group.AcceptChanges(Ignore);
+
+            WriteObject(group);
+        }
+
+        #endregion Methods
     }
 }

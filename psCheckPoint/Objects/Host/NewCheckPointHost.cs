@@ -32,11 +32,7 @@ namespace psCheckPoint.Objects.Host
         /// <para type="description">Collection of group identifiers.</para>
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Groups
-        {
-            get { return _groups; }
-            set { _groups = CreateArray(value); }
-        }
+        public string[] Groups { get => _groups; set => _groups = CreateArray(value); }
 
         /// <summary>
         /// <para type="description">

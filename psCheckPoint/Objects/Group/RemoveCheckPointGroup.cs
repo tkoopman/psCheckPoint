@@ -8,14 +8,35 @@ namespace psCheckPoint.Objects.Group
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Remove-CheckPointGroup -Name Test1 -Verbose</code>
+    /// <code>
+    /// Remove-CheckPointGroup -Name Test1 -Verbose
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointGroup")]
     public class RemoveCheckPointGroup : RemoveCheckPointObject
     {
+        #region Properties
+
         /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// <para type="description">Group object, name or UID.</para>
         /// </summary>
-        public override string Command { get { return "delete-group"; } }
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
+        [Alias("Name", "UID")]
+        public PSObject Group { get => Object; set => Object = value; }
+
+        /// <inheritdoc />
+        protected override string InputName => nameof(Group);
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void Remove(string value)
+        {
+            Session.DeleteGroup(value, Ignore);
+        }
+
+        #endregion Methods
     }
 }
