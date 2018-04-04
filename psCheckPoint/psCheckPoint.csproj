@@ -85,7 +85,6 @@
     <Compile Remove="Objects\MulticastAddressRange\NewCheckPointMulticastAddressRange.cs" />
     <Compile Remove="Objects\MulticastAddressRange\RemoveCheckPointMulticastAddressRange.cs" />
     <Compile Remove="Objects\MulticastAddressRange\SetCheckPointMulticastAddressRange.cs" />
-    <Compile Remove="Objects\Policy\InstallCheckPointPolicy.cs" />
     <Compile Remove="Objects\SecurityZone\CheckPointSecurityZone.cs" />
     <Compile Remove="Objects\SecurityZone\GetCheckPointSecurityZone.cs" />
     <Compile Remove="Objects\SecurityZone\GetCheckPointSecurityZones.cs" />
@@ -179,7 +178,6 @@
     <None Include="Objects\MulticastAddressRange\NewCheckPointMulticastAddressRange.cs" />
     <None Include="Objects\MulticastAddressRange\RemoveCheckPointMulticastAddressRange.cs" />
     <None Include="Objects\MulticastAddressRange\SetCheckPointMulticastAddressRange.cs" />
-    <None Include="Objects\Policy\InstallCheckPointPolicy.cs" />
     <None Include="Objects\SecurityZone\CheckPointSecurityZone.cs" />
     <None Include="Objects\SecurityZone\GetCheckPointSecurityZone.cs" />
     <None Include="Objects\SecurityZone\GetCheckPointSecurityZones.cs" />
