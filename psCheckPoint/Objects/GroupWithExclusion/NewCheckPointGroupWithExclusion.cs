@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Linq;
 using System.Management.Automation;
 
 namespace psCheckPoint.Objects.GroupWithExclusion
@@ -9,29 +9,51 @@ namespace psCheckPoint.Objects.GroupWithExclusion
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code></code>
+    /// <code></code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "CheckPointGroupWithExclusion")]
-    [OutputType(typeof(CheckPointGroupWithExclusion))]
-    public class NewCheckPointGroupWithExclusion : NewCheckPointObject<CheckPointGroupWithExclusion>
+    [OutputType(typeof(Koopman.CheckPoint.GroupWithExclusion))]
+    public class NewCheckPointGroupWithExclusion : NewCheckPointObject
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "add-group-with-exclusion"; } }
-
-        /// <summary>
-        /// <para type="description">Object to include.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "include", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true)]
-        public string Include { get; set; }
+        #region Properties
 
         /// <summary>
         /// <para type="description">Object to exclude.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "except", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true)]
         public string Except { get; set; }
+
+        /// <summary>
+        /// <para type="description">Object to include.</para>
+        /// </summary>
+        [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true)]
+        public string Include { get; set; }
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord()
+        {
+            var group = new Koopman.CheckPoint.GroupWithExclusion(Session, SetIfExists.IsPresent)
+            {
+                Name = Name,
+                Color = Color,
+                Comments = Comments
+            };
+
+            group.SetInclude(Include);
+            group.SetExcept(Except);
+
+            foreach (var t in Tags ?? Enumerable.Empty<string>())
+                group.Tags.Add(t);
+
+            group.AcceptChanges(Ignore);
+
+            WriteObject(group);
+        }
+
+        #endregion Methods
     }
 }

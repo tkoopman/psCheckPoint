@@ -71,12 +71,6 @@
     <Compile Remove="Objects\Application\NewCheckPointApplication.cs" />
     <Compile Remove="Objects\Application\RemoveCheckPointApplication.cs" />
     <Compile Remove="Objects\Application\SetCheckPointApplication.cs" />
-    <Compile Remove="Objects\GroupWithExclusion\CheckPointGroupWithExclusion.cs" />
-    <Compile Remove="Objects\GroupWithExclusion\GetCheckPointGroupsWithExclusion.cs" />
-    <Compile Remove="Objects\GroupWithExclusion\GetCheckPointGroupWithExclusion.cs" />
-    <Compile Remove="Objects\GroupWithExclusion\NewCheckPointGroupWithExclusion.cs" />
-    <Compile Remove="Objects\GroupWithExclusion\RemoveCheckPointGroupWithExclusion.cs" />
-    <Compile Remove="Objects\GroupWithExclusion\SetCheckPointGroupWithExclusion.cs" />
     <Compile Remove="Objects\Group\CheckPointGroup.cs" />
     <Compile Remove="Objects\Host\NewCheckPointHostInterface.cs" />
     <Compile Remove="Objects\Host\RemoveCheckPointHostInterface.cs" />
@@ -177,12 +171,6 @@
     <None Include="Objects\Application\NewCheckPointApplication.cs" />
     <None Include="Objects\Application\RemoveCheckPointApplication.cs" />
     <None Include="Objects\Application\SetCheckPointApplication.cs" />
-    <None Include="Objects\GroupWithExclusion\CheckPointGroupWithExclusion.cs" />
-    <None Include="Objects\GroupWithExclusion\GetCheckPointGroupsWithExclusion.cs" />
-    <None Include="Objects\GroupWithExclusion\GetCheckPointGroupWithExclusion.cs" />
-    <None Include="Objects\GroupWithExclusion\NewCheckPointGroupWithExclusion.cs" />
-    <None Include="Objects\GroupWithExclusion\RemoveCheckPointGroupWithExclusion.cs" />
-    <None Include="Objects\GroupWithExclusion\SetCheckPointGroupWithExclusion.cs" />
     <None Include="Objects\Host\NewCheckPointHostInterface.cs" />
     <None Include="Objects\Host\RemoveCheckPointHostInterface.cs" />
     <None Include="Objects\Misc\CheckPointTask.cs" />

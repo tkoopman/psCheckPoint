@@ -7,15 +7,19 @@ namespace psCheckPoint.Objects.GroupWithExclusion
     /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example>
-    /// </example>
+    /// <example></example>
     [Cmdlet(VerbsCommon.Get, "CheckPointGroupWithExclusion")]
-    [OutputType(typeof(CheckPointGroupWithExclusion))]
-    public class GetCheckPointGroupWithExclusion : GetCheckPointObject<CheckPointGroupWithExclusion>
+    [OutputType(typeof(Koopman.CheckPoint.GroupWithExclusion))]
+    public class GetCheckPointGroupWithExclusion : GetCheckPointObject
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "show-group-with-exclusion"; } }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord()
+        {
+            WriteObject(Session.FindGroupWithExclusion(Value, DetailsLevel));
+        }
+
+        #endregion Methods
     }
 }
