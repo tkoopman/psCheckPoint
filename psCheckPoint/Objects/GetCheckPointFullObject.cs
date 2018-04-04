@@ -12,22 +12,33 @@ namespace psCheckPoint.Objects
     /// <para type="description">Use this to return the full objects for each summary.</para>
     /// </summary>
     /// <example>
-    /// <code>Get-CheckPointGroups | Get-CheckPointFullObject</code>
+    /// <code>
+    /// Get-CheckPointGroups | Get-CheckPointFullObject
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointFullObject")]
     public class GetCheckPointFullObject : PSCmdlet
     {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">
+        /// The level of detail for some of the fields in the response can vary from showing only the
+        /// UID value of the object to a fully detailed representation of the object.
+        /// </para>
+        /// </summary>
+        [Parameter]
+        public DetailLevels DetailsLevel { get; set; } = DetailLevels.Standard;
+
         /// <summary>
         /// <para type="description">Input objects to start export from.</para>
         /// </summary>
         [Parameter(Mandatory = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
         public PSObject Object { get; set; }
 
-        /// <summary>
-        /// <para type="description">The level of detail for some of the fields in the response can vary from showing only the UID value of the object to a fully detailed representation of the object.</para>
-        /// </summary>
-        [Parameter]
-        public DetailLevels DetailsLevel { get; set; } = DetailLevels.Standard;
+        #endregion Properties
+
+        #region Methods
 
         /// <summary>
         /// Provides a record-by-record processing functionality for the cmdlet.
@@ -39,9 +50,9 @@ namespace psCheckPoint.Objects
 
         private void Process(object obj)
         {
-            if (obj is ObjectBase)
+            if (obj is IObjectSummary objectSummary)
             {
-                (obj as ObjectBase).Reload(detailLevel: DetailsLevel);
+                objectSummary.Reload(OnlyIfPartial: false, detailLevel: DetailsLevel);
                 WriteObject(obj);
             }
             else if (obj is PSObject)
@@ -51,14 +62,11 @@ namespace psCheckPoint.Objects
             else if (obj is IEnumerable)
             {
                 foreach (object o in (obj as IEnumerable))
-                {
                     Process(o);
-                }
             }
-            else
-            {
-                throw new CmdletInvocationException($"Invalid object type: {obj.GetType()}");
-            }
+            else throw new CmdletInvocationException($"Invalid object type: {obj.GetType()}");
         }
+
+        #endregion Methods
     }
 }

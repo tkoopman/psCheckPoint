@@ -1,4 +1,5 @@
-﻿using Koopman.CheckPoint.Common;
+﻿using Koopman.CheckPoint;
+using Koopman.CheckPoint.Common;
 using System.Collections;
 using System.ComponentModel;
 using System.Management.Automation;
@@ -98,13 +99,13 @@ namespace psCheckPoint
 
         private void ProcessObject(object obj)
         {
-            if (obj is string) Set((obj as string));
-            else if (obj is ObjectBase) Set((obj as ObjectBase).GetMembershipID());
-            else if (obj is PSObject) ProcessObject((obj as PSObject).BaseObject);
-            else if (obj is IEnumerable)
+            if (obj is string str) Set(str);
+            else if (obj is IObjectSummary o) Set(o.GetMembershipID());
+            else if (obj is PSObject pso) ProcessObject(pso.BaseObject);
+            else if (obj is IEnumerable enumerable)
             {
-                foreach (object o in (obj as IEnumerable))
-                    ProcessObject(o);
+                foreach (object eo in enumerable)
+                    ProcessObject(eo);
             }
             else
                 throw new PSArgumentException($"Invalid type: {obj.GetType()}", InputName);

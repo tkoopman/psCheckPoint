@@ -30,7 +30,7 @@ namespace psCheckPoint
             "WarningVariable"
         };
 
-        internal static void Add<T>(this MemberMembershipChangeTracking<T> obj, MembershipActions action, string[] values) where T : IMember
+        internal static void Add<T>(this MemberMembershipChangeTracking<T> obj, MembershipActions action, string[] values) where T : IObjectSummary
         {
             switch (action)
             {
@@ -53,7 +53,7 @@ namespace psCheckPoint
             }
         }
 
-        internal static void SetProperty(this ObjectSummary obj, string name, object value)
+        internal static void SetProperty(this IObjectSummary obj, string name, object value)
         {
             // Ignore all standard Powershell property names
             if (IgnoredProperties.Contains(name)) return;

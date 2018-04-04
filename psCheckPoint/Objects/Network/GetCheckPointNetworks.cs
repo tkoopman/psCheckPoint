@@ -21,26 +21,20 @@ namespace psCheckPoint.Objects.Network
         /// <inheritdoc />
         protected override void ProcessRecord()
         {
-            var results = Session.FindAllNetworks(
-                limit: Limit,
-                offset: Offset,
-                detailLevel: DetailsLevel
-                );
-
             if (ParameterSetName == "Limit")
             {
-                WriteObject(results, false);
+                WriteObject(
+                    Session.FindNetworks(
+                            limit: Limit,
+                            offset: Offset,
+                            detailLevel: DetailsLevel), false);
             }
             else
             {
-                while (results != null)
-                {
-                    foreach (var r in results)
-                    {
-                        WriteObject(r);
-                    }
-                    results = results.NextPage();
-                }
+                WriteObject(
+                    Session.FindAllNetworks(
+                            limit: Limit,
+                            detailLevel: DetailsLevel), false);
             }
         }
 

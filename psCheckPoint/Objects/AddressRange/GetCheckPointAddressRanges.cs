@@ -17,26 +17,20 @@ namespace psCheckPoint.Objects.AddressRange
         /// <inheritdoc />
         protected override void ProcessRecord()
         {
-            var results = Session.FindAllAddressRanges(
-                limit: Limit,
-                offset: Offset,
-                detailLevel: DetailsLevel
-                );
-
             if (ParameterSetName == "Limit")
             {
-                WriteObject(results, false);
+                WriteObject(
+                    Session.FindAddressRanges(
+                            limit: Limit,
+                            offset: Offset,
+                            detailLevel: DetailsLevel), false);
             }
             else
             {
-                while (results != null)
-                {
-                    foreach (var r in results)
-                    {
-                        WriteObject(r);
-                    }
-                    results = results.NextPage();
-                }
+                WriteObject(
+                    Session.FindAllAddressRanges(
+                            limit: Limit,
+                            detailLevel: DetailsLevel), false);
             }
         }
 
