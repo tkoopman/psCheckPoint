@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Koopman.CheckPoint;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Management.Automation;
@@ -36,8 +39,9 @@ namespace psCheckPoint.Objects.Misc
         /// <summary>
         /// <para type="description">Unique identifier of task</para>
         /// </summary>
-        [Parameter(Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
-        public string TaskID { get; set; }
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
+        [Alias("TaskID")]
+        public PSObject Task { get; set; }
 
         /// <summary>
         /// <para type="description">Timeout in seconds.</para>
@@ -53,7 +57,33 @@ namespace psCheckPoint.Objects.Misc
         /// <inheritdoc />
         protected override void ProcessRecord()
         {
-            var task = Session.FindTask(TaskID);
+            ProcessObject(Task);
+        }
+
+        /// <summary>
+        /// Stops the processing.
+        /// </summary>
+        protected override void StopProcessing() => cancellationTokenSource?.Cancel();
+
+        private void ProcessObject(object obj)
+        {
+            if (obj is string str) Wait(str);
+            else if (obj is Task t) Wait(t.TaskID);
+            else if (obj is IReadOnlyDictionary<string, string> ro) ProcessObject(ro.Values);
+            else if (obj is PSObject pso) ProcessObject(pso.BaseObject);
+            else if (obj is IEnumerable enumerable)
+            {
+                foreach (object eo in enumerable)
+                    ProcessObject(eo);
+            }
+            else
+                throw new PSArgumentException($"Invalid type: {obj.GetType()}", nameof(Task));
+        }
+
+        /// <inheritdoc />
+        private void Wait(string taskID)
+        {
+            var task = Session.FindTask(taskID);
 
             if (task.Status == Koopman.CheckPoint.Task.TaskStatus.InProgress)
             {
@@ -79,11 +109,6 @@ namespace psCheckPoint.Objects.Misc
             }
             WriteObject(task);
         }
-
-        /// <summary>
-        /// Stops the processing.
-        /// </summary>
-        protected override void StopProcessing() => cancellationTokenSource?.Cancel();
 
         #endregion Methods
     }

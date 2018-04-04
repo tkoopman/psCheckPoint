@@ -1,35 +1,44 @@
-﻿using Newtonsoft.Json;
+﻿using Koopman.CheckPoint;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Management.Automation;
-using System.Runtime.Serialization;
 
 namespace psCheckPoint.Objects.Misc
 {
     /// <api cmd="run-script">Invoke-CheckPointScript</api>
     /// <summary>
     /// <para type="synopsis">Run script on gateways</para>
-    /// <para type="description">Run a script on target gateways. After completing you can get any output from script by looking at the task details.</para>
+    /// <para type="description">
+    /// Run a script on target gateways. After completing you can get any output from script by
+    /// looking at the task details.
+    /// </para>
     /// </summary>
     /// <example>
-    ///   <code>$(Invoke-CheckPointScript -ScriptName "Get Configuration" -Script "clish -c 'Show Configuration'" -Targets fwm-devbtpp001 | Wait-CheckPointTask).TaskDetails.ResponseMessage</code>
+    /// <code>
+    /// $(Invoke-CheckPointScript -ScriptName "Get Configuration" -Script "clish -c 'Show Configuration'" -Targets mgmt | Wait-CheckPointTask).TaskDetails.ResponseMessage
+    /// </code>
     /// </example>
     [Cmdlet(VerbsLifecycle.Invoke, "CheckPointScript")]
-    public class InvokeCheckPointScript : CheckPointCmdlet<CheckPointTaskIDs>
+    public class InvokeCheckPointScript : CheckPointCmdletBase
     {
-        public override string Command { get { return "run-script"; } }
+        #region Properties
 
         /// <summary>
-        /// <para type="description">Script Name.</para>
+        /// <para type="description">Script arguments.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "script-name")]
-        [Parameter(Mandatory = true)]
-        public string ScriptName { get; set; }
+        [Parameter]
+        public string Args { get; set; }
+
+        /// <summary>
+        /// <para type="description">Comments string</para>
+        /// </summary>
+        [Parameter]
+        public string Comments { get; set; }
 
         /// <summary>
         /// <para type="description">Script Body</para>
         /// </summary>
-        [JsonProperty(PropertyName = "script")]
         [Parameter(ParameterSetName = "By Inline Script", Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public string Script { get; set; }
 
@@ -40,84 +49,50 @@ namespace psCheckPoint.Objects.Misc
         public string ScriptFile { get; set; }
 
         /// <summary>
-        /// <para type="description">Script arguments.</para>
+        /// <para type="description">Script Name.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "args")]
-        [Parameter]
-        public string Args { get; set; }
+        [Parameter(Mandatory = true)]
+        public string ScriptName { get; set; }
 
         /// <summary>
-        /// <para type="description">On what targets to execute this command. Targets may be identified by their name, or object unique identifier.</para>
+        /// <para type="description">
+        /// On what targets to execute this command. Targets may be identified by their name, or
+        /// object unique identifier.
+        /// </para>
         /// </summary>
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public PSObject Targets { get; set; }
 
-        [JsonProperty(PropertyName = "targets")]
-        private string _targets;
+        #endregion Properties
 
-        /// <summary>
-        /// <para type="description">Comments string</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "comments")]
-        [Parameter]
-        public string Comments { get; set; }
+        #region Methods
 
-        [OnSerializing]
-        private void OnSerializing(StreamingContext context)
+        /// <inheritdoc />
+        protected override void ProcessRecord()
         {
-            SetInputIdentifier(Targets, "simple-gateway", out _targets, out _targets);
+            var targets = new List<string>();
+            GetTargets(Targets, targets);
 
             if (ScriptFile != null)
+                Script = File.ReadAllText(ScriptFile);
+
+            WriteObject(Session.RunScript(ScriptName, Script, Args, targets.ToArray(), Comments));
+        }
+
+        private void GetTargets(object obj, List<string> output)
+        {
+            if (obj is string str) output.Add(str);
+            else if (obj is IObjectSummary o) output.Add(o.GetMembershipID());
+            else if (obj is PSObject pso) GetTargets(pso.BaseObject, output);
+            else if (obj is IEnumerable enumerable)
             {
-                Script = System.IO.File.ReadAllText(ScriptFile);
+                foreach (object eo in enumerable)
+                    GetTargets(eo, output);
             }
+            else
+                throw new PSArgumentException($"Invalid type: {obj.GetType()}", nameof(Targets));
         }
 
-        protected override void WriteRecordResponse(CheckPointTaskIDs result)
-        {
-            foreach (CheckPointTaskID task in result)
-            {
-                WriteObject(task);
-            }
-        }
-    }
-
-    [JsonObject]
-    public class CheckPointTaskIDs : IEnumerable<CheckPointTaskID>
-    {
-        [JsonConstructor]
-        private CheckPointTaskIDs(List<CheckPointTaskID> tasks)
-        {
-            Tasks = tasks;
-        }
-
-        [JsonProperty(PropertyName = "tasks")]
-        public List<CheckPointTaskID> Tasks { get; private set; }
-
-        public IEnumerator<CheckPointTaskID> GetEnumerator()
-        {
-            return ((IEnumerable<CheckPointTaskID>)Tasks).GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return ((IEnumerable<CheckPointTaskID>)Tasks).GetEnumerator();
-        }
-    }
-
-    public class CheckPointTaskID
-    {
-        [JsonConstructor]
-        private CheckPointTaskID(string target, string taskID)
-        {
-            Target = target;
-            TaskID = taskID;
-        }
-
-        [JsonProperty(PropertyName = "target")]
-        public string Target { get; private set; }
-
-        [JsonProperty(PropertyName = "task-id")]
-        public string TaskID { get; private set; }
+        #endregion Methods
     }
 }
