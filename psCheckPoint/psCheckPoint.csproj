@@ -74,15 +74,12 @@
     <Compile Remove="Objects\Group\CheckPointGroup.cs" />
     <Compile Remove="Objects\Host\NewCheckPointHostInterface.cs" />
     <Compile Remove="Objects\Host\RemoveCheckPointHostInterface.cs" />
-    <Compile Remove="Objects\Misc\CheckPointTask.cs" />
     <Compile Remove="Objects\Misc\CheckPointWhereUsed.cs" />
     <Compile Remove="Objects\Misc\GetCheckPointCommands.cs" />
     <Compile Remove="Objects\Misc\GetCheckPointObject.cs" />
     <Compile Remove="Objects\Misc\GetCheckPointObjects.cs" />
-    <Compile Remove="Objects\Misc\GetCheckPointTask.cs" />
     <Compile Remove="Objects\Misc\GetCheckPointWhereUsed.cs" />
     <Compile Remove="Objects\Misc\InvokeCheckPointScript.cs" />
-    <Compile Remove="Objects\Misc\WaitCheckPointTask.cs" />
     <Compile Remove="Objects\MulticastAddressRange\CheckPointMulticastAddressRange.cs" />
     <Compile Remove="Objects\MulticastAddressRange\GetCheckPointMulticastAddressRange.cs" />
     <Compile Remove="Objects\MulticastAddressRange\GetCheckPointMulticastAddressRanges.cs" />
@@ -90,7 +87,6 @@
     <Compile Remove="Objects\MulticastAddressRange\RemoveCheckPointMulticastAddressRange.cs" />
     <Compile Remove="Objects\MulticastAddressRange\SetCheckPointMulticastAddressRange.cs" />
     <Compile Remove="Objects\Policy\InstallCheckPointPolicy.cs" />
-    <Compile Remove="Objects\Policy\TestCheckPointPolicy.cs" />
     <Compile Remove="Objects\SecurityZone\CheckPointSecurityZone.cs" />
     <Compile Remove="Objects\SecurityZone\GetCheckPointSecurityZone.cs" />
     <Compile Remove="Objects\SecurityZone\GetCheckPointSecurityZones.cs" />
@@ -173,15 +169,12 @@
     <None Include="Objects\Application\SetCheckPointApplication.cs" />
     <None Include="Objects\Host\NewCheckPointHostInterface.cs" />
     <None Include="Objects\Host\RemoveCheckPointHostInterface.cs" />
-    <None Include="Objects\Misc\CheckPointTask.cs" />
     <None Include="Objects\Misc\CheckPointWhereUsed.cs" />
     <None Include="Objects\Misc\GetCheckPointCommands.cs" />
     <None Include="Objects\Misc\GetCheckPointObject.cs" />
     <None Include="Objects\Misc\GetCheckPointObjects.cs" />
-    <None Include="Objects\Misc\GetCheckPointTask.cs" />
     <None Include="Objects\Misc\GetCheckPointWhereUsed.cs" />
     <None Include="Objects\Misc\InvokeCheckPointScript.cs" />
-    <None Include="Objects\Misc\WaitCheckPointTask.cs" />
     <None Include="Objects\MulticastAddressRange\CheckPointMulticastAddressRange.cs" />
     <None Include="Objects\MulticastAddressRange\GetCheckPointMulticastAddressRange.cs" />
     <None Include="Objects\MulticastAddressRange\GetCheckPointMulticastAddressRanges.cs" />
@@ -189,7 +182,6 @@
     <None Include="Objects\MulticastAddressRange\RemoveCheckPointMulticastAddressRange.cs" />
     <None Include="Objects\MulticastAddressRange\SetCheckPointMulticastAddressRange.cs" />
     <None Include="Objects\Policy\InstallCheckPointPolicy.cs" />
-    <None Include="Objects\Policy\TestCheckPointPolicy.cs" />
     <None Include="Objects\SecurityZone\CheckPointSecurityZone.cs" />
     <None Include="Objects\SecurityZone\GetCheckPointSecurityZone.cs" />
     <None Include="Objects\SecurityZone\GetCheckPointSecurityZones.cs" />
@@ -225,7 +217,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CheckPoint.NET" Version="0.2.0-alpha2" />
+    <PackageReference Include="CheckPoint.NET" Version="0.2.0-alpha3" />
   </ItemGroup>
   
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">

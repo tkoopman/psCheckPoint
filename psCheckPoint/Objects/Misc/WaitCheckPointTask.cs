@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Management.Automation;
 using System.Threading;
@@ -11,16 +12,32 @@ namespace psCheckPoint.Objects.Misc
     /// <para type="description">Waits for task to complete then returns the completed task details.</para>
     /// </summary>
     /// <example>
-    ///   <code>Install-CheckPointPolicy -PolicyPackage Standard -Targets MyGateway | Wait-CheckPointTask</code>
+    /// <code>
+    /// Install-CheckPointPolicy -PolicyPackage Standard -Targets MyGateway | Wait-CheckPointTask
+    /// </code>
     /// </example>
     [Cmdlet(VerbsLifecycle.Wait, "CheckPointTask")]
-    public class WaitCheckPointTask : GetCheckPointTask
+    public class WaitCheckPointTask : CheckPointCmdletBase
     {
+        #region Fields
+
+        private CancellationTokenSource cancellationTokenSource;
+
+        #endregion Fields
+
+        #region Properties
+
         /// <summary>
         /// <para type="description">Time in seconds to sleep in-between checking task status</para>
         /// </summary>
         [Parameter]
         public int SleepTime { get; set; } = 5;
+
+        /// <summary>
+        /// <para type="description">Unique identifier of task</para>
+        /// </summary>
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
+        public string TaskID { get; set; }
 
         /// <summary>
         /// <para type="description">Timeout in seconds.</para>
@@ -29,51 +46,45 @@ namespace psCheckPoint.Objects.Misc
         [ValidateRange(1, 3600)]
         public int Timeout { get; set; } = 300;
 
-        private Stopwatch watch;
-        private ProgressRecord progress;
+        #endregion Properties
 
-        protected override void WriteRecordResponse(CheckPointTasks result)
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord()
         {
-            if (watch == null)
-            {
-                watch = Stopwatch.StartNew();
-            }
-            CheckPointTask task = result.Tasks.First();
-            if (task == null)
-            {
-                throw new System.Exception("Task not found");
-            }
+            var task = Session.FindTask(TaskID);
 
-            if (task.ProgressPercentage == 100)
+            if (task.Status == Koopman.CheckPoint.Task.TaskStatus.InProgress)
             {
-                WriteVerbose($"Task {task.ProgressPercentage}% complete. Exiting.");
-                progress.PercentComplete = 100;
-                progress.StatusDescription = task.Comments;
+                var progress = new ProgressRecord(1, "Waiting for task to complete", task.TaskName);
+                cancellationTokenSource = new CancellationTokenSource(Timeout * 1000);
+
+                var waitTask = task.WaitAsync(
+                        delay: SleepTime * 1000,
+                        progress: new Progress<int>(i => progress.PercentComplete = i),
+                        cancellationToken: cancellationTokenSource.Token
+                    );
+
+                while (waitTask.Status < System.Threading.Tasks.TaskStatus.RanToCompletion)
+                {
+                    WriteProgress(progress);
+                    Thread.Sleep(500);
+                }
+
+                cancellationTokenSource = null;
+
                 progress.RecordType = ProgressRecordType.Completed;
                 WriteProgress(progress);
-                WriteObject(task);
             }
-            else if (watch.ElapsedMilliseconds >= Timeout * 1000)
-            {
-                WriteVerbose($"Task {task.ProgressPercentage}% complete. Timeout reached, exiting.");
-                progress.PercentComplete = task.ProgressPercentage;
-                progress.StatusDescription = "Wait timeout reached, exiting.";
-                progress.RecordType = ProgressRecordType.Completed;
-                WriteProgress(progress);
-                WriteObject(task);
-            }
-            else
-            {
-                WriteVerbose($"Task {task.ProgressPercentage}% complete");
-
-                if (progress == null) { progress = new ProgressRecord(1, task.TaskName, task.Comments); }
-                progress.PercentComplete = task.ProgressPercentage;
-                progress.StatusDescription = task.Comments;
-                WriteProgress(progress);
-
-                Thread.Sleep(SleepTime * 1000);
-                this.ProcessRecord();
-            }
+            WriteObject(task);
         }
+
+        /// <summary>
+        /// Stops the processing.
+        /// </summary>
+        protected override void StopProcessing() => cancellationTokenSource?.Cancel();
+
+        #endregion Methods
     }
 }

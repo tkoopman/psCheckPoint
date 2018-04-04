@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Management.Automation;
 
 namespace psCheckPoint.Objects.Policy
@@ -10,20 +9,26 @@ namespace psCheckPoint.Objects.Policy
     /// <para type="description"></para>
     /// </summary>
     [Cmdlet(VerbsDiagnostic.Test, "CheckPointPolicy")]
-    public class TestCheckPointPolicy : CheckPointCmdlet<Dictionary<string, string>>
+    public class TestCheckPointPolicy : CheckPointCmdletBase
     {
-        public override string Command { get { return "verify-policy"; } }
+        #region Properties
 
         /// <summary>
         /// <para type="description">The name of the Policy Package to be installed.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "policy-package")]
         [Parameter(Mandatory = true)]
         public string PolicyPackage { get; private set; }
 
-        protected override void WriteRecordResponse(Dictionary<string, string> result)
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord()
         {
-            WriteObject(result["task-id"]);
+            WriteObject(Session.VerifyPolicy(PolicyPackage));
         }
+
+        #endregion Methods
     }
 }

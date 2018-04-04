@@ -1,4 +1,6 @@
-﻿using System.Management.Automation;
+﻿using Koopman.CheckPoint;
+using System.Collections;
+using System.Management.Automation;
 
 namespace psCheckPoint.Session
 {
@@ -8,22 +10,46 @@ namespace psCheckPoint.Session
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Reset-CheckPointSession</code>
+    /// <code>
+    /// Reset-CheckPointSession
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Reset, "CheckPointSession")]
     public class ResetCheckPointSession : CheckPointCmdletBase
     {
+        #region Properties
 
         /// <summary>
         /// <para type="description">Reset none active session</para>
         /// </summary>
         [Parameter(ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ValueFromRemainingArguments = true)]
-        public Koopman.CheckPoint.SessionInfo ResetSession { get; set; }
+        public PSObject ResetSession { get; set; }
 
-        /// <inheritdoc/>
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
         protected override void ProcessRecord()
         {
-            Session.Discard(ResetSession?.UID);
+            ProcessObject(ResetSession);
         }
+
+        private void ProcessObject(object obj)
+        {
+            if (obj == null) Session.Discard();
+            else if (obj is string str) Session.Discard(str);
+            else if (obj is SessionInfo o) Session.Discard(o.UID);
+            else if (obj is PSObject pso) ProcessObject(pso.BaseObject);
+            else if (obj is IEnumerable enumerable)
+            {
+                foreach (object eo in enumerable)
+                    ProcessObject(eo);
+            }
+            else
+                throw new PSArgumentException($"Invalid type: {obj.GetType()}", nameof(ResetSession));
+        }
+
+        #endregion Methods
     }
 }
