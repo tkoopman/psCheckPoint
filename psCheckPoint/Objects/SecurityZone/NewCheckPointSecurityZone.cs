@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿using System.Linq;
+using System.Management.Automation;
 
 namespace psCheckPoint.Objects.SecurityZone
 {
@@ -8,15 +9,32 @@ namespace psCheckPoint.Objects.SecurityZone
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code></code>
+    /// <code></code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "CheckPointSecurityZone")]
-    [OutputType(typeof(CheckPointSecurityZone))]
-    public class NewCheckPointSecurityZone : NewCheckPointObject<CheckPointSecurityZone>
+    [OutputType(typeof(Koopman.CheckPoint.SecurityZone))]
+    public class NewCheckPointSecurityZone : NewCheckPointObject
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "add-security-zone"; } }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord()
+        {
+            var zone = new Koopman.CheckPoint.SecurityZone(Session, SetIfExists.IsPresent)
+            {
+                Name = Name,
+                Color = Color,
+                Comments = Comments
+            };
+
+            foreach (var t in Tags ?? Enumerable.Empty<string>())
+                zone.Tags.Add(t);
+
+            zone.AcceptChanges(Ignore);
+
+            WriteObject(zone);
+        }
+
+        #endregion Methods
     }
 }

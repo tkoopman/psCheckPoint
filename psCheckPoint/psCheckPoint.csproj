@@ -79,12 +79,6 @@
     <Compile Remove="Objects\Misc\GetCheckPointObject.cs" />
     <Compile Remove="Objects\Misc\GetCheckPointObjects.cs" />
     <Compile Remove="Objects\Misc\GetCheckPointWhereUsed.cs" />
-    <Compile Remove="Objects\SecurityZone\CheckPointSecurityZone.cs" />
-    <Compile Remove="Objects\SecurityZone\GetCheckPointSecurityZone.cs" />
-    <Compile Remove="Objects\SecurityZone\GetCheckPointSecurityZones.cs" />
-    <Compile Remove="Objects\SecurityZone\NewCheckPointSecurityZone.cs" />
-    <Compile Remove="Objects\SecurityZone\RemoveCheckPointSecurityZone.cs" />
-    <Compile Remove="Objects\SecurityZone\SetCheckPointSecurityZone.cs" />
     <Compile Remove="Objects\ServiceGroup\CheckPointServiceGroup.cs" />
     <Compile Remove="Objects\ServiceGroup\GetCheckPointServiceGroup.cs" />
     <Compile Remove="Objects\ServiceGroup\GetCheckPointServiceGroups.cs" />
@@ -166,12 +160,6 @@
     <None Include="Objects\Misc\GetCheckPointObject.cs" />
     <None Include="Objects\Misc\GetCheckPointObjects.cs" />
     <None Include="Objects\Misc\GetCheckPointWhereUsed.cs" />
-    <None Include="Objects\SecurityZone\CheckPointSecurityZone.cs" />
-    <None Include="Objects\SecurityZone\GetCheckPointSecurityZone.cs" />
-    <None Include="Objects\SecurityZone\GetCheckPointSecurityZones.cs" />
-    <None Include="Objects\SecurityZone\NewCheckPointSecurityZone.cs" />
-    <None Include="Objects\SecurityZone\RemoveCheckPointSecurityZone.cs" />
-    <None Include="Objects\SecurityZone\SetCheckPointSecurityZone.cs" />
     <None Include="Objects\ServiceGroup\CheckPointServiceGroup.cs" />
     <None Include="Objects\ServiceGroup\GetCheckPointServiceGroup.cs" />
     <None Include="Objects\ServiceGroup\GetCheckPointServiceGroups.cs" />
