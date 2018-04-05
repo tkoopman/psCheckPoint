@@ -13,7 +13,8 @@ namespace psCheckPoint.Objects.Host
     /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointHosts")]
-    [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.Host>))]
+    [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.Host>), ParameterSetName = new string[] { "Limit" })]
+    [OutputType(typeof(Koopman.CheckPoint.Host[]), ParameterSetName = new string[] { "All" })]
     public class GetCheckPointHosts : GetCheckPointObjects
     {
         #region Methods

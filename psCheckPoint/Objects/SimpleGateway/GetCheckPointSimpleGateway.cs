@@ -7,12 +7,19 @@ namespace psCheckPoint.Objects.SimpleGateway
     /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example>
-    /// </example>
+    /// <example></example>
     [Cmdlet(VerbsCommon.Get, "CheckPointSimpleGateway")]
-    [OutputType(typeof(CheckPointSimpleGateway))]
-    public class GetCheckPointSimpleGateway : GetCheckPointObject<CheckPointSimpleGateway>
+    [OutputType(typeof(Koopman.CheckPoint.SimpleGateway))]
+    public class GetCheckPointSimpleGateway : GetCheckPointObject
     {
-        public override string Command { get { return "show-simple-gateway"; } }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord()
+        {
+            WriteObject(Session.FindSimpleGateway(Value, DetailsLevel));
+        }
+
+        #endregion Methods
     }
 }

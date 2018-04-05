@@ -9,7 +9,8 @@ namespace psCheckPoint.Objects.MulticastAddressRange
     /// </summary>
     /// <example></example>
     [Cmdlet(VerbsCommon.Get, "CheckPointMulticastAddressRanges")]
-    [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.MulticastAddressRange>))]
+    [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.MulticastAddressRange>), ParameterSetName = new string[] { "Limit" })]
+    [OutputType(typeof(Koopman.CheckPoint.MulticastAddressRange[]), ParameterSetName = new string[] { "All" })]
     public class GetCheckPointMulticastAddressRanges : GetCheckPointObjects
     {
         #region Methods

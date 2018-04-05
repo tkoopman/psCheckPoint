@@ -10,7 +10,8 @@ namespace psCheckPoint.Objects.Session
     /// </summary>
     /// <example></example>
     [Cmdlet(VerbsCommon.Get, "CheckPointSessions")]
-    [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.SessionInfo>))]
+    [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.SessionInfo>), ParameterSetName = new string[] { "Limit" })]
+    [OutputType(typeof(Koopman.CheckPoint.SessionInfo[]), ParameterSetName = new string[] { "All" })]
     public class GetCheckPointSessions : GetCheckPointObjects
     {
         #region Properties

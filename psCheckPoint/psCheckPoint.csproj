@@ -102,9 +102,6 @@
     <Compile Remove="Objects\Service\CheckPointServices.cs" />
     <Compile Remove="Objects\Service\NewCheckPointService.cs" />
     <Compile Remove="Objects\Service\SetCheckPointService.cs" />
-    <Compile Remove="Objects\SimpleGateway\CheckPointSimpleGateway.cs" />
-    <Compile Remove="Objects\SimpleGateway\GetCheckPointSimpleGateway.cs" />
-    <Compile Remove="Objects\SimpleGateway\GetCheckPointSimpleGateways.cs" />
     <ContentWithTargetPath Include="@(ViewFiles)">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>..\Views\%(FileName)%(Extension)</TargetPath>
@@ -183,9 +180,6 @@
     <None Include="Objects\Service\CheckPointServices.cs" />
     <None Include="Objects\Service\NewCheckPointService.cs" />
     <None Include="Objects\Service\SetCheckPointService.cs" />
-    <None Include="Objects\SimpleGateway\CheckPointSimpleGateway.cs" />
-    <None Include="Objects\SimpleGateway\GetCheckPointSimpleGateway.cs" />
-    <None Include="Objects\SimpleGateway\GetCheckPointSimpleGateways.cs" />
   </ItemGroup>
 
   <ItemGroup>

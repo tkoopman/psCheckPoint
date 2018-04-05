@@ -9,7 +9,8 @@ namespace psCheckPoint.Objects.AddressRange
     /// </summary>
     /// <example></example>
     [Cmdlet(VerbsCommon.Get, "CheckPointAddressRanges")]
-    [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.AddressRange>))]
+    [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.AddressRange>), ParameterSetName = new string[] { "Limit" })]
+    [OutputType(typeof(Koopman.CheckPoint.AddressRange[]), ParameterSetName = new string[] { "All" })]
     public class GetCheckPointAddressRanges : GetCheckPointObjects
     {
         #region Methods

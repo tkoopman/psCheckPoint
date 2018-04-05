@@ -9,7 +9,8 @@ namespace psCheckPoint.Objects.SecurityZone
     /// </summary>
     /// <example></example>
     [Cmdlet(VerbsCommon.Get, "CheckPointSecurityZones")]
-    [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.SecurityZone>))]
+    [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.SecurityZone>), ParameterSetName = new string[] { "Limit" })]
+    [OutputType(typeof(Koopman.CheckPoint.SecurityZone[]), ParameterSetName = new string[] { "All" })]
     public class GetCheckPointSecurityZones : GetCheckPointObjects
     {
         #region Methods
