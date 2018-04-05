@@ -14,7 +14,7 @@ namespace psCheckPoint.Objects.AddressRange
         #region Properties
 
         /// <summary>
-        /// <para type="description">Network object, name or UID.</para>
+        /// <para type="description">Address Range object, name or UID.</para>
         /// </summary>
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
         [Alias("Name", "UID")]
