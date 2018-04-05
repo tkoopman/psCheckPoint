@@ -29,7 +29,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard1.6|AnyCPU'">
-    <DocumentationFile>bin\Debug\net45\psCheckPoint.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\netstandard1.6\psCheckPoint.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -184,8 +184,9 @@
 
   <ItemGroup>
     <PackageReference Include="CheckPoint.NET" Version="0.2.0-alpha3" />
+    <PackageReference Include="XmlDoc2CmdletDoc" Version="0.2.10" />
   </ItemGroup>
-  
+
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">
     <PackageReference Include="Microsoft.PowerShell.NanoServer.NetCore.Library">
       <Version>1.0.0</Version>
@@ -200,5 +201,4 @@
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)' == 'netstandard1.6'">
     <Exec Command="%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy RemoteSigned -Command &quot;$(SolutionDir)\run\post-build-netstandard1.6.ps1 -TargetDir '$(TargetDir)' -SolutionDir '$(SolutionDir)'&quot;" />
   </Target>
-  
 </Project>
