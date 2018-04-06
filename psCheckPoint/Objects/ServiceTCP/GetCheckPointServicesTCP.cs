@@ -1,5 +1,4 @@
-﻿using psCheckPoint.Objects.Service;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 
 namespace psCheckPoint.Objects.ServiceTCP
 {
@@ -8,15 +7,34 @@ namespace psCheckPoint.Objects.ServiceTCP
     /// <para type="synopsis">Retrieve all objects.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example>
-    /// </example>
+    /// <example></example>
     [Cmdlet(VerbsCommon.Get, "CheckPointServicesTCP")]
-    [OutputType(typeof(CheckPointServices))]
-    public class GetCheckPointServicesTCP : GetCheckPointObjectsBase<CheckPointServices>
+    [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.ServiceTCP>), ParameterSetName = new string[] { "Limit" })]
+    [OutputType(typeof(Koopman.CheckPoint.ServiceTCP[]), ParameterSetName = new string[] { "All" })]
+    public class GetCheckPointServicesTCP : GetCheckPointObjects
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "show-services-tcp"; } }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord()
+        {
+            if (ParameterSetName == "Limit")
+            {
+                WriteObject(
+                    Session.FindServicesTCP(
+                            limit: Limit,
+                            offset: Offset,
+                            detailLevel: DetailsLevel), false);
+            }
+            else
+            {
+                WriteObject(
+                    Session.FindAllServicesTCP(
+                            limit: Limit,
+                            detailLevel: DetailsLevel), false);
+            }
+        }
+
+        #endregion Methods
     }
 }

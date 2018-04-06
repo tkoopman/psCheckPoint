@@ -7,15 +7,19 @@ namespace psCheckPoint.Objects.ServiceTCP
     /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example>
-    /// </example>
+    /// <example></example>
     [Cmdlet(VerbsCommon.Get, "CheckPointServiceTCP")]
-    [OutputType(typeof(CheckPointServiceTCP))]
-    public class GetCheckPointServiceTCP : GetCheckPointObject<CheckPointServiceTCP>
+    [OutputType(typeof(Koopman.CheckPoint.ServiceTCP))]
+    public class GetCheckPointServiceTCP : GetCheckPointObject
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "show-service-tcp"; } }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord()
+        {
+            WriteObject(Session.FindServiceTCP(Value, DetailsLevel));
+        }
+
+        #endregion Methods
     }
 }

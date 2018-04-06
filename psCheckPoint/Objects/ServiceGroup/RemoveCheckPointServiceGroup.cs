@@ -8,14 +8,35 @@ namespace psCheckPoint.Objects.ServiceGroup
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Remove-CheckPointGroup -Name Test1 -Verbose</code>
+    /// <code>
+    /// Remove-CheckPointGroup -Name Test1 -Verbose
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointServiceGroup")]
     public class RemoveCheckPointServiceGroup : RemoveCheckPointObject
     {
+        #region Properties
+
         /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// <para type="description">Network object, name or UID.</para>
         /// </summary>
-        public override string Command { get { return "delete-service-group"; } }
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
+        [Alias("Name", "UID")]
+        public PSObject ServiceGroup { get => Object; set => Object = value; }
+
+        /// <inheritdoc />
+        protected override string InputName => nameof(ServiceGroup);
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void Remove(string value)
+        {
+            Session.DeleteServiceGroup(value, Ignore);
+        }
+
+        #endregion Methods
     }
 }

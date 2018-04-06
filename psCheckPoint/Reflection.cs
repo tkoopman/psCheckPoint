@@ -3,6 +3,7 @@ using Koopman.CheckPoint.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -64,6 +65,8 @@ namespace psCheckPoint
             PropertyInfo prop = obj.GetType().GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
             if (prop != null && prop.CanWrite)
             {
+                if (value is SwitchParameter sp) value = sp.IsPresent;
+
                 prop.SetValue(obj, value, null);
             }
             else
