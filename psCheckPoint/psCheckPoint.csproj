@@ -140,7 +140,6 @@
 
   <ItemGroup>
     <PackageReference Include="CheckPoint.NET" Version="0.2.0-alpha3" />
-    <PackageReference Include="XmlDoc2CmdletDoc" Version="0.2.10" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">
@@ -152,6 +151,7 @@
   <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
     <Reference Include="System.Management" />
     <PackageReference Include="System.Management.Automation.dll" Version="10.0.10586" />
+    <PackageReference Include="XmlDoc2CmdletDoc" Version="0.2.10" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)' == 'netstandard1.6'">
