@@ -14,23 +14,6 @@ namespace psCheckPoint
     {
         #region Methods
 
-        private static readonly string[] IgnoredProperties = {
-            "Debug",
-            "ErrorAction",
-            "ErrorVariable",
-            "Ignore",
-            "InformationAction",
-            "InformationVariable",
-            "OutBuffer",
-            "OutVariable",
-            "PassThru",
-            "PipelineVariable",
-            "Session",
-            "Verbose",
-            "WarningAction",
-            "WarningVariable"
-        };
-
         internal static void Add<T>(this MemberMembershipChangeTracking<T> obj, MembershipActions action, string[] values) where T : IObjectSummary
         {
             switch (action)
@@ -54,11 +37,20 @@ namespace psCheckPoint
             }
         }
 
+        internal static T GetProperty<T>(this IObjectSummary obj, string name)
+        {
+            if (obj == null) throw new ArgumentNullException(nameof(obj));
+            if (name == null) throw new ArgumentNullException(nameof(name));
+
+            PropertyInfo prop = obj.GetType().GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
+            if (prop != null && prop.CanRead)
+                return (T)prop.GetValue(obj);
+            else
+                throw new ArgumentException("No property found.");
+        }
+
         internal static void SetProperty(this IObjectSummary obj, string name, object value)
         {
-            // Ignore all standard Powershell property names
-            if (IgnoredProperties.Contains(name)) return;
-
             if (obj == null) throw new ArgumentNullException(nameof(obj));
             if (name == null) throw new ArgumentNullException(nameof(name));
 

@@ -1,4 +1,5 @@
-﻿using Koopman.CheckPoint.FastUpdate;
+﻿using Koopman.CheckPoint;
+using Koopman.CheckPoint.FastUpdate;
 using System.Management.Automation;
 using System.Net;
 using System.Runtime.Serialization;
@@ -116,65 +117,52 @@ namespace psCheckPoint.Objects.Network
         /// <inheritdoc />
         protected override void Set(string value)
         {
-            var network = Session.UpdateNetwork(value);
+            var o = Session.UpdateNetwork(value);
+            UpdateProperties(o);
+            o.AcceptChanges(Ignore);
+            WriteObject(o);
+        }
 
-            // Only change values user called
-            foreach (var p in MyInvocation.BoundParameters.Keys)
+        /// <inheritdoc />
+        protected override bool UpdateProperty(IObjectSummary obj, string name, object value)
+        {
+            if (base.UpdateProperty(obj, name, value)) return true;
+
+            var o = (Koopman.CheckPoint.Network)obj;
+            switch (name)
             {
-                switch (p)
-                {
-                    case nameof(Network): break;
-                    case nameof(Broadcast):
-                        network.BroadcastInclusion = !(Broadcast == "disallow");
-                        break;
+                case nameof(Broadcast):
+                    o.BroadcastInclusion = !(Broadcast == "disallow");
+                    return true;
 
-                    case nameof(GroupAction):
-                        if (GroupAction == MembershipActions.Replace && Groups == null)
-                            network.Groups.Clear();
-                        break;
+                case nameof(GroupAction):
+                    if (GroupAction == MembershipActions.Replace && Groups == null)
+                        o.Groups.Clear();
+                    return true;
 
-                    case nameof(Groups):
-                        network.Groups.Add(GroupAction, Groups);
-                        break;
+                case nameof(Groups):
+                    o.Groups.Add(GroupAction, Groups);
+                    return true;
 
-                    case nameof(MaskLength):
-                        if (Subnet == null)
-                            throw new PSArgumentNullException(nameof(Subnet), "Must specify Subnet to use MaskLength.");
-                        if (Subnet.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
-                            network.MaskLength6 = MaskLength;
-                        else
-                            network.MaskLength4 = MaskLength;
-                        break;
+                case nameof(MaskLength):
+                    if (Subnet == null)
+                        throw new PSArgumentNullException(nameof(Subnet), "Must specify Subnet to use MaskLength.");
+                    if (Subnet.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                        o.MaskLength6 = MaskLength;
+                    else
+                        o.MaskLength4 = MaskLength;
+                    return true;
 
-                    case nameof(Subnet):
-                        if (Subnet.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
-                            network.Subnet6 = Subnet;
-                        else
-                            network.Subnet4 = Subnet;
-                        break;
+                case nameof(Subnet):
+                    if (Subnet.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                        o.Subnet6 = Subnet;
+                    else
+                        o.Subnet4 = Subnet;
+                    return true;
 
-                    case nameof(TagAction):
-                        if (TagAction == MembershipActions.Replace && Tags == null)
-                            network.Tags.Clear();
-                        break;
-
-                    case nameof(Tags):
-                        network.Tags.Add(TagAction, Tags);
-                        break;
-
-                    case nameof(NewName):
-                        network.Name = NewName;
-                        break;
-
-                    default:
-                        network.SetProperty(p, MyInvocation.BoundParameters[p]);
-                        break;
-                }
+                default:
+                    return false;
             }
-
-            network.AcceptChanges(Ignore);
-
-            WriteObject(network);
         }
 
         #endregion Methods

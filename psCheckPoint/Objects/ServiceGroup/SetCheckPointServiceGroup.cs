@@ -1,4 +1,5 @@
-﻿using Koopman.CheckPoint.FastUpdate;
+﻿using Koopman.CheckPoint;
+using Koopman.CheckPoint.FastUpdate;
 using Newtonsoft.Json;
 using System.Management.Automation;
 using System.Runtime.Serialization;
@@ -77,55 +78,41 @@ namespace psCheckPoint.Objects.ServiceGroup
         /// <inheritdoc />
         protected override void Set(string value)
         {
-            var group = Session.UpdateServiceGroup(value);
+            var o = Session.UpdateServiceGroup(value);
+            UpdateProperties(o);
+            o.AcceptChanges(Ignore);
+            WriteObject(o);
+        }
 
-            // Only change values user called
-            foreach (var p in MyInvocation.BoundParameters.Keys)
+        /// <inheritdoc />
+        protected override bool UpdateProperty(IObjectSummary obj, string name, object value)
+        {
+            if (base.UpdateProperty(obj, name, value)) return true;
+
+            var o = (Koopman.CheckPoint.ServiceGroup)obj;
+            switch (name)
             {
-                switch (p)
-                {
-                    case nameof(ServiceGroup): break;
+                case nameof(GroupAction):
+                    if (GroupAction == MembershipActions.Replace && Groups == null)
+                        o.Groups.Clear();
+                    return true;
 
-                    case nameof(GroupAction):
-                        if (GroupAction == MembershipActions.Replace && Groups == null)
-                            group.Groups.Clear();
-                        break;
+                case nameof(Groups):
+                    o.Groups.Add(GroupAction, Groups);
+                    return true;
 
-                    case nameof(Groups):
-                        group.Groups.Add(GroupAction, Groups);
-                        break;
+                case nameof(MemberAction):
+                    if (MemberAction == MembershipActions.Replace && Members == null)
+                        o.Members.Clear();
+                    return true;
 
-                    case nameof(MemberAction):
-                        if (MemberAction == MembershipActions.Replace && Groups == null)
-                            group.Members.Clear();
-                        break;
+                case nameof(Members):
+                    o.Members.Add(MemberAction, Members);
+                    return true;
 
-                    case nameof(Members):
-                        group.Members.Add(MemberAction, Members);
-                        break;
-
-                    case nameof(TagAction):
-                        if (TagAction == MembershipActions.Replace && Tags == null)
-                            group.Tags.Clear();
-                        break;
-
-                    case nameof(Tags):
-                        group.Tags.Add(TagAction, Tags);
-                        break;
-
-                    case nameof(NewName):
-                        group.Name = NewName;
-                        break;
-
-                    default:
-                        group.SetProperty(p, MyInvocation.BoundParameters[p]);
-                        break;
-                }
+                default:
+                    return false;
             }
-
-            group.AcceptChanges(Ignore);
-
-            WriteObject(group);
         }
 
         #endregion Methods

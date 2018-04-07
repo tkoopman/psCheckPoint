@@ -1,4 +1,5 @@
-﻿using Koopman.CheckPoint.FastUpdate;
+﻿using Koopman.CheckPoint;
+using Koopman.CheckPoint.FastUpdate;
 using System.Management.Automation;
 
 namespace psCheckPoint.Objects.ServiceTCP
@@ -144,46 +145,32 @@ namespace psCheckPoint.Objects.ServiceTCP
         /// <inheritdoc />
         protected override void Set(string value)
         {
-            var tcp = Session.UpdateServiceTCP(value);
+            var o = Session.UpdateServiceTCP(value);
+            UpdateProperties(o);
+            o.AcceptChanges(Ignore);
+            WriteObject(o);
+        }
 
-            // Only change values user called
-            foreach (var p in MyInvocation.BoundParameters.Keys)
+        /// <inheritdoc />
+        protected override bool UpdateProperty(IObjectSummary obj, string name, object value)
+        {
+            if (base.UpdateProperty(obj, name, value)) return true;
+
+            var o = (Koopman.CheckPoint.ServiceTCP)obj;
+            switch (name)
             {
-                switch (p)
-                {
-                    case nameof(ServiceTCP): break;
+                case nameof(GroupAction):
+                    if (GroupAction == MembershipActions.Replace && Groups == null)
+                        o.Groups.Clear();
+                    return true;
 
-                    case nameof(GroupAction):
-                        if (GroupAction == MembershipActions.Replace && Groups == null)
-                            tcp.Groups.Clear();
-                        break;
+                case nameof(Groups):
+                    o.Groups.Add(GroupAction, Groups);
+                    return true;
 
-                    case nameof(Groups):
-                        tcp.Groups.Add(GroupAction, Groups);
-                        break;
-
-                    case nameof(TagAction):
-                        if (TagAction == MembershipActions.Replace && Tags == null)
-                            tcp.Tags.Clear();
-                        break;
-
-                    case nameof(Tags):
-                        tcp.Tags.Add(TagAction, Tags);
-                        break;
-
-                    case nameof(NewName):
-                        tcp.Name = NewName;
-                        break;
-
-                    default:
-                        tcp.SetProperty(p, MyInvocation.BoundParameters[p]);
-                        break;
-                }
+                default:
+                    return false;
             }
-
-            tcp.AcceptChanges(Ignore);
-
-            WriteObject(tcp);
         }
 
         #endregion Methods

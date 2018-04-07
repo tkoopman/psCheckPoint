@@ -1,4 +1,5 @@
-﻿using Koopman.CheckPoint.FastUpdate;
+﻿using Koopman.CheckPoint;
+using Koopman.CheckPoint.FastUpdate;
 using Newtonsoft.Json;
 using System.Management.Automation;
 using System.Net;
@@ -101,60 +102,46 @@ namespace psCheckPoint.Objects.AddressRange
         /// <inheritdoc />
         protected override void Set(string value)
         {
-            var addressRange = Session.UpdateAddressRange(value);
+            var o = Session.UpdateAddressRange(value);
+            UpdateProperties(o);
+            o.AcceptChanges(Ignore);
+            WriteObject(o);
+        }
 
-            // Only change values user called
-            foreach (var p in MyInvocation.BoundParameters.Keys)
+        /// <inheritdoc />
+        protected override bool UpdateProperty(IObjectSummary obj, string name, object value)
+        {
+            if (base.UpdateProperty(obj, name, value)) return true;
+
+            var o = (Koopman.CheckPoint.AddressRange)obj;
+            switch (name)
             {
-                switch (p)
-                {
-                    case nameof(AddressRange): break;
+                case nameof(GroupAction):
+                    if (GroupAction == MembershipActions.Replace && Groups == null)
+                        o.Groups.Clear();
+                    return true;
 
-                    case nameof(GroupAction):
-                        if (GroupAction == MembershipActions.Replace && Groups == null)
-                            addressRange.Groups.Clear();
-                        break;
+                case nameof(Groups):
+                    o.Groups.Add(GroupAction, Groups);
+                    return true;
 
-                    case nameof(Groups):
-                        addressRange.Groups.Add(GroupAction, Groups);
-                        break;
+                case nameof(IPAddressFirst):
+                    if (IPAddressFirst.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                        o.IPv6AddressFirst = IPAddressFirst;
+                    else
+                        o.IPv4AddressFirst = IPAddressFirst;
+                    return true;
 
-                    case nameof(IPAddressFirst):
-                        if (IPAddressFirst.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
-                            addressRange.IPv6AddressFirst = IPAddressFirst;
-                        else
-                            addressRange.IPv4AddressFirst = IPAddressFirst;
-                        break;
+                case nameof(IPAddressLast):
+                    if (IPAddressLast.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                        o.IPv6AddressLast = IPAddressLast;
+                    else
+                        o.IPv4AddressLast = IPAddressLast;
+                    return true;
 
-                    case nameof(IPAddressLast):
-                        if (IPAddressLast.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
-                            addressRange.IPv6AddressLast = IPAddressLast;
-                        else
-                            addressRange.IPv4AddressLast = IPAddressLast;
-                        break;
-
-                    case nameof(TagAction):
-                        if (TagAction == MembershipActions.Replace && Tags == null)
-                            addressRange.Tags.Clear();
-                        break;
-
-                    case nameof(Tags):
-                        addressRange.Tags.Add(TagAction, Tags);
-                        break;
-
-                    case nameof(NewName):
-                        addressRange.Name = NewName;
-                        break;
-
-                    default:
-                        addressRange.SetProperty(p, MyInvocation.BoundParameters[p]);
-                        break;
-                }
+                default:
+                    return false;
             }
-
-            addressRange.AcceptChanges(Ignore);
-
-            WriteObject(addressRange);
         }
 
         #endregion Methods

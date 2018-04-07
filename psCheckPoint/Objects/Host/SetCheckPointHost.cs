@@ -1,4 +1,5 @@
-﻿using Koopman.CheckPoint.FastUpdate;
+﻿using Koopman.CheckPoint;
+using Koopman.CheckPoint.FastUpdate;
 using System.Management.Automation;
 using System.Net;
 using System.Runtime.Serialization;
@@ -81,52 +82,39 @@ namespace psCheckPoint.Objects.Host
         /// <inheritdoc />
         protected override void Set(string value)
         {
-            var host = Session.UpdateHost(value);
+            var o = Session.UpdateHost(value);
+            UpdateProperties(o);
+            o.AcceptChanges(Ignore);
+            WriteObject(o);
+        }
 
-            // Only change values user called
-            foreach (var p in MyInvocation.BoundParameters.Keys)
+        /// <inheritdoc />
+        protected override bool UpdateProperty(IObjectSummary obj, string name, object value)
+        {
+            if (base.UpdateProperty(obj, name, value)) return true;
+
+            var o = (Koopman.CheckPoint.Host)obj;
+            switch (name)
             {
-                switch (p)
-                {
-                    case nameof(Host): break;
-                    case nameof(GroupAction):
-                        if (GroupAction == MembershipActions.Replace && Groups == null)
-                            host.Groups.Clear();
-                        break;
+                case nameof(IPAddress):
+                    if (IPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                        o.IPv6Address = IPAddress;
+                    else
+                        o.IPv4Address = IPAddress;
+                    return true;
 
-                    case nameof(Groups):
-                        host.Groups.Add(GroupAction, Groups);
-                        break;
+                case nameof(GroupAction):
+                    if (GroupAction == MembershipActions.Replace && Groups == null)
+                        o.Groups.Clear();
+                    return true;
 
-                    case nameof(IPAddress):
-                        if (IPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
-                            host.IPv6Address = IPAddress;
-                        else
-                            host.IPv4Address = IPAddress;
-                        break;
+                case nameof(Groups):
+                    o.Groups.Add(GroupAction, Groups);
+                    return true;
 
-                    case nameof(TagAction):
-                        if (TagAction == MembershipActions.Replace && Tags == null)
-                            host.Tags.Clear();
-                        break;
-
-                    case nameof(Tags):
-                        host.Tags.Add(TagAction, Tags);
-                        break;
-
-                    case nameof(NewName):
-                        host.Name = NewName;
-                        break;
-
-                    default:
-                        host.SetProperty(p, MyInvocation.BoundParameters[p]);
-                        break;
-                }
+                default:
+                    return false;
             }
-
-            host.AcceptChanges(Ignore);
-
-            WriteObject(host);
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using Koopman.CheckPoint.FastUpdate;
+﻿using Koopman.CheckPoint;
+using Koopman.CheckPoint.FastUpdate;
 using System.Management.Automation;
 
 namespace psCheckPoint.Objects.GroupWithExclusion
@@ -44,45 +45,31 @@ namespace psCheckPoint.Objects.GroupWithExclusion
         /// <inheritdoc />
         protected override void Set(string value)
         {
-            var group = Session.UpdateGroupWithExclusion(value);
+            var o = Session.UpdateGroupWithExclusion(value);
+            UpdateProperties(o);
+            o.AcceptChanges(Ignore);
+            WriteObject(o);
+        }
 
-            // Only change values user called
-            foreach (var p in MyInvocation.BoundParameters.Keys)
+        /// <inheritdoc />
+        protected override bool UpdateProperty(IObjectSummary obj, string name, object value)
+        {
+            if (base.UpdateProperty(obj, name, value)) return true;
+
+            var o = (Koopman.CheckPoint.GroupWithExclusion)obj;
+            switch (name)
             {
-                switch (p)
-                {
-                    case nameof(GroupWithExclusion): break;
+                case nameof(Include):
+                    o.SetInclude(Include);
+                    return true;
 
-                    case nameof(Include):
-                        group.SetInclude(Include);
-                        break;
+                case nameof(Except):
+                    o.SetExcept(Except);
+                    return true;
 
-                    case nameof(Except):
-                        group.SetExcept(Except);
-                        break;
-
-                    case nameof(TagAction):
-                        if (TagAction == MembershipActions.Replace && Tags == null)
-                            group.Tags.Clear();
-                        break;
-
-                    case nameof(Tags):
-                        group.Tags.Add(TagAction, Tags);
-                        break;
-
-                    case nameof(NewName):
-                        group.Name = NewName;
-                        break;
-
-                    default:
-                        group.SetProperty(p, MyInvocation.BoundParameters[p]);
-                        break;
-                }
+                default:
+                    return false;
             }
-
-            group.AcceptChanges(Ignore);
-
-            WriteObject(group);
         }
 
         #endregion Methods

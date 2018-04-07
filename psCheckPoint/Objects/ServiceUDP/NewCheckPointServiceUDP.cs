@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Koopman.CheckPoint;
+using System.Linq;
 using System.Management.Automation;
 
 namespace psCheckPoint.Objects.ServiceUDP
@@ -132,32 +133,28 @@ namespace psCheckPoint.Objects.ServiceUDP
         /// <inheritdoc />
         protected override void ProcessRecord()
         {
-            var udp = new Koopman.CheckPoint.ServiceUDP(Session, SetIfExists.IsPresent)
+            var o = new Koopman.CheckPoint.ServiceUDP(Session, SetIfExists.IsPresent);
+            UpdateProperties(o);
+            o.AcceptChanges(Ignore);
+            WriteObject(o);
+        }
+
+        /// <inheritdoc />
+        protected override bool UpdateProperty(IObjectSummary obj, string name, object value)
+        {
+            if (base.UpdateProperty(obj, name, value)) return true;
+
+            var o = (Koopman.CheckPoint.ServiceUDP)obj;
+            switch (name)
             {
-                Name = Name,
-                Color = Color,
-                Comments = Comments,
-                AcceptReplies = AcceptReplies.IsPresent,
-                KeepConnectionsOpenAfterPolicyInstallation = KeepConnectionsOpenAfterPolicyInstallation.IsPresent,
-                MatchByProtocolSignature = MatchByProtocolSignature.IsPresent,
-                MatchForAny = MatchForAny.IsPresent,
-                OverrideDefaultSettings = OverrideDefaultSettings.IsPresent,
-                Port = Port,
-                Protocol = Protocol,
-                SessionTimeout = SessionTimeout,
-                SourcePort = SourcePort,
-                SyncConnectionsOnCluster = SyncConnectionsOnCluster.IsPresent,
-                UseDefaultSessionTimeout = UseDefaultSessionTimeout.IsPresent
-            };
+                case nameof(Groups):
+                    foreach (var g in Groups ?? Enumerable.Empty<string>())
+                        o.Groups.Add(g);
+                    return true;
 
-            foreach (var g in Groups ?? Enumerable.Empty<string>())
-                udp.Groups.Add(g);
-            foreach (var t in Tags ?? Enumerable.Empty<string>())
-                udp.Tags.Add(t);
-
-            udp.AcceptChanges(Ignore);
-
-            WriteObject(udp);
+                default:
+                    return false;
+            }
         }
 
         #endregion Methods
