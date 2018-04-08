@@ -79,28 +79,6 @@
     <Compile Remove="Objects\Misc\GetCheckPointObject.cs" />
     <Compile Remove="Objects\Misc\GetCheckPointObjects.cs" />
     <Compile Remove="Objects\Misc\GetCheckPointWhereUsed.cs" />
-    <Compile Remove="Objects\ServiceGroup\CheckPointServiceGroup.cs" />
-    <Compile Remove="Objects\ServiceGroup\GetCheckPointServiceGroup.cs" />
-    <Compile Remove="Objects\ServiceGroup\GetCheckPointServiceGroups.cs" />
-    <Compile Remove="Objects\ServiceGroup\NewCheckPointServiceGroup.cs" />
-    <Compile Remove="Objects\ServiceGroup\RemoveCheckPointServiceGroup.cs" />
-    <Compile Remove="Objects\ServiceGroup\SetCheckPointServiceGroup.cs" />
-    <Compile Remove="Objects\ServiceTCP\CheckPointServiceTCP.cs" />
-    <Compile Remove="Objects\ServiceTCP\GetCheckPointServicesTCP.cs" />
-    <Compile Remove="Objects\ServiceTCP\GetCheckPointServiceTCP.cs" />
-    <Compile Remove="Objects\ServiceTCP\NewCheckPointServiceTCP.cs" />
-    <Compile Remove="Objects\ServiceTCP\RemoveCheckPointServiceTCP.cs" />
-    <Compile Remove="Objects\ServiceTCP\SetCheckPointServiceTCP.cs" />
-    <Compile Remove="Objects\ServiceUDP\CheckPointServiceUDP.cs" />
-    <Compile Remove="Objects\ServiceUDP\GetCheckPointServicesUDP.cs" />
-    <Compile Remove="Objects\ServiceUDP\GetCheckPointServiceUDP.cs" />
-    <Compile Remove="Objects\ServiceUDP\NewCheckPointServiceUDP.cs" />
-    <Compile Remove="Objects\ServiceUDP\RemoveCheckPointServiceUDP.cs" />
-    <Compile Remove="Objects\ServiceUDP\SetCheckPointServiceUDP.cs" />
-    <Compile Remove="Objects\Service\CheckPointService.cs" />
-    <Compile Remove="Objects\Service\CheckPointServiceBase.cs" />
-    <Compile Remove="Objects\Service\CheckPointServices.cs" />
-    <Compile Remove="Objects\Service\NewCheckPointService.cs" />
     <Compile Remove="Objects\Service\SetCheckPointService.cs" />
     <ContentWithTargetPath Include="@(ViewFiles)">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -157,34 +135,11 @@
     <None Include="Objects\Misc\GetCheckPointObject.cs" />
     <None Include="Objects\Misc\GetCheckPointObjects.cs" />
     <None Include="Objects\Misc\GetCheckPointWhereUsed.cs" />
-    <None Include="Objects\ServiceGroup\CheckPointServiceGroup.cs" />
-    <None Include="Objects\ServiceGroup\GetCheckPointServiceGroup.cs" />
-    <None Include="Objects\ServiceGroup\GetCheckPointServiceGroups.cs" />
-    <None Include="Objects\ServiceGroup\NewCheckPointServiceGroup.cs" />
-    <None Include="Objects\ServiceGroup\RemoveCheckPointServiceGroup.cs" />
-    <None Include="Objects\ServiceGroup\SetCheckPointServiceGroup.cs" />
-    <None Include="Objects\ServiceTCP\CheckPointServiceTCP.cs" />
-    <None Include="Objects\ServiceTCP\GetCheckPointServicesTCP.cs" />
-    <None Include="Objects\ServiceTCP\GetCheckPointServiceTCP.cs" />
-    <None Include="Objects\ServiceTCP\NewCheckPointServiceTCP.cs" />
-    <None Include="Objects\ServiceTCP\RemoveCheckPointServiceTCP.cs" />
-    <None Include="Objects\ServiceTCP\SetCheckPointServiceTCP.cs" />
-    <None Include="Objects\ServiceUDP\CheckPointServiceUDP.cs" />
-    <None Include="Objects\ServiceUDP\GetCheckPointServicesUDP.cs" />
-    <None Include="Objects\ServiceUDP\GetCheckPointServiceUDP.cs" />
-    <None Include="Objects\ServiceUDP\NewCheckPointServiceUDP.cs" />
-    <None Include="Objects\ServiceUDP\RemoveCheckPointServiceUDP.cs" />
-    <None Include="Objects\ServiceUDP\SetCheckPointServiceUDP.cs" />
-    <None Include="Objects\Service\CheckPointService.cs" />
-    <None Include="Objects\Service\CheckPointServiceBase.cs" />
-    <None Include="Objects\Service\CheckPointServices.cs" />
-    <None Include="Objects\Service\NewCheckPointService.cs" />
     <None Include="Objects\Service\SetCheckPointService.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CheckPoint.NET" Version="0.2.0-alpha3" />
-    <PackageReference Include="XmlDoc2CmdletDoc" Version="0.2.10" />
+    <PackageReference Include="CheckPoint.NET" Version="0.2.0-beta1" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">
@@ -196,6 +151,7 @@
   <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
     <Reference Include="System.Management" />
     <PackageReference Include="System.Management.Automation.dll" Version="10.0.10586" />
+    <PackageReference Include="XmlDoc2CmdletDoc" Version="0.2.10" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)' == 'netstandard1.6'">

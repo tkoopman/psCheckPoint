@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Koopman.CheckPoint;
+using Koopman.CheckPoint.FastUpdate;
+using Newtonsoft.Json;
 using System.Management.Automation;
 using System.Runtime.Serialization;
 
@@ -10,35 +12,22 @@ namespace psCheckPoint.Objects.ServiceGroup
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Set-CheckPointGroup -Name Test1 -NewName Test2 -Tags TestTag</code>
+    /// <code>
+    /// Set-CheckPointGroup -Name Test1 -NewName Test2 -Tags TestTag
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Set, "CheckPointServiceGroup")]
-    [OutputType(typeof(CheckPointServiceGroup))]
-    public class SetCheckPointServiceGroup : SetCheckPointObject<CheckPointServiceGroup>
+    [OutputType(typeof(Koopman.CheckPoint.ServiceGroup))]
+    public class SetCheckPointServiceGroup : SetCheckPointCmdlet
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "set-service-group"; } }
+        #region Fields
 
-        [JsonProperty(PropertyName = "members", NullValueHandling = NullValueHandling.Ignore)]
-        private dynamic _members;
+        private string[] _groups;
+        private string[] _members;
 
-        /// <summary>
-        /// <para type="description">Action to take with members.</para>
-        /// </summary>
-        [Parameter]
-        public MembershipActions MemberAction { get; set; } = MembershipActions.Replace;
+        #endregion Fields
 
-        /// <summary>
-        /// <para type="description">Collection of Network objects identified by the name or UID.</para>
-        /// <para type="description">Members listed will be either Added, Removed or replace the current list of members based on MemberAction parameter.</para>
-        /// </summary>
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Members { get; set; }
-
-        [JsonProperty(PropertyName = "groups", NullValueHandling = NullValueHandling.Ignore)]
-        private dynamic _groups;
+        #region Properties
 
         /// <summary>
         /// <para type="description">Action to take with groups.</para>
@@ -48,19 +37,84 @@ namespace psCheckPoint.Objects.ServiceGroup
 
         /// <summary>
         /// <para type="description">Collection of group identifiers.</para>
-        /// <para type="description">Groups listed will be either Added, Removed or replace the current list of group membership based on GroupAction parameter.</para>
+        /// <para type="description">
+        /// Groups listed will be either Added, Removed or replace the current list of group
+        /// membership based on GroupAction parameter.
+        /// </para>
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Groups { get; set; }
+        public string[] Groups { get => _groups; set => _groups = CreateArray(value); }
 
         /// <summary>
-        /// <para type="description">Called when object is being serialized. Used for processing Group Actions.</para>
+        /// <para type="description">Action to take with members.</para>
         /// </summary>
-        protected override void OnSerializing()
+        [Parameter]
+        public MembershipActions MemberAction { get; set; } = MembershipActions.Replace;
+
+        /// <summary>
+        /// <para type="description">Collection of Network objects identified by the name or UID.</para>
+        /// <para type="description">
+        /// Members listed will be either Added, Removed or replace the current list of members based
+        /// on MemberAction parameter.
+        /// </para>
+        /// </summary>
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        public string[] Members { get => _members; set => _members = CreateArray(value); }
+
+        /// <summary>
+        /// <para type="description">Group object, name or UID.</para>
+        /// </summary>
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
+        [Alias("Name", "UID")]
+        public PSObject ServiceGroup { get => Object; set => Object = value; }
+
+        /// <inheritdoc />
+        protected override string InputName => nameof(ServiceGroup);
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void Set(string value)
         {
-            base.OnSerializing();
-            _groups = ProcessGroupAction(GroupAction, Groups);
-            _members = ProcessGroupAction(MemberAction, Members);
+            var o = Session.UpdateServiceGroup(value);
+            UpdateProperties(o);
+            o.AcceptChanges(Ignore);
+            WriteObject(o);
         }
+
+        /// <inheritdoc />
+        protected override bool UpdateProperty(IObjectSummary obj, string name, object value)
+        {
+            if (base.UpdateProperty(obj, name, value)) return true;
+
+            var o = (Koopman.CheckPoint.ServiceGroup)obj;
+            switch (name)
+            {
+                case nameof(GroupAction):
+                    if (GroupAction == MembershipActions.Replace && Groups == null)
+                        o.Groups.Clear();
+                    return true;
+
+                case nameof(Groups):
+                    o.Groups.Add(GroupAction, Groups);
+                    return true;
+
+                case nameof(MemberAction):
+                    if (MemberAction == MembershipActions.Replace && Members == null)
+                        o.Members.Clear();
+                    return true;
+
+                case nameof(Members):
+                    o.Members.Add(MemberAction, Members);
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        #endregion Methods
     }
 }

@@ -8,15 +8,22 @@ namespace psCheckPoint.Objects.ServiceGroup
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Get-CheckPointGroup -Name Test1</code>
+    /// <code>
+    /// Get-CheckPointGroup -Name Test1
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointServiceGroup")]
-    [OutputType(typeof(CheckPointServiceGroup))]
-    public class GetCheckPointServiceGroup : GetCheckPointObject<CheckPointServiceGroup>
+    [OutputType(typeof(Koopman.CheckPoint.ServiceGroup))]
+    public class GetCheckPointServiceGroup : GetCheckPointObject
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "show-service-group"; } }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord()
+        {
+            WriteObject(Session.FindServiceGroup(Value, DetailsLevel));
+        }
+
+        #endregion Methods
     }
 }

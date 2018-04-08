@@ -7,14 +7,32 @@ namespace psCheckPoint.Objects.ServiceUDP
     /// <para type="synopsis">Delete existing object using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example>
-    /// </example>
+    /// <example></example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointServiceUDP")]
     public class RemoveCheckPointServiceUDP : RemoveCheckPointObject
     {
+        #region Properties
+
         /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// <para type="description">Network object, name or UID.</para>
         /// </summary>
-        public override string Command { get { return "delete-service-udp"; } }
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
+        [Alias("Name", "UID")]
+        public PSObject ServiceUDP { get => Object; set => Object = value; }
+
+        /// <inheritdoc />
+        protected override string InputName => nameof(ServiceUDP);
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void Remove(string value)
+        {
+            Session.DeleteServiceUDP(value, Ignore);
+        }
+
+        #endregion Methods
     }
 }

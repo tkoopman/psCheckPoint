@@ -1,4 +1,5 @@
-﻿using Koopman.CheckPoint.FastUpdate;
+﻿using Koopman.CheckPoint;
+using Koopman.CheckPoint.FastUpdate;
 using System.Management.Automation;
 
 namespace psCheckPoint.Objects.SecurityZone
@@ -32,37 +33,10 @@ namespace psCheckPoint.Objects.SecurityZone
         /// <inheritdoc />
         protected override void Set(string value)
         {
-            var zone = Session.UpdateSecurityZone(value);
-
-            // Only change values user called
-            foreach (var p in MyInvocation.BoundParameters.Keys)
-            {
-                switch (p)
-                {
-                    case nameof(SecurityZone): break;
-
-                    case nameof(TagAction):
-                        if (TagAction == MembershipActions.Replace && Tags == null)
-                            zone.Tags.Clear();
-                        break;
-
-                    case nameof(Tags):
-                        zone.Tags.Add(TagAction, Tags);
-                        break;
-
-                    case nameof(NewName):
-                        zone.Name = NewName;
-                        break;
-
-                    default:
-                        zone.SetProperty(p, MyInvocation.BoundParameters[p]);
-                        break;
-                }
-            }
-
-            zone.AcceptChanges(Ignore);
-
-            WriteObject(zone);
+            var o = Session.UpdateSecurityZone(value);
+            UpdateProperties(o);
+            o.AcceptChanges(Ignore);
+            WriteObject(o);
         }
 
         #endregion Methods

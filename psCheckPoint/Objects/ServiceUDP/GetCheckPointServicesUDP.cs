@@ -1,5 +1,4 @@
-﻿using psCheckPoint.Objects.Service;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 
 namespace psCheckPoint.Objects.ServiceUDP
 {
@@ -8,15 +7,34 @@ namespace psCheckPoint.Objects.ServiceUDP
     /// <para type="synopsis">Retrieve all objects.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example>
-    /// </example>
+    /// <example></example>
     [Cmdlet(VerbsCommon.Get, "CheckPointServicesUDP")]
-    [OutputType(typeof(CheckPointServices))]
-    public class GetCheckPointServicesUDP : GetCheckPointObjectsBase<CheckPointServices>
+    [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.ServiceUDP>), ParameterSetName = new string[] { "Limit" })]
+    [OutputType(typeof(Koopman.CheckPoint.ServiceUDP[]), ParameterSetName = new string[] { "All" })]
+    public class GetCheckPointServicesUDP : GetCheckPointObjects
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "show-services-udp"; } }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord()
+        {
+            if (ParameterSetName == "Limit")
+            {
+                WriteObject(
+                    Session.FindServicesUDP(
+                            limit: Limit,
+                            offset: Offset,
+                            detailLevel: DetailsLevel), false);
+            }
+            else
+            {
+                WriteObject(
+                    Session.FindAllServicesUDP(
+                            limit: Limit,
+                            detailLevel: DetailsLevel), false);
+            }
+        }
+
+        #endregion Methods
     }
 }

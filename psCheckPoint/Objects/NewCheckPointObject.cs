@@ -7,10 +7,19 @@ namespace psCheckPoint.Objects
     /// </summary>
     public abstract class NewCheckPointObject : NewCheckPointCmdlet
     {
+        #region Properties
+
         /// <summary>
-        /// <para type="description">If another object with the same identifier already exists, it will be updated. The command behaviour will be the same as if originally a set command was called. Pay attention that original object's fields will be overwritten by the fields provided in the request payload!</para>
+        /// <para type="description">
+        /// If another object with the same identifier already exists, it will be updated. The
+        /// command behaviour will be the same as if originally a set command was called. Pay
+        /// attention that original object's fields will be overwritten by the fields provided in the
+        /// request payload!
+        /// </para>
         /// </summary>
         [Parameter]
         public SwitchParameter SetIfExists { get; set; }
+
+        #endregion Properties
     }
 }
