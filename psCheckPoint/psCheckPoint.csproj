@@ -79,7 +79,6 @@
     <Compile Remove="Objects\Misc\GetCheckPointObject.cs" />
     <Compile Remove="Objects\Misc\GetCheckPointObjects.cs" />
     <Compile Remove="Objects\Misc\GetCheckPointWhereUsed.cs" />
-    <Compile Remove="Objects\Service\SetCheckPointService.cs" />
     <ContentWithTargetPath Include="@(ViewFiles)">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>..\Views\%(FileName)%(Extension)</TargetPath>
@@ -135,7 +134,6 @@
     <None Include="Objects\Misc\GetCheckPointObject.cs" />
     <None Include="Objects\Misc\GetCheckPointObjects.cs" />
     <None Include="Objects\Misc\GetCheckPointWhereUsed.cs" />
-    <None Include="Objects\Service\SetCheckPointService.cs" />
   </ItemGroup>
 
   <ItemGroup>
