@@ -8,12 +8,19 @@ namespace psCheckPoint.Objects.ApplicationCategory
     /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example>
-    /// </example>
+    /// <example></example>
     [Cmdlet(VerbsCommon.Get, "CheckPointApplicationCategory")]
-    [OutputType(typeof(CheckPointApplicationCategory))]
-    public class GetCheckPointApplicationCategory : GetCheckPointObject<CheckPointApplicationCategory>
+    [OutputType(typeof(Koopman.CheckPoint.ApplicationCategory))]
+    public class GetCheckPointApplicationCategory : GetCheckPointObject
     {
-        public override string Command { get { return "show-application-site-category"; } }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord()
+        {
+            WriteObject(Session.FindApplicationCategory(Value, DetailsLevel));
+        }
+
+        #endregion Methods
     }
 }

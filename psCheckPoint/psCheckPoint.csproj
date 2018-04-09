@@ -60,18 +60,6 @@
     <Compile Remove="Objects\AccessRule\CheckPointAccessRuleSummary.cs" />
     <Compile Remove="Objects\AccessRule\GetCheckPointAccessRule.cs" />
     <Compile Remove="Objects\AccessRule\GetCheckPointAccessRuleBase.cs" />
-    <Compile Remove="Objects\ApplicationCategory\CheckPointApplicationCategory.cs" />
-    <Compile Remove="Objects\ApplicationCategory\GetCheckPointApplicationCategories.cs" />
-    <Compile Remove="Objects\ApplicationCategory\GetCheckPointApplicationCategory.cs" />
-    <Compile Remove="Objects\ApplicationCategory\NewCheckPointApplicationCategory.cs" />
-    <Compile Remove="Objects\ApplicationCategory\RemoveCheckPointApplicationCategory.cs" />
-    <Compile Remove="Objects\ApplicationCategory\SetCheckPointApplicationCategory.cs" />
-    <Compile Remove="Objects\Application\CheckPointApplication.cs" />
-    <Compile Remove="Objects\Application\GetCheckPointApplication.cs" />
-    <Compile Remove="Objects\Application\GetCheckPointApplications.cs" />
-    <Compile Remove="Objects\Application\NewCheckPointApplication.cs" />
-    <Compile Remove="Objects\Application\RemoveCheckPointApplication.cs" />
-    <Compile Remove="Objects\Application\SetCheckPointApplication.cs" />
     <Compile Remove="Objects\Group\CheckPointGroup.cs" />
     <Compile Remove="Objects\Host\NewCheckPointHostInterface.cs" />
     <Compile Remove="Objects\Host\RemoveCheckPointHostInterface.cs" />
@@ -116,18 +104,6 @@
     <None Include="Objects\AccessRule\CheckPointAccessRuleSummary.cs" />
     <None Include="Objects\AccessRule\GetCheckPointAccessRule.cs" />
     <None Include="Objects\AccessRule\GetCheckPointAccessRuleBase.cs" />
-    <None Include="Objects\ApplicationCategory\CheckPointApplicationCategory.cs" />
-    <None Include="Objects\ApplicationCategory\GetCheckPointApplicationCategories.cs" />
-    <None Include="Objects\ApplicationCategory\GetCheckPointApplicationCategory.cs" />
-    <None Include="Objects\ApplicationCategory\NewCheckPointApplicationCategory.cs" />
-    <None Include="Objects\ApplicationCategory\RemoveCheckPointApplicationCategory.cs" />
-    <None Include="Objects\ApplicationCategory\SetCheckPointApplicationCategory.cs" />
-    <None Include="Objects\Application\CheckPointApplication.cs" />
-    <None Include="Objects\Application\GetCheckPointApplication.cs" />
-    <None Include="Objects\Application\GetCheckPointApplications.cs" />
-    <None Include="Objects\Application\NewCheckPointApplication.cs" />
-    <None Include="Objects\Application\RemoveCheckPointApplication.cs" />
-    <None Include="Objects\Application\SetCheckPointApplication.cs" />
     <None Include="Objects\Host\NewCheckPointHostInterface.cs" />
     <None Include="Objects\Host\RemoveCheckPointHostInterface.cs" />
     <None Include="Objects\Misc\CheckPointWhereUsed.cs" />
@@ -138,7 +114,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CheckPoint.NET" Version="0.2.0-beta1" />
+    <PackageReference Include="CheckPoint.NET" Version="0.2.1" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">

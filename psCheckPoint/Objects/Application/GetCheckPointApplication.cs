@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 
 namespace psCheckPoint.Objects.Application
 {
@@ -8,19 +7,32 @@ namespace psCheckPoint.Objects.Application
     /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example>
-    /// </example>
-    [Cmdlet(VerbsCommon.Get, "CheckPointApplication")]
-    [OutputType(typeof(CheckPointApplication))]
-    public class GetCheckPointApplication : GetCheckPointObject<CheckPointApplication>
+    /// <example></example>
+    [Cmdlet(VerbsCommon.Get, "CheckPointApplication", DefaultParameterSetName = "By Name or UID")]
+    [OutputType(typeof(Koopman.CheckPoint.ApplicationSite))]
+    public class GetCheckPointApplication : GetCheckPointObject
     {
-        public override string Command { get { return "show-application-site"; } }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord()
+        {
+            if (ParameterSetName.Equals("By Application ID"))
+                WriteObject(Session.FindApplicationSite(ApplicationID, DetailsLevel));
+            else
+                WriteObject(Session.FindApplicationSite(Value, DetailsLevel));
+        }
+
+        #endregion Methods
+
+        #region Properties
 
         /// <summary>
         /// <para type="description">Object application identifier.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "application-id", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(Mandatory = true, ParameterSetName = "By Application ID", ValueFromPipelineByPropertyName = true)]
-        public string ApplicationID { get; set; }
+        public int ApplicationID { get; set; }
+
+        #endregion Properties
     }
 }

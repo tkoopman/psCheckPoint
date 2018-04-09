@@ -37,6 +37,29 @@ namespace psCheckPoint
             }
         }
 
+        internal static void Add<T>(this MembershipChangeTracking<T> obj, MembershipActions action, string[] values)
+        {
+            switch (action)
+            {
+                case MembershipActions.Add:
+                    foreach (var v in values)
+                        obj.Add(v);
+                    break;
+
+                case MembershipActions.Remove:
+                    foreach (var v in values)
+                        obj.Remove(v);
+                    break;
+
+                case MembershipActions.Replace:
+                    obj.Clear();
+                    if (values != null)
+                        foreach (var v in values)
+                            obj.Add(v);
+                    break;
+            }
+        }
+
         internal static T GetProperty<T>(this IObjectSummary obj, string name)
         {
             if (obj == null) throw new ArgumentNullException(nameof(obj));

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Koopman.CheckPoint;
+using System.Linq;
 using System.Management.Automation;
 
 namespace psCheckPoint.Objects.ApplicationCategory
@@ -9,32 +10,63 @@ namespace psCheckPoint.Objects.ApplicationCategory
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code></code>
+    /// <code></code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "CheckPointApplicationCategory")]
-    [OutputType(typeof(CheckPointApplicationCategory))]
-    public class NewCheckPointApplicationCategory : NewCheckPointCmdlet<CheckPointApplicationCategory>
+    [OutputType(typeof(Koopman.CheckPoint.ApplicationCategory))]
+    public class NewCheckPointApplicationCategory : NewCheckPointObject
     {
-        public override string Command { get { return "add-application-site-category"; } }
-
-        /// <summary>
-        /// <para type="description">Collection of group identifiers.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "groups", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Groups
-        {
-            get { return _groups; }
-            set { _groups = CreateArray(value); }
-        }
+        #region Fields
 
         private string[] _groups;
+
+        #endregion Fields
+
+        #region Properties
 
         /// <summary>
         /// <para type="description">A description for the application.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "description")]
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public string Description { get; set; }
+
+        /// <summary>
+        /// <para type="description">Collection of group identifiers.</para>
+        /// </summary>
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        public string[] Groups { get => _groups; set => _groups = CreateArray(value); }
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord()
+        {
+            var o = new Koopman.CheckPoint.ApplicationCategory(Session, SetIfExists.IsPresent) { };
+            UpdateProperties(o);
+            o.AcceptChanges(Ignore);
+            WriteObject(o);
+        }
+
+        /// <inheritdoc />
+        protected override bool UpdateProperty(IObjectSummary obj, string name, object value)
+        {
+            if (base.UpdateProperty(obj, name, value)) return true;
+
+            var o = (Koopman.CheckPoint.ApplicationCategory)obj;
+            switch (name)
+            {
+                case nameof(Groups):
+                    foreach (var g in Groups ?? Enumerable.Empty<string>())
+                        o.Groups.Add(g);
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        #endregion Methods
     }
 }

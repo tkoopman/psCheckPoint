@@ -7,12 +7,34 @@ namespace psCheckPoint.Objects.Application
     /// <para type="synopsis">Retrieve all objects.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example>
-    /// </example>
+    /// <example></example>
     [Cmdlet(VerbsCommon.Get, "CheckPointApplications")]
-    [OutputType(typeof(CheckPointObjects))]
+    [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.ApplicationSite>), ParameterSetName = new string[] { "Limit" })]
+    [OutputType(typeof(Koopman.CheckPoint.ApplicationSite[]), ParameterSetName = new string[] { "All" })]
     public class GetCheckPointApplications : GetCheckPointObjects
     {
-        public override string Command { get { return "show-application-sites"; } }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord()
+        {
+            if (ParameterSetName == "Limit")
+            {
+                WriteObject(
+                    Session.FindApplicationSites(
+                            limit: Limit,
+                            offset: Offset,
+                            detailLevel: DetailsLevel), false);
+            }
+            else
+            {
+                WriteObject(
+                    Session.FindAllApplicationSites(
+                            limit: Limit,
+                            detailLevel: DetailsLevel), false);
+            }
+        }
+
+        #endregion Methods
     }
 }
