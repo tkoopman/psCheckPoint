@@ -63,9 +63,7 @@
     <Compile Remove="Objects\Group\CheckPointGroup.cs" />
     <Compile Remove="Objects\Host\NewCheckPointHostInterface.cs" />
     <Compile Remove="Objects\Host\RemoveCheckPointHostInterface.cs" />
-    <Compile Remove="Objects\Misc\CheckPointWhereUsed.cs" />
     <Compile Remove="Objects\Misc\GetCheckPointCommands.cs" />
-    <Compile Remove="Objects\Misc\GetCheckPointWhereUsed.cs" />
     <ContentWithTargetPath Include="@(ViewFiles)">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>..\Views\%(FileName)%(Extension)</TargetPath>
@@ -104,13 +102,11 @@
     <None Include="Objects\AccessRule\GetCheckPointAccessRuleBase.cs" />
     <None Include="Objects\Host\NewCheckPointHostInterface.cs" />
     <None Include="Objects\Host\RemoveCheckPointHostInterface.cs" />
-    <None Include="Objects\Misc\CheckPointWhereUsed.cs" />
     <None Include="Objects\Misc\GetCheckPointCommands.cs" />
-    <None Include="Objects\Misc\GetCheckPointWhereUsed.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CheckPoint.NET" Version="0.2.2-alpha2" />
+    <PackageReference Include="CheckPoint.NET" Version="0.2.2" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">

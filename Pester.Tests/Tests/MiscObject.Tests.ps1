@@ -19,4 +19,10 @@
 			Get-CheckPointObjects -Session $Session -Unused
 		}
 	}
+
+	Context "Get-CheckPointWhereUsed" {
+		It "Get" {
+			Get-CheckPointWhereUsed -Session $Session -Name domain-udp | Should BeOfType Koopman.CheckPoint.Common.WhereUsed
+		}
+	}
 }

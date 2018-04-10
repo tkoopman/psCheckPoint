@@ -38,10 +38,7 @@ namespace psCheckPoint.Objects.Misc
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
-        {
-            WriteObject(Session.FindObject(UID, DetailsLevel));
-        }
+        protected override void ProcessRecord() => WriteObject(Session.FindObject(UID, DetailsLevel));
 
         #endregion Methods
     }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Koopman.CheckPoint;
 using psCheckPoint.Session;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -13,90 +13,59 @@ namespace psCheckPoint.Objects.Misc
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code>Get-CheckPointWhereUsed -Name http</code>
+    /// <code>
+    /// Get-CheckPointWhereUsed -Name http
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointWhereUsed", DefaultParameterSetName = "By Object")]
-    [OutputType(typeof(CheckPointWhereUsed))]
-    public class GetCheckPointWhereUsed : CheckPointCmdlet<CheckPointWhereUsed>
+    [OutputType(typeof(Koopman.CheckPoint.Common.WhereUsed))]
+    public class GetCheckPointWhereUsed : CheckPointCmdletBase
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "where-used"; } }
+        #region Properties
 
         /// <summary>
-        /// <para type="description">Object unique identifier.</para>
+        /// <para type="description">
+        /// The level of detail for some of the fields in the response can vary from showing only the
+        /// UID value of the object to a fully detailed representation of the object.
+        /// </para>
         /// </summary>
-        [JsonProperty(PropertyName = "uid", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(Mandatory = true, ParameterSetName = "By UID", ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
-        public string UID { get; set; }
-
-        /// <summary>
-        /// <para type="description">Force by UID. Used if pipelining in list of UIDs.</para>
-        /// </summary>
-        [JsonConverter(typeof(SwitchJsonConverter))]
-        [Parameter(ParameterSetName = "By UID")]
-        public SwitchParameter ByUID { get; set; }
-
-        /// <summary>
-        /// <para type="description">Object name.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "name", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(Mandatory = true, ParameterSetName = "By Name", ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// <para type="description">Force by name. Used if pipelining in list of names.</para>
-        /// </summary>
-        [JsonConverter(typeof(SwitchJsonConverter))]
-        [Parameter(ParameterSetName = "By Name")]
-        public SwitchParameter ByName { get; set; }
-
-        /// <summary>
-        /// <para type="description">Check Point Object.</para>
-        /// </summary>
-        [Parameter(Mandatory = true, ParameterSetName = "By Object", ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
-        [PSDefaultValue(Value = null)]
-        public CheckPointObject Object { set { UID = value.UID; } }
+        [Parameter]
+        public DetailLevels DetailsLevel { get; set; } = DetailLevels.Standard;
 
         /// <summary>
         /// <para type="description">Search for indirect usage.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "indirect", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [JsonConverter(typeof(SwitchJsonConverter))]
         [Parameter]
         public SwitchParameter Indirect { get; set; }
 
         /// <summary>
         /// <para type="description">Maximum nesting level during indirect usage search.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "indirect-max-depth", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [DefaultValue(5)]
         [Parameter]
         public int IndirectMaxDepth { get; set; } = 5;
 
         /// <summary>
-        /// For running PowerShell Cmdlet from another C# class
+        /// <para type="description">Check Point Object.</para>
         /// </summary>
-        /// <param name="Session">Open Check Point session that will be used for running command</param>
-        /// <param name="obj">Object to be run against.</param>
-        /// <param name="indirect">Weather to include indirect uses.</param>
-        /// <returns>Object contains results.</returns>
-        public static CheckPointWhereUsed Run(CheckPointSession Session, CheckPointObject obj, bool indirect)
-        {
-            using (PowerShell PSI = PowerShell.Create())
-            {
-                PSI.AddCommand(new CmdletInfo("Get-CheckPointWhereUsed", typeof(GetCheckPointWhereUsed)));
-                PSI.AddParameter("Session", Session);
-                PSI.AddParameter("UID", obj.UID);
-                if (indirect)
-                {
-                    PSI.AddParameter("Indirect");
-                }
+        [Parameter(Mandatory = true, ParameterSetName = "By Object", ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
+        [PSDefaultValue(Value = null)]
+        public IObjectSummary Object { set => Value = value.UID; }
 
-                Collection<CheckPointWhereUsed> results = PSI.Invoke<CheckPointWhereUsed>();
-                return results.First();
-            }
-        }
+        /// <summary>
+        /// <para type="description">Object name or UID.</para>
+        /// </summary>
+        [Parameter(Position = 1, ParameterSetName = "By Name or UID", Mandatory = true, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true)]
+        [Alias("Name", "UID")]
+        public string Value { get; set; }
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord() => WriteObject(Session.FindWhereUsed(Value, DetailsLevel, Indirect, IndirectMaxDepth));
+
+        #endregion Methods
     }
 }
