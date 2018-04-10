@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Koopman.CheckPoint;
+using Koopman.CheckPoint.Common;
+using psCheckPoint;
 using System.ComponentModel;
 using System.Management.Automation;
 
@@ -8,27 +10,68 @@ namespace psCheckPoint.Objects.Misc
     /// <api cmd="show-unused-objects">Get-CheckPointObjects</api>
     /// <summary>
     /// <para type="synopsis">Find objects by Filter.</para>
-    /// <para type="description">Can find many different types of objects based on a filter. Filters are same as what can be used in Smart Console</para>
+    /// <para type="description">
+    /// Can find many different types of objects based on a filter. Filters are same as what can be
+    /// used in Smart Console
+    /// </para>
     /// </summary>
     /// <example>
-    /// <code>Get-CheckPointObjects -Filter "O365 OR Office365"</code>
+    /// <code>
+    /// Get-CheckPointObjects -Filter "O365 OR Office365"
+    /// </code>
     /// </example>
     /// <example>
-    /// <code>Get-CheckPointObjects -Unused</code>
+    /// <code>
+    /// Get-CheckPointObjects -Unused
+    /// </code>
     /// </example>
-    [Cmdlet(VerbsCommon.Get, "CheckPointObjects", DefaultParameterSetName = "Limit + Filter")]
-    [OutputType(typeof(CheckPointObjects))]
-    public class GetCheckPointObjects : CheckPointCmdlet<CheckPointObjects>
+    [Cmdlet(VerbsCommon.Get, "CheckPointObjects", DefaultParameterSetName = GetCheckPointObjectsStatic.LimitFilter)]
+    [OutputType(typeof(IObjectSummary), ParameterSetName = new string[] { GetCheckPointObjectsStatic.AllFilter, GetCheckPointObjectsStatic.AllUnused })]
+    [OutputType(typeof(ObjectsPagingResults<IObjectSummary>), ParameterSetName = new string[] { GetCheckPointObjectsStatic.LimitFilter, GetCheckPointObjectsStatic.LimitUnused })]
+    public class GetCheckPointObjects : CheckPointCmdletBase
     {
+        #region Properties
+
         /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// <para type="description">Get All Records</para>
         /// </summary>
-        public override string Command { get { return (Unused.IsPresent) ? "show-unused-objects" : "show-objects"; } }
+        [Parameter(ParameterSetName = GetCheckPointObjectsStatic.AllFilter, Mandatory = true)]
+        [Parameter(ParameterSetName = GetCheckPointObjectsStatic.AllUnused, Mandatory = true)]
+        public SwitchParameter All { get; set; }
+
+        /// <summary>
+        /// The level of detail for some of the fields in the response can vary from showing only the
+        /// UID value of the object to a fully detailed representation of the object.
+        /// </summary>
+        /// <value>The details level.</value>
+        [Parameter]
+        public DetailLevels DetailsLevel { get; set; } = DetailLevels.Standard;
+
+        /// <summary>
+        /// <para type="description">
+        /// Search expression to filter objects by. The provided text should be exactly the same as
+        /// it would be given in Smart Console. The logical operators in the expression ('AND', 'OR')
+        /// should be provided in capital letters. By default, the search involves both a textual
+        /// search and a IP search. To use IP search only, set the "ip-only" parameter to true.
+        /// </para>
+        /// </summary>
+        [Parameter(ParameterSetName = GetCheckPointObjectsStatic.LimitFilter)]
+        [Parameter(ParameterSetName = GetCheckPointObjectsStatic.AllFilter)]
+        public string Filter { get; set; }
+
+        /// <summary>
+        /// <para type="description">
+        /// If using "filter", use this field to search objects by their IP address only, without
+        /// involving the textual search.
+        /// </para>
+        /// </summary>
+        [Parameter(ParameterSetName = GetCheckPointObjectsStatic.LimitFilter)]
+        [Parameter(ParameterSetName = GetCheckPointObjectsStatic.AllFilter)]
+        public SwitchParameter IPOnly { get; set; }
 
         /// <summary>
         /// <para type="description">No more than that many results will be returned.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "limit", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter]
         [ValidateRange(1, 500)]
         public int Limit { get; set; } = 50;
@@ -36,73 +79,90 @@ namespace psCheckPoint.Objects.Misc
         /// <summary>
         /// <para type="description">Skip that many results before beginning to return them.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "offset", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ParameterSetName = "Limit + Filter")]
-        [Parameter(ParameterSetName = "Limit + Unused")]
+        [Parameter(ParameterSetName = GetCheckPointObjectsStatic.LimitFilter)]
+        [Parameter(ParameterSetName = GetCheckPointObjectsStatic.LimitUnused)]
         public int Offset { get; set; } = 0;
-
-        /// <summary>
-        /// <para type="description">Get All Records</para>
-        /// </summary>
-        [Parameter(ParameterSetName = "All + Filter", Mandatory = true)]
-        [Parameter(ParameterSetName = "All + Unused", Mandatory = true)]
-        public SwitchParameter All { get; set; }
-
-        /// <summary>
-        /// <para type="description">Retrieve all unused objects.</para>
-        /// </summary>
-        [Parameter(ParameterSetName = "Limit + Unused", Mandatory = true)]
-        [Parameter(ParameterSetName = "All + Unused", Mandatory = true)]
-        public SwitchParameter Unused { get; set; }
-
-        /// <summary>
-        /// <para type="description">Search expression to filter objects by. The provided text should be exactly the same as it would be given in Smart Console. The logical operators in the expression ('AND', 'OR') should be provided in capital letters. By default, the search involves both a textual search and a IP search. To use IP search only, set the "ip-only" parameter to true.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "filter", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        [Parameter(ParameterSetName = "Limit + Filter")]
-        [Parameter(ParameterSetName = "All + Filter")]
-        public string Filter { get; set; }
-
-        /// <summary>
-        /// <para type="description">If using "filter", use this field to search objects by their IP address only, without involving the textual search.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ip-only", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [JsonConverter(typeof(SwitchJsonConverter))]
-        [Parameter(ParameterSetName = "Limit + Filter")]
-        [Parameter(ParameterSetName = "All + Filter")]
-        public SwitchParameter IPOnly { get; set; }
 
         /// <summary>
         /// <para type="description">The objects' type</para>
         /// </summary>
-        [JsonProperty(PropertyName = "type", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         [DefaultValue("object")]
-        [Parameter(ParameterSetName = "Limit + Filter")]
-        [Parameter(ParameterSetName = "All + Filter")]
+        [Parameter(ParameterSetName = GetCheckPointObjectsStatic.LimitFilter)]
+        [Parameter(ParameterSetName = GetCheckPointObjectsStatic.AllFilter)]
         [ValidateSet("object", "host", "network", "group", "address-range", "multicast-address-range", "group-with-exclusion", "simple-gateway", "security-zone", "time", "time-group", "access-role", "dynamic-object", "trusted-client", "tag", "dns-domain", "opsec-application",
             "service-tcp", "service-udp", "service-icmp", "service-icmp6", "service-sctp", "service-other", "service-group",
             IgnoreCase = false)]
         public string Type { get; set; } = "object";
 
-        protected override void WriteRecordResponse(CheckPointObjects result)
-        {
-            if (ParameterSetName.StartsWith("Limit"))
-            {
-                base.WriteRecordResponse(result);
-            }
-            else
-            {
-                foreach (object r in result)
-                {
-                    WriteObject(r);
-                }
+        /// <summary>
+        /// <para type="description">Retrieve all unused objects.</para>
+        /// </summary>
+        [Parameter(ParameterSetName = GetCheckPointObjectsStatic.LimitUnused, Mandatory = true)]
+        [Parameter(ParameterSetName = GetCheckPointObjectsStatic.AllUnused, Mandatory = true)]
+        public SwitchParameter Unused { get; set; }
 
-                if (result.To != result.Total)
-                {
-                    Offset = result.To;
-                    ProcessRecord();
-                }
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord()
+        {
+            switch (ParameterSetName)
+            {
+                case GetCheckPointObjectsStatic.AllFilter:
+                    WriteObject(Session.FindAllObjects(
+                        filter: Filter,
+                        type: Type,
+                        ipOnly: IPOnly.IsPresent,
+                        detailLevel: DetailsLevel,
+                        limit: Limit
+                        ));
+                    break;
+
+                case GetCheckPointObjectsStatic.AllUnused:
+                    WriteObject(Session.FindAllUnusedObjects(
+                        detailLevel: DetailsLevel,
+                        limit: Limit
+                        ));
+                    break;
+
+                case GetCheckPointObjectsStatic.LimitFilter:
+                    WriteObject(Session.FindObjects(
+                        filter: Filter,
+                        type: Type,
+                        ipOnly: IPOnly.IsPresent,
+                        detailLevel: DetailsLevel,
+                        limit: Limit,
+                        offset: Offset
+                        ));
+                    break;
+
+                case GetCheckPointObjectsStatic.LimitUnused:
+                    WriteObject(Session.FindUnusedObjects(
+                        detailLevel: DetailsLevel,
+                        limit: Limit,
+                        offset: Offset
+                        ));
+                    break;
+
+                default:
+                    throw new PSNotSupportedException($"Unknown parameter set name: {ParameterSetName}");
             }
         }
+
+        #endregion Methods
+    }
+
+    internal static class GetCheckPointObjectsStatic
+    {
+        #region Fields
+
+        internal const string AllFilter = "All + Filter";
+        internal const string AllUnused = "All + Unused";
+        internal const string LimitFilter = "Limit + Filter";
+        internal const string LimitUnused = "Limit + Unused";
+
+        #endregion Fields
     }
 }

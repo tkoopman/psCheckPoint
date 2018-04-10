@@ -1,7 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel;
-using System.Linq;
+﻿using Koopman.CheckPoint;
 using System.Management.Automation;
 
 namespace psCheckPoint.Objects.Misc
@@ -12,41 +9,40 @@ namespace psCheckPoint.Objects.Misc
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code>Get-CheckPointObject -UID "12345678-1234-1234-1234-123456789abc" | Get-CheckPointFullObject</code>
+    /// <code>
+    /// Get-CheckPointObject -UID "12345678-1234-1234-1234-123456789abc"
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointObject")]
-    [OutputType(typeof(CheckPointObject))]
-    public class GetCheckPointObject : CheckPointCmdlet<CheckPointObject>
+    [OutputType(typeof(Koopman.CheckPoint.IObjectSummary))]
+    public class GetCheckPointObject : CheckPointCmdletBase
     {
+        #region Properties
+
         /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// The level of detail for some of the fields in the response can vary from showing only the
+        /// UID value of the object to a fully detailed representation of the object.
         /// </summary>
-        public override string Command { get { return "show-object"; } }
+        /// <value>The details level.</value>
+        [Parameter]
+        public DetailLevels DetailsLevel { get; set; } = DetailLevels.Standard;
 
         /// <summary>
         /// <para type="description">Object unique identifier.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "uid", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public string UID { get; set; }
 
-        /// <summary>
-        /// <para type="description">The level of detail for some of the fields in the response can vary from showing only the UID value of the object to a fully detailed representation of the object.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "details-level", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [DefaultValue("standard")]
-        protected string DetailsLevel { get; set; } = "standard";
+        #endregion Properties
 
-        protected override CheckPointObject ProcessRecordResponse(string JSON)
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord()
         {
-            // Debug Output Request
-            WriteDebug($@"JSON Response
-{JSON}");
-
-            JObject results = JObject.Parse(JSON);
-            CheckPointObject result = results["object"].ToObject<CheckPointObject>();
-
-            return result;
+            WriteObject(Session.FindObject(UID, DetailsLevel));
         }
+
+        #endregion Methods
     }
 }
