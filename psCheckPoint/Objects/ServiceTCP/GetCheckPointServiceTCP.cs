@@ -15,10 +15,7 @@ namespace psCheckPoint.Objects.ServiceTCP
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
-        {
-            WriteObject(Session.FindServiceTCP(Value, DetailsLevel));
-        }
+        protected override void ProcessRecord() => WriteObject(Session.FindServiceTCP(Value, DetailsLevel));
 
         #endregion Methods
     }

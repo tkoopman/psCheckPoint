@@ -28,10 +28,7 @@ namespace psCheckPoint.Objects.MulticastAddressRange
         #region Methods
 
         /// <inheritdoc />
-        protected override void Remove(string value)
-        {
-            Session.DeleteMulticastAddressRange(value, Ignore);
-        }
+        protected override void Remove(string value) => Session.DeleteMulticastAddressRange(value, Ignore);
 
         #endregion Methods
     }

@@ -27,7 +27,7 @@ namespace psCheckPoint.Objects.SecurityZone
                 Comments = Comments
             };
 
-            foreach (var t in Tags ?? Enumerable.Empty<string>())
+            foreach (string t in Tags ?? Enumerable.Empty<string>())
                 zone.Tags.Add(t);
 
             zone.AcceptChanges(Ignore);

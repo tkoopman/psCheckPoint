@@ -32,10 +32,7 @@ namespace psCheckPoint.Objects.Host
         #region Methods
 
         /// <inheritdoc />
-        protected override void Remove(string value)
-        {
-            Session.DeleteHost(value, Ignore);
-        }
+        protected override void Remove(string value) => Session.DeleteHost(value, Ignore);
 
         #endregion Methods
     }

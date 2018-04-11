@@ -19,10 +19,7 @@ namespace psCheckPoint.Objects.ServiceGroup
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
-        {
-            WriteObject(Session.FindServiceGroup(Value, DetailsLevel));
-        }
+        protected override void ProcessRecord() => WriteObject(Session.FindServiceGroup(Value, DetailsLevel));
 
         #endregion Methods
     }

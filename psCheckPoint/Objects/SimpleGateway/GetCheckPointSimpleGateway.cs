@@ -15,10 +15,7 @@ namespace psCheckPoint.Objects.SimpleGateway
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
-        {
-            WriteObject(Session.FindSimpleGateway(Value, DetailsLevel));
-        }
+        protected override void ProcessRecord() => WriteObject(Session.FindSimpleGateway(Value, DetailsLevel));
 
         #endregion Methods
     }

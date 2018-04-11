@@ -58,7 +58,7 @@ namespace psCheckPoint.Objects.ApplicationCategory
             switch (name)
             {
                 case nameof(Groups):
-                    foreach (var g in Groups ?? Enumerable.Empty<string>())
+                    foreach (string g in Groups ?? Enumerable.Empty<string>())
                         o.Groups.Add(g);
                     return true;
 

@@ -1,8 +1,7 @@
-﻿using System.ComponentModel;
+﻿using Koopman.CheckPoint;
+using Koopman.CheckPoint.Common;
 using System.Linq;
 using System.Management.Automation;
-using Koopman.CheckPoint;
-using Koopman.CheckPoint.Common;
 
 namespace psCheckPoint
 {
@@ -32,7 +31,7 @@ namespace psCheckPoint
             {
                 case nameof(Tags):
                     var tags = obj.GetProperty<MemberMembershipChangeTracking<Tag>>("Tags");
-                    foreach (var t in Tags ?? Enumerable.Empty<string>())
+                    foreach (string t in Tags ?? Enumerable.Empty<string>())
                         tags.Add(t);
                     return true;
 

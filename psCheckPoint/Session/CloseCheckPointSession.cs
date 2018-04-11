@@ -9,27 +9,43 @@ namespace psCheckPoint.Session
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Close-CheckPointSession</code>
+    /// <code>
+    /// Close-CheckPointSession
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Close, "CheckPointSession")]
     public class CloseCheckPointSession : CheckPointCmdletBase
     {
+        #region Fields
+
+        private bool IsPSSession = false;
+
+        #endregion Fields
+
+        #region Properties
+
         /// <summary>
-        /// <para type="description">The session will be continued next time your open SmartConsole. In case 'uid' is not provided, use current session. In order for the session to pass successfully to SmartConsole, make sure you don't have any other active GUI sessions.</para>
+        /// <para type="description">
+        /// The session will be continued next time your open SmartConsole. In case 'uid' is not
+        /// provided, use current session. In order for the session to pass successfully to
+        /// SmartConsole, make sure you don't have any other active GUI sessions.
+        /// </para>
         /// </summary>
         [Parameter]
         public SwitchParameter ContinueSessionInSmartconsole { get; set; }
 
-        private bool IsPSSession = false;
+        #endregion Properties
 
-        /// <inheritdoc/>
+        #region Methods
+
+        /// <inheritdoc />
         protected override void BeginProcessing()
         {
             IsPSSession = (Session == null);
             base.BeginProcessing();
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         protected override void ProcessRecord()
         {
             if (ContinueSessionInSmartconsole.IsPresent)
@@ -41,5 +57,7 @@ namespace psCheckPoint.Session
 
             if (IsPSSession) { SessionState.PSVariable.Remove("CheckPointSession"); }
         }
+
+        #endregion Methods
     }
 }

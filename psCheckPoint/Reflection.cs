@@ -1,12 +1,8 @@
 ﻿using Koopman.CheckPoint;
 using Koopman.CheckPoint.Common;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace psCheckPoint
 {
@@ -19,19 +15,19 @@ namespace psCheckPoint
             switch (action)
             {
                 case MembershipActions.Add:
-                    foreach (var v in values)
+                    foreach (string v in values)
                         obj.Add(v);
                     break;
 
                 case MembershipActions.Remove:
-                    foreach (var v in values)
+                    foreach (string v in values)
                         obj.Remove(v);
                     break;
 
                 case MembershipActions.Replace:
                     obj.Clear();
                     if (values != null)
-                        foreach (var v in values)
+                        foreach (string v in values)
                             obj.Add(v);
                     break;
             }
@@ -42,19 +38,19 @@ namespace psCheckPoint
             switch (action)
             {
                 case MembershipActions.Add:
-                    foreach (var v in values)
+                    foreach (string v in values)
                         obj.Add(v);
                     break;
 
                 case MembershipActions.Remove:
-                    foreach (var v in values)
+                    foreach (string v in values)
                         obj.Remove(v);
                     break;
 
                 case MembershipActions.Replace:
                     obj.Clear();
                     if (values != null)
-                        foreach (var v in values)
+                        foreach (string v in values)
                             obj.Add(v);
                     break;
             }
@@ -65,7 +61,7 @@ namespace psCheckPoint
             if (obj == null) throw new ArgumentNullException(nameof(obj));
             if (name == null) throw new ArgumentNullException(nameof(name));
 
-            PropertyInfo prop = obj.GetType().GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
+            var prop = obj.GetType().GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
             if (prop != null && prop.CanRead)
                 return (T)prop.GetValue(obj);
             else
@@ -77,7 +73,7 @@ namespace psCheckPoint
             if (obj == null) throw new ArgumentNullException(nameof(obj));
             if (name == null) throw new ArgumentNullException(nameof(name));
 
-            PropertyInfo prop = obj.GetType().GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
+            var prop = obj.GetType().GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
             if (prop != null && prop.CanWrite)
             {
                 if (value is SwitchParameter sp) value = sp.IsPresent;

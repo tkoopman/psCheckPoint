@@ -15,10 +15,7 @@ namespace psCheckPoint.Objects.SecurityZone
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
-        {
-            WriteObject(Session.FindSecurityZone(Value, DetailsLevel));
-        }
+        protected override void ProcessRecord() => WriteObject(Session.FindSecurityZone(Value, DetailsLevel));
 
         #endregion Methods
     }

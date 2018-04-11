@@ -28,10 +28,7 @@ namespace psCheckPoint.Objects.AddressRange
         #region Methods
 
         /// <inheritdoc />
-        protected override void Remove(string value)
-        {
-            Session.DeleteAddressRange(value, Ignore);
-        }
+        protected override void Remove(string value) => Session.DeleteAddressRange(value, Ignore);
 
         #endregion Methods
     }

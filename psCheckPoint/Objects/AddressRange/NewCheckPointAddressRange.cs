@@ -107,9 +107,9 @@ namespace psCheckPoint.Objects.AddressRange
                 IPv6AddressLast = IPv6AddressLast
             };
 
-            foreach (var g in Groups ?? Enumerable.Empty<string>())
+            foreach (string g in Groups ?? Enumerable.Empty<string>())
                 addressRange.Groups.Add(g);
-            foreach (var t in Tags ?? Enumerable.Empty<string>())
+            foreach (string t in Tags ?? Enumerable.Empty<string>())
                 addressRange.Tags.Add(t);
 
             addressRange.AcceptChanges(Ignore);

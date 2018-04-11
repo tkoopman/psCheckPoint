@@ -1,6 +1,5 @@
 ﻿using Koopman.CheckPoint;
 using Koopman.CheckPoint.Common;
-using psCheckPoint;
 using System.ComponentModel;
 using System.Management.Automation;
 

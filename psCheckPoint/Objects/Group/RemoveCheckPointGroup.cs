@@ -32,10 +32,7 @@ namespace psCheckPoint.Objects.Group
         #region Methods
 
         /// <inheritdoc />
-        protected override void Remove(string value)
-        {
-            Session.DeleteGroup(value, Ignore);
-        }
+        protected override void Remove(string value) => Session.DeleteGroup(value, Ignore);
 
         #endregion Methods
     }

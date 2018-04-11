@@ -30,10 +30,7 @@ namespace psCheckPoint.Session
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
-        {
-            ProcessObject(ResetSession);
-        }
+        protected override void ProcessRecord() => ProcessObject(ResetSession);
 
         private void ProcessObject(object obj)
         {

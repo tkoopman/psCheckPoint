@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 
 namespace psCheckPoint.Objects.Misc
 {
@@ -25,10 +24,7 @@ namespace psCheckPoint.Objects.Misc
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
-        {
-            WriteObject(Session.FindTask(TaskID));
-        }
+        protected override void ProcessRecord() => WriteObject(Session.FindTask(TaskID));
 
         #endregion Methods
     }

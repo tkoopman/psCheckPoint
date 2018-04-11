@@ -28,10 +28,7 @@ namespace psCheckPoint.Objects.GroupWithExclusion
         #region Methods
 
         /// <inheritdoc />
-        protected override void Remove(string value)
-        {
-            Session.DeleteGroupWithExclusion(value, Ignore);
-        }
+        protected override void Remove(string value) => Session.DeleteGroupWithExclusion(value, Ignore);
 
         #endregion Methods
     }

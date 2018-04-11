@@ -8,15 +8,18 @@ namespace psCheckPoint.Session
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Send-CheckPointKeepAlive</code>
+    /// <code>
+    /// Send-CheckPointKeepAlive
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommunications.Send, "CheckPointKeepAlive")]
     public class SendCheckPointKeepAlive : CheckPointCmdletBase
     {
-        /// <inheritdoc/>
-        protected override void ProcessRecord()
-        {
-            Session.SendKeepAlive();
-        }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord() => Session.SendKeepAlive();
+
+        #endregion Methods
     }
 }

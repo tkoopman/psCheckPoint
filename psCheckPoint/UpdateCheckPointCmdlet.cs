@@ -1,9 +1,5 @@
 ﻿using Koopman.CheckPoint;
-using Koopman.CheckPoint.Common;
-using System;
-using System.ComponentModel;
 using System.Management.Automation;
-using System.Reflection;
 
 namespace psCheckPoint
 {
@@ -51,8 +47,8 @@ namespace psCheckPoint
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public string[] Tags
         {
-            get { return _tags; }
-            set { _tags = CreateArray(value); }
+            get => _tags;
+            set => _tags = CreateArray(value);
         }
 
         #endregion Properties
@@ -66,7 +62,7 @@ namespace psCheckPoint
         protected void UpdateProperties(IObjectSummary obj)
         {
             // Only change values user called
-            foreach (var p in MyInvocation.BoundParameters.Keys)
+            foreach (string p in MyInvocation.BoundParameters.Keys)
             {
                 switch (p)
                 {
@@ -105,10 +101,7 @@ namespace psCheckPoint
         /// <c>true</c> if property was handled. <c>false</c> if it was not which will case the
         /// default basic set to happen.
         /// </returns>
-        protected virtual bool UpdateProperty(IObjectSummary obj, string name, object value)
-        {
-            return false;
-        }
+        protected virtual bool UpdateProperty(IObjectSummary obj, string name, object value) => false;
 
         /// <summary>
         /// Writes the object only if PassThru is set.

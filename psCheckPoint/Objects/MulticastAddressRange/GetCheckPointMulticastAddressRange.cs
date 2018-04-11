@@ -15,10 +15,7 @@ namespace psCheckPoint.Objects.MulticastAddressRange
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
-        {
-            WriteObject(Session.FindMulticastAddressRange(Value, DetailsLevel));
-        }
+        protected override void ProcessRecord() => WriteObject(Session.FindMulticastAddressRange(Value, DetailsLevel));
 
         #endregion Methods
     }

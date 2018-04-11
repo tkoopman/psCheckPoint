@@ -1,7 +1,6 @@
 ﻿using Koopman.CheckPoint;
 using Koopman.CheckPoint.Common;
 using System.Collections;
-using System.ComponentModel;
 using System.Management.Automation;
 
 namespace psCheckPoint
@@ -40,10 +39,7 @@ namespace psCheckPoint
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
-        {
-            ProcessObject(Object);
-        }
+        protected override void ProcessRecord() => ProcessObject(Object);
 
         /// <summary>
         /// Sets the specified object.

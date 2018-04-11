@@ -8,22 +8,31 @@ namespace psCheckPoint.Objects.Session
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code>Get-CheckPointSession</code>
+    /// <code>
+    /// Get-CheckPointSession
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointSession")]
     [OutputType(typeof(Koopman.CheckPoint.SessionInfo))]
     public class GetCheckPointSession : CheckPointCmdletBase
     {
+        #region Properties
+
         /// <summary>
-        /// <para type="description">Session unique identifier. If not provided the current logged in session UID will be used.</para>
+        /// <para type="description">
+        /// Session unique identifier. If not provided the current logged in session UID will be used.
+        /// </para>
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
         public string UID { get; set; }
 
-        /// <inheritdoc/>
-        protected override void ProcessRecord()
-        {
-            WriteObject(Session.FindSession(UID));
-        }
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord() => WriteObject(Session.FindSession(UID));
+
+        #endregion Methods
     }
 }

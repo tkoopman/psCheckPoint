@@ -2,8 +2,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Management.Automation;
 using System.Threading;
 
@@ -55,10 +53,7 @@ namespace psCheckPoint.Objects.Misc
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
-        {
-            ProcessObject(Task);
-        }
+        protected override void ProcessRecord() => ProcessObject(Task);
 
         /// <summary>
         /// Stops the processing.

@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Linq;
+﻿using System.Linq;
 using System.Management.Automation;
 
 namespace psCheckPoint.Objects.ServiceGroup
@@ -51,11 +50,11 @@ namespace psCheckPoint.Objects.ServiceGroup
                 Comments = Comments
             };
 
-            foreach (var g in Groups ?? Enumerable.Empty<string>())
+            foreach (string g in Groups ?? Enumerable.Empty<string>())
                 group.Groups.Add(g);
-            foreach (var m in Members ?? Enumerable.Empty<string>())
+            foreach (string m in Members ?? Enumerable.Empty<string>())
                 group.Members.Add(m);
-            foreach (var t in Tags ?? Enumerable.Empty<string>())
+            foreach (string t in Tags ?? Enumerable.Empty<string>())
                 group.Tags.Add(t);
 
             group.AcceptChanges(Ignore);

@@ -28,10 +28,7 @@ namespace psCheckPoint.Objects.SecurityZone
         #region Methods
 
         /// <inheritdoc />
-        protected override void Remove(string value)
-        {
-            Session.DeleteSecurityZone(value, Ignore);
-        }
+        protected override void Remove(string value) => Session.DeleteSecurityZone(value, Ignore);
 
         #endregion Methods
     }

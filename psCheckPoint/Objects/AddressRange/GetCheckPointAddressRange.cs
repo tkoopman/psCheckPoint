@@ -15,10 +15,7 @@ namespace psCheckPoint.Objects.AddressRange
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
-        {
-            WriteObject(Session.FindAddressRange(Value, DetailsLevel));
-        }
+        protected override void ProcessRecord() => WriteObject(Session.FindAddressRange(Value, DetailsLevel));
 
         #endregion Methods
     }

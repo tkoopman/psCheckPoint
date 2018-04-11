@@ -46,7 +46,7 @@ namespace psCheckPoint.Objects.GroupWithExclusion
             group.SetInclude(Include);
             group.SetExcept(Except);
 
-            foreach (var t in Tags ?? Enumerable.Empty<string>())
+            foreach (string t in Tags ?? Enumerable.Empty<string>())
                 group.Tags.Add(t);
 
             group.AcceptChanges(Ignore);

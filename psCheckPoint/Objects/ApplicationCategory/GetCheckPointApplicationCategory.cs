@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 
 namespace psCheckPoint.Objects.ApplicationCategory
 {
@@ -16,10 +15,7 @@ namespace psCheckPoint.Objects.ApplicationCategory
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
-        {
-            WriteObject(Session.FindApplicationCategory(Value, DetailsLevel));
-        }
+        protected override void ProcessRecord() => WriteObject(Session.FindApplicationCategory(Value, DetailsLevel));
 
         #endregion Methods
     }

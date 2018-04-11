@@ -28,10 +28,7 @@ namespace psCheckPoint.Objects.ServiceTCP
         #region Methods
 
         /// <inheritdoc />
-        protected override void Remove(string value)
-        {
-            Session.DeleteServiceTCP(value, Ignore);
-        }
+        protected override void Remove(string value) => Session.DeleteServiceTCP(value, Ignore);
 
         #endregion Methods
     }

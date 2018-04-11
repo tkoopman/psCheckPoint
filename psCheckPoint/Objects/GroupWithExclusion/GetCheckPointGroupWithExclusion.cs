@@ -15,10 +15,7 @@ namespace psCheckPoint.Objects.GroupWithExclusion
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
-        {
-            WriteObject(Session.FindGroupWithExclusion(Value, DetailsLevel));
-        }
+        protected override void ProcessRecord() => WriteObject(Session.FindGroupWithExclusion(Value, DetailsLevel));
 
         #endregion Methods
     }

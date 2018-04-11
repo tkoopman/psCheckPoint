@@ -127,7 +127,7 @@ namespace psCheckPoint.Session
         {
             try
             {
-                Koopman.CheckPoint.Session session = new Koopman.CheckPoint.Session(
+                var session = new Koopman.CheckPoint.Session(
                     managementServer: ManagementServer,
                     domain: Domain,
                     userName: Credentials.GetNetworkCredential().UserName,
@@ -150,7 +150,7 @@ namespace psCheckPoint.Session
             catch (Exception e)
             {
                 while (e.InnerException != null) e = e.InnerException;
-                this.WriteError(new ErrorRecord(e, e.Message, ErrorCategory.ConnectionError, this));
+                WriteError(new ErrorRecord(e, e.Message, ErrorCategory.ConnectionError, this));
             }
         }
 

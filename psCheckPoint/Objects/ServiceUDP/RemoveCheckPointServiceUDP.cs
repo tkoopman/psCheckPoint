@@ -28,10 +28,7 @@ namespace psCheckPoint.Objects.ServiceUDP
         #region Methods
 
         /// <inheritdoc />
-        protected override void Remove(string value)
-        {
-            Session.DeleteServiceUDP(value, Ignore);
-        }
+        protected override void Remove(string value) => Session.DeleteServiceUDP(value, Ignore);
 
         #endregion Methods
     }

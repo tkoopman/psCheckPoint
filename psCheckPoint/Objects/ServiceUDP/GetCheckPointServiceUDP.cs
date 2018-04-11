@@ -15,10 +15,7 @@ namespace psCheckPoint.Objects.ServiceUDP
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
-        {
-            WriteObject(Session.FindServiceUDP(Value, DetailsLevel));
-        }
+        protected override void ProcessRecord() => WriteObject(Session.FindServiceUDP(Value, DetailsLevel));
 
         #endregion Methods
     }

@@ -1,5 +1,4 @@
-﻿using Koopman.CheckPoint;
-using Koopman.CheckPoint.FastUpdate;
+﻿using Koopman.CheckPoint.FastUpdate;
 using System.Management.Automation;
 
 namespace psCheckPoint.Objects.SecurityZone

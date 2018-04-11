@@ -19,10 +19,7 @@ namespace psCheckPoint.Objects.Network
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
-        {
-            WriteObject(Session.FindNetwork(Value, DetailsLevel));
-        }
+        protected override void ProcessRecord() => WriteObject(Session.FindNetwork(Value, DetailsLevel));
 
         #endregion Methods
     }

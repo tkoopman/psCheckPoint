@@ -143,9 +143,9 @@ namespace psCheckPoint.Objects.Network
                 network.MaskLength6 = MaskLength6;
             }
 
-            foreach (var g in Groups ?? Enumerable.Empty<string>())
+            foreach (string g in Groups ?? Enumerable.Empty<string>())
                 network.Groups.Add(g);
-            foreach (var t in Tags ?? Enumerable.Empty<string>())
+            foreach (string t in Tags ?? Enumerable.Empty<string>())
                 network.Tags.Add(t);
 
             network.AcceptChanges(Ignore);

@@ -1,6 +1,6 @@
-﻿using System.Linq;
+﻿using Koopman.CheckPoint;
+using System.Linq;
 using System.Management.Automation;
-using Koopman.CheckPoint;
 
 namespace psCheckPoint.Objects.ServiceTCP
 {
@@ -142,7 +142,7 @@ namespace psCheckPoint.Objects.ServiceTCP
             switch (name)
             {
                 case nameof(Groups):
-                    foreach (var g in Groups ?? Enumerable.Empty<string>())
+                    foreach (string g in Groups ?? Enumerable.Empty<string>())
                         o.Groups.Add(g);
                     return true;
 

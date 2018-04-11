@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 
 namespace psCheckPoint.Objects.Policy
 {
@@ -24,10 +23,7 @@ namespace psCheckPoint.Objects.Policy
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
-        {
-            WriteObject(Session.VerifyPolicy(PolicyPackage));
-        }
+        protected override void ProcessRecord() => WriteObject(Session.VerifyPolicy(PolicyPackage));
 
         #endregion Methods
     }

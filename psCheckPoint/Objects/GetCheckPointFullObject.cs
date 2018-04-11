@@ -1,5 +1,4 @@
 ﻿using Koopman.CheckPoint;
-using Koopman.CheckPoint.Common;
 using System.Collections;
 using System.Management.Automation;
 
@@ -43,10 +42,7 @@ namespace psCheckPoint.Objects
         /// <summary>
         /// Provides a record-by-record processing functionality for the cmdlet.
         /// </summary>
-        protected override void ProcessRecord()
-        {
-            Process(Object);
-        }
+        protected override void ProcessRecord() => Process(Object);
 
         private void Process(object obj)
         {

@@ -1,6 +1,4 @@
 ﻿using Koopman.CheckPoint;
-using System.Collections;
-using System.ComponentModel;
 using System.Management.Automation;
 
 namespace psCheckPoint.Objects
@@ -10,6 +8,23 @@ namespace psCheckPoint.Objects
     /// </summary>
     public abstract class GetCheckPointObjects : CheckPointCmdletBase
     {
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Get All Records</para>
+        /// </summary>
+        [Parameter(ParameterSetName = "All", Mandatory = true)]
+        public SwitchParameter All { get; set; }
+
+        /// <summary>
+        /// <para type="description">
+        /// The level of detail for some of the fields in the response can vary from showing only the
+        /// UID value of the object to a fully detailed representation of the object.
+        /// </para>
+        /// </summary>
+        [Parameter]
+        public DetailLevels DetailsLevel { get; set; } = DetailLevels.Standard;
+
         /// <summary>
         /// <para type="description">No more than that many results will be returned.</para>
         /// </summary>
@@ -23,21 +38,14 @@ namespace psCheckPoint.Objects
         [Parameter(ParameterSetName = "Limit")]
         public int Offset { get; set; } = 0;
 
-        /// <summary>
-        /// <para type="description">Get All Records</para>
-        /// </summary>
-        [Parameter(ParameterSetName = "All", Mandatory = true)]
-        public SwitchParameter All { get; set; }
+        #endregion Properties
+
+        #region Methods
 
         //TODO order
-
-        /// <summary>
-        /// <para type="description">The level of detail for some of the fields in the response can vary from showing only the UID value of the object to a fully detailed representation of the object.</para>
-        /// </summary>
-        [Parameter]
-        public DetailLevels DetailsLevel { get; set; } = DetailLevels.Standard;
-        
-        /// <inheritdoc/>
+        /// <inheritdoc />
         protected abstract override void ProcessRecord();
+
+        #endregion Methods
     }
 }

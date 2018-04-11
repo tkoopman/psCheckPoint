@@ -32,10 +32,7 @@ namespace psCheckPoint.Objects.Network
         #region Methods
 
         /// <inheritdoc />
-        protected override void Remove(string value)
-        {
-            Session.DeleteNetwork(value, Ignore);
-        }
+        protected override void Remove(string value) => Session.DeleteNetwork(value, Ignore);
 
         #endregion Methods
     }

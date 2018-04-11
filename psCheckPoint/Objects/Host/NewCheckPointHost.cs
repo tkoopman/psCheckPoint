@@ -1,8 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Management.Automation;
 using System.Net;
-using Koopman.CheckPoint;
 
 namespace psCheckPoint.Objects.Host
 {
@@ -82,9 +80,9 @@ namespace psCheckPoint.Objects.Host
                 IPv4Address = IPv4Address,
                 IPv6Address = IPv6Address
             };
-            foreach (var g in Groups ?? Enumerable.Empty<string>())
+            foreach (string g in Groups ?? Enumerable.Empty<string>())
                 host.Groups.Add(g);
-            foreach (var t in Tags ?? Enumerable.Empty<string>())
+            foreach (string t in Tags ?? Enumerable.Empty<string>())
                 host.Tags.Add(t);
 
             host.AcceptChanges(Ignore);

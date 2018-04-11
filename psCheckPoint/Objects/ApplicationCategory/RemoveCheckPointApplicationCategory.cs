@@ -28,10 +28,7 @@ namespace psCheckPoint.Objects.ApplicationCategory
         #region Methods
 
         /// <inheritdoc />
-        protected override void Remove(string value)
-        {
-            Session.DeleteApplicationCategory(value, Ignore);
-        }
+        protected override void Remove(string value) => Session.DeleteApplicationCategory(value, Ignore);
 
         #endregion Methods
     }
