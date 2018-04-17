@@ -43,7 +43,7 @@ namespace psCheckPoint.Objects
         private void ProcessObject(object obj)
         {
             if (obj is string str) Remove(str);
-            else if (obj is IObjectSummary o) Remove(o.GetMembershipID());
+            else if (obj is IObjectSummary o) Remove(o.GetIdentifier());
             else if (obj is PSObject pso) ProcessObject(pso.BaseObject);
             else if (obj is IEnumerable enumerable)
             {

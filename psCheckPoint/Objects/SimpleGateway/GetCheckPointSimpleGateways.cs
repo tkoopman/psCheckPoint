@@ -9,7 +9,7 @@ namespace psCheckPoint.Objects.SimpleGateway
     /// </summary>
     /// <example></example>
     [Cmdlet(VerbsCommon.Get, "CheckPointSimpleGateways")]
-    [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.SimpleGateway>), ParameterSetName = new string[] { "Limit" })]
+    [OutputType(typeof(Koopman.CheckPoint.Common.NetworkObjectsPagingResults<Koopman.CheckPoint.SimpleGateway>), ParameterSetName = new string[] { "Limit" })]
     [OutputType(typeof(Koopman.CheckPoint.SimpleGateway[]), ParameterSetName = new string[] { "All" })]
     public class GetCheckPointSimpleGateways : GetCheckPointObjects
     {

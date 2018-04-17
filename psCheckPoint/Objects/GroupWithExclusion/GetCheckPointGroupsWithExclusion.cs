@@ -9,7 +9,7 @@ namespace psCheckPoint.Objects.GroupWithExclusion
     /// </summary>
     /// <example></example>
     [Cmdlet(VerbsCommon.Get, "CheckPointGroupsWithExclusion")]
-    [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.GroupWithExclusion>), ParameterSetName = new string[] { "Limit" })]
+    [OutputType(typeof(Koopman.CheckPoint.Common.NetworkObjectsPagingResults<Koopman.CheckPoint.GroupWithExclusion>), ParameterSetName = new string[] { "Limit" })]
     [OutputType(typeof(Koopman.CheckPoint.GroupWithExclusion[]), ParameterSetName = new string[] { "All" })]
     public class GetCheckPointGroupsWithExclusion : GetCheckPointObjects
     {

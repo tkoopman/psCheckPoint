@@ -11,7 +11,7 @@ namespace psCheckPoint.Objects.ServiceGroup
     /// <code></code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointServiceGroups")]
-    [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.ServiceGroup>), ParameterSetName = new string[] { "Limit" })]
+    [OutputType(typeof(Koopman.CheckPoint.Common.NetworkObjectsPagingResults<Koopman.CheckPoint.ServiceGroup>), ParameterSetName = new string[] { "Limit" })]
     [OutputType(typeof(Koopman.CheckPoint.ServiceGroup[]), ParameterSetName = new string[] { "All" })]
     public class GetCheckPointServiceGroups : GetCheckPointObjects
     {

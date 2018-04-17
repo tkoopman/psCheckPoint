@@ -76,7 +76,7 @@ namespace psCheckPoint
         private void ProcessObject(object obj)
         {
             if (obj is string str) Set(str);
-            else if (obj is IObjectSummary o) Set(o.GetMembershipID());
+            else if (obj is IObjectSummary o) Set(o.GetIdentifier());
             else if (obj is PSObject pso) ProcessObject(pso.BaseObject);
             else if (obj is IEnumerable enumerable)
             {

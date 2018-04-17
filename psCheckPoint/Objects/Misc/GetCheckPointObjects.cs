@@ -26,7 +26,7 @@ namespace psCheckPoint.Objects.Misc
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointObjects", DefaultParameterSetName = GetCheckPointObjectsStatic.LimitFilter)]
     [OutputType(typeof(IObjectSummary), ParameterSetName = new string[] { GetCheckPointObjectsStatic.AllFilter, GetCheckPointObjectsStatic.AllUnused })]
-    [OutputType(typeof(ObjectsPagingResults<IObjectSummary>), ParameterSetName = new string[] { GetCheckPointObjectsStatic.LimitFilter, GetCheckPointObjectsStatic.LimitUnused })]
+    [OutputType(typeof(NetworkObjectsPagingResults<IObjectSummary>), ParameterSetName = new string[] { GetCheckPointObjectsStatic.LimitFilter, GetCheckPointObjectsStatic.LimitUnused })]
     public class GetCheckPointObjects : CheckPointCmdletBase
     {
         #region Properties

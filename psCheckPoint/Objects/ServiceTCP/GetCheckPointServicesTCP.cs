@@ -9,7 +9,7 @@ namespace psCheckPoint.Objects.ServiceTCP
     /// </summary>
     /// <example></example>
     [Cmdlet(VerbsCommon.Get, "CheckPointServicesTCP")]
-    [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.ServiceTCP>), ParameterSetName = new string[] { "Limit" })]
+    [OutputType(typeof(Koopman.CheckPoint.Common.NetworkObjectsPagingResults<Koopman.CheckPoint.ServiceTCP>), ParameterSetName = new string[] { "Limit" })]
     [OutputType(typeof(Koopman.CheckPoint.ServiceTCP[]), ParameterSetName = new string[] { "All" })]
     public class GetCheckPointServicesTCP : GetCheckPointObjects
     {

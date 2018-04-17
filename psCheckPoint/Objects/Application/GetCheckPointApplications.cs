@@ -9,7 +9,7 @@ namespace psCheckPoint.Objects.Application
     /// </summary>
     /// <example></example>
     [Cmdlet(VerbsCommon.Get, "CheckPointApplications")]
-    [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.ApplicationSite>), ParameterSetName = new string[] { "Limit" })]
+    [OutputType(typeof(Koopman.CheckPoint.Common.NetworkObjectsPagingResults<Koopman.CheckPoint.ApplicationSite>), ParameterSetName = new string[] { "Limit" })]
     [OutputType(typeof(Koopman.CheckPoint.ApplicationSite[]), ParameterSetName = new string[] { "All" })]
     public class GetCheckPointApplications : GetCheckPointObjects
     {

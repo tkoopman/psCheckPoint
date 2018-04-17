@@ -13,7 +13,7 @@ namespace psCheckPoint.Objects.Network
     /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointNetworks")]
-    [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.Network>), ParameterSetName = new string[] { "Limit" })]
+    [OutputType(typeof(Koopman.CheckPoint.Common.NetworkObjectsPagingResults<Koopman.CheckPoint.Network>), ParameterSetName = new string[] { "Limit" })]
     [OutputType(typeof(Koopman.CheckPoint.Network[]), ParameterSetName = new string[] { "All" })]
     public class GetCheckPointNetworks : GetCheckPointObjects
     {

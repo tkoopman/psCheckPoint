@@ -9,7 +9,7 @@ namespace psCheckPoint.Objects.ServiceUDP
     /// </summary>
     /// <example></example>
     [Cmdlet(VerbsCommon.Get, "CheckPointServicesUDP")]
-    [OutputType(typeof(Koopman.CheckPoint.Common.ObjectsPagingResults<Koopman.CheckPoint.ServiceUDP>), ParameterSetName = new string[] { "Limit" })]
+    [OutputType(typeof(Koopman.CheckPoint.Common.NetworkObjectsPagingResults<Koopman.CheckPoint.ServiceUDP>), ParameterSetName = new string[] { "Limit" })]
     [OutputType(typeof(Koopman.CheckPoint.ServiceUDP[]), ParameterSetName = new string[] { "All" })]
     public class GetCheckPointServicesUDP : GetCheckPointObjects
     {

@@ -82,7 +82,7 @@ namespace psCheckPoint.Objects.Misc
         private void GetTargets(object obj, List<string> output)
         {
             if (obj is string str) output.Add(str);
-            else if (obj is IObjectSummary o) output.Add(o.GetMembershipID());
+            else if (obj is IObjectSummary o) output.Add(o.GetIdentifier());
             else if (obj is PSObject pso) GetTargets(pso.BaseObject, output);
             else if (obj is IEnumerable enumerable)
             {
