@@ -48,11 +48,6 @@
     <Compile Remove="IA\RemoveCheckPointIdentity.cs" />
     <Compile Remove="IA\Responses.cs" />
     <Compile Remove="IA\SwitchJsonConverter.cs" />
-    <Compile Remove="Objects\AccessRule\CheckPointAccessRule.cs" />
-    <Compile Remove="Objects\AccessRule\CheckPointAccessRuleBase.cs" />
-    <Compile Remove="Objects\AccessRule\CheckPointAccessRuleSummary.cs" />
-    <Compile Remove="Objects\AccessRule\GetCheckPointAccessRule.cs" />
-    <Compile Remove="Objects\AccessRule\GetCheckPointAccessRuleBase.cs" />
     <Compile Remove="Objects\Group\CheckPointGroup.cs" />
     <Compile Remove="Objects\Host\NewCheckPointHostInterface.cs" />
     <Compile Remove="Objects\Host\RemoveCheckPointHostInterface.cs" />
@@ -81,18 +76,13 @@
     <None Include="IA\RemoveCheckPointIdentity.cs" />
     <None Include="IA\Responses.cs" />
     <None Include="IA\SwitchJsonConverter.cs" />
-    <None Include="Objects\AccessRule\CheckPointAccessRule.cs" />
-    <None Include="Objects\AccessRule\CheckPointAccessRuleBase.cs" />
-    <None Include="Objects\AccessRule\CheckPointAccessRuleSummary.cs" />
-    <None Include="Objects\AccessRule\GetCheckPointAccessRule.cs" />
-    <None Include="Objects\AccessRule\GetCheckPointAccessRuleBase.cs" />
     <None Include="Objects\Host\NewCheckPointHostInterface.cs" />
     <None Include="Objects\Host\RemoveCheckPointHostInterface.cs" />
     <None Include="Objects\Misc\GetCheckPointCommands.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CheckPoint.NET" Version="0.2.3-alpha2" />
+    <PackageReference Include="CheckPoint.NET" Version="0.2.3-beta1" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Koopman.CheckPoint;
 using System.ComponentModel;
 using System.Management.Automation;
 
@@ -7,63 +7,78 @@ namespace psCheckPoint.Objects.AccessRule
     /// <api cmd="show-access-rulebase">Get-CheckPointAccessRuleBase</api>
     /// <summary>
     /// <para type="synopsis">Shows the entire Access Rules layer.</para>
-    /// <para type="description">Shows the entire Access Rules layer. This layer is divided into sections. An Access Rule may be within a section, or independent of a section (in which case it is said to be under the "global" section). The reply features a list of objects. Each object may be a section of the layer, with all its rules in, or a rule itself, for the case of rules which are under the global section. An optional "filter" field may be added in order to filter out only those rules that match a search criteria.</para>
+    /// <para type="description">
+    /// Shows the entire Access Rules layer. This layer is divided into sections. An Access Rule may
+    /// be within a section, or independent of a section (in which case it is said to be under the
+    /// "global" section). The reply features a list of objects. Each object may be a section of the
+    /// layer, with all its rules in, or a rule itself, for the case of rules which are under the
+    /// global section. An optional "filter" field may be added in order to filter out only those
+    /// rules that match a search criteria.
+    /// </para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "CheckPointAccessRuleBase")]
-    [OutputType(typeof(CheckPointAccessRule))]
-    public class GetCheckPointAccessRuleBase : CheckPointCmdlet<CheckPointAccessRuleBase>
+    [OutputType(typeof(Koopman.CheckPoint.Common.AccessRulebasePagingResults))]
+    public class GetCheckPointAccessRuleBase : CheckPointCmdletBase
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "show-access-rulebase"; } }
+        #region Properties
 
         /// <summary>
-        /// <para type="description">Object unique identifier.</para>
+        /// <para type="description">Network object, name or UID.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "uid", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(Mandatory = true, ParameterSetName = "By UID", ValueFromPipelineByPropertyName = true)]
-        public string UID { get; set; }
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
+        [Alias("Name", "UID", "Layer")]
+        public PSObject AccessLayer { get; set; }
 
         /// <summary>
-        /// <para type="description">Object name.</para>
+        /// <para type="description">
+        /// The level of detail for some of the fields in the response can vary from showing only the
+        /// UID value of the object to a fully detailed representation of the object.
+        /// </para>
         /// </summary>
-        [JsonProperty(PropertyName = "name", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(Position = 2, Mandatory = true, ParameterSetName = "By Name", ValueFromPipelineByPropertyName = true)]
-        public string Name { get; set; }
+        [Parameter]
+        public DetailLevels DetailsLevel { get; set; } = DetailLevels.Standard;
 
         /// <summary>
-        /// <para type="description">Search expression to filter the rulebase. The provided text should be exactly the same as it would be given in Smart Console. The logical operators in the expression ('AND', 'OR') should be provided in capital letters.</para>
+        /// <para type="description">
+        /// Search expression to filter the rulebase. The provided text should be exactly the same as
+        /// it would be given in Smart Console. The logical operators in the expression ('AND', 'OR')
+        /// should be provided in capital letters.
+        /// </para>
         /// </summary>
-        [JsonProperty(PropertyName = "filter", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter()]
         public string Filter { get; set; }
 
-        //TODO hit-settings
-        //TODO show-hits
+        /// <summary>
+        /// <para type="description">No more than that many results will be returned.</para>
+        /// </summary>
+        [Parameter]
+        [ValidateRange(1, 500)]
+        public int Limit { get; set; } = 50;
 
         /// <summary>
-        /// <para type="description">The level of detail for some of the fields in the response can vary from showing only the UID value of the object to a fully detailed representation of the object.</para>
+        /// <para type="description">Skip that many results before beginning to return them.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "details-level", DefaultValueHandling = DefaultValueHandling.Include)]
-        [DefaultValue("standard")]
-        protected string DetailsLevel { get; set; } = "standard";
+        [Parameter(ParameterSetName = "Limit")]
+        public int Offset { get; set; } = 0;
 
-        /// <summary>
-        /// <para type="description"></para>
-        /// </summary>
-        [JsonProperty(PropertyName = "use-object-dictionary", DefaultValueHandling = DefaultValueHandling.Include)]
-        [DefaultValue(true)]
-        protected bool UseObjectDictionary { get; set; } = false;
+        #endregion Properties
 
-        protected override void WriteRecordResponse(CheckPointAccessRuleBase result)
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord()
         {
-            foreach (CheckPointAccessRuleSummary rule in result.RuleBase)
-            {
-                rule.Layer = result.UID;
-            }
+            string layer;
+            if (AccessLayer.BaseObject is string s)
+                layer = s;
+            else if (AccessLayer.BaseObject is Koopman.CheckPoint.AccessLayer al)
+                layer = al.GetIdentifier();
+            else
+                throw new PSArgumentException($"Invalid value of type {AccessLayer.BaseObject.GetType()}. Should be string or AccessLayer object.", nameof(AccessLayer));
 
-            base.WriteRecordResponse(result);
+            WriteObject(Session.FindAccessRulebase(layer, Filter, DetailsLevel, Limit, Offset));
         }
+
+        #endregion Methods
     }
 }

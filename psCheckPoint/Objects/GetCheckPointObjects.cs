@@ -42,7 +42,6 @@ namespace psCheckPoint.Objects
 
         #region Methods
 
-        //TODO order
         /// <inheritdoc />
         protected abstract override void ProcessRecord();
 
