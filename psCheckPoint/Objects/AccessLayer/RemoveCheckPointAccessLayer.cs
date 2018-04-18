@@ -8,14 +8,32 @@ namespace psCheckPoint.Objects.AccessLayer
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code>Remove-CheckPointAccessLayer -Name Network</code>
+    /// <code>
+    /// Remove-CheckPointAccessLayer -Name Network
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointAccessLayer")]
     public class RemoveCheckPointAccessLayer : RemoveCheckPointObject
     {
+        #region Properties
+
         /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// <para type="description">Network object, name or UID.</para>
         /// </summary>
-        public override string Command { get { return "delete-access-layer"; } }
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
+        [Alias("Name", "UID", "Layer")]
+        public PSObject AccessLayer { get => Object; set => Object = value; }
+
+        /// <inheritdoc />
+        protected override string InputName => nameof(AccessLayer);
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void Remove(string value) => Session.DeleteAccessLayer(value, Ignore);
+
+        #endregion Methods
     }
 }

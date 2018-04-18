@@ -48,13 +48,6 @@
     <Compile Remove="IA\RemoveCheckPointIdentity.cs" />
     <Compile Remove="IA\Responses.cs" />
     <Compile Remove="IA\SwitchJsonConverter.cs" />
-    <Compile Remove="Objects\AccessLayer\CheckPointAccessLayer.cs" />
-    <Compile Remove="Objects\AccessLayer\CheckPointAccessLayers.cs" />
-    <Compile Remove="Objects\AccessLayer\GetCheckPointAccessLayer.cs" />
-    <Compile Remove="Objects\AccessLayer\GetCheckPointAccessLayers.cs" />
-    <Compile Remove="Objects\AccessLayer\NewCheckPointAccessLayer.cs" />
-    <Compile Remove="Objects\AccessLayer\RemoveCheckPointAccessLayer.cs" />
-    <Compile Remove="Objects\AccessLayer\SetCheckPointAccessLayer.cs" />
     <Compile Remove="Objects\AccessRule\CheckPointAccessRule.cs" />
     <Compile Remove="Objects\AccessRule\CheckPointAccessRuleBase.cs" />
     <Compile Remove="Objects\AccessRule\CheckPointAccessRuleSummary.cs" />
@@ -88,13 +81,6 @@
     <None Include="IA\RemoveCheckPointIdentity.cs" />
     <None Include="IA\Responses.cs" />
     <None Include="IA\SwitchJsonConverter.cs" />
-    <None Include="Objects\AccessLayer\CheckPointAccessLayer.cs" />
-    <None Include="Objects\AccessLayer\CheckPointAccessLayers.cs" />
-    <None Include="Objects\AccessLayer\GetCheckPointAccessLayer.cs" />
-    <None Include="Objects\AccessLayer\GetCheckPointAccessLayers.cs" />
-    <None Include="Objects\AccessLayer\NewCheckPointAccessLayer.cs" />
-    <None Include="Objects\AccessLayer\RemoveCheckPointAccessLayer.cs" />
-    <None Include="Objects\AccessLayer\SetCheckPointAccessLayer.cs" />
     <None Include="Objects\AccessRule\CheckPointAccessRule.cs" />
     <None Include="Objects\AccessRule\CheckPointAccessRuleBase.cs" />
     <None Include="Objects\AccessRule\CheckPointAccessRuleSummary.cs" />
@@ -106,7 +92,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CheckPoint.NET" Version="0.2.3-alpha1" />
+    <PackageReference Include="CheckPoint.NET" Version="0.2.3-alpha2" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">

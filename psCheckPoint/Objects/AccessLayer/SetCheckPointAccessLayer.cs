@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Koopman.CheckPoint.FastUpdate;
 using System.ComponentModel;
 using System.Management.Automation;
 
@@ -10,42 +10,49 @@ namespace psCheckPoint.Objects.AccessLayer
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code>Set-CheckPointAccessLayer -Name Network -ApplicationsAndUrlFiltering $true</code>
+    /// <code>
+    /// Set-CheckPointAccessLayer -Name Network -ApplicationsAndUrlFiltering $true
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Set, "CheckPointAccessLayer")]
-    [OutputType(typeof(CheckPointAccessLayer))]
-    public class SetCheckPointAccessLayer : SetCheckPointObject<CheckPointAccessLayer>
+    [OutputType(typeof(Koopman.CheckPoint.AccessLayer))]
+    public class SetCheckPointAccessLayer : SetCheckPointCmdlet
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "set-access-layer"; } }
+        #region Properties
 
         /// <summary>
-        /// <para type="description">Whether to enable Applications and URL Filtering blade on the layer.</para>
+        /// <para type="description">Network object, name or UID.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "applications-and-url-filtering", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
+        [Alias("Name", "UID", "Layer")]
+        public PSObject AccessLayer { get => Object; set => Object = value; }
+
+        /// <summary>
+        /// <para type="description">
+        /// Whether to enable Applications and URL Filtering blade on the layer.
+        /// </para>
+        /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public bool ApplicationsAndUrlFiltering { get; set; } = false;
 
         /// <summary>
         /// <para type="description">Whether to enable Content Awareness blade on the layer.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "content-awareness", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public bool ContentAwareness { get; set; } = false;
 
         /// <summary>
-        /// <para type="description">Whether to use X-Forward-For HTTP header, which is added by the proxy server to keep track of the original source IP.</para>
+        /// <para type="description">
+        /// Whether to use X-Forward-For HTTP header, which is added by the proxy server to keep
+        /// track of the original source IP.
+        /// </para>
         /// </summary>
-        [JsonProperty(PropertyName = "detect-using-x-forward-for", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public bool DetectUsingXForwardFor { get; set; } = false;
 
         /// <summary>
         /// <para type="description">Whether to enable Firewall blade on the layer.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "firewall", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         [DefaultValue(true)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public bool Firewall { get; set; } = true;
@@ -53,15 +60,31 @@ namespace psCheckPoint.Objects.AccessLayer
         /// <summary>
         /// <para type="description">Whether to enable Mobile Access blade on the layer.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "mobile-access", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public bool MobileAccess { get; set; } = false;
 
         /// <summary>
         /// <para type="description">Whether this layer is shared.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "shared", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public bool Shared { get; set; } = false;
+
+        /// <inheritdoc />
+        protected override string InputName => nameof(AccessLayer);
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void Set(string value)
+        {
+            var o = Session.UpdateAccessLayer(value);
+            UpdateProperties(o);
+            o.AcceptChanges(Ignore);
+            WriteObject(o);
+        }
+
+        #endregion Methods
     }
 }

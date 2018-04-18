@@ -8,15 +8,19 @@ namespace psCheckPoint.Objects.AccessLayer
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code>Get-CheckPointAccessLayer -Name Network</code>
+    /// <code>
+    /// Get-CheckPointAccessLayer -Name Network
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointAccessLayer")]
-    [OutputType(typeof(CheckPointAccessLayer))]
-    public class GetCheckPointAccessLayer : GetCheckPointObject<CheckPointAccessLayer>
+    [OutputType(typeof(Koopman.CheckPoint.AccessLayer))]
+    public class GetCheckPointAccessLayer : GetCheckPointObject
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "show-access-layer"; } }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord() => WriteObject(Session.FindAccessLayer(Value, DetailsLevel));
+
+        #endregion Methods
     }
 }

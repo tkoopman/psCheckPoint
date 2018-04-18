@@ -8,15 +8,37 @@ namespace psCheckPoint.Objects.AccessLayer
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code>Get-CheckPointAccessLayers</code>
+    /// <code>
+    /// Get-CheckPointAccessLayers
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointAccessLayers")]
-    [OutputType(typeof(CheckPointAccessLayers))]
-    public class GetCheckPointAccessLayers : GetCheckPointObjectsBase<CheckPointAccessLayers>
+    [OutputType(typeof(Koopman.CheckPoint.Common.NetworkObjectsPagingResults<Koopman.CheckPoint.AccessLayer>), ParameterSetName = new string[] { "Limit" })]
+    [OutputType(typeof(Koopman.CheckPoint.AccessLayer[]), ParameterSetName = new string[] { "All" })]
+    public class GetCheckPointAccessLayers : GetCheckPointObjects
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "show-access-layers"; } }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void ProcessRecord()
+        {
+            if (ParameterSetName == "Limit")
+            {
+                WriteObject(
+                    Session.FindAccessLayers(
+                            limit: Limit,
+                            offset: Offset,
+                            detailLevel: DetailsLevel), false);
+            }
+            else
+            {
+                WriteObject(
+                    Session.FindAllAccessLayers(
+                            limit: Limit,
+                            detailLevel: DetailsLevel), false);
+            }
+        }
+
+        #endregion Methods
     }
 }
