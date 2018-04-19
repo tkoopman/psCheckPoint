@@ -25,8 +25,8 @@ Do not include IPv6 addresses.
 If any changes made publish them automatically. By default session will just be closed pending you to manually open session in SmartConsole and publish the changes.
 Publish will only happen if no errors during sync.
 
-.PARAMETER IgnoreWarnings
-When creating new Check Point objects pass the IgnoreWarnings switch. This is required if your Check Point database already contains duplicate addresses with different names.
+.PARAMETER Ignore
+Weather Check Point warnings or errors should be ignored.
 
 .PARAMETER Rename
 If existing object not found by name, first search by IP/Subnet and if matching object found rename it and add to group.
@@ -50,7 +50,7 @@ Tag set when creating objects.
 ./AWS_Group_Sync.ps1 -NoIPv6 -Rename -Verbose
 
 .NOTES
-Requires psCheckPoint v0.7.9+.
+Requires psCheckPoint v1.0.0+.
 Requires AWSPowerShell.
 
 .LINK
@@ -70,7 +70,8 @@ param(
 	[switch]$NoIPv4,
 	[switch]$NoIPv6,
 	[switch]$Publish,
-	[switch]$IgnoreWarnings,
+	[ValidateSet("No", "Warnings", "Errors")]
+	[string]$Ignore = "No",
 	[switch]$Rename,
 	[string]$Color = "red",
 	[string]$Prefix = "AWS",
@@ -108,8 +109,8 @@ ForEach($Service in $Services) {
 		Write-Verbose "Processing $GroupName";
 
 		$AWSPIAR | Where-Object {$_.Service -eq $Service -and $_.Region -eq $Region} |
-			Select-Object -ExpandProperty IpPrefix | New-SyncMember -Prefix "${Prefix}_" |
-			Invoke-CheckPointGroupSync -Session $Session -Name $GroupName -Rename:$Rename.IsPresent -IgnoreWarnings:$IgnoreWarnings.IsPresent -Color $Color -Comments $Comments -Tags $Tag -CreateGroup |
+			Select-Object -ExpandProperty IpPrefix |
+			Invoke-CheckPointGroupSync -Session $Session -GroupName $GroupName -Prefix "${Prefix}_" -Rename:$Rename.IsPresent -Color $Color -Comments $Comments -Tags $Tag -CreateGroup -Ignore $Ignore |
 			Tee-Object -Variable output;
 
 		if (($output | Where-Object {$_.Actions -ne 0 -and -not $_.Error} | Measure-Object).Count -ne 0) {

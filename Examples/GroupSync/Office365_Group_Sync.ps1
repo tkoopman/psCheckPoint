@@ -25,8 +25,8 @@ Do not include IPv6 addresses.
 If any changes made publish them automatically. By default session will just be closed pending you to manually open session in SmartConsole and publish the changes.
 Publish will only happen if no errors during sync.
 
-.PARAMETER IgnoreWarnings
-When creating new Check Point objects pass the IgnoreWarnings switch. This is required if your Check Point database already contains duplicate addresses with different names.
+.PARAMETER Ignore
+Weather Check Point warnings or errors should be ignored.
 
 .PARAMETER Rename
 If existing object not found by name, first search by IP/Subnet and if matching object found rename it and add to group.
@@ -69,7 +69,8 @@ param(
 	[switch]$NoIPv4,
 	[switch]$NoIPv6,
 	[switch]$Publish,
-	[switch]$IgnoreWarnings,
+	[ValidateSet("No", "Warnings", "Errors")]
+	[string]$Ignore = "No",
 	[switch]$Rename,
 	[string]$Color = "red",
 	[string]$HostPrefix = "Microsoft",
@@ -78,12 +79,30 @@ param(
 	[string]$Tag = "Microsoft_Office365"
 )
 
+# path where client ID will be stored
+$datapath = $Env:TEMP + "\MS_O365_ClientRequestId.txt";
+Write-Verbose "Client ID File: $datapath";
+
+# fetch client ID if data file exists; otherwise create new file
+if (Test-Path $datapath) {
+    $content = Get-Content $datapath;
+    $clientRequestId = $content;
+}
+else {
+	Write-Verbose "Creating new Client ID";
+    $clientRequestId = [GUID]::NewGuid().Guid;
+    $clientRequestId | Out-File $datapath;
+}
+
+Write-Verbose "Client ID: $clientRequestId";
+
 # Download Microsoft Cloud IP Ranges and Names into Object
-$O365IPAddresses = "https://support.content.office.net/en-us/static/O365IPAddresses.xml";
-[XML]$O365 = Invoke-WebRequest -Uri $O365IPAddresses -DisableKeepAlive;
+$Version = Invoke-RestMethod https://endpoints.office.com/version/O365Worldwide?ClientRequestId=$clientRequestId;
+Write-Verbose "Version: $($Version.latest)";
+$O365IPAddresses = Invoke-RestMethod https://endpoints.office.com/endpoints/O365Worldwide?ClientRequestId=$clientRequestId;
 
 # Set variables
-$Updated = ([datetime]::parseexact($O365.products.updated,"M/d/yyyy",[System.Globalization.CultureInfo]::InvariantCulture)).ToShortDateString();
+$Updated = ([datetime]::parseexact($Version.latest.Substring(0, 8),"yyyyMMdd",[System.Globalization.CultureInfo]::InvariantCulture)).ToShortDateString();
 $Comments = "$CommentPrefix added $Updated";
 $GroupComments = "$CommentPrefix updated $Updated";
 $Errors = 0;
@@ -96,13 +115,22 @@ if (-not $Session) {
 	exit;
 }
 
-ForEach ($Product in $O365.products.product) {
-	$GroupName = $GroupPrefix + "_" + $Product.Name;
+$ServiceAreas = $O365IPAddresses | Select-Object -ExpandProperty serviceArea | Sort-Object -Unique
+
+ForEach ($ServiceArea in $ServiceAreas) {
+	$GroupName = $GroupPrefix + "_" + $ServiceArea;
 	Write-Verbose "Processing $GroupName";
 
-	$Product.addresslist | Where-Object { ($_.type -eq "IPv4" -and -not $NoIPv4.IsPresent) -or ($_.type -eq "IPv6" -and -not $NoIPv6.IsPresent) } |
-		Select-Object -ExpandProperty address -ErrorAction SilentlyContinue | New-SyncMember -Prefix "${HostPrefix}_" |
-		Invoke-CheckPointGroupSync -Session $Session -Name $GroupName -Rename:$Rename.IsPresent -IgnoreWarnings:$IgnoreWarnings.IsPresent -Color $Color -Comments $Comments -Tags $Tag -CreateGroup |
+	$ServiceAreaIPs = $O365IPAddresses | Where-Object {$_.serviceArea -eq "Common" -and $_.ips} | Select-Object -ExpandProperty ips;
+	if ($NoIPv4.IsPresent) {
+		$ServiceAreaIPs = $ServiceAreaIPs | Where-Object { $_ -notmatch "\." }
+	}
+	if ($NoIPv6.IsPresent) {
+		$ServiceAreaIPs = $ServiceAreaIPs | Where-Object { $_ -notmatch ":" }
+	}
+
+	$ServiceAreaIPs |
+		Invoke-CheckPointGroupSync -Session $Session -GroupName $GroupName -Prefix "${HostPrefix}_" -Rename:$Rename.IsPresent -Ignore $Ignore -Color $Color -Comments $Comments -Tags $Tag -CreateGroup |
 		Tee-Object -Variable output;
 	if (($output | Where-Object {$_.Actions -ne 0 -and -not $_.Error} | Measure-Object).Count -ne 0) {
 		# Updates made

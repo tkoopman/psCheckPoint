@@ -38,9 +38,6 @@
     <Compile Remove="Extra\Export\CheckPointExportSet.cs" />
     <Compile Remove="Extra\Export\ConvertToCheckPointHtml.cs" />
     <Compile Remove="Extra\Export\ExportCheckPointAccessRule.cs" />
-    <Compile Remove="Extra\Sync\InvokeCheckPointGroupSync.cs" />
-    <Compile Remove="Extra\Sync\Member.cs" />
-    <Compile Remove="Extra\Sync\NewSyncMember.cs" />
     <Compile Remove="IA\AddCheckPointIdentity.cs" />
     <Compile Remove="IA\Batch.cs" />
     <Compile Remove="IA\CheckPointIACmdlet.cs" />
@@ -66,9 +63,6 @@
     <None Include="Extra\Export\CheckPointExportSet.cs" />
     <None Include="Extra\Export\ConvertToCheckPointHtml.cs" />
     <None Include="Extra\Export\ExportCheckPointAccessRule.cs" />
-    <None Include="Extra\Sync\InvokeCheckPointGroupSync.cs" />
-    <None Include="Extra\Sync\Member.cs" />
-    <None Include="Extra\Sync\NewSyncMember.cs" />
     <None Include="IA\AddCheckPointIdentity.cs" />
     <None Include="IA\Batch.cs" />
     <None Include="IA\CheckPointIACmdlet.cs" />
@@ -82,7 +76,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CheckPoint.NET" Version="0.2.3-beta1" />
+    <PackageReference Include="CheckPoint.NET" Version="0.2.3-rc1" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">
