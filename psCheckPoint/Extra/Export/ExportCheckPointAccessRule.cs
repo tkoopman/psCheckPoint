@@ -1,46 +1,61 @@
-﻿using psCheckPoint.Objects;
-using psCheckPoint.Objects.AccessRule;
-using psCheckPoint.Objects.AddressRange;
-using psCheckPoint.Objects.Group;
-using psCheckPoint.Objects.GroupWithExclusion;
-using psCheckPoint.Objects.Host;
-using psCheckPoint.Objects.Misc;
-using psCheckPoint.Objects.MulticastAddressRange;
-using psCheckPoint.Objects.Network;
-using psCheckPoint.Objects.Service;
-using psCheckPoint.Objects.ServiceGroup;
-using psCheckPoint.Objects.ServiceTCP;
-using psCheckPoint.Objects.ServiceUDP;
-using psCheckPoint.Session;
-using System;
+﻿using Koopman.CheckPoint;
+using Koopman.CheckPoint.Common;
 using System.Collections;
+using System.IO;
 using System.Linq;
 using System.Management.Automation;
+using System.Reflection;
 
 namespace psCheckPoint.Extra.Export
 {
     /// <extra category="Export Commands">Export-CheckPointObjects</extra>
     /// <summary>
     /// <para type="synopsis">Export input objects and any other object used by input objects.</para>
-    /// <para type="description">Performs an export of input objects and any object used by an input object.</para>
+    /// <para type="description">
+    /// Performs an export of input objects and any object used by an input object.
+    /// </para>
     /// <para type="description">Input objects could be of the following types:</para>
-    /// <para type="description">    * Any Check Point Object like Host, Network, Rule, etc</para>
-    /// <para type="description">    * Output from Get-CheckPointWhereUsed</para>
-    /// <para type="description">    * Output from Get-CheckPointObjects</para>
-    /// <para type="description">    * An array or list of objects of any mixture of above</para>
+    /// <para type="description">* Any Check Point Object like Host, Network, Rule, etc</para>
+    /// <para type="description">* Output from Get-CheckPointObjects</para>
+    /// <para type="description">* Name of an object</para>
+    /// <para type="description">* An array or list of objects of any mixture of above</para>
     /// </summary>
     /// <example>
-    /// <code>Export-CheckPointObjects -Verbose $InputObject1 $InputObject2 ... $InputObjectX | ConvertTo-CheckPointHtml -Open</code>
+    /// <code>
+    /// Export-CheckPointObjects $InputObject1 $InputObject2 ... $InputObjectX
+    /// </code>
     /// </example>
     [Cmdlet(VerbsData.Export, "CheckPointObjects")]
-    [OutputType(typeof(CheckPointExportSet))]
+    [OutputType(typeof(string))]
     public class ExportCheckPointObjects : CheckPointCmdletBase
     {
+        #region Enums
+
         /// <summary>
-        /// <para type="description">Input objects to start export from.</para>
+        /// Export output type
         /// </summary>
-        [Parameter(Mandatory = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
-        public PSObject Object { get; set; }
+        public enum OutputType
+        {
+            /// <summary>
+            /// JSON Data embeded in HTML file
+            /// </summary>
+            HTML,
+
+            /// <summary>
+            /// Raw JSON data
+            /// </summary>
+            JSON
+        }
+
+        #endregion Enums
+
+        #region Fields
+
+        private JsonExport export = null;
+
+        #endregion Fields
+
+        #region Properties
 
         /// <summary>
         /// <para type="description">Max depth to look for objects used by input objects</para>
@@ -65,38 +80,95 @@ namespace psCheckPoint.Extra.Export
         public string[] ExcludeByType { get; set; } = { };
 
         /// <summary>
-        /// <para type="description">Enter names of objects you do not want export to search for children of</para>
+        /// <para type="description">
+        /// Enter names of objects you do not want export to search for children of
+        /// </para>
         /// </summary>
         [Parameter]
         public string[] ExcludeDetailsByName { get; set; } = { };
 
         /// <summary>
-        /// <para type="description">Enter types of objects you do not want export to search for children of</para>
+        /// <para type="description">
+        /// Enter types of objects you do not want export to search for children of
+        /// </para>
         /// </summary>
         [Parameter]
         [ValidateSet("group", "group-with-exclusion", "service-group", IgnoreCase = false)]
         public string[] ExcludeDetailsByType { get; set; } = { };
 
         /// <summary>
-        /// <para type="description">Even if input object is not a rule do not perform a where used</para>
+        /// Force overwritting existing file.
+        /// </summary>
+        [Parameter]
+        public SwitchParameter Force { get; set; }
+
+        /// <summary>
+        /// <para type="description">Indent JSON data</para>
+        /// </summary>
+        [Parameter]
+        public SwitchParameter Indent { get; set; }
+
+        /// <summary>
+        /// <para type="description">
+        /// When passing Check Point objects as input perform a indirect where used instead of the
+        /// standard direct only.
+        /// </para>
+        /// </summary>
+        [Parameter]
+        public SwitchParameter IndirectWhereUsed { get; set; }
+
+        /// <summary>
+        /// <para type="description">Input objects to start export from.</para>
+        /// </summary>
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
+        public PSObject Object { get; set; }
+
+        /// <summary>
+        /// Weather to output raw Json data or HTML.
+        /// </summary>
+        /// <value>The output type.</value>
+        [Parameter]
+        public OutputType Output { get; set; } = OutputType.HTML;
+
+        /// <summary>
+        /// <para type="description">Filename to write HTML file to.</para>
+        /// </summary>
+        [Parameter]
+        public string Path { get; set; }
+
+        /// <summary>
+        /// <para type="description">
+        /// Even if input object is not a rule do not perform a where used. NOTE: String inputs will
+        /// ignore this and still run a Where Used.
+        /// </para>
         /// </summary>
         [Parameter]
         public SwitchParameter SkipWhereUsed { get; set; }
 
         /// <summary>
-        /// <para type="description">When passing Check Point objects as input perform a indirect where used instead of the standard direct only.</para>
+        /// <para type="description">Filename to HTML file to use as template.</para>
+        /// <para type="description">{JSON} will be replaced with JSON data.</para>
+        /// <para type="description">Leave blank to use default template.</para>
         /// </summary>
         [Parameter]
-        public SwitchParameter IndirectWhereUsed { get; set; }
+        public string Template { get; set; }
 
-        private CheckPointExportSet export = new CheckPointExportSet();
+        #endregion Properties
 
-        /// <summary>
-        /// <para type="synopsis">Process each input object.</para>
-        /// </summary>
-        protected override void ProcessRecord()
+        #region Methods
+
+        /// <inheritdoc />
+        protected override void BeginProcessing()
         {
-            Process(Object.BaseObject, 0);
+            if (Path != null && !Force.IsPresent && File.Exists(Path))
+                throw new PSArgumentException("File already exists. Use -Force to use existing file.", nameof(Path));
+
+            string dir = System.IO.Path.GetDirectoryName(Path);
+            if (Path != null && !string.IsNullOrWhiteSpace(dir) && !Directory.Exists(dir))
+                throw new PSArgumentException("Path directory does not exist.", nameof(Path));
+
+            base.BeginProcessing();
+            export = new JsonExport(Session, ExcludeDetailsByType, ExcludeDetailsByName, ExcludeByType, ExcludeByName);
         }
 
         /// <summary>
@@ -104,283 +176,102 @@ namespace psCheckPoint.Extra.Export
         /// </summary>
         protected override void EndProcessing()
         {
-            WriteObject(export);
-        }
+            string json = export.Export(Indent.IsPresent);
+            string output = json;
 
-        private void Process(object obj, int CurrentDepth)
-        {
-            if (obj is ICheckPointObjectSummary)
+            if (Output == OutputType.HTML)
             {
-                Process(obj as ICheckPointObjectSummary, CurrentDepth);
-            }
-            else if (obj is PSObject)
-            {
-                Process((obj as PSObject).BaseObject, CurrentDepth);
-            }
-            else if (obj is CheckPointWhereUsed)
-            {
-                CheckPointWhereUsed o = obj as CheckPointWhereUsed;
-                if (o.UsedDirectly != null)
+                if (string.IsNullOrWhiteSpace(Template))
                 {
-                    Process(o.UsedDirectly.Objects, CurrentDepth + 1);
-                    Process(o.UsedDirectly.AccessControlRules, CurrentDepth);
+                    // Load default template
+                    var _assembly = typeof(psCheckPoint.Extra.Export.ExportCheckPointObjects).GetTypeInfo().Assembly;
+                    using (var _html = new StreamReader(_assembly.GetManifestResourceStream("psCheckPoint.Extra.Export.ExportTemplate.html")))
+                    {
+                        output = _html.ReadToEnd();
+                    }
                 }
+                else
+                    output = File.ReadAllText(Template);
 
-                if (o.UsedIndirectly != null)
-                {
-                    Process(o.UsedIndirectly.Objects, CurrentDepth + 1);
-                    Process(o.UsedIndirectly.AccessControlRules, CurrentDepth);
-                }
-                //TODO add other entries when implemented fully
+                if (string.IsNullOrWhiteSpace(output))
+                    throw new CmdletInvocationException("Unable to load HTML template.");
+
+                output = output.Replace("{JSON}", json);
             }
-            else if (obj is IEnumerable)
-            {
-                foreach (object o in (obj as IEnumerable))
-                {
-                    Process(o, CurrentDepth);
-                }
-            }
+
+            if (Path != null)
+                File.WriteAllText(Path, output);
             else
+                WriteObject(output);
+
+            WriteVerbose($"Exported {export.Count} objects");
+        }
+
+        /// <summary>
+        /// <para type="synopsis">Process each input object.</para>
+        /// </summary>
+        protected override void ProcessRecord() => Process(Object.BaseObject);
+
+        private void Process(object obj)
+        {
+            switch (obj)
             {
-                throw new CmdletInvocationException($"Invalid object type: {obj.GetType()}");
+                case string str:
+                    var whereUsed = Session.FindWhereUsed(str, indirect: IndirectWhereUsed.IsPresent);
+                    export.Add(str, whereUsed);
+                    break;
+
+                case IObjectSummary objectSummary:
+                    Process(objectSummary);
+                    break;
+
+                case PSObject psObject:
+                    Process(psObject.BaseObject);
+                    break;
+
+                case AccessRulebasePagingResults ruleBase:
+                    export.Add(ruleBase);
+                    break;
+
+                case IEnumerable objs:
+                    foreach (object o in objs)
+                        Process(o);
+                    break;
+
+                default:
+                    throw new CmdletInvocationException($"Invalid input object type: {obj.GetType()}");
             }
         }
 
-        private void Process(ICheckPointObjectSummary obj, int CurrentDepth)
+        private void Process(IObjectSummary obj)
         {
             if (ExcludeByName.Contains(obj.ToString()) || ExcludeByType.Contains(obj.Type)) { return; }
 
-            switch (obj.Type)
-            {
-                case "access-rule":
-                    {
-                        if (export.AccessRules.Contains(obj)) { return; }
-                        CheckPointAccessRule r = obj.ToFullObj<CheckPointAccessRule>(Session);
-                        if (r != null) { Process(r, CurrentDepth); }
-                        break;
-                    }
-                case "address-range":
-                    {
-                        if (export.AddressRanges.Contains(obj)) { return; }
-                        CheckPointAddressRange r = obj.ToFullObj<CheckPointAddressRange>(Session);
-                        if (r != null) { Process(r, CurrentDepth); }
-                        break;
-                    }
-                case "CpmiAnyObject": break;
-                case "group":
-                    {
-                        if (export.Groups.Contains(obj)) { return; }
-                        CheckPointGroup r = obj.ToFullObj<CheckPointGroup>(Session);
-                        if (r != null) { Process(r, CurrentDepth); }
-                        break;
-                    }
-                case "group-with-exclusion":
-                    {
-                        if (export.GroupsWithExclusion.Contains(obj)) { return; }
-                        CheckPointGroupWithExclusion r = obj.ToFullObj<CheckPointGroupWithExclusion>(Session);
-                        if (r != null) { Process(r, CurrentDepth); }
-                        break;
-                    }
-                case "host":
-                    {
-                        if (export.Hosts.Contains(obj)) { return; }
-                        CheckPointHost r = obj.ToFullObj<CheckPointHost>(Session);
-                        if (r != null) { Process(r, CurrentDepth); }
-                        break;
-                    }
-                case "multicast-address-range":
-                    {
-                        if (export.Hosts.Contains(obj)) { return; }
-                        CheckPointMulticastAddressRange r = obj.ToFullObj<CheckPointMulticastAddressRange>(Session);
-                        if (r != null) { Process(r, CurrentDepth); }
-                        break;
-                    }
-                case "network":
-                    {
-                        if (export.Hosts.Contains(obj)) { return; }
-                        CheckPointNetwork r = obj.ToFullObj<CheckPointNetwork>(Session);
-                        if (r != null) { Process(r, CurrentDepth); }
-                        break;
-                    }
-                case "service-group":
-                    {
-                        if (export.ServiceGroups.Contains(obj)) { return; }
-                        CheckPointServiceGroup r = obj.ToFullObj<CheckPointServiceGroup>(Session);
-                        if (r != null) { Process(r, CurrentDepth); }
-                        break;
-                    }
-                case "service-tcp":
-                    {
-                        if (export.Services.Contains(obj)) { return; }
-                        CheckPointServiceTCP r = obj.ToFullObj<CheckPointServiceTCP>(Session);
-                        if (r != null) { Process(r, CurrentDepth); }
-                        break;
-                    }
-                case "service-udp":
-                    {
-                        if (export.Services.Contains(obj)) { return; }
-                        CheckPointServiceUDP r = obj.ToFullObj<CheckPointServiceUDP>(Session);
-                        if (r != null) { Process(r, CurrentDepth); }
-                        break;
-                    }
-                default:
-                    {
-                        if (obj is CheckPointObject)
-                        {
-                            CheckPointObject o = obj as CheckPointObject;
-                            if (!export.Other.Contains(o))
-                            {
-                                WriteVerbose($"Exporting* {o.Type}: {o.Name}");
-                                export.Other.Add(o);
-                            }
-                        }
-                        break;
-                    }
-            }
-        }
-
-        private void Process(CheckPointAccessRule obj, int CurrentDepth)
-        {
-            if (export.AccessRules.Contains(obj)) { return; }
-
-            string name = (String.IsNullOrWhiteSpace(obj.Name)) ? obj.UID : obj.Name;
-            WriteVerbose($"Exporting {obj.Type}: {name}");
-
-            export.AccessRules.Add(obj);
-
-            if (CurrentDepth < Depth)
-            {
-                foreach (CheckPointObject newObj in obj.Source)
+            export.Add(obj);
+            if (!SkipWhereUsed.IsPresent)
+                switch (obj)
                 {
-                    Process(newObj, CurrentDepth + 1);
+                    case AddressRange _:
+                    case Group _:
+                    case GroupWithExclusion _:
+                    case Host _:
+                    case MulticastAddressRange _:
+                    case Network _:
+                    case ServiceGroup _:
+                    case ServiceDceRpc _:
+                    case ServiceICMP _:
+                    case ServiceICMP6 _:
+                    case ServiceOther _:
+                    case ServiceRPC _:
+                    case ServiceSCTP _:
+                    case ServiceTCP _:
+                    case ServiceUDP _:
+                        var whereUsed = Session.FindWhereUsed(obj.GetIdentifier(), indirect: IndirectWhereUsed.IsPresent);
+                        export.Add(obj.GetIdentifier(), whereUsed);
+                        break;
                 }
-                foreach (CheckPointObject newObj in obj.Destination)
-                {
-                    Process(newObj, CurrentDepth + 1);
-                }
-                foreach (CheckPointObject newObj in obj.Service)
-                {
-                    Process(newObj, CurrentDepth + 1);
-                }
-            }
-            else
-            {
-                WriteVerbose("Depth limit reached!");
-            }
         }
 
-        private void Process(CheckPointAddressRange obj, int CurrentDepth)
-        {
-            if (export.AddressRanges.Contains(obj)) { return; }
-
-            WriteVerbose($"Exporting {obj.Type}: {obj.Name}");
-            export.AddressRanges.Add(obj);
-            WhereUsed(obj, CurrentDepth);
-        }
-
-        private void Process(CheckPointGroup obj, int CurrentDepth)
-        {
-            if (export.Groups.Contains(obj)) { return; }
-
-            WriteVerbose($"Exporting {obj.Type}: {obj.Name}");
-            export.Groups.Add(obj);
-            WhereUsed(obj, CurrentDepth);
-
-            if (CurrentDepth < Depth && !ExcludeDetailsByName.Contains(obj.Name) && !ExcludeDetailsByType.Contains(obj.Type))
-            {
-                foreach (CheckPointObject member in obj.Members)
-                {
-                    Process(member, CurrentDepth + 1);
-                }
-            }
-            else
-            {
-                WriteVerbose($"Not following {obj.Name}");
-            }
-        }
-
-        private void Process(CheckPointGroupWithExclusion obj, int CurrentDepth)
-        {
-            if (export.GroupsWithExclusion.Contains(obj)) { return; }
-
-            WriteVerbose($"Exporting {obj.Type}: {obj.Name}");
-            export.GroupsWithExclusion.Add(obj);
-            WhereUsed(obj, CurrentDepth);
-
-            if (CurrentDepth < Depth && !ExcludeDetailsByName.Contains(obj.Name) && !ExcludeDetailsByType.Contains(obj.Type))
-            {
-                Process(obj.Include, CurrentDepth + 1);
-                Process(obj.Except, CurrentDepth + 1);
-            }
-            else
-            {
-                WriteVerbose($"Not following {obj.Name}");
-            }
-        }
-
-        private void Process(CheckPointHost obj, int CurrentDepth)
-        {
-            if (export.Hosts.Contains(obj)) { return; }
-
-            WriteVerbose($"Exporting {obj.Type}: {obj.Name}");
-            export.Hosts.Add(obj);
-            WhereUsed(obj, CurrentDepth);
-        }
-
-        private void Process(CheckPointMulticastAddressRange obj, int CurrentDepth)
-        {
-            if (export.MulticastAddressRanges.Contains(obj)) { return; }
-
-            WriteVerbose($"Exporting {obj.Type}: {obj.Name}");
-            export.MulticastAddressRanges.Add(obj);
-            WhereUsed(obj, CurrentDepth);
-        }
-
-        private void Process(CheckPointNetwork obj, int CurrentDepth)
-        {
-            if (export.Networks.Contains(obj)) { return; }
-
-            WriteVerbose($"Exporting {obj.Type}: {obj.Name}");
-            export.Networks.Add(obj);
-            WhereUsed(obj, CurrentDepth);
-        }
-
-        private void Process(CheckPointServiceBase obj, int CurrentDepth)
-        {
-            if (export.Services.Contains(obj)) { return; }
-
-            WriteVerbose($"Exporting {obj.Type}: {obj.ToString()}");
-            export.Services.Add(obj);
-            WhereUsed(obj, CurrentDepth);
-        }
-
-        private void Process(CheckPointServiceGroup obj, int CurrentDepth)
-        {
-            if (export.ServiceGroups.Contains(obj)) { return; }
-
-            WriteVerbose($"Exporting {obj.Type}: {obj.ToString()}");
-            export.ServiceGroups.Add(obj);
-            WhereUsed(obj, CurrentDepth);
-
-            if (CurrentDepth < Depth && !ExcludeDetailsByName.Contains(obj.Name) && !ExcludeDetailsByType.Contains(obj.Type))
-            {
-                Process(obj.Members, CurrentDepth + 1);
-            }
-            else
-            {
-                WriteVerbose($"Not following {obj.Name}");
-            }
-        }
-
-        private void WhereUsed(CheckPointObject obj, int CurrentDepth)
-        {
-            // Only do this if an CheckPointObject was used as initial input
-            if (CurrentDepth == 0 && !SkipWhereUsed.IsPresent)
-            {
-                WriteVerbose($"Performing where-used on {obj.ToString()}");
-                CheckPointWhereUsed wu = GetCheckPointWhereUsed.Run(Session, obj, IndirectWhereUsed.IsPresent);
-                Process(wu, CurrentDepth + 1);
-            }
-        }
+        #endregion Methods
     }
 }

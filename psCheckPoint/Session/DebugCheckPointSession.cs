@@ -33,16 +33,16 @@ namespace psCheckPoint.Session
         public SwitchParameter Disable { get; set; }
 
         /// <summary>
-        /// <para type="description">The file name to outpout debug loggin to.</para>
-        /// </summary>
-        [Parameter(ParameterSetName = "On", Mandatory = true)]
-        public string FileName { get; set; }
-
-        /// <summary>
         /// Force overwritting existing file.
         /// </summary>
         [Parameter(ParameterSetName = "On")]
         public SwitchParameter Force { get; set; }
+
+        /// <summary>
+        /// <para type="description">The file name to outpout debug loggin to.</para>
+        /// </summary>
+        [Parameter(ParameterSetName = "On", Mandatory = true)]
+        public string Path { get; set; }
 
         #endregion Properties
 
@@ -68,11 +68,11 @@ namespace psCheckPoint.Session
                 if (Session.DebugWriter != null)
                     throw new PSArgumentException("DebugWriter already set.", nameof(Session));
                 if (Append.IsPresent)
-                    Session.DebugWriter = File.AppendText(FileName);
-                else if (Force.IsPresent || !File.Exists(FileName))
-                    Session.DebugWriter = File.CreateText(FileName);
+                    Session.DebugWriter = File.AppendText(Path);
+                else if (Force.IsPresent || !File.Exists(Path))
+                    Session.DebugWriter = File.CreateText(Path);
                 else
-                    throw new PSArgumentException("File name already exists. Use -Append or -Force to use existing file.", nameof(FileName));
+                    throw new PSArgumentException("File name already exists. Use -Append or -Force to use existing file.", nameof(Path));
             }
         }
 

@@ -35,9 +35,6 @@
 
   <ItemGroup>
     <ViewFiles Include="..\Views\*.ps1xml" />
-    <Compile Remove="Extra\Export\CheckPointExportSet.cs" />
-    <Compile Remove="Extra\Export\ConvertToCheckPointHtml.cs" />
-    <Compile Remove="Extra\Export\ExportCheckPointAccessRule.cs" />
     <Compile Remove="IA\AddCheckPointIdentity.cs" />
     <Compile Remove="IA\Batch.cs" />
     <Compile Remove="IA\CheckPointIACmdlet.cs" />
@@ -49,6 +46,10 @@
     <Compile Remove="Objects\Host\NewCheckPointHostInterface.cs" />
     <Compile Remove="Objects\Host\RemoveCheckPointHostInterface.cs" />
     <Compile Remove="Objects\Misc\GetCheckPointCommands.cs" />
+    <None Remove="Extra\Export\ExportTemplate.html" />
+    <EmbeddedResource Include="Extra\Export\ExportTemplate.html">
+      <CustomToolNamespace>psCheckPoint.Extra.Export</CustomToolNamespace>
+    </EmbeddedResource>
     <ContentWithTargetPath Include="@(ViewFiles)">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>..\Views\%(FileName)%(Extension)</TargetPath>
@@ -60,9 +61,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Extra\Export\CheckPointExportSet.cs" />
-    <None Include="Extra\Export\ConvertToCheckPointHtml.cs" />
-    <None Include="Extra\Export\ExportCheckPointAccessRule.cs" />
     <None Include="IA\AddCheckPointIdentity.cs" />
     <None Include="IA\Batch.cs" />
     <None Include="IA\CheckPointIACmdlet.cs" />
@@ -76,7 +74,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CheckPoint.NET" Version="0.2.3-rc1" />
+    <PackageReference Include="CheckPoint.NET" Version="0.2.3" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">
