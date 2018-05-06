@@ -1,29 +1,30 @@
 # Close-CheckPointSession
 
 ## SYNOPSIS
-Log out of a session.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
 ```
-Close-CheckPointSession [-ContinueSessionInSmartconsole] [-Session <CheckPointSession>]
+Close-CheckPointSession [-ContinueSessionInSmartconsole] [-Session <Session>]
 ```
 
 ## DESCRIPTION
+{{Fill in the Description}}
 
 ## EXAMPLES
 
-### ----------  EXAMPLE 1  ----------
+### Example 1
 ```
-Close-CheckPointSession
+PS C:\> {{ Add example code here }}
 ```
+
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -ContinueSessionInSmartconsole
-The session will be continued next time your open SmartConsole.
-In case 'uid' is not provided, use current session.
-In order for the session to pass successfully to SmartConsole, make sure you don't have any other active GUI sessions.
+{{Fill ContinueSessionInSmartconsole Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -32,16 +33,16 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Session
-Session object from Open-CheckPointSession
+{{Fill Session Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -54,7 +55,12 @@ Accept wildcard characters: False
 
 ## INPUTS
 
+### None
+
+
 ## OUTPUTS
+
+### System.Object
 
 ## NOTES
 

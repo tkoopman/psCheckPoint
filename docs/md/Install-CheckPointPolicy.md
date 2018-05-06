@@ -1,15 +1,17 @@
 # Install-CheckPointPolicy
 
 ## SYNOPSIS
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
 ```
-Install-CheckPointPolicy -PolicyPackage <String> [-Access] [-DisableInstallOnAllClusterMembersOrFail]
- [-PrepareOnly] [-Revision <String>] [-Targets <String[]>] [-ThreatPrevention] [-Session <CheckPointSession>]
+Install-CheckPointPolicy [-Access] [-DisableInstallOnAllClusterMembersOrFail] -PolicyPackage <String>
+ [-PrepareOnly] [-Revision <String>] [-Targets <String[]>] [-ThreatPrevention] [-Session <Session>]
 ```
 
 ## DESCRIPTION
+{{Fill in the Description}}
 
 ## EXAMPLES
 
@@ -23,7 +25,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -Access
-Set to be true in order to install the access policy.
+{{Fill Access Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -32,13 +34,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -DisableInstallOnAllClusterMembersOrFail
-install-on-all-cluster-members-or-fail
+{{Fill DisableInstallOnAllClusterMembersOrFail Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -47,13 +49,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -PolicyPackage
-The name of the Policy Package to be installed.
+{{Fill PolicyPackage Description}}
 
 ```yaml
 Type: String
@@ -68,7 +70,7 @@ Accept wildcard characters: False
 ```
 
 ### -PrepareOnly
-If true, prepares the policy for the installation, but doesn't install it on an installation target.
+{{Fill PrepareOnly Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -77,13 +79,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Revision
-The UID of the revision of the policy to install.
+{{Fill Revision Description}}
 
 ```yaml
 Type: String
@@ -98,10 +100,10 @@ Accept wildcard characters: False
 ```
 
 ### -Session
-Session object from Open-CheckPointSession
+{{Fill Session Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -113,8 +115,7 @@ Accept wildcard characters: False
 ```
 
 ### -Targets
-On what targets to execute this command.
-Targets may be identified by their name, or object unique identifier.
+{{Fill Targets Description}}
 
 ```yaml
 Type: String[]
@@ -129,7 +130,7 @@ Accept wildcard characters: False
 ```
 
 ### -ThreatPrevention
-Set to be true in order to install the threat prevention policy.
+{{Fill ThreatPrevention Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -138,14 +139,19 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ## INPUTS
 
+### None
+
+
 ## OUTPUTS
+
+### System.Object
 
 ## NOTES
 

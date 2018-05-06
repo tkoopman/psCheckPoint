@@ -1,37 +1,33 @@
 # Export-CheckPointObjects
 
 ## SYNOPSIS
-Export input objects and any other object used by input objects.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
 ```
-Export-CheckPointObjects -Object <PSObject> [-Depth <Int32>] [-ExcludeByName <String[]>]
- [-ExcludeByType <String[]>] [-ExcludeDetailsByName <String[]>] [-ExcludeDetailsByType <String[]>]
- [-SkipWhereUsed] [-IndirectWhereUsed] [-Session <CheckPointSession>]
+Export-CheckPointObjects [-Depth <Int32>] [-ExcludeByName <String[]>] [-ExcludeByType <String[]>]
+ [-ExcludeDetailsByName <String[]>] [-ExcludeDetailsByType <String[]>] [-Force] [-Indent] [-IndirectWhereUsed]
+ -Object <PSObject> [-Output <OutputType>] [-Path <String>] [-SkipWhereUsed] [-Template <String>]
+ [-Session <Session>]
 ```
 
 ## DESCRIPTION
-Performs an export of input objects and any object used by an input object.
-
-Input objects could be of the following types:
-
-* Any Check Point Object like Host, Network, Rule, etc
-* Output from Get-CheckPointWhereUsed
-* Output from Get-CheckPointObjects
-* An array or list of objects of any mixture of above
+{{Fill in the Description}}
 
 ## EXAMPLES
 
-### ----------  EXAMPLE 1  ----------
+### Example 1
 ```
-Export-CheckPointObjects -Verbose $InputObject1 $InputObject2 ... $InputObjectX | ConvertTo-CheckPointHtml -Open
+PS C:\> {{ Add example code here }}
 ```
+
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -Depth
-Max depth to look for objects used by input objects
+{{Fill Depth Description}}
 
 ```yaml
 Type: Int32
@@ -40,13 +36,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: 3
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -ExcludeByName
-Enter names of objects to exclude from export
+{{Fill ExcludeByName Description}}
 
 ```yaml
 Type: String[]
@@ -61,12 +57,13 @@ Accept wildcard characters: False
 ```
 
 ### -ExcludeByType
-Enter types of objects to exclude from export
+{{Fill ExcludeByType Description}}
 
 ```yaml
 Type: String[]
 Parameter Sets: (All)
 Aliases: 
+Accepted values: object, host, network, group, address-range, multicast-address-range, group-with-exclusion, simple-gateway, security-zone, time, time-group, access-role, dynamic-object, trusted-client, tag, dns-domain, opsec-application, service-tcp, service-udp, service-icmp, service-icmp6, service-sctp, service-other, service-group
 
 Required: False
 Position: Named
@@ -76,7 +73,7 @@ Accept wildcard characters: False
 ```
 
 ### -ExcludeDetailsByName
-Enter names of objects you do not want export to search for children of
+{{Fill ExcludeDetailsByName Description}}
 
 ```yaml
 Type: String[]
@@ -91,10 +88,41 @@ Accept wildcard characters: False
 ```
 
 ### -ExcludeDetailsByType
-Enter types of objects you do not want export to search for children of
+{{Fill ExcludeDetailsByType Description}}
 
 ```yaml
 Type: String[]
+Parameter Sets: (All)
+Aliases: 
+Accepted values: group, group-with-exclusion, service-group
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Force
+{{Fill Force Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Indent
+{{Fill Indent Description}}
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: 
 
@@ -106,7 +134,7 @@ Accept wildcard characters: False
 ```
 
 ### -IndirectWhereUsed
-When passing Check Point objects as input perform a indirect where used instead of the standard direct only.
+{{Fill IndirectWhereUsed Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -115,13 +143,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Object
-Input objects to start export from.
+{{Fill Object Description}}
 
 ```yaml
 Type: PSObject
@@ -135,11 +163,42 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Session
-Session object from Open-CheckPointSession
+### -Output
+{{Fill Output Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: OutputType
+Parameter Sets: (All)
+Aliases: 
+Accepted values: HTML, JSON
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Path
+{{Fill Path Description}}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Session
+{{Fill Session Description}}
+
+```yaml
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -151,7 +210,7 @@ Accept wildcard characters: False
 ```
 
 ### -SkipWhereUsed
-Even if input object is not a rule do not perform a where used
+{{Fill SkipWhereUsed Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -160,7 +219,22 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Template
+{{Fill Template Description}}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -168,16 +242,12 @@ Accept wildcard characters: False
 ## INPUTS
 
 ### System.Management.Automation.PSObject
-Input objects to start export from.
+
 
 ## OUTPUTS
 
-### psCheckPoint.Extra.Export.CheckPointExportSet
-Contains arrays of all exported objects including rules, groups, hosts, etc
+### System.String
 
-Any unknown exported object will have summary in "Other" array
-
-Pipe this to other commands like ConvertTo-CheckPointHtml or ConvertToJson for final export results
 
 ## NOTES
 

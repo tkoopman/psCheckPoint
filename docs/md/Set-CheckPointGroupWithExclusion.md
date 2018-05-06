@@ -1,43 +1,38 @@
 # Set-CheckPointGroupWithExclusion
 
 ## SYNOPSIS
-Edit existing object using object name or uid.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
-### By UID
 ```
-Set-CheckPointGroupWithExclusion [-Include <String>] [-Except <String>] -UID <String> [-NewName <String>]
- [-TagAction <MembershipActions>] [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors]
- [-PassThru] [-Color <String>] [-Session <CheckPointSession>]
-```
-
-### By Name
-```
-Set-CheckPointGroupWithExclusion [-Include <String>] [-Except <String>] [-Name] <String> [-NewName <String>]
- [-TagAction <MembershipActions>] [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors]
- [-PassThru] [-Color <String>] [-Session <CheckPointSession>]
+Set-CheckPointGroupWithExclusion [-Except <String>] -GroupWithExclusion <PSObject> [-Include <String>]
+ [-NewName <String>] [-TagAction <MembershipActions>] [-Color <Colors>] [-Comments <String>] [-Ignore <Ignore>]
+ [-PassThru] [-Tags <String[]>] [-Session <Session>]
 ```
 
 ## DESCRIPTION
+{{Fill in the Description}}
 
 ## EXAMPLES
 
-### ----------  EXAMPLE 1  ----------
+### Example 1
+```
+PS C:\> {{ Add example code here }}
 ```
 
-```
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -Color
-Color of the object.
-Should be one of existing colors.
+{{Fill Color Description}}
 
 ```yaml
-Type: String
+Type: Colors
 Parameter Sets: (All)
 Aliases: Colour
+Accepted values: Aquamarine, Black, Blue, Brown, Burlywood, Coral, CreteBlue, Cyan, DarkBlue, DarkGold, DarkGray, DarkGreen, DarkOrange, DarkSeaGreen, Firebrick, ForestGreen, Gold, Gray, Khaki, LemonChiffon, LightGreen, Magenta, NavyBlue, Olive, Orange, Orchid, Pink, Purple, Red, SeaGreen, Sienna, SkyBlue, SlateBlue, Turquoise, VioletRed, Yellow
 
 Required: False
 Position: Named
@@ -47,7 +42,7 @@ Accept wildcard characters: False
 ```
 
 ### -Comments
-Comments string.
+{{Fill Comments Description}}
 
 ```yaml
 Type: String
@@ -62,7 +57,7 @@ Accept wildcard characters: False
 ```
 
 ### -Except
-Object to exclude.
+{{Fill Except Description}}
 
 ```yaml
 Type: String
@@ -76,70 +71,54 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -IgnoreErrors
-Apply changes ignoring errors.
-You won't be able to publish such a changes.
-If ignore-warnings flag was omitted - warnings will also be ignored.
+### -GroupWithExclusion
+{{Fill GroupWithExclusion Description}}
 
 ```yaml
-Type: SwitchParameter
+Type: PSObject
 Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -IgnoreWarnings
-Apply changes ignoring warnings.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Include
-Object to include.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Name
-Object name.
-
-```yaml
-Type: String
-Parameter Sets: By Name
-Aliases: 
+Aliases: Name, UID
 
 Required: True
-Position: 1
+Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 
+### -Ignore
+{{Fill Ignore Description}}
+
+```yaml
+Type: Ignore
+Parameter Sets: (All)
+Aliases: 
+Accepted values: No, Warnings, Errors
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Include
+{{Fill Include Description}}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -NewName
-New name of the object.
+{{Fill NewName Description}}
 
 ```yaml
 Type: String
@@ -154,7 +133,7 @@ Accept wildcard characters: False
 ```
 
 ### -PassThru
-Return the updated object.
+{{Fill PassThru Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -163,16 +142,16 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Session
-Session object from Open-CheckPointSession
+{{Fill Session Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -184,9 +163,7 @@ Accept wildcard characters: False
 ```
 
 ### -TagAction
-Action to take with tags.
-
-Possible values: Replace, Add, Remove
+{{Fill TagAction Description}}
 
 ```yaml
 Type: MembershipActions
@@ -196,13 +173,13 @@ Accepted values: Replace, Add, Remove
 
 Required: False
 Position: Named
-Default value: Replace
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Tags
-Collection of tag identifiers.
+{{Fill Tags Description}}
 
 ```yaml
 Type: String[]
@@ -216,52 +193,18 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -UID
-Object unique identifier.
-
-```yaml
-Type: String
-Parameter Sets: By UID
-Aliases: 
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
 ## INPUTS
 
 ### System.String
-Object to include.
+System.Management.Automation.PSObject
+Koopman.CheckPoint.Colors
+System.String[]
 
-### System.String
-Object to exclude.
-
-### System.String
-Object unique identifier.
-
-### System.String
-Object name.
-
-### System.String
-New name of the object.
-
-### System.String[]
-Collection of tag identifiers.
-
-### System.String
-Comments string.
-
-### System.String
-Color of the object.
-Should be one of existing colors.
 
 ## OUTPUTS
 
-### psCheckPoint.Objects.GroupWithExclusion.CheckPointGroupWithExclusion
-Details of a Check Point Group with Exclusion
+### Koopman.CheckPoint.GroupWithExclusion
+
 
 ## NOTES
 

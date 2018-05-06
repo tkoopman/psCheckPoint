@@ -1,52 +1,49 @@
 # Get-CheckPointObjects
 
 ## SYNOPSIS
-Find objects by Filter.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
 ### Limit + Filter (Default)
 ```
-Get-CheckPointObjects [-Limit <Int32>] [-Offset <Int32>] [-Filter <String>] [-IPOnly] [-Type <String>]
- [-Session <CheckPointSession>]
-```
-
-### Limit + Unused
-```
-Get-CheckPointObjects [-Limit <Int32>] [-Offset <Int32>] [-Unused] [-Session <CheckPointSession>]
+Get-CheckPointObjects [-DetailsLevel <DetailLevels>] [-Filter <String>] [-IPOnly] [-Limit <Int32>]
+ [-Offset <Int32>] [-Type <String>] [-Session <Session>]
 ```
 
 ### All + Filter
 ```
-Get-CheckPointObjects [-Limit <Int32>] [-All] [-Filter <String>] [-IPOnly] [-Type <String>]
- [-Session <CheckPointSession>]
+Get-CheckPointObjects [-All] [-DetailsLevel <DetailLevels>] [-Filter <String>] [-IPOnly] [-Limit <Int32>]
+ [-Type <String>] [-Session <Session>]
 ```
 
 ### All + Unused
 ```
-Get-CheckPointObjects [-Limit <Int32>] [-All] [-Unused] [-Session <CheckPointSession>]
+Get-CheckPointObjects [-All] [-DetailsLevel <DetailLevels>] [-Limit <Int32>] [-Unused] [-Session <Session>]
+```
+
+### Limit + Unused
+```
+Get-CheckPointObjects [-DetailsLevel <DetailLevels>] [-Limit <Int32>] [-Offset <Int32>] [-Unused]
+ [-Session <Session>]
 ```
 
 ## DESCRIPTION
-Can find many different types of objects based on a filter.
-Filters are same as what can be used in Smart Console
+{{Fill in the Description}}
 
 ## EXAMPLES
 
-### ----------  EXAMPLE 1  ----------
+### Example 1
 ```
-Get-CheckPointObjects -Filter "O365 OR Office365"
+PS C:\> {{ Add example code here }}
 ```
 
-### ----------  EXAMPLE 2  ----------
-```
-Get-CheckPointObjects -Unused
-```
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -All
-Get All Records
+{{Fill All Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -55,17 +52,29 @@ Aliases:
 
 Required: True
 Position: Named
-Default value: False
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DetailsLevel
+{{Fill DetailsLevel Description}}
+
+```yaml
+Type: DetailLevels
+Parameter Sets: (All)
+Aliases: 
+Accepted values: UID, Standard, Full
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Filter
-Search expression to filter objects by.
-The provided text should be exactly the same as it would be given in Smart Console.
-The logical operators in the expression ('AND', 'OR') should be provided in capital letters.
-By default, the search involves both a textual search and a IP search.
-To use IP search only, set the "ip-only" parameter to true.
+{{Fill Filter Description}}
 
 ```yaml
 Type: String
@@ -80,7 +89,7 @@ Accept wildcard characters: False
 ```
 
 ### -IPOnly
-If using "filter", use this field to search objects by their IP address only, without involving the textual search.
+{{Fill IPOnly Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -89,13 +98,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Limit
-No more than that many results will be returned.
+{{Fill Limit Description}}
 
 ```yaml
 Type: Int32
@@ -104,13 +113,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: 50
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Offset
-Skip that many results before beginning to return them.
+{{Fill Offset Description}}
 
 ```yaml
 Type: Int32
@@ -119,16 +128,16 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: 0
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Session
-Session object from Open-CheckPointSession
+{{Fill Session Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -140,41 +149,46 @@ Accept wildcard characters: False
 ```
 
 ### -Type
-The objects' type
+{{Fill Type Description}}
 
 ```yaml
 Type: String
 Parameter Sets: Limit + Filter, All + Filter
 Aliases: 
+Accepted values: object, host, network, group, address-range, multicast-address-range, group-with-exclusion, simple-gateway, security-zone, time, time-group, access-role, dynamic-object, trusted-client, tag, dns-domain, opsec-application, service-tcp, service-udp, service-icmp, service-icmp6, service-sctp, service-other, service-group
 
 Required: False
 Position: Named
-Default value: Object
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Unused
-Retrieve all unused objects.
+{{Fill Unused Description}}
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Limit + Unused, All + Unused
+Parameter Sets: All + Unused, Limit + Unused
 Aliases: 
 
 Required: True
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ## INPUTS
 
+### None
+
+
 ## OUTPUTS
 
-### psCheckPoint.Objects.CheckPointObjects
-Result from commands that return multiple objects.
+### Koopman.CheckPoint.IObjectSummary
+Koopman.CheckPoint.Common.NetworkObjectsPagingResults`1[[Koopman.CheckPoint.IObjectSummary, CheckPoint.NET, Version=0.3.0.0, Culture=neutral, PublicKeyToken=null]]
+
 
 ## NOTES
 

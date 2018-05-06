@@ -1,19 +1,18 @@
-# Get-CheckPointServicesUDP
+# Debug-CheckPointSession
 
 ## SYNOPSIS
 {{Fill in the Synopsis}}
 
 ## SYNTAX
 
-### All
+### On
 ```
-Get-CheckPointServicesUDP [-All] [-DetailsLevel <DetailLevels>] [-Limit <Int32>] [-Session <Session>]
+Debug-CheckPointSession [-Append] [-Force] -Path <String> [-Session <Session>]
 ```
 
-### Limit
+### Off
 ```
-Get-CheckPointServicesUDP [-DetailsLevel <DetailLevels>] [-Limit <Int32>] [-Offset <Int32>]
- [-Session <Session>]
+Debug-CheckPointSession [-Disable] [-Session <Session>]
 ```
 
 ## DESCRIPTION
@@ -30,12 +29,27 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -All
-{{Fill All Description}}
+### -Append
+{{Fill Append Description}}
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: All
+Parameter Sets: On
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Disable
+{{Fill Disable Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Off
 Aliases: 
 
 Required: True
@@ -45,28 +59,12 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -DetailsLevel
-{{Fill DetailsLevel Description}}
+### -Force
+{{Fill Force Description}}
 
 ```yaml
-Type: DetailLevels
-Parameter Sets: (All)
-Aliases: 
-Accepted values: UID, Standard, Full
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Limit
-{{Fill Limit Description}}
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
+Type: SwitchParameter
+Parameter Sets: On
 Aliases: 
 
 Required: False
@@ -76,15 +74,15 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Offset
-{{Fill Offset Description}}
+### -Path
+{{Fill Path Description}}
 
 ```yaml
-Type: Int32
-Parameter Sets: Limit
+Type: String
+Parameter Sets: On
 Aliases: 
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -113,9 +111,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### Koopman.CheckPoint.Common.NetworkObjectsPagingResults`1[[Koopman.CheckPoint.ServiceUDP, CheckPoint.NET, Version=0.3.0.0, Culture=neutral, PublicKeyToken=null]]
-Koopman.CheckPoint.ServiceUDP[]
-
+### System.Object
 
 ## NOTES
 

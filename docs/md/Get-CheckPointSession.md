@@ -1,30 +1,33 @@
 # Get-CheckPointSession
 
 ## SYNOPSIS
-Retrieve existing object using object name or uid.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
 ```
-Get-CheckPointSession [-UID <String>] [-Session <CheckPointSession>]
+Get-CheckPointSession [-UID <String>] [-Session <Session>]
 ```
 
 ## DESCRIPTION
+{{Fill in the Description}}
 
 ## EXAMPLES
 
-### ----------  EXAMPLE 1  ----------
+### Example 1
 ```
-Get-CheckPointSession
+PS C:\> {{ Add example code here }}
 ```
+
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -Session
-Session object from Open-CheckPointSession
+{{Fill Session Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -36,8 +39,7 @@ Accept wildcard characters: False
 ```
 
 ### -UID
-Session unique identifier.
-If not provided the current logged in session UID will be used.
+{{Fill UID Description}}
 
 ```yaml
 Type: String
@@ -54,15 +56,12 @@ Accept wildcard characters: False
 ## INPUTS
 
 ### System.String
-Session unique identifier.
-If not provided the current logged in session UID will be used.
+
 
 ## OUTPUTS
 
-### psCheckPoint.Objects.Session.CheckPointSession
-Details of a Check Point Session
+### Koopman.CheckPoint.SessionInfo
 
-This session object does NOT include login details so cannot be used as Session parameter in other commands
 
 ## NOTES
 

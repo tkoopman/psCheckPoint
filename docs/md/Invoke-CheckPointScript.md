@@ -1,37 +1,38 @@
 # Invoke-CheckPointScript
 
 ## SYNOPSIS
-Run script on gateways
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
 ### By Inline Script
 ```
-Invoke-CheckPointScript -ScriptName <String> -Script <String> [-Args <String>] -Targets <PSObject>
- [-Comments <String>] [-Session <CheckPointSession>]
+Invoke-CheckPointScript [-Args <String>] [-Comments <String>] -Script <String> -ScriptName <String>
+ -Targets <PSObject> [-Session <Session>]
 ```
 
 ### By Script File
 ```
-Invoke-CheckPointScript -ScriptName <String> -ScriptFile <String> [-Args <String>] -Targets <PSObject>
- [-Comments <String>] [-Session <CheckPointSession>]
+Invoke-CheckPointScript [-Args <String>] [-Comments <String>] -ScriptFile <String> -ScriptName <String>
+ -Targets <PSObject> [-Session <Session>]
 ```
 
 ## DESCRIPTION
-Run a script on target gateways.
-After completing you can get any output from script by looking at the task details.
+{{Fill in the Description}}
 
 ## EXAMPLES
 
-### ----------  EXAMPLE 1  ----------
+### Example 1
 ```
-$(Invoke-CheckPointScript -ScriptName "Get Configuration" -Script "clish -c 'Show Configuration'" -Targets fwm-devbtpp001 | Wait-CheckPointTask).TaskDetails.ResponseMessage
+PS C:\> {{ Add example code here }}
 ```
+
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -Args
-Script arguments.
+{{Fill Args Description}}
 
 ```yaml
 Type: String
@@ -46,7 +47,7 @@ Accept wildcard characters: False
 ```
 
 ### -Comments
-Comments string
+{{Fill Comments Description}}
 
 ```yaml
 Type: String
@@ -61,7 +62,7 @@ Accept wildcard characters: False
 ```
 
 ### -Script
-Script Body
+{{Fill Script Description}}
 
 ```yaml
 Type: String
@@ -76,7 +77,7 @@ Accept wildcard characters: False
 ```
 
 ### -ScriptFile
-Load Script Body from File
+{{Fill ScriptFile Description}}
 
 ```yaml
 Type: String
@@ -91,7 +92,7 @@ Accept wildcard characters: False
 ```
 
 ### -ScriptName
-Script Name.
+{{Fill ScriptName Description}}
 
 ```yaml
 Type: String
@@ -106,10 +107,10 @@ Accept wildcard characters: False
 ```
 
 ### -Session
-Session object from Open-CheckPointSession
+{{Fill Session Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -121,8 +122,7 @@ Accept wildcard characters: False
 ```
 
 ### -Targets
-On what targets to execute this command.
-Targets may be identified by their name, or object unique identifier.
+{{Fill Targets Description}}
 
 ```yaml
 Type: PSObject
@@ -139,13 +139,12 @@ Accept wildcard characters: False
 ## INPUTS
 
 ### System.String
-Script Body
+System.Management.Automation.PSObject
 
-### System.Management.Automation.PSObject
-On what targets to execute this command.
-Targets may be identified by their name, or object unique identifier.
 
 ## OUTPUTS
+
+### System.Object
 
 ## NOTES
 

@@ -1,30 +1,33 @@
 # Send-CheckPointKeepAlive
 
 ## SYNOPSIS
-Keep the session valid/alive.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
 ```
-Send-CheckPointKeepAlive [-Session <CheckPointSession>]
+Send-CheckPointKeepAlive [-Session <Session>]
 ```
 
 ## DESCRIPTION
+{{Fill in the Description}}
 
 ## EXAMPLES
 
-### ----------  EXAMPLE 1  ----------
+### Example 1
 ```
-Send-CheckPointKeepAlive
+PS C:\> {{ Add example code here }}
 ```
+
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -Session
-Session object from Open-CheckPointSession
+{{Fill Session Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -37,7 +40,12 @@ Accept wildcard characters: False
 
 ## INPUTS
 
+### None
+
+
 ## OUTPUTS
+
+### System.Object
 
 ## NOTES
 

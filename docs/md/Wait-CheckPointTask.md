@@ -1,31 +1,33 @@
 # Wait-CheckPointTask
 
 ## SYNOPSIS
-Waits for task to complete.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
 ```
-Wait-CheckPointTask [-SleepTime <Int32>] [-Timeout <Int32>] -TaskID <String> [-Session <CheckPointSession>]
+Wait-CheckPointTask [-SleepTime <Int32>] -Task <PSObject> [-Timeout <Int32>] [-Session <Session>]
 ```
 
 ## DESCRIPTION
-Waits for task to complete then returns the completed task details.
+{{Fill in the Description}}
 
 ## EXAMPLES
 
-### ----------  EXAMPLE 1  ----------
+### Example 1
 ```
-Install-CheckPointPolicy -PolicyPackage Standard -Targets MyGateway | Wait-CheckPointTask
+PS C:\> {{ Add example code here }}
 ```
+
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -Session
-Session object from Open-CheckPointSession
+{{Fill Session Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -37,7 +39,7 @@ Accept wildcard characters: False
 ```
 
 ### -SleepTime
-Time in seconds to sleep in-between checking task status
+{{Fill SleepTime Description}}
 
 ```yaml
 Type: Int32
@@ -46,28 +48,28 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: 5
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -TaskID
-Unique identifier of task
+### -Task
+{{Fill Task Description}}
 
 ```yaml
-Type: String
+Type: PSObject
 Parameter Sets: (All)
-Aliases: 
+Aliases: TaskID
 
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName, ByValue)
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
 ### -Timeout
-Timeout in seconds.
+{{Fill Timeout Description}}
 
 ```yaml
 Type: Int32
@@ -76,17 +78,19 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: 300
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ## INPUTS
 
-### System.String
-Unique identifier of task
+### System.Management.Automation.PSObject
+
 
 ## OUTPUTS
+
+### System.Object
 
 ## NOTES
 

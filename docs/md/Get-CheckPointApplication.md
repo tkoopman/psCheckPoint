@@ -1,41 +1,39 @@
 # Get-CheckPointApplication
 
 ## SYNOPSIS
-Retrieve existing object using object name or uid.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
+### By Name or UID (Default)
+```
+Get-CheckPointApplication [-DetailsLevel <DetailLevels>] [-Value] <String> [-Session <Session>]
+```
+
 ### By Application ID
 ```
-Get-CheckPointApplication -ApplicationID <String> [-Session <CheckPointSession>]
-```
-
-### By UID
-```
-Get-CheckPointApplication -UID <String> [-Session <CheckPointSession>]
-```
-
-### By Name
-```
-Get-CheckPointApplication [-Name] <String> [-Session <CheckPointSession>]
+Get-CheckPointApplication -ApplicationID <Int32> [-DetailsLevel <DetailLevels>] [-Session <Session>]
 ```
 
 ## DESCRIPTION
+{{Fill in the Description}}
 
 ## EXAMPLES
 
-### ----------  EXAMPLE 1  ----------
+### Example 1
+```
+PS C:\> {{ Add example code here }}
 ```
 
-```
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -ApplicationID
-Object application identifier.
+{{Fill ApplicationID Description}}
 
 ```yaml
-Type: String
+Type: Int32
 Parameter Sets: By Application ID
 Aliases: 
 
@@ -46,26 +44,27 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -Name
-Object name.
+### -DetailsLevel
+{{Fill DetailsLevel Description}}
 
 ```yaml
-Type: String
-Parameter Sets: By Name
+Type: DetailLevels
+Parameter Sets: (All)
 Aliases: 
+Accepted values: UID, Standard, Full
 
-Required: True
-Position: 1
+Required: False
+Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName, ByValue)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Session
-Session object from Open-CheckPointSession
+{{Fill Session Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -76,36 +75,31 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -UID
-Object unique identifier.
+### -Value
+{{Fill Value Description}}
 
 ```yaml
 Type: String
-Parameter Sets: By UID
-Aliases: 
+Parameter Sets: By Name or UID
+Aliases: Name, UID
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 
 ## INPUTS
 
-### System.String
-Object application identifier.
+### System.Int32
+System.String
 
-### System.String
-Object unique identifier.
-
-### System.String
-Object name.
 
 ## OUTPUTS
 
-### psCheckPoint.Objects.Application.CheckPointApplication
-Details of a Check Point Application/Site
+### Koopman.CheckPoint.ApplicationSite
+
 
 ## NOTES
 

@@ -114,16 +114,6 @@
             "Name": "show-hosts",
             "Class": "GetCheckPointHosts",
             "Cmdlet": "Get-CheckPointHosts"
-          },
-          {
-            "Name": "New-CheckPointHostInterface",
-            "Class": "NewCheckPointHostInterface",
-            "Cmdlet": "New-CheckPointHostInterface"
-          },
-          {
-            "Name": "Remove-CheckPointHostInterface",
-            "Class": "RemoveCheckPointHostInterface",
-            "Cmdlet": "Remove-CheckPointHostInterface"
           }
         ],
         "SubChapters": []
@@ -267,7 +257,7 @@
           },
           {
             "Name": "set-group-with-exclusion",
-            "Class": "SetCheckPointHostWithExclusion",
+            "Class": "SetCheckPointGroupWithExclusion",
             "Cmdlet": "Set-CheckPointGroupWithExclusion"
           },
           {
@@ -1704,8 +1694,8 @@
       },
       {
         "Name": "show-commands",
-        "Class": "GetCheckPointCommands",
-        "Cmdlet": "Get-CheckPointCommands"
+        "Class": null,
+        "Cmdlet": null
       },
       {
         "Name": "put-file",
@@ -1770,23 +1760,7 @@
   },
   {
     "Name": "Identity Awareness",
-    "Cmdlets": [
-      {
-        "Name": "add-identity",
-        "Class": "AddCheckPointIdentity",
-        "Cmdlet": "Add-CheckPointIdentity"
-      },
-      {
-        "Name": "delete-identity",
-        "Class": "RemoveCheckPointIdentity",
-        "Cmdlet": "Remove-CheckPointIdentity"
-      },
-      {
-        "Name": "show-identity",
-        "Class": "GetCheckPointIdentity",
-        "Cmdlet": "Get-CheckPointIdentity"
-      }
-    ],
+    "Cmdlets": [],
     "SubChapters": []
   }
 ]

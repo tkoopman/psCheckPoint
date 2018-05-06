@@ -3,11 +3,6 @@
     "Name": "Export Commands",
     "Cmdlets": [
       {
-        "Name": "ConvertTo-CheckPointHtml",
-        "Class": "ConvertToCheckPointHtml",
-        "Cmdlet": "ConvertTo-CheckPointHtml"
-      },
-      {
         "Name": "Export-CheckPointObjects",
         "Class": "ExportCheckPointObjects",
         "Cmdlet": "Export-CheckPointObjects"
@@ -22,11 +17,6 @@
         "Name": "Invoke-CheckPointGroupSync",
         "Class": "InvokeCheckPointGroupSync",
         "Cmdlet": "Invoke-CheckPointGroupSync"
-      },
-      {
-        "Name": "New-SyncMember",
-        "Class": "NewSyncMember",
-        "Cmdlet": "New-SyncMember"
       }
     ],
     "SubChapters": []

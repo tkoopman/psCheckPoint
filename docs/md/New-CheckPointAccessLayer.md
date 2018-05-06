@@ -1,30 +1,33 @@
 # New-CheckPointAccessLayer
 
 ## SYNOPSIS
-Create new object.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
 ```
 New-CheckPointAccessLayer [-AddDefaultRule <Boolean>] [-ApplicationsAndUrlFiltering <Boolean>]
  [-ContentAwareness <Boolean>] [-DetectUsingXForwardFor <Boolean>] [-Firewall <Boolean>]
- [-MobileAccess <Boolean>] [-Shared <Boolean>] -Name <String> [-Tags <String[]>] [-Comments <String>]
- [-IgnoreWarnings] [-IgnoreErrors] [-PassThru] [-Color <String>] [-Session <CheckPointSession>]
+ [-MobileAccess <Boolean>] [-Shared <Boolean>] -Name <String> [-Color <Colors>] [-Comments <String>]
+ [-Ignore <Ignore>] [-PassThru] [-Tags <String[]>] [-Session <Session>]
 ```
 
 ## DESCRIPTION
+{{Fill in the Description}}
 
 ## EXAMPLES
 
-### ----------  EXAMPLE 1  ----------
+### Example 1
+```
+PS C:\> {{ Add example code here }}
 ```
 
-```
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -AddDefaultRule
-Indicates whether to include a clean-up rule in the new layer.
+{{Fill AddDefaultRule Description}}
 
 ```yaml
 Type: Boolean
@@ -33,13 +36,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: True
+Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -ApplicationsAndUrlFiltering
-Whether to enable Applications and URL Filtering blade on the layer.
+{{Fill ApplicationsAndUrlFiltering Description}}
 
 ```yaml
 Type: Boolean
@@ -48,19 +51,19 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -Color
-Color of the object.
-Should be one of existing colors.
+{{Fill Color Description}}
 
 ```yaml
-Type: String
+Type: Colors
 Parameter Sets: (All)
 Aliases: Colour
+Accepted values: Aquamarine, Black, Blue, Brown, Burlywood, Coral, CreteBlue, Cyan, DarkBlue, DarkGold, DarkGray, DarkGreen, DarkOrange, DarkSeaGreen, Firebrick, ForestGreen, Gold, Gray, Khaki, LemonChiffon, LightGreen, Magenta, NavyBlue, Olive, Orange, Orchid, Pink, Purple, Red, SeaGreen, Sienna, SkyBlue, SlateBlue, Turquoise, VioletRed, Yellow
 
 Required: False
 Position: Named
@@ -70,7 +73,7 @@ Accept wildcard characters: False
 ```
 
 ### -Comments
-Comments string.
+{{Fill Comments Description}}
 
 ```yaml
 Type: String
@@ -85,7 +88,7 @@ Accept wildcard characters: False
 ```
 
 ### -ContentAwareness
-Whether to enable Content Awareness blade on the layer.
+{{Fill ContentAwareness Description}}
 
 ```yaml
 Type: Boolean
@@ -94,13 +97,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -DetectUsingXForwardFor
-Whether to use X-Forward-For HTTP header, which is added by the proxy server to keep track of the original source IP.
+{{Fill DetectUsingXForwardFor Description}}
 
 ```yaml
 Type: Boolean
@@ -109,13 +112,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -Firewall
-Whether to enable Firewall blade on the layer.
+{{Fill Firewall Description}}
 
 ```yaml
 Type: Boolean
@@ -124,45 +127,29 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: True
+Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -IgnoreErrors
-Apply changes ignoring errors.
-You won't be able to publish such a changes.
-If ignore-warnings flag was omitted - warnings will also be ignored.
+### -Ignore
+{{Fill Ignore Description}}
 
 ```yaml
-Type: SwitchParameter
+Type: Ignore
 Parameter Sets: (All)
 Aliases: 
+Accepted values: No, Warnings, Errors
 
 Required: False
 Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -IgnoreWarnings
-Apply changes ignoring warnings.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -MobileAccess
-Whether to enable Mobile Access blade on the layer.
+{{Fill MobileAccess Description}}
 
 ```yaml
 Type: Boolean
@@ -171,14 +158,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -Name
-Object name.
-Should be unique in the domain.
+{{Fill Name Description}}
 
 ```yaml
 Type: String
@@ -193,7 +179,7 @@ Accept wildcard characters: False
 ```
 
 ### -PassThru
-Return the updated object.
+{{Fill PassThru Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -202,16 +188,16 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Session
-Session object from Open-CheckPointSession
+{{Fill Session Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -223,7 +209,7 @@ Accept wildcard characters: False
 ```
 
 ### -Shared
-Whether this layer is shared.
+{{Fill Shared Description}}
 
 ```yaml
 Type: Boolean
@@ -232,13 +218,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -Tags
-Collection of tag identifiers.
+{{Fill Tags Description}}
 
 ```yaml
 Type: String[]
@@ -255,44 +241,15 @@ Accept wildcard characters: False
 ## INPUTS
 
 ### System.Boolean
-Indicates whether to include a clean-up rule in the new layer.
+System.String
+Koopman.CheckPoint.Colors
+System.String[]
 
-### System.Boolean
-Whether to enable Applications and URL Filtering blade on the layer.
-
-### System.Boolean
-Whether to enable Content Awareness blade on the layer.
-
-### System.Boolean
-Whether to use X-Forward-For HTTP header, which is added by the proxy server to keep track of the original source IP.
-
-### System.Boolean
-Whether to enable Firewall blade on the layer.
-
-### System.Boolean
-Whether to enable Mobile Access blade on the layer.
-
-### System.Boolean
-Whether this layer is shared.
-
-### System.String
-Object name.
-Should be unique in the domain.
-
-### System.String[]
-Collection of tag identifiers.
-
-### System.String
-Comments string.
-
-### System.String
-Color of the object.
-Should be one of existing colors.
 
 ## OUTPUTS
 
-### psCheckPoint.Objects.AccessLayer.CheckPointAccessLayer
-Details of a Check Point Access Layer
+### Koopman.CheckPoint.AccessLayer
+
 
 ## NOTES
 

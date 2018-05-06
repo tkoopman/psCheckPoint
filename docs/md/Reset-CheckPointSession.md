@@ -1,30 +1,33 @@
 # Reset-CheckPointSession
 
 ## SYNOPSIS
-Log out of a session.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
 ```
-Reset-CheckPointSession [-ResetSession <CheckPointSession>] [-Session <CheckPointSession>]
+Reset-CheckPointSession [-ResetSession <PSObject>] [-Session <Session>]
 ```
 
 ## DESCRIPTION
+{{Fill in the Description}}
 
 ## EXAMPLES
 
-### ----------  EXAMPLE 1  ----------
+### Example 1
 ```
-Reset-CheckPointSession
+PS C:\> {{ Add example code here }}
 ```
+
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -ResetSession
-Reset none active session
+{{Fill ResetSession Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: PSObject
 Parameter Sets: (All)
 Aliases: 
 
@@ -36,10 +39,10 @@ Accept wildcard characters: False
 ```
 
 ### -Session
-Session object from Open-CheckPointSession
+{{Fill Session Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -52,10 +55,12 @@ Accept wildcard characters: False
 
 ## INPUTS
 
-### psCheckPoint.Objects.Session.CheckPointSession
-Reset none active session
+### System.Management.Automation.PSObject
+
 
 ## OUTPUTS
+
+### System.Object
 
 ## NOTES
 

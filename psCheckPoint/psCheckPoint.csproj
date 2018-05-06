@@ -33,6 +33,14 @@
     <DocumentationFile>bin\Debug\netstandard1.6\psCheckPoint.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|AnyCPU'">
+    <DocumentationFile>bin\Release\net45\psCheckPoint.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard1.6|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard1.6\psCheckPoint.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <ViewFiles Include="..\Views\*.ps1xml" />
     <Compile Remove="IA\AddCheckPointIdentity.cs" />
