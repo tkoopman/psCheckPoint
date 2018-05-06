@@ -2,6 +2,7 @@
 using Koopman.CheckPoint.FastUpdate;
 using System.Management.Automation;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Host
 {
@@ -79,11 +80,11 @@ namespace psCheckPoint.Objects.Host
         #region Methods
 
         /// <inheritdoc />
-        protected override void Set(string value)
+        protected override async Task Set(string value)
         {
             var o = Session.UpdateHost(value);
             UpdateProperties(o);
-            o.AcceptChanges(Ignore);
+            await o.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
             WriteObject(o);
         }
 

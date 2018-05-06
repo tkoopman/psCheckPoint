@@ -1,5 +1,6 @@
 ﻿using Koopman.CheckPoint;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects
 {
@@ -31,7 +32,7 @@ namespace psCheckPoint.Objects
         #region Methods
 
         /// <inheritdoc />
-        protected abstract override void ProcessRecord();
+        protected abstract override Task ProcessRecordAsync();
 
         #endregion Methods
     }

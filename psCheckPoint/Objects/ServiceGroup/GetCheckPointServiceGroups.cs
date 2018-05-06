@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.ServiceGroup
 {
@@ -18,22 +19,24 @@ namespace psCheckPoint.Objects.ServiceGroup
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
+        protected override async Task ProcessRecordAsync()
         {
             if (ParameterSetName == "Limit")
             {
                 WriteObject(
-                    Session.FindServiceGroups(
+                    await Session.FindServiceGroups(
                             limit: Limit,
                             offset: Offset,
-                            detailLevel: DetailsLevel), false);
+                            detailLevel: DetailsLevel,
+                            cancellationToken: CancelProcessToken), false);
             }
             else
             {
                 WriteObject(
-                    Session.FindAllServiceGroups(
+                    await Session.FindAllServiceGroups(
                             limit: Limit,
-                            detailLevel: DetailsLevel), false);
+                            detailLevel: DetailsLevel,
+                            cancellationToken: CancelProcessToken), false);
             }
         }
 

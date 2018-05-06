@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.MulticastAddressRange
 {
@@ -15,7 +16,7 @@ namespace psCheckPoint.Objects.MulticastAddressRange
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord() => WriteObject(Session.FindMulticastAddressRange(Value, DetailsLevel));
+        protected override async Task ProcessRecordAsync() => WriteObject(await Session.FindMulticastAddressRange(Value, DetailsLevel, cancellationToken: CancelProcessToken));
 
         #endregion Methods
     }

@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.ApplicationCategory
 {
@@ -15,7 +16,7 @@ namespace psCheckPoint.Objects.ApplicationCategory
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord() => WriteObject(Session.FindApplicationCategory(Value, DetailsLevel));
+        protected override async Task ProcessRecordAsync() => WriteObject(await Session.FindApplicationCategory(Value, DetailsLevel, cancellationToken: CancelProcessToken));
 
         #endregion Methods
     }

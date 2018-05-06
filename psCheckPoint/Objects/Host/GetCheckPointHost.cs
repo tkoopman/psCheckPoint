@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Host
 {
@@ -19,7 +20,7 @@ namespace psCheckPoint.Objects.Host
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord() => WriteObject(Session.FindHost(Value, DetailsLevel));
+        protected override async Task ProcessRecordAsync() => WriteObject(await Session.FindHost(Value, DetailsLevel, cancellationToken: CancelProcessToken));
 
         #endregion Methods
     }

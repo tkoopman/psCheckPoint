@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.ServiceGroup
 {
@@ -19,7 +20,7 @@ namespace psCheckPoint.Objects.ServiceGroup
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord() => WriteObject(Session.FindServiceGroup(Value, DetailsLevel));
+        protected override async Task ProcessRecordAsync() => WriteObject(await Session.FindServiceGroup(Value, DetailsLevel, cancellationToken: CancelProcessToken));
 
         #endregion Methods
     }

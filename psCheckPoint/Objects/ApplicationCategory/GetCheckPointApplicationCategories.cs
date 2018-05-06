@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.ApplicationCategory
 {
@@ -16,22 +17,24 @@ namespace psCheckPoint.Objects.ApplicationCategory
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
+        protected override async Task ProcessRecordAsync()
         {
             if (ParameterSetName == "Limit")
             {
                 WriteObject(
-                    Session.FindApplicationCategories(
+                    await Session.FindApplicationCategories(
                             limit: Limit,
                             offset: Offset,
-                            detailLevel: DetailsLevel), false);
+                            detailLevel: DetailsLevel,
+                            cancellationToken: CancelProcessToken), false);
             }
             else
             {
                 WriteObject(
-                    Session.FindAllApplicationCategories(
+                    await Session.FindAllApplicationCategories(
                             limit: Limit,
-                            detailLevel: DetailsLevel), false);
+                            detailLevel: DetailsLevel,
+                            cancellationToken: CancelProcessToken), false);
             }
         }
 

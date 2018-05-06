@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.ServiceUDP
 {
@@ -15,7 +16,7 @@ namespace psCheckPoint.Objects.ServiceUDP
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord() => WriteObject(Session.FindServiceUDP(Value, DetailsLevel));
+        protected override async Task ProcessRecordAsync() => WriteObject(await Session.FindServiceUDP(Value, DetailsLevel, cancellationToken: CancelProcessToken));
 
         #endregion Methods
     }

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.GroupWithExclusion
 {
@@ -34,7 +35,7 @@ namespace psCheckPoint.Objects.GroupWithExclusion
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
+        protected override async Task ProcessRecordAsync()
         {
             var group = new Koopman.CheckPoint.GroupWithExclusion(Session, SetIfExists.IsPresent)
             {
@@ -49,7 +50,7 @@ namespace psCheckPoint.Objects.GroupWithExclusion
             foreach (string t in Tags ?? Enumerable.Empty<string>())
                 group.Tags.Add(t);
 
-            group.AcceptChanges(Ignore);
+            await group.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
 
             WriteObject(group);
         }

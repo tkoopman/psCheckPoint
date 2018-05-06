@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.SecurityZone
 {
@@ -16,22 +17,24 @@ namespace psCheckPoint.Objects.SecurityZone
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
+        protected override async Task ProcessRecordAsync()
         {
             if (ParameterSetName == "Limit")
             {
                 WriteObject(
-                    Session.FindSecurityZones(
+                    await Session.FindSecurityZones(
                             limit: Limit,
                             offset: Offset,
-                            detailLevel: DetailsLevel), false);
+                            detailLevel: DetailsLevel,
+                            cancellationToken: CancelProcessToken), false);
             }
             else
             {
                 WriteObject(
-                    Session.FindAllSecurityZones(
+                    await Session.FindAllSecurityZones(
                             limit: Limit,
-                            detailLevel: DetailsLevel), false);
+                            detailLevel: DetailsLevel,
+                            cancellationToken: CancelProcessToken), false);
             }
         }
 

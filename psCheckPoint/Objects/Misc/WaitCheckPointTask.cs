@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Management.Automation;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Misc
 {
@@ -20,12 +21,6 @@ namespace psCheckPoint.Objects.Misc
     [Cmdlet(VerbsLifecycle.Wait, "CheckPointTask")]
     public class WaitCheckPointTask : CheckPointCmdletBase
     {
-        #region Fields
-
-        private CancellationTokenSource cancellationTokenSource;
-
-        #endregion Fields
-
         #region Properties
 
         /// <summary>
@@ -53,51 +48,38 @@ namespace psCheckPoint.Objects.Misc
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord() => ProcessObject(Task);
+        protected override Task ProcessRecordAsync() => ProcessObject(Task);
 
-        /// <summary>
-        /// Stops the processing.
-        /// </summary>
-        protected override void StopProcessing() => cancellationTokenSource?.Cancel();
-
-        private void ProcessObject(object obj)
+        private async Task ProcessObject(object obj)
         {
-            if (obj is string str) Wait(str);
-            else if (obj is Task t) Wait(t.TaskID);
-            else if (obj is IReadOnlyDictionary<string, string> ro) ProcessObject(ro.Values);
-            else if (obj is PSObject pso) ProcessObject(pso.BaseObject);
+            if (obj is string str) await Wait(str);
+            else if (obj is CheckPointTask t) await Wait(t.TaskID);
+            else if (obj is IReadOnlyDictionary<string, string> ro) await ProcessObject(ro.Values);
+            else if (obj is PSObject pso) await ProcessObject(pso.BaseObject);
             else if (obj is IEnumerable enumerable)
             {
                 foreach (object eo in enumerable)
-                    ProcessObject(eo);
+                    await ProcessObject(eo);
             }
             else
                 throw new PSArgumentException($"Invalid type: {obj.GetType()}", nameof(Task));
         }
 
         /// <inheritdoc />
-        private void Wait(string taskID)
+        private async Task Wait(string taskID)
         {
-            var task = Session.FindTask(taskID);
+            var task = await Session.FindTask(taskID);
 
-            if (task.Status == Koopman.CheckPoint.Task.TaskStatus.InProgress)
+            if (task.Status == CheckPointTask.TaskStatus.InProgress)
             {
                 var progress = new ProgressRecord(1, "Waiting for task to complete", task.TaskName);
-                cancellationTokenSource = new CancellationTokenSource(Timeout * 1000);
+                var cts = new CancellationTokenSource(Timeout * 1000);
 
-                var waitTask = task.WaitAsync(
+                await task.WaitAsync(
                         delay: SleepTime * 1000,
-                        progress: new Progress<int>(i => progress.PercentComplete = i),
-                        cancellationToken: cancellationTokenSource.Token
+                        progress: new Progress<int>(i => { progress.PercentComplete = i; WriteProgress(progress); }),
+                        cancellationToken: CancellationTokenSource.CreateLinkedTokenSource(CancelProcessToken, cts.Token).Token
                     );
-
-                while (waitTask.Status < System.Threading.Tasks.TaskStatus.RanToCompletion)
-                {
-                    WriteProgress(progress);
-                    Thread.Sleep(500);
-                }
-
-                cancellationTokenSource = null;
 
                 progress.RecordType = ProgressRecordType.Completed;
                 WriteProgress(progress);

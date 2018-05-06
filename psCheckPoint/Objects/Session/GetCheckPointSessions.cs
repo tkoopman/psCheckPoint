@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Session
 {
@@ -26,22 +27,24 @@ namespace psCheckPoint.Objects.Session
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
+        protected override async Task ProcessRecordAsync()
         {
             if (ParameterSetName == "Limit")
             {
                 WriteObject(
-                    Session.FindSessions(
+                    await Session.FindSessions(
                             viewPublishedSessions: ViewPublishedSessions.IsPresent,
                             limit: Limit,
-                            offset: Offset), false);
+                            offset: Offset,
+                            cancellationToken: CancelProcessToken), false);
             }
             else
             {
                 WriteObject(
-                    Session.FindAllSessions(
+                    await Session.FindAllSessions(
                             viewPublishedSessions: ViewPublishedSessions.IsPresent,
-                            limit: Limit), false);
+                            limit: Limit,
+                            cancellationToken: CancelProcessToken), false);
             }
         }
 

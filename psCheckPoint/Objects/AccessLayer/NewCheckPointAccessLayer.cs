@@ -1,6 +1,7 @@
 ﻿using Koopman.CheckPoint;
 using System.ComponentModel;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.AccessLayer
 {
@@ -72,11 +73,11 @@ namespace psCheckPoint.Objects.AccessLayer
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
+        protected override async Task ProcessRecordAsync()
         {
             var o = new Koopman.CheckPoint.AccessLayer(Session, AddDefaultRule);
             UpdateProperties(o);
-            o.AcceptChanges(Ignore);
+            await o.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
             WriteObject(o);
         }
 

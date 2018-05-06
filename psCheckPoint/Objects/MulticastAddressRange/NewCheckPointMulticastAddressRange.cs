@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Management.Automation;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.MulticastAddressRange
 {
@@ -84,7 +85,7 @@ namespace psCheckPoint.Objects.MulticastAddressRange
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
+        protected override async Task ProcessRecordAsync()
         {
             if (ParameterSetName.StartsWith("IPv4 or IPv6"))
             {
@@ -120,7 +121,7 @@ namespace psCheckPoint.Objects.MulticastAddressRange
             foreach (string t in Tags ?? Enumerable.Empty<string>())
                 addressRange.Tags.Add(t);
 
-            addressRange.AcceptChanges(Ignore);
+            await addressRange.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
 
             WriteObject(addressRange);
         }

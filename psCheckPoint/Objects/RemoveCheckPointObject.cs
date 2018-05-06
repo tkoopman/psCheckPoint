@@ -1,6 +1,7 @@
 ﻿using Koopman.CheckPoint;
 using System.Collections;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects
 {
@@ -32,23 +33,24 @@ namespace psCheckPoint.Objects
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord() => ProcessObject(Object);
+        protected override Task ProcessRecordAsync() => ProcessObject(Object);
 
         /// <summary>
         /// Removes the specified object.
         /// </summary>
         /// <param name="value">The name or UID of the object to remove.</param>
-        protected abstract void Remove(string value);
+        protected abstract Task Remove(string value);
 
-        private void ProcessObject(object obj)
+        private async Task ProcessObject(object obj)
         {
-            if (obj is string str) Remove(str);
-            else if (obj is IObjectSummary o) Remove(o.GetIdentifier());
-            else if (obj is PSObject pso) ProcessObject(pso.BaseObject);
+            CancelProcessToken.ThrowIfCancellationRequested();
+            if (obj is string str) await Remove(str);
+            else if (obj is IObjectSummary o) await Remove(o.GetIdentifier());
+            else if (obj is PSObject pso) await ProcessObject(pso.BaseObject);
             else if (obj is IEnumerable enumerable)
             {
                 foreach (object eo in enumerable)
-                    ProcessObject(eo);
+                    await ProcessObject(eo);
             }
             else
                 throw new PSArgumentException($"Invalid type: {obj.GetType()}", InputName);

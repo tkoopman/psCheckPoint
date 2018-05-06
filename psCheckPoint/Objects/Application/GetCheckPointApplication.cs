@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Application
 {
@@ -15,12 +16,12 @@ namespace psCheckPoint.Objects.Application
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
+        protected override async Task ProcessRecordAsync()
         {
             if (ParameterSetName.Equals("By Application ID"))
-                WriteObject(Session.FindApplicationSite(ApplicationID, DetailsLevel));
+                WriteObject(await Session.FindApplicationSite(ApplicationID, DetailsLevel, cancellationToken: CancelProcessToken));
             else
-                WriteObject(Session.FindApplicationSite(Value, DetailsLevel));
+                WriteObject(await Session.FindApplicationSite(Value, DetailsLevel, cancellationToken: CancelProcessToken));
         }
 
         #endregion Methods

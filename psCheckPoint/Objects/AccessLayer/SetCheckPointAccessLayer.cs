@@ -1,6 +1,7 @@
 ﻿using Koopman.CheckPoint.FastUpdate;
 using System.ComponentModel;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.AccessLayer
 {
@@ -77,11 +78,11 @@ namespace psCheckPoint.Objects.AccessLayer
         #region Methods
 
         /// <inheritdoc />
-        protected override void Set(string value)
+        protected override async Task Set(string value)
         {
             var o = Session.UpdateAccessLayer(value);
             UpdateProperties(o);
-            o.AcceptChanges(Ignore);
+            await o.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
             WriteObject(o);
         }
 

@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.SecurityZone
 {
@@ -28,7 +29,7 @@ namespace psCheckPoint.Objects.SecurityZone
         #region Methods
 
         /// <inheritdoc />
-        protected override void Remove(string value) => Session.DeleteSecurityZone(value, Ignore);
+        protected override Task Remove(string value) => Session.DeleteSecurityZone(value, Ignore, cancellationToken: CancelProcessToken);
 
         #endregion Methods
     }

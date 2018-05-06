@@ -106,18 +106,13 @@ namespace psCheckPoint.Extra.Sync
 
         #region Methods
 
-        /// <summary>
-        /// </summary>
-        /// <exception cref="PSArgumentException">Unable to find or create group - GroupName</exception>
         /// <inheritdoc />
-        protected override void BeginProcessing()
+        protected override async Task BeginProcessingAsync()
         {
-            base.BeginProcessing();
-
             hostColor = Host.UI.RawUI.ForegroundColor;
             try
             {
-                group = Session.FindGroup(GroupName);
+                group = await Session.FindGroup(GroupName, cancellationToken: CancelProcessToken);
             }
             catch (Koopman.CheckPoint.Exceptions.ObjectNotFoundException)
             {
@@ -132,7 +127,7 @@ namespace psCheckPoint.Extra.Sync
                     foreach (string t in Tags ?? Enumerable.Empty<string>())
                         group.Tags.Add(t);
 
-                    group.AcceptChanges(Ignore);
+                    await group.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
                 }
             }
 
@@ -148,10 +143,8 @@ namespace psCheckPoint.Extra.Sync
             _postMembers = new SortedSet<string>();
         }
 
-        /// <summary>
-        /// Ends the processing.
-        /// </summary>
-        protected override void EndProcessing()
+        /// <inheritdoc />
+        protected override async Task EndProcessingAsync()
         {
             string[] deleteKeys = _currentMembers.Keys.Except(_postMembers).ToArray();
             bool removed = true;
@@ -163,7 +156,7 @@ namespace psCheckPoint.Extra.Sync
                     group.Members.Remove(n);
                 try
                 {
-                    group.AcceptChanges(Ignore);
+                    await group.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
                 }
                 catch (Koopman.CheckPoint.Exceptions.GenericException e)
                 {
@@ -181,16 +174,16 @@ namespace psCheckPoint.Extra.Sync
                     Error = !removed
                 };
 
-                var used = Session.FindWhereUsed(obj.Name);
+                var used = await Session.FindWhereUsed(identifier: obj.Name, detailLevel: DetailLevels.UID, cancellationToken: CancelProcessToken);
                 if (used.UsedDirectly.Total == 0)
                 {
                     output.Actions |= Actions.Delete;
                     try
                     {
                         if (obj is Host h)
-                            h.Delete();
+                            await h.Delete(cancellationToken: CancelProcessToken);
                         else if (obj is Network n)
-                            n.Delete();
+                            await n.Delete(cancellationToken: CancelProcessToken);
                     }
                     catch (Koopman.CheckPoint.Exceptions.GenericException e)
                     {
@@ -206,13 +199,13 @@ namespace psCheckPoint.Extra.Sync
                         {
                             foreach (string t in Tags)
                                 h.Tags.Remove(t);
-                            h.AcceptChanges(Ignore);
+                            await h.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
                         }
                         else if (obj is Network n)
                         {
                             foreach (string t in Tags)
                                 n.Tags.Remove(t);
-                            n.AcceptChanges(Ignore);
+                            await n.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
                         }
                     }
                     catch (Koopman.CheckPoint.Exceptions.GenericException e)
@@ -230,7 +223,7 @@ namespace psCheckPoint.Extra.Sync
         /// Processes the record.
         /// </summary>
         /// <exception cref="PSInvalidCastException">Incorrect object found.</exception>
-        protected override void ProcessRecord()
+        protected override async Task ProcessRecordAsync()
         {
             foreach (string input in Input)
             {
@@ -244,11 +237,11 @@ namespace psCheckPoint.Extra.Sync
                 }
                 else
                 {
-                    var obj = FindObjectByName(member);
+                    var obj = await FindObjectByName(member);
                     string oldName = null;
                     if (obj == null && Rename.IsPresent)
                     {
-                        obj = FindObjectByIP(member);
+                        obj = await FindObjectByIP(member);
                         if (obj != null)
                         {
                             oldName = obj.Name;
@@ -259,12 +252,12 @@ namespace psCheckPoint.Extra.Sync
                                 if (obj is Network n)
                                 {
                                     n.Name = member.Name;
-                                    n.AcceptChanges(Ignore);
+                                    await n.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
                                 }
                                 else if (obj is Host h)
                                 {
                                     h.Name = member.Name;
-                                    h.AcceptChanges(Ignore);
+                                    await h.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
                                 }
                             }
                             catch (Koopman.CheckPoint.Exceptions.GenericException e)
@@ -298,7 +291,7 @@ namespace psCheckPoint.Extra.Sync
                                 foreach (string t in Tags ?? Enumerable.Empty<string>())
                                     host.Tags.Add(t);
 
-                                host.AcceptChanges(Ignore);
+                                await host.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
                             }
                             else
                             {
@@ -324,7 +317,7 @@ namespace psCheckPoint.Extra.Sync
                                 foreach (string t in Tags ?? Enumerable.Empty<string>())
                                     network.Tags.Add(t);
 
-                                network.AcceptChanges(Ignore);
+                                await network.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
                             }
                         }
                         catch (Koopman.CheckPoint.Exceptions.GenericException e)
@@ -339,7 +332,7 @@ namespace psCheckPoint.Extra.Sync
                         group.Members.Add(obj.Name);
                         try
                         {
-                            group.AcceptChanges(Ignore);
+                            await group.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
                         }
                         catch (Koopman.CheckPoint.Exceptions.GenericException e)
                         {
@@ -358,13 +351,13 @@ namespace psCheckPoint.Extra.Sync
             }
         }
 
-        private IObjectSummary FindObjectByIP(Member member)
+        private async Task<IObjectSummary> FindObjectByIP(Member member)
         {
             try
             {
                 if (member.IsHost())
                 {
-                    foreach (var host in Session.FindAllHosts(member.IP))
+                    foreach (var host in await Session.FindAllHosts(member.IP, cancellationToken: CancelProcessToken))
                     {
                         if ((member.IsIPv4() && host.IPv4Address.Equals(member.IPAddress)) ||
                             (member.IsIPv6() && host.IPv6Address.Equals(member.IPAddress)))
@@ -375,7 +368,7 @@ namespace psCheckPoint.Extra.Sync
                 }
                 else
                 {
-                    foreach (var network in Session.FindAllNetworks(member.IP))
+                    foreach (var network in await Session.FindAllNetworks(member.IP, cancellationToken: CancelProcessToken))
                     {
                         if ((member.IsIPv4() && network.Subnet4.Equals(member.IPAddress) && network.MaskLength4 == member.CIDR) ||
                             (member.IsIPv6() && network.Subnet6.Equals(member.IPAddress) && network.MaskLength6 == member.CIDR))
@@ -390,14 +383,14 @@ namespace psCheckPoint.Extra.Sync
             return null;
         }
 
-        private IObjectSummary FindObjectByName(Member member)
+        private async Task<IObjectSummary> FindObjectByName(Member member)
         {
             try
             {
                 if (member.IsHost())
-                    return Session.FindHost(member.Name);
+                    return await Session.FindHost(member.Name, cancellationToken: CancelProcessToken);
                 else
-                    return Session.FindNetwork(member.Name);
+                    return await Session.FindNetwork(member.Name, cancellationToken: CancelProcessToken);
             }
             catch (Koopman.CheckPoint.Exceptions.ObjectNotFoundException)
             {

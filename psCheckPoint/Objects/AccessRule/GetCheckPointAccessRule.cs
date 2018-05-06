@@ -1,6 +1,7 @@
 ﻿using Koopman.CheckPoint;
 using System.ComponentModel;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.AccessRule
 {
@@ -40,7 +41,7 @@ namespace psCheckPoint.Objects.AccessRule
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord() => WriteObject(Session.FindAccessRule(Layer, RuleNumber, DetailsLevel));
+        protected override async Task ProcessRecordAsync() => WriteObject(await Session.FindAccessRule(Layer, RuleNumber, DetailsLevel, cancellationToken: CancelProcessToken));
 
         #endregion Methods
     }

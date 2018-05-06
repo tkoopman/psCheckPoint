@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.SimpleGateway
 {
@@ -16,22 +17,24 @@ namespace psCheckPoint.Objects.SimpleGateway
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
+        protected override async Task ProcessRecordAsync()
         {
             if (ParameterSetName == "Limit")
             {
                 WriteObject(
-                    Session.FindSimpleGateways(
+                    await Session.FindSimpleGateways(
                             limit: Limit,
                             offset: Offset,
-                            detailLevel: DetailsLevel), false);
+                            detailLevel: DetailsLevel,
+                            cancellationToken: CancelProcessToken), false);
             }
             else
             {
                 WriteObject(
-                    Session.FindAllSimpleGateways(
+                    await Session.FindAllSimpleGateways(
                             limit: Limit,
-                            detailLevel: DetailsLevel), false);
+                            detailLevel: DetailsLevel,
+                            cancellationToken: CancelProcessToken), false);
             }
         }
 

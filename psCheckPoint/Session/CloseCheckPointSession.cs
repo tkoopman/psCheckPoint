@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Session
 {
@@ -16,12 +17,6 @@ namespace psCheckPoint.Session
     [Cmdlet(VerbsCommon.Close, "CheckPointSession")]
     public class CloseCheckPointSession : CheckPointCmdletBase
     {
-        #region Fields
-
-        private bool IsPSSession = false;
-
-        #endregion Fields
-
         #region Properties
 
         /// <summary>
@@ -39,23 +34,17 @@ namespace psCheckPoint.Session
         #region Methods
 
         /// <inheritdoc />
-        protected override void BeginProcessing()
-        {
-            IsPSSession = (Session == null);
-            base.BeginProcessing();
-        }
-
-        /// <inheritdoc />
-        protected override void ProcessRecord()
+        protected override async Task ProcessRecordAsync()
         {
             if (ContinueSessionInSmartconsole.IsPresent)
-                Session.ContinueSessionInSmartconsole();
+                await Session.ContinueSessionInSmartconsole(cancellationToken: CancelProcessToken);
             else
-                Session.Logout();
+                await Session.Logout(cancellationToken: CancelProcessToken);
 
             Session.Dispose();
 
-            if (IsPSSession) { SessionState.PSVariable.Remove("CheckPointSession"); }
+            if (IsPSSession)
+                SessionState.PSVariable.Remove("CheckPointSession");
         }
 
         #endregion Methods

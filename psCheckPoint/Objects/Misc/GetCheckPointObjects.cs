@@ -2,6 +2,7 @@
 using Koopman.CheckPoint.Common;
 using System.ComponentModel;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Misc
 {
@@ -105,43 +106,47 @@ namespace psCheckPoint.Objects.Misc
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
+        protected override async Task ProcessRecordAsync()
         {
             switch (ParameterSetName)
             {
                 case GetCheckPointObjectsStatic.AllFilter:
-                    WriteObject(Session.FindAllObjects(
+                    WriteObject(await Session.FindAllObjects(
                         filter: Filter,
                         type: Type,
                         ipOnly: IPOnly.IsPresent,
                         detailLevel: DetailsLevel,
-                        limit: Limit
+                        limit: Limit,
+                        cancellationToken: CancelProcessToken
                         ));
                     break;
 
                 case GetCheckPointObjectsStatic.AllUnused:
-                    WriteObject(Session.FindAllUnusedObjects(
+                    WriteObject(await Session.FindAllUnusedObjects(
                         detailLevel: DetailsLevel,
-                        limit: Limit
+                        limit: Limit,
+                        cancellationToken: CancelProcessToken
                         ));
                     break;
 
                 case GetCheckPointObjectsStatic.LimitFilter:
-                    WriteObject(Session.FindObjects(
+                    WriteObject(await Session.FindObjects(
                         filter: Filter,
                         type: Type,
                         ipOnly: IPOnly.IsPresent,
                         detailLevel: DetailsLevel,
                         limit: Limit,
-                        offset: Offset
+                        offset: Offset,
+                        cancellationToken: CancelProcessToken
                         ));
                     break;
 
                 case GetCheckPointObjectsStatic.LimitUnused:
-                    WriteObject(Session.FindUnusedObjects(
+                    WriteObject(await Session.FindUnusedObjects(
                         detailLevel: DetailsLevel,
                         limit: Limit,
-                        offset: Offset
+                        offset: Offset,
+                        cancellationToken: CancelProcessToken
                         ));
                     break;
 

@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Session
 {
@@ -49,10 +50,8 @@ namespace psCheckPoint.Session
         #region Methods
 
         /// <inheritdoc />
-        protected override void BeginProcessing()
+        protected override Task BeginProcessingAsync()
         {
-            base.BeginProcessing();
-
             if (ParameterSetName.Equals("Off"))
             {
                 if (Session.DebugWriter != null)
@@ -74,6 +73,8 @@ namespace psCheckPoint.Session
                 else
                     throw new PSArgumentException("File name already exists. Use -Append or -Force to use existing file.", nameof(Path));
             }
+
+            return base.BeginProcessingAsync();
         }
 
         #endregion Methods

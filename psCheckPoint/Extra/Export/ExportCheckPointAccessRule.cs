@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Extra.Export
 {
@@ -158,7 +159,7 @@ namespace psCheckPoint.Extra.Export
         #region Methods
 
         /// <inheritdoc />
-        protected override void BeginProcessing()
+        protected override Task BeginProcessingAsync()
         {
             if (Path != null && !Force.IsPresent && File.Exists(Path))
                 throw new PSArgumentException("File already exists. Use -Force to use existing file.", nameof(Path));
@@ -167,16 +168,20 @@ namespace psCheckPoint.Extra.Export
             if (Path != null && !string.IsNullOrWhiteSpace(dir) && !Directory.Exists(dir))
                 throw new PSArgumentException("Path directory does not exist.", nameof(Path));
 
-            base.BeginProcessing();
-            export = new JsonExport(Session, ExcludeDetailsByType, ExcludeDetailsByName, ExcludeByType, ExcludeByName);
+            export = new JsonExport(Session, ExcludeDetailsByType, ExcludeDetailsByName, ExcludeByType, ExcludeByName)
+            {
+                CancellationToken = CancelProcessToken
+            };
+
+            return base.BeginProcessingAsync();
         }
 
         /// <summary>
         /// <para type="synopsis">Write out resulting export set object.</para>
         /// </summary>
-        protected override void EndProcessing()
+        protected async override Task EndProcessingAsync()
         {
-            string json = export.Export(Indent.IsPresent);
+            string json = await export.Export(Indent.IsPresent);
             string output = json;
 
             if (Output == OutputType.HTML)
@@ -187,7 +192,7 @@ namespace psCheckPoint.Extra.Export
                     var _assembly = typeof(psCheckPoint.Extra.Export.ExportCheckPointObjects).GetTypeInfo().Assembly;
                     using (var _html = new StreamReader(_assembly.GetManifestResourceStream("psCheckPoint.Extra.Export.ExportTemplate.html")))
                     {
-                        output = _html.ReadToEnd();
+                        output = await _html.ReadToEndAsync();
                     }
                 }
                 else
@@ -210,32 +215,32 @@ namespace psCheckPoint.Extra.Export
         /// <summary>
         /// <para type="synopsis">Process each input object.</para>
         /// </summary>
-        protected override void ProcessRecord() => Process(Object.BaseObject);
+        protected override Task ProcessRecordAsync() => Process(Object.BaseObject);
 
-        private void Process(object obj)
+        private async Task Process(object obj)
         {
             switch (obj)
             {
                 case string str:
-                    var whereUsed = Session.FindWhereUsed(str, indirect: IndirectWhereUsed.IsPresent);
-                    export.Add(str, whereUsed);
+                    var whereUsed = await Session.FindWhereUsed(identifier: str, indirect: IndirectWhereUsed.IsPresent, cancellationToken: CancelProcessToken);
+                    await export.AddAsync(str, whereUsed);
                     break;
 
                 case IObjectSummary objectSummary:
-                    Process(objectSummary);
+                    await Process(objectSummary);
                     break;
 
                 case PSObject psObject:
-                    Process(psObject.BaseObject);
+                    await Process(psObject.BaseObject);
                     break;
 
                 case AccessRulebasePagingResults ruleBase:
-                    export.Add(ruleBase);
+                    await export.AddAsync(ruleBase);
                     break;
 
                 case IEnumerable objs:
                     foreach (object o in objs)
-                        Process(o);
+                        await Process(o);
                     break;
 
                 default:
@@ -243,11 +248,11 @@ namespace psCheckPoint.Extra.Export
             }
         }
 
-        private void Process(IObjectSummary obj)
+        private async Task Process(IObjectSummary obj)
         {
             if (ExcludeByName.Contains(obj.ToString()) || ExcludeByType.Contains(obj.Type)) { return; }
 
-            export.Add(obj);
+            await export.AddAsync(obj);
             if (!SkipWhereUsed.IsPresent)
                 switch (obj)
                 {
@@ -266,8 +271,8 @@ namespace psCheckPoint.Extra.Export
                     case ServiceSCTP _:
                     case ServiceTCP _:
                     case ServiceUDP _:
-                        var whereUsed = Session.FindWhereUsed(obj.GetIdentifier(), indirect: IndirectWhereUsed.IsPresent);
-                        export.Add(obj.GetIdentifier(), whereUsed);
+                        var whereUsed = await Session.FindWhereUsed(identifier: obj.GetIdentifier(), indirect: IndirectWhereUsed.IsPresent, cancellationToken: CancelProcessToken);
+                        await export.AddAsync(obj.GetIdentifier(), whereUsed);
                         break;
                 }
         }

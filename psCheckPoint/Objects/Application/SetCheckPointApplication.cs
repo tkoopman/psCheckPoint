@@ -1,6 +1,7 @@
 ﻿using Koopman.CheckPoint;
 using Koopman.CheckPoint.FastUpdate;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Application
 {
@@ -117,11 +118,11 @@ namespace psCheckPoint.Objects.Application
         #region Methods
 
         /// <inheritdoc />
-        protected override void Set(string value)
+        protected override async Task Set(string value)
         {
             var o = Session.UpdateApplicationSite(value);
             UpdateProperties(o);
-            o.AcceptChanges(Ignore);
+            await o.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
             WriteObject(o);
         }
 

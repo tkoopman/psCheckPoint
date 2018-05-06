@@ -1,6 +1,7 @@
 ﻿using Koopman.CheckPoint;
 using System.ComponentModel;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.AccessRule
 {
@@ -66,7 +67,7 @@ namespace psCheckPoint.Objects.AccessRule
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
+        protected override async Task ProcessRecordAsync()
         {
             string layer;
             if (AccessLayer.BaseObject is string s)
@@ -76,7 +77,7 @@ namespace psCheckPoint.Objects.AccessRule
             else
                 throw new PSArgumentException($"Invalid value of type {AccessLayer.BaseObject.GetType()}. Should be string or AccessLayer object.", nameof(AccessLayer));
 
-            WriteObject(Session.FindAccessRulebase(layer, Filter, DetailsLevel, Limit, Offset));
+            WriteObject(await Session.FindAccessRulebase(layer, Filter, DetailsLevel, Limit, Offset, cancellationToken: CancelProcessToken));
         }
 
         #endregion Methods

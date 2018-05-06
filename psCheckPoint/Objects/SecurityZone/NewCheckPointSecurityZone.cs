@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.SecurityZone
 {
@@ -18,7 +19,7 @@ namespace psCheckPoint.Objects.SecurityZone
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
+        protected override async Task ProcessRecordAsync()
         {
             var zone = new Koopman.CheckPoint.SecurityZone(Session, SetIfExists.IsPresent)
             {
@@ -30,7 +31,7 @@ namespace psCheckPoint.Objects.SecurityZone
             foreach (string t in Tags ?? Enumerable.Empty<string>())
                 zone.Tags.Add(t);
 
-            zone.AcceptChanges(Ignore);
+            await zone.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
 
             WriteObject(zone);
         }

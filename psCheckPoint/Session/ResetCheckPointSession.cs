@@ -1,6 +1,7 @@
 ﻿using Koopman.CheckPoint;
 using System.Collections;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Session
 {
@@ -30,18 +31,19 @@ namespace psCheckPoint.Session
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord() => ProcessObject(ResetSession);
+        protected override Task ProcessRecordAsync() => ProcessObject(ResetSession);
 
-        private void ProcessObject(object obj)
+        private async Task ProcessObject(object obj)
         {
-            if (obj == null) Session.Discard();
-            else if (obj is string str) Session.Discard(str);
-            else if (obj is SessionInfo o) Session.Discard(o.UID);
-            else if (obj is PSObject pso) ProcessObject(pso.BaseObject);
+            CancelProcessToken.ThrowIfCancellationRequested();
+            if (obj == null) await Session.Discard();
+            else if (obj is string str) await Session.Discard(str, cancellationToken: CancelProcessToken);
+            else if (obj is SessionInfo o) await Session.Discard(o.UID, cancellationToken: CancelProcessToken);
+            else if (obj is PSObject pso) await ProcessObject(pso.BaseObject);
             else if (obj is IEnumerable enumerable)
             {
                 foreach (object eo in enumerable)
-                    ProcessObject(eo);
+                    await ProcessObject(eo);
             }
             else
                 throw new PSArgumentException($"Invalid type: {obj.GetType()}", nameof(ResetSession));

@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.AccessLayer
 {
@@ -32,7 +33,7 @@ namespace psCheckPoint.Objects.AccessLayer
         #region Methods
 
         /// <inheritdoc />
-        protected override void Remove(string value) => Session.DeleteAccessLayer(value, Ignore);
+        protected override Task Remove(string value) => Session.DeleteAccessLayer(value, Ignore, cancellationToken: CancelProcessToken);
 
         #endregion Methods
     }

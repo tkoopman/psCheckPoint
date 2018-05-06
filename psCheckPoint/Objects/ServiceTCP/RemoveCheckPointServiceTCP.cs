@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.ServiceTCP
 {
@@ -28,7 +29,7 @@ namespace psCheckPoint.Objects.ServiceTCP
         #region Methods
 
         /// <inheritdoc />
-        protected override void Remove(string value) => Session.DeleteServiceTCP(value, Ignore);
+        protected override Task Remove(string value) => Session.DeleteServiceTCP(value, Ignore, cancellationToken: CancelProcessToken);
 
         #endregion Methods
     }

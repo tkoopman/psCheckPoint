@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.GroupWithExclusion
 {
@@ -15,7 +16,7 @@ namespace psCheckPoint.Objects.GroupWithExclusion
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord() => WriteObject(Session.FindGroupWithExclusion(Value, DetailsLevel));
+        protected override async Task ProcessRecordAsync() => WriteObject(await Session.FindGroupWithExclusion(Value, DetailsLevel, cancellationToken: CancelProcessToken));
 
         #endregion Methods
     }

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.ServiceGroup
 {
@@ -41,7 +42,7 @@ namespace psCheckPoint.Objects.ServiceGroup
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
+        protected override async Task ProcessRecordAsync()
         {
             var group = new Koopman.CheckPoint.ServiceGroup(Session, SetIfExists.IsPresent)
             {
@@ -57,7 +58,7 @@ namespace psCheckPoint.Objects.ServiceGroup
             foreach (string t in Tags ?? Enumerable.Empty<string>())
                 group.Tags.Add(t);
 
-            group.AcceptChanges(Ignore);
+            await group.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
 
             WriteObject(group);
         }

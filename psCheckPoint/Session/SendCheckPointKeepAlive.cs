@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Session
 {
@@ -18,7 +19,7 @@ namespace psCheckPoint.Session
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord() => Session.SendKeepAlive();
+        protected override Task ProcessRecordAsync() => Session.SendKeepAlive(cancellationToken: CancelProcessToken);
 
         #endregion Methods
     }

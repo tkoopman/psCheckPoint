@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.ServiceTCP
 {
@@ -15,7 +16,7 @@ namespace psCheckPoint.Objects.ServiceTCP
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord() => WriteObject(Session.FindServiceTCP(Value, DetailsLevel));
+        protected override async Task ProcessRecordAsync() => WriteObject(await Session.FindServiceTCP(Value, DetailsLevel, cancellationToken: CancelProcessToken));
 
         #endregion Methods
     }

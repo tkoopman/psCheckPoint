@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.ApplicationCategory
 {
@@ -28,7 +29,7 @@ namespace psCheckPoint.Objects.ApplicationCategory
         #region Methods
 
         /// <inheritdoc />
-        protected override void Remove(string value) => Session.DeleteApplicationCategory(value, Ignore);
+        protected override Task Remove(string value) => Session.DeleteApplicationCategory(value, Ignore, cancellationToken: CancelProcessToken);
 
         #endregion Methods
     }

@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Policy
 {
@@ -71,16 +72,17 @@ namespace psCheckPoint.Objects.Policy
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
+        protected override async Task ProcessRecordAsync()
         {
-            WriteObject(Session.InstallPolicy(
+            WriteObject(await Session.InstallPolicy(
                     policy: PolicyPackage,
                     targets: Targets,
                     access: Access.IsPresent,
                     threatPrevention: ThreatPrevention.IsPresent,
                     installOnAllClusterMembersOrFail: !DisableInstallOnAllClusterMembersOrFail.IsPresent,
                     prepareOnly: PrepareOnly.IsPresent,
-                    revision: Revision
+                    revision: Revision,
+                    cancellationToken: CancelProcessToken
                 ));
         }
 

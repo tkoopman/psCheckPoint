@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.SimpleGateway
 {
@@ -15,7 +16,7 @@ namespace psCheckPoint.Objects.SimpleGateway
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord() => WriteObject(Session.FindSimpleGateway(Value, DetailsLevel));
+        protected override async Task ProcessRecordAsync() => WriteObject(await Session.FindSimpleGateway(Value, DetailsLevel, cancellationToken: CancelProcessToken));
 
         #endregion Methods
     }

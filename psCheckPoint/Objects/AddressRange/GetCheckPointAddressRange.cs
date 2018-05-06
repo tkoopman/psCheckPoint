@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.AddressRange
 {
@@ -15,7 +16,7 @@ namespace psCheckPoint.Objects.AddressRange
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord() => WriteObject(Session.FindAddressRange(Value, DetailsLevel));
+        protected override async Task ProcessRecordAsync() => WriteObject(await Session.FindAddressRange(Value, DetailsLevel, cancellationToken: CancelProcessToken));
 
         #endregion Methods
     }

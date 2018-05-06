@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Misc
 {
@@ -8,7 +9,7 @@ namespace psCheckPoint.Objects.Misc
     /// <para type="description"></para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "CheckPointTask")]
-    [OutputType(typeof(Koopman.CheckPoint.Task))]
+    [OutputType(typeof(Koopman.CheckPoint.CheckPointTask))]
     public class GetCheckPointTask : CheckPointCmdletBase
     {
         #region Properties
@@ -24,7 +25,7 @@ namespace psCheckPoint.Objects.Misc
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord() => WriteObject(Session.FindTask(TaskID));
+        protected override async Task ProcessRecordAsync() => WriteObject(await Session.FindTask(TaskID, cancellationToken: CancelProcessToken));
 
         #endregion Methods
     }

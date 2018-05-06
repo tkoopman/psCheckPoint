@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Misc
 {
@@ -68,7 +69,7 @@ namespace psCheckPoint.Objects.Misc
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
+        protected override async Task ProcessRecordAsync()
         {
             var targets = new List<string>();
             GetTargets(Targets, targets);
@@ -76,7 +77,7 @@ namespace psCheckPoint.Objects.Misc
             if (ScriptFile != null)
                 Script = File.ReadAllText(ScriptFile);
 
-            WriteObject(Session.RunScript(ScriptName, Script, Args, targets.ToArray(), Comments));
+            WriteObject(await Session.RunScript(ScriptName, Script, Args, targets.ToArray(), Comments, cancellationToken: CancelProcessToken));
         }
 
         private void GetTargets(object obj, List<string> output)

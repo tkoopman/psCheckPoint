@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Group
 {
@@ -32,7 +33,7 @@ namespace psCheckPoint.Objects.Group
         #region Methods
 
         /// <inheritdoc />
-        protected override void Remove(string value) => Session.DeleteGroup(value, Ignore);
+        protected override Task Remove(string value) => Session.DeleteGroup(value, Ignore, cancellationToken: CancelProcessToken);
 
         #endregion Methods
     }

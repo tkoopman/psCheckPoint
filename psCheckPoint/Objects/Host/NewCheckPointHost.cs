@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Management.Automation;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Host
 {
@@ -63,7 +64,7 @@ namespace psCheckPoint.Objects.Host
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
+        protected override async Task ProcessRecordAsync()
         {
             if (ParameterSetName.Equals("IPv4 or IPv6"))
             {
@@ -85,7 +86,7 @@ namespace psCheckPoint.Objects.Host
             foreach (string t in Tags ?? Enumerable.Empty<string>())
                 host.Tags.Add(t);
 
-            host.AcceptChanges(Ignore);
+            await host.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
 
             WriteObject(host);
         }

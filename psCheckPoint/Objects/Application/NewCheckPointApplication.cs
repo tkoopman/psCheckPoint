@@ -1,6 +1,7 @@
 ﻿using Koopman.CheckPoint;
 using System.Linq;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Application
 {
@@ -84,11 +85,11 @@ namespace psCheckPoint.Objects.Application
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
+        protected override async Task ProcessRecordAsync()
         {
             var o = new Koopman.CheckPoint.ApplicationSite(Session, SetIfExists.IsPresent) { };
             UpdateProperties(o);
-            o.AcceptChanges(Ignore);
+            await o.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
             WriteObject(o);
         }
 

@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Network
 {
@@ -19,7 +20,7 @@ namespace psCheckPoint.Objects.Network
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord() => WriteObject(Session.FindNetwork(Value, DetailsLevel));
+        protected override async Task ProcessRecordAsync() => WriteObject(await Session.FindNetwork(Value, DetailsLevel, cancellationToken: CancelProcessToken));
 
         #endregion Methods
     }

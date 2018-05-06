@@ -1,6 +1,7 @@
 ﻿using Koopman.CheckPoint;
 using System.ComponentModel;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Misc
 {
@@ -61,7 +62,7 @@ namespace psCheckPoint.Objects.Misc
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord() => WriteObject(Session.FindWhereUsed(Value, DetailsLevel, Indirect, IndirectMaxDepth));
+        protected override async Task ProcessRecordAsync() => WriteObject(await Session.FindWhereUsed(Value, DetailsLevel, Indirect, IndirectMaxDepth, cancellationToken: CancelProcessToken));
 
         #endregion Methods
     }

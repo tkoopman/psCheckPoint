@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Policy
 {
@@ -23,7 +24,7 @@ namespace psCheckPoint.Objects.Policy
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord() => WriteObject(Session.VerifyPolicy(PolicyPackage));
+        protected override async Task ProcessRecordAsync() => WriteObject(await Session.VerifyPolicy(PolicyPackage, cancellationToken: CancelProcessToken));
 
         #endregion Methods
     }
