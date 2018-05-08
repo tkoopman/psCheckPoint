@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Session
 {
@@ -20,7 +21,7 @@ namespace psCheckPoint.Session
     /// </example>
     [Cmdlet(VerbsCommon.Open, "CheckPointSession")]
     [OutputType(typeof(Koopman.CheckPoint.Session))]
-    public class OpenCheckPointSession : PSCmdlet
+    public class OpenCheckPointSession : PSCmdletAsync
     {
         #region Properties
 
@@ -123,11 +124,11 @@ namespace psCheckPoint.Session
         #region Methods
 
         /// <inheritdoc />
-        protected override void ProcessRecord()
+        protected override async Task ProcessRecordAsync()
         {
             try
             {
-                var session = new Koopman.CheckPoint.Session(
+                var session = await Koopman.CheckPoint.Session.Login(
                     managementServer: ManagementServer,
                     domain: Domain,
                     userName: Credentials.GetNetworkCredential().UserName,
@@ -140,7 +141,8 @@ namespace psCheckPoint.Session
                     description: SessionDescription,
                     timeout: SessionTimeout,
                     continueLastSession: ContinueLastSession.IsPresent,
-                    enterLastPublishedSession: EnterLastPublishedSession.IsPresent
+                    enterLastPublishedSession: EnterLastPublishedSession.IsPresent,
+                    cancellationToken: CancelProcessToken
                     );
                 if (PassThru.IsPresent)
                     WriteObject(session);
