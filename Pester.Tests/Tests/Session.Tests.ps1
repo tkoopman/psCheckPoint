@@ -43,7 +43,7 @@
 	Context "PS Session Variable" {
 		$secpasswd = ConvertTo-SecureString $Settings.Management.Password -AsPlainText -Force
 		$mycreds = New-Object System.Management.Automation.PSCredential ($Settings.Management.User, $secpasswd)
-		Open-CheckPointSession -NoCertificateValidation -ManagementServer $Settings.Management.Server -Credentials $mycreds -SessionName Pester -SessionDescription "psCheckPoint Pester Testing - Session"
+		Open-CheckPointSession -ManagementServer $Settings.Management.Server -Credentials $mycreds -CertificateHash $Settings.Management.Hash -SessionName Pester -SessionDescription "psCheckPoint Pester Testing - Session"
 
 		$s = Get-CheckPointSession
 

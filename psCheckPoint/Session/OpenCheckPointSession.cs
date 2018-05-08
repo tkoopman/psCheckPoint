@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Koopman.CheckPoint;
+using System;
 using System.Management.Automation;
 using System.Threading.Tasks;
 
@@ -24,6 +25,18 @@ namespace psCheckPoint.Session
     public class OpenCheckPointSession : PSCmdletAsync
     {
         #region Properties
+
+        /// <summary>
+        /// <para type="description">Server certificate hash you are expecting.</para>
+        /// </summary>
+        [Parameter]
+        public string CertificateHash { get; set; }
+
+        /// <summary>
+        /// <para type="description">What level of certificate validation to perform.</para>
+        /// </summary>
+        [Parameter]
+        public CertificateValidation CertificateValidation { get; set; } = CertificateValidation.Auto;
 
         /// <summary>
         /// <para type="description">The new session would continue where the last session was stopped.</para>
@@ -70,12 +83,6 @@ namespace psCheckPoint.Session
         /// </summary>
         [Parameter(Position = 0, Mandatory = true)]
         public string ManagementServer { get; set; }
-
-        /// <summary>
-        /// <para type="description">Do NOT verify server's certificate.</para>
-        /// </summary>
-        [Parameter]
-        public SwitchParameter NoCertificateValidation { get; set; }
 
         /// <summary>
         /// <para type="description">Return the session and do not store it for automatic use.</para>
@@ -135,7 +142,8 @@ namespace psCheckPoint.Session
                     password: Credentials.GetNetworkCredential().Password,
                     port: ManagementPort,
                     readOnly: ReadOnly.IsPresent,
-                    certificateValidation: !NoCertificateValidation.IsPresent,
+                    certificateValidation: CertificateValidation,
+                    certificateHash: CertificateHash,
                     sessionName: SessionName,
                     comments: SessionComments,
                     description: SessionDescription,
