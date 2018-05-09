@@ -8,6 +8,7 @@
   },
   "IAGateway": {
     "Server": "192.168.1.1",
-    "SharedSecret": "password"
+    "SharedSecret": "password",
+    "Hash": ""
   }
 }

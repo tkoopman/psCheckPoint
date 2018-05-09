@@ -43,13 +43,6 @@
 
   <ItemGroup>
     <ViewFiles Include="..\Views\*.ps1xml" />
-    <Compile Remove="IA\AddCheckPointIdentity.cs" />
-    <Compile Remove="IA\Batch.cs" />
-    <Compile Remove="IA\CheckPointIACmdlet.cs" />
-    <Compile Remove="IA\GetCheckPointIdentity.cs" />
-    <Compile Remove="IA\RemoveCheckPointIdentity.cs" />
-    <Compile Remove="IA\Responses.cs" />
-    <Compile Remove="IA\SwitchJsonConverter.cs" />
     <Compile Remove="Objects\Group\CheckPointGroup.cs" />
     <Compile Remove="Objects\Host\NewCheckPointHostInterface.cs" />
     <Compile Remove="Objects\Host\RemoveCheckPointHostInterface.cs" />
@@ -69,20 +62,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="IA\AddCheckPointIdentity.cs" />
-    <None Include="IA\Batch.cs" />
-    <None Include="IA\CheckPointIACmdlet.cs" />
-    <None Include="IA\GetCheckPointIdentity.cs" />
-    <None Include="IA\RemoveCheckPointIdentity.cs" />
-    <None Include="IA\Responses.cs" />
-    <None Include="IA\SwitchJsonConverter.cs" />
     <None Include="Objects\Host\NewCheckPointHostInterface.cs" />
     <None Include="Objects\Host\RemoveCheckPointHostInterface.cs" />
     <None Include="Objects\Misc\GetCheckPointCommands.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CheckPoint.NET" Version="0.3.2" />
+    <PackageReference Include="CheckPoint.NET" Version="0.3.3-beta" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">

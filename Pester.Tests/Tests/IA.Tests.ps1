@@ -1,11 +1,11 @@
 ﻿Describe "Basic.IA" {
-	It "Add Identity" -Skip {
-		$(Add-CheckPointIdentity -Gateway $Settings.IAGateway.Server -SharedSecret $Settings.IAGateway.SharedSecret -NoCertificateValidation -IPAddress 192.168.1.2 -NoFetchUserGroups -NoFetchMachineGroups -NoCalculateRoles -Machine "PesterMachine" -Roles "PesterRole")[0] | Should BeOfType psCheckPoint.IA.AddIdentityResponse
+	It "Add Identity" {
+		$(Add-CheckPointIdentity -Gateway $Settings.IAGateway.Server -SharedSecret $Settings.IAGateway.SharedSecret -CertificateHash $Settings.IAGateway.Hash -IPAddress 192.168.1.2 -NoFetchUserGroups -NoFetchMachineGroups -NoCalculateRoles -Machine "PesterMachine" -Roles "TestIARole")[0]
 	}
-	It "Get Identity" -Skip {
-		$(Get-CheckPointIdentity -Gateway $Settings.IAGateway.Server -SharedSecret $Settings.IAGateway.SharedSecret -NoCertificateValidation -IPAddress 192.168.1.2)[0] | Should BeOfType psCheckPoint.IA.GetIdentityResponse
+	It "Get Identity" {
+		$(Get-CheckPointIdentity -Gateway $Settings.IAGateway.Server -SharedSecret $Settings.IAGateway.SharedSecret -CertificateHash $Settings.IAGateway.Hash -IPAddress 192.168.1.2)[0]
 	}
-	It "Remove Identity" -Skip {
-		$(Remove-CheckPointIdentity -Gateway $Settings.IAGateway.Server -SharedSecret $Settings.IAGateway.SharedSecret -NoCertificateValidation -IPAddress 192.168.1.2)[0] | Should BeOfType psCheckPoint.IA.RemoveIdentityResponse
+	It "Remove Identity" {
+		$(Remove-CheckPointIdentity -Gateway $Settings.IAGateway.Server -SharedSecret $Settings.IAGateway.SharedSecret -CertificateHash $Settings.IAGateway.Hash -IPAddress 192.168.1.2)[0]
 	}
 }

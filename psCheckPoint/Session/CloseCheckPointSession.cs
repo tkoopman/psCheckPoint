@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿using System;
+using System.Management.Automation;
 using System.Threading.Tasks;
 
 namespace psCheckPoint.Session
@@ -41,7 +42,7 @@ namespace psCheckPoint.Session
             else
                 await Session.Logout(cancellationToken: CancelProcessToken);
 
-            Session.Dispose();
+            ((IDisposable)Session).Dispose();
 
             if (IsPSSession)
                 SessionState.PSVariable.Remove("CheckPointSession");
