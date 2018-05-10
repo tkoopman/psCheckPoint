@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Management.Automation;
 using System.Threading.Tasks;
-using static Koopman.CheckPoint.IA.IASession;
+using Koopman.CheckPoint.IA;
 
 namespace psCheckPoint.IA
 {
@@ -35,8 +35,7 @@ namespace psCheckPoint.IA
         /// </para>
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true)]
-        [ValidateSet("any", "captive-portal", "ida-agent", "vpn", "ad-query", "multihost-agent", "radius", "ida-api", "identity-collector", IgnoreCase = true)]
-        public string ClientType { get; set; }
+        public ClientTypes ClientType { get; set; } = ClientTypes.Any;
 
         /// <summary>
         /// <para type="description">Association IP. Required when you revoke a single IP.</para>
@@ -72,18 +71,34 @@ namespace psCheckPoint.IA
 
         #region Methods
 
+        /// <summary>
+        /// Begins the processing asynchronous.
+        /// </summary>
+        /// <returns></returns>
         protected override Task BeginProcessingAsync()
         {
             Session.StartDeleteBatch((r) => { WriteObject(r); }, maxBatchSize: BatchSize);
             return base.BeginProcessingAsync();
         }
 
+        /// <summary>
+        /// Processes the record asynchronous.
+        /// </summary>
+        /// <returns></returns>
         protected override Task ProcessRecordAsync()
         {
             switch (ParameterSetName)
             {
                 case "ip":
-                    Tasks.Add(Session.DeleteIdentity(IPAddress));
+                    Tasks.Add(Session.DeleteIdentity(IPAddress, ClientType, CancelProcessToken));
+                    break;
+
+                case "mask":
+                    Tasks.Add(Session.DeleteIdentityMask(Subnet, SubnetMask, ClientType, CancelProcessToken));
+                    break;
+
+                case "range":
+                    Tasks.Add(Session.DeleteIdentityRange(IPAddressFirst, IPAddressLast, ClientType, CancelProcessToken));
                     break;
             }
             return base.ProcessRecordAsync();

@@ -34,7 +34,7 @@ namespace psCheckPoint.Objects.SimpleGateway
                     await Session.FindAllSimpleGateways(
                             limit: Limit,
                             detailLevel: DetailsLevel,
-                            cancellationToken: CancelProcessToken), false);
+                            cancellationToken: CancelProcessToken), true);
             }
         }
 

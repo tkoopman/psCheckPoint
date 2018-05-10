@@ -38,7 +38,7 @@ namespace psCheckPoint.Objects.AccessLayer
                     await Session.FindAllAccessLayers(
                             limit: Limit,
                             detailLevel: DetailsLevel,
-                            cancellationToken: CancelProcessToken), false);
+                            cancellationToken: CancelProcessToken), true);
             }
         }
 

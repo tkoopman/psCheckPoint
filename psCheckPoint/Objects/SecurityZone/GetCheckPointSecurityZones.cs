@@ -34,7 +34,7 @@ namespace psCheckPoint.Objects.SecurityZone
                     await Session.FindAllSecurityZones(
                             limit: Limit,
                             detailLevel: DetailsLevel,
-                            cancellationToken: CancelProcessToken), false);
+                            cancellationToken: CancelProcessToken), true);
             }
         }
 

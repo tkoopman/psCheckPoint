@@ -9,11 +9,14 @@ This script will create/update Check Point groups for each AWS Service & Region,
 .PARAMETER ManagementServer
 IP or Hostname of the Check point Management Server
 
-.PARAMETER ManagementPort
-Port Web API running on.
-
 .PARAMETER Credentials
 PSCredential containing User name and Password. If not provided you will be prompted.
+
+.PARAMETER CertificateHash
+The server's SSL certificate hash
+
+.PARAMETER ManagementPort
+Port Web API running on.
 
 .PARAMETER NoIPv4
 Do not include IPv4 addresses.
@@ -46,6 +49,9 @@ Prefix used on comments (Groups, Session, Created Hosts & Networks).
 .PARAMETER Tag
 Tag set when creating objects.
 
+.PARAMETER CertificateValidation
+Which certificate validation method(s) to use.
+
 .EXAMPLE
 ./AWS_Group_Sync.ps1 -NoIPv6 -Rename -Verbose
 
@@ -64,9 +70,10 @@ https://aws.amazon.com/documentation/powershell/
 param(
 	[Parameter(Mandatory = $true)]
     [string]$ManagementServer,
-    [int]$ManagementPort = 443,
 	[Parameter(Mandatory = $true)]
 	[PSCredential]$Credentials,
+	[string]$CertificateHash,
+    [int]$ManagementPort = 443,
 	[switch]$NoIPv4,
 	[switch]$NoIPv6,
 	[switch]$Publish,
@@ -77,9 +84,10 @@ param(
 	[string]$Prefix = "AWS",
 	[string]$GroupPrefix = "AWS",
 	[string]$CommentPrefix = "AWS",
-	[string]$Tag = "AWS"
+	[string]$Tag = "AWS",
+	[ValidateSet("All", "Auto", "CertificatePinning", "None", "ValidCertificate")]
+	[string]$CertificateValidation = "Auto"
 )
-
 $AWSPIAR = Get-AWSPublicIpAddressRange | Where-Object { ($_.IpAddressFormat -eq "Ipv4" -and -not $NoIPv4.IsPresent) -or ($_.IpAddressFormat -eq "Ipv6" -and -not $NoIPv6.IsPresent) };
 $Services = $AWSPIAR | Select-Object -ExpandProperty Service -Unique | Sort-Object;
 
@@ -91,7 +99,7 @@ $Errors = 0;
 
 # Login to Check Point API to get Session ID
 Write-Verbose " *** Log in to Check Point Smart Center API *** ";
-$Session = Open-CheckPointSession -SessionName $CommentPrefix -SessionComments "$CommentPrefix Group Sync" -ManagementServer $ManagementServer -ManagementPort $ManagementPort -Credentials $Credentials -NoCertificateValidation -PassThru;
+$Session = Open-CheckPointSession -SessionName $CommentPrefix -SessionComments "$CommentPrefix Group Sync" -ManagementServer $ManagementServer -ManagementPort $ManagementPort -Credentials $Credentials -CertificateValidation $CertificateValidation -CertificateHash $CertificateHash -PassThru;
 if (-not $Session) {
 	# Failed login
 	exit;

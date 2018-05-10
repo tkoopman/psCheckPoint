@@ -118,7 +118,7 @@ namespace psCheckPoint.Objects.Misc
                         detailLevel: DetailsLevel,
                         limit: Limit,
                         cancellationToken: CancelProcessToken
-                        ));
+                        ), true);
                     break;
 
                 case GetCheckPointObjectsStatic.AllUnused:
@@ -126,7 +126,7 @@ namespace psCheckPoint.Objects.Misc
                         detailLevel: DetailsLevel,
                         limit: Limit,
                         cancellationToken: CancelProcessToken
-                        ));
+                        ), true);
                     break;
 
                 case GetCheckPointObjectsStatic.LimitFilter:
@@ -138,7 +138,7 @@ namespace psCheckPoint.Objects.Misc
                         limit: Limit,
                         offset: Offset,
                         cancellationToken: CancelProcessToken
-                        ));
+                        ), false);
                     break;
 
                 case GetCheckPointObjectsStatic.LimitUnused:
@@ -147,7 +147,7 @@ namespace psCheckPoint.Objects.Misc
                         limit: Limit,
                         offset: Offset,
                         cancellationToken: CancelProcessToken
-                        ));
+                        ), false);
                     break;
 
                 default:

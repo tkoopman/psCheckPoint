@@ -34,7 +34,7 @@ namespace psCheckPoint.Objects.GroupWithExclusion
                     await Session.FindAllGroupsWithExclusion(
                             limit: Limit,
                             detailLevel: DetailsLevel,
-                            cancellationToken: CancelProcessToken), false);
+                            cancellationToken: CancelProcessToken), true);
             }
         }
 

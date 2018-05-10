@@ -34,7 +34,7 @@ namespace psCheckPoint.Objects.ServiceTCP
                     await Session.FindAllServicesTCP(
                             limit: Limit,
                             detailLevel: DetailsLevel,
-                            cancellationToken: CancelProcessToken), false);
+                            cancellationToken: CancelProcessToken), true);
             }
         }
 

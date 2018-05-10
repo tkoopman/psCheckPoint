@@ -38,7 +38,7 @@ namespace psCheckPoint.Objects.Group
                     await Session.FindAllGroups(
                             limit: Limit,
                             detailLevel: DetailsLevel,
-                            cancellationToken: CancelProcessToken), false);
+                            cancellationToken: CancelProcessToken), true);
             }
         }
 

@@ -2,7 +2,7 @@
 using System;
 using System.Management.Automation;
 using System.Threading.Tasks;
-using static Koopman.CheckPoint.IA.IASession;
+using Koopman.CheckPoint.IA;
 
 namespace psCheckPoint.IA
 {
@@ -65,8 +65,8 @@ namespace psCheckPoint.IA
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public string[] MachineGroups
         {
-            get { return _MachineGroups; }
-            set { _MachineGroups = CreateArray(value); }
+            get => _MachineGroups;
+            set => _MachineGroups = CreateArray(value);
         }
 
         /// <summary>
@@ -109,8 +109,8 @@ namespace psCheckPoint.IA
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public string[] Roles
         {
-            get { return _Roles; }
-            set { _Roles = CreateArray(value); }
+            get => _Roles;
+            set => _Roles = CreateArray(value);
         }
 
         /// <summary>
@@ -134,20 +134,28 @@ namespace psCheckPoint.IA
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public string[] UserGroups
         {
-            get { return _UserGroups; }
-            set { _UserGroups = CreateArray(value); }
+            get => _UserGroups;
+            set => _UserGroups = CreateArray(value);
         }
 
         #endregion Properties
 
         #region Methods
 
+        /// <summary>
+        /// Begins the processing asynchronous.
+        /// </summary>
+        /// <returns></returns>
         protected override Task BeginProcessingAsync()
         {
             Session.StartAddBatch((r) => { WriteObject(r); }, maxBatchSize: BatchSize);
             return base.BeginProcessingAsync();
         }
 
+        /// <summary>
+        /// Processes the record asynchronous.
+        /// </summary>
+        /// <returns></returns>
         protected override Task ProcessRecordAsync()
         {
             Tasks.Add(Session.AddIdentity(IPAddress, User, Machine, Domain, SessionTimeout, !NoFetchUserGroups.IsPresent, !NoFetchMachineGroups.IsPresent, !NoCalculateRoles.IsPresent, UserGroups, MachineGroups, Roles, MachineOS, HostType));

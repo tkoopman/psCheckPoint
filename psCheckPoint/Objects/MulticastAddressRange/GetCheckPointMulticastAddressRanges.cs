@@ -34,7 +34,7 @@ namespace psCheckPoint.Objects.MulticastAddressRange
                     await Session.FindAllMulticastAddressRanges(
                             limit: Limit,
                             detailLevel: DetailsLevel,
-                            cancellationToken: CancelProcessToken), false);
+                            cancellationToken: CancelProcessToken), true);
             }
         }
 

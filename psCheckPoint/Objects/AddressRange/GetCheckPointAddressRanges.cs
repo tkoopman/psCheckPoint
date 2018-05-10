@@ -34,7 +34,7 @@ namespace psCheckPoint.Objects.AddressRange
                     await Session.FindAllAddressRanges(
                             limit: Limit,
                             detailLevel: DetailsLevel,
-                            cancellationToken: CancelProcessToken), false);
+                            cancellationToken: CancelProcessToken), true);
             }
         }
 

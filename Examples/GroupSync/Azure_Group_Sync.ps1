@@ -11,11 +11,14 @@ Use -RegionsLike to create initial groups in batches. Once created should be no 
 .PARAMETER ManagementServer
 IP or Hostname of the Check point Management Server
 
-.PARAMETER ManagementPort
-Port Web API running on.
-
 .PARAMETER Credentials
 PSCredential containing User name and Password. If not provided you will be prompted.
+
+.PARAMETER CertificateHash
+The server's SSL certificate hash
+
+.PARAMETER ManagementPort
+Port Web API running on.
 
 .PARAMETER Publish
 If any changes made publish them automatically. By default session will just be closed pending you to manually open session in SmartConsole and publish the changes.
@@ -48,6 +51,9 @@ Only process regions which match this string. Uses -match
 .PARAMETER PrintRegions
 Will output list of regions only.
 
+.PARAMETER CertificateValidation
+Which certificate validation method(s) to use.
+
 .EXAMPLE
 ./Azure_Group_Sync.ps1 -Rename -Verbose
 
@@ -66,10 +72,12 @@ https://www.microsoft.com/en-au/download/details.aspx?id=41653
 param(
 	[Parameter(Mandatory = $true, ParameterSetName='Standard')]
     [string]$ManagementServer,
-	[Parameter(ParameterSetName='Standard')]
-    [int]$ManagementPort = 443,
 	[Parameter(Mandatory = $true, ParameterSetName='Standard')]
 	[PSCredential]$Credentials,
+	[Parameter(ParameterSetName='Standard')]
+	[string]$CertificateHash,
+	[Parameter(ParameterSetName='Standard')]
+    [int]$ManagementPort = 443,
 	[Parameter(ParameterSetName='Standard')]
 	[switch]$Publish,
 	[Parameter(ParameterSetName='Standard')]
@@ -90,9 +98,10 @@ param(
 	[Parameter(ParameterSetName='Standard')]
 	[string]$RegionsMatch = "",
 	[Parameter(Mandatory = $true, ParameterSetName='Print Regions')]
-	[switch]$PrintRegions
+	[switch]$PrintRegions,
+	[ValidateSet("All", "Auto", "CertificatePinning", "None", "ValidCertificate")]
+	[string]$CertificateValidation = "Auto"
 )
-
 # Download code from https://gallery.technet.microsoft.com/scriptcenter/Adds-Azure-Datacenter-IP-dbeebe0c
 # Download Microsoft Azure IP Ranges and Names into Object
 $downloadUri = "https://www.microsoft.com/en-in/download/confirmation.aspx?id=41653";
@@ -117,7 +126,7 @@ $Errors = 0;
 
 # Login to Check Point API to get Session ID
 Write-Verbose " *** Log in to Check Point Smart Center API *** ";
-$Session = Open-CheckPointSession -SessionName $CommentPrefix -SessionComments "$CommentPrefix Group Sync" -ManagementServer $ManagementServer -ManagementPort $ManagementPort -Credentials $Credentials -NoCertificateValidation -PassThru;
+$Session = Open-CheckPointSession -SessionName $CommentPrefix -SessionComments "$CommentPrefix Group Sync" -ManagementServer $ManagementServer -ManagementPort $ManagementPort -Credentials $Credentials -CertificateValidation $CertificateValidation -CertificateHash $CertificateHash -PassThru;
 if (-not $Session) {
 	# Failed login
 	exit;

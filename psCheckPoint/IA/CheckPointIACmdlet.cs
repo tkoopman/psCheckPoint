@@ -48,19 +48,35 @@ namespace psCheckPoint.IA
         [Parameter(Mandatory = true)]
         public string SharedSecret { get; set; }
 
+        /// <summary>
+        /// Gets the IA session.
+        /// </summary>
+        /// <value>The IA session.</value>
         protected IASession Session { get; private set; }
+
+        /// <summary>
+        /// Gets the executed processing tasks the EndProcessingAsync will wait for.
+        /// </summary>
+        /// <value>The tasks.</value>
         protected List<Task> Tasks { get; } = new List<Task>();
 
         #endregion Properties
 
         #region Methods
 
+        /// <summary>
+        /// Begins the processing.
+        /// </summary>
         protected sealed override void BeginProcessing()
         {
             Session = new IASession(Gateway, SharedSecret, certificateHash: CertificateHash, certificateValidation: CertificateValidation);
             base.BeginProcessing();
         }
 
+        /// <summary>
+        /// Ends the processing asynchronous.
+        /// </summary>
+        /// <returns></returns>
         protected override async Task EndProcessingAsync()
         {
             Tasks.Add(Session.Flush(true));

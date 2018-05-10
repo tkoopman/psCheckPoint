@@ -44,7 +44,7 @@ namespace psCheckPoint.Objects.Session
                     await Session.FindAllSessions(
                             viewPublishedSessions: ViewPublishedSessions.IsPresent,
                             limit: Limit,
-                            cancellationToken: CancelProcessToken), false);
+                            cancellationToken: CancelProcessToken), true);
             }
         }
 

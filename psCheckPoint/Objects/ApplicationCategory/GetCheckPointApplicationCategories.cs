@@ -34,7 +34,7 @@ namespace psCheckPoint.Objects.ApplicationCategory
                     await Session.FindAllApplicationCategories(
                             limit: Limit,
                             detailLevel: DetailsLevel,
-                            cancellationToken: CancelProcessToken), false);
+                            cancellationToken: CancelProcessToken), true);
             }
         }
 

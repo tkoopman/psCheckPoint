@@ -34,7 +34,7 @@ namespace psCheckPoint.Objects.ServiceUDP
                     await Session.FindAllServicesUDP(
                             limit: Limit,
                             detailLevel: DetailsLevel,
-                            cancellationToken: CancelProcessToken), false);
+                            cancellationToken: CancelProcessToken), true);
             }
         }
 

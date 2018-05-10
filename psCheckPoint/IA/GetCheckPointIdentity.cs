@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Management.Automation;
 using System.Threading.Tasks;
-using static Koopman.CheckPoint.IA.IASession;
+using Koopman.CheckPoint.IA;
 
 namespace psCheckPoint.IA
 {
@@ -31,12 +31,20 @@ namespace psCheckPoint.IA
 
         #region Methods
 
+        /// <summary>
+        /// Begins the processing asynchronous.
+        /// </summary>
+        /// <returns></returns>
         protected override Task BeginProcessingAsync()
         {
             Session.StartShowBatch((r) => { WriteObject(r); }, maxBatchSize: BatchSize);
             return base.BeginProcessingAsync();
         }
 
+        /// <summary>
+        /// Processes the record asynchronous.
+        /// </summary>
+        /// <returns></returns>
         protected override Task ProcessRecordAsync()
         {
             Tasks.Add(Session.ShowIdentity(IPAddress));

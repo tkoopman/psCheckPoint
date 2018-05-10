@@ -9,11 +9,14 @@ This script will create/update Check Point groups for each Microsoft Office365 p
 .PARAMETER ManagementServer
 IP or Hostname of the Check point Management Server
 
-.PARAMETER ManagementPort
-Port Web API running on.
-
 .PARAMETER Credentials
 PSCredential containing User name and Password. If not provided you will be prompted.
+
+.PARAMETER CertificateHash
+The server's SSL certificate hash
+
+.PARAMETER ManagementPort
+Port Web API running on.
 
 .PARAMETER NoIPv4
 Do not include IPv4 addresses.
@@ -46,6 +49,9 @@ Prefix used on comments (Groups, Session, Created Hosts & Networks).
 .PARAMETER Tag
 Tag set when creating objects.
 
+.PARAMETER CertificateValidation
+Which certificate validation method(s) to use.
+
 .EXAMPLE
 ./Office365_Group_Sync.ps1 -NoIPv6 -Rename -Verbose
 
@@ -63,9 +69,10 @@ https://support.content.office.net/en-us/static/O365IPAddresses.xml
 param(
 	[Parameter(Mandatory = $true)]
     [string]$ManagementServer,
-    [int]$ManagementPort = 443,
 	[Parameter(Mandatory = $true)]
 	[PSCredential]$Credentials,
+	[string]$CertificateHash,
+    [int]$ManagementPort = 443,
 	[switch]$NoIPv4,
 	[switch]$NoIPv6,
 	[switch]$Publish,
@@ -76,9 +83,10 @@ param(
 	[string]$HostPrefix = "Microsoft",
 	[string]$GroupPrefix = "Microsoft_Office365",
 	[string]$CommentPrefix = "Microsoft Office365",
-	[string]$Tag = "Microsoft_Office365"
+	[string]$Tag = "Microsoft_Office365",
+	[ValidateSet("All", "Auto", "CertificatePinning", "None", "ValidCertificate")]
+	[string]$CertificateValidation = "Auto"
 )
-
 # path where client ID will be stored
 $datapath = $Env:TEMP + "\MS_O365_ClientRequestId.txt";
 Write-Verbose "Client ID File: $datapath";
@@ -109,7 +117,7 @@ $Errors = 0;
 
 # Login to Check Point API to get Session ID
 Write-Verbose " *** Log in to Check Point Smart Center API *** ";
-$Session = Open-CheckPointSession -SessionName $CommentPrefix -SessionComments "$CommentPrefix Group Sync" -ManagementServer $ManagementServer -ManagementPort $ManagementPort -Credentials $Credentials -NoCertificateValidation -PassThru;
+$Session = Open-CheckPointSession -SessionName $CommentPrefix -SessionComments "$CommentPrefix Group Sync" -ManagementServer $ManagementServer -ManagementPort $ManagementPort -Credentials $Credentials -CertificateValidation $CertificateValidation -CertificateHash $CertificateHash -PassThru;
 if (-not $Session) {
 	# Failed login
 	exit;

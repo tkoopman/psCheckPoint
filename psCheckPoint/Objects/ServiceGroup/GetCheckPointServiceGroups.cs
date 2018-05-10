@@ -36,7 +36,7 @@ namespace psCheckPoint.Objects.ServiceGroup
                     await Session.FindAllServiceGroups(
                             limit: Limit,
                             detailLevel: DetailsLevel,
-                            cancellationToken: CancelProcessToken), false);
+                            cancellationToken: CancelProcessToken), true);
             }
         }
 

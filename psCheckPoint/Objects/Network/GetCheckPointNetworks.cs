@@ -38,7 +38,7 @@ namespace psCheckPoint.Objects.Network
                     await Session.FindAllNetworks(
                             limit: Limit,
                             detailLevel: DetailsLevel,
-                            cancellationToken: CancelProcessToken), false);
+                            cancellationToken: CancelProcessToken), true);
             }
         }
 

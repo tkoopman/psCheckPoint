@@ -38,7 +38,7 @@ namespace psCheckPoint.Objects.Host
                     await Session.FindAllHosts(
                             limit: Limit,
                             detailLevel: DetailsLevel,
-                            cancellationToken: CancelProcessToken), false);
+                            cancellationToken: CancelProcessToken), true);
             }
         }
 

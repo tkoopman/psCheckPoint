@@ -34,7 +34,7 @@ namespace psCheckPoint.Objects.Application
                     await Session.FindAllApplicationSites(
                             limit: Limit,
                             detailLevel: DetailsLevel,
-                            cancellationToken: CancelProcessToken), false);
+                            cancellationToken: CancelProcessToken), true);
             }
         }
 
