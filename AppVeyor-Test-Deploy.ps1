@@ -5,7 +5,7 @@
 
 		$ModFileName = "$env:APPVEYOR_BUILD_FOLDER\psCheckPoint\bin\Release\psCheckPoint.psd1"
         $ModManifest = Get-Content -Path $ModFileName
-        $BumpedManifest = $ModManifest -replace "'0.0.0'", "'$Ver[0]'"
+        $BumpedManifest = $ModManifest -replace "'0.0.0'", "'$($Ver[0])'"
 
 		$Pre = '';
 		if ($Ver[1]) { $Pre = "-$($Ver[1])" }
