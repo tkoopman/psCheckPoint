@@ -1,13 +1,14 @@
 # Bump Version
 	Try {
+		$InfoVer = $env:APPVEYOR_REPO_TAG_NAME.TrimStart("v");
+		$Ver = $InfoVer.Split("-");
+
 		$ModFileName = "$env:APPVEYOR_BUILD_FOLDER\psCheckPoint\bin\Release\psCheckPoint.psd1"
         $ModManifest = Get-Content -Path $ModFileName
-        $BumpedManifest = $ModManifest -replace "'0.0.0'", "'$Env:APPVEYOR_BUILD_VERSION'"
+        $BumpedManifest = $ModManifest -replace "'0.0.0'", "'$Ver[0]'"
 
-		$InfoVer = $env:APPVEYOR_REPO_TAG_NAME.TrimStart("v");
-		$Ver = $InfoVer.Split("-")[1];
 		$Pre = '';
-		if ($Ver) { $Pre = "-$($Ver)" }
+		if ($Ver[1]) { $Pre = "-$($Ver[1])" }
 		$BumpedManifest = $BumpedManifest -replace "'-pre'", "'$Pre'"
 
         Remove-Item -Path $ModFileName
