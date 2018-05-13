@@ -19,6 +19,7 @@
         td, th {
             border: 1px solid #eeeeee;
             text-align: left;
+            vertical-align: top;
             padding: 8px;
         }
 
@@ -70,6 +71,10 @@
             overflow: auto;
             border: 2px solid cadetblue;
             box-shadow: 5px 10px #888888;
+        }
+
+        .Negate {
+            text-decoration: line-through;
         }
 
         h1 .Object {
@@ -166,10 +171,16 @@
                 function (o) { return o.name == n; }
             );
         }
-        function getObjectsByType(n) {
-            return jsonData.objects.filter(
+        function getObjectsByType(n, sortProperty = "name") {
+            var objs = jsonData.objects.filter(
                 function (o) { return o.type == n; }
             );
+
+            if (sortProperty) {
+                objs = objs.sort(function (x, y) { return x[sortProperty].localeCompare(y[sortProperty]); });
+            }
+
+            return objs;
         }
         function getObjectByUID(n) {
             return jsonData.objects.filter(
@@ -267,7 +278,7 @@
                 } else { return outputObject(getProperty(o, format)); }
             }
         }
-        function createTable(objs, tableID, heads, cols) {
+        function createTable(objs, tableID, heads, cols, classNameCallback) {
             if (objs) {
                 var table = "<table id='" + tableID + "'><tr>";
                 heads.forEach(
@@ -280,7 +291,14 @@
                         table += "<tr>";
                         cols.forEach(
                             function (c) {
-                                table += "<td>";
+                                table += "<td";
+                                if (classNameCallback) {
+                                    var className = classNameCallback(o, c);
+                                    if (className) {
+                                        table += " class='" + className + "'";
+                                    }
+                                }
+                                table += ">";
                                 if (Array.isArray(c)) {
                                     var output = [];
                                     c.forEach(
@@ -307,6 +325,34 @@
 
                 table += "</table>";
                 return table;
+            }
+        }
+        function RuleClassName(o, c) {
+            switch (c) {
+                case "rule.content":
+                    if (o.rule["content-negate"]) return "Negate";
+                    break;
+                case "content":
+                    if (o["content-negate"]) return "Negate";
+                    break;
+                case "rule.destination":
+                    if (o.rule["destination-negate"]) return "Negate";
+                    break;
+                case "destination":
+                    if (o["destination-negate"]) return "Negate";
+                    break;
+                case "rule.service":
+                    if (o.rule["service-negate"]) return "Negate";
+                    break;
+                case "service":
+                    if (o["service-negate"]) return "Negate";
+                    break;
+                case "rule.source":
+                    if (o.rule["source-negate"]) return "Negate";
+                    break;
+                case "source":
+                    if (o["source-negate"]) return "Negate";
+                    break;
             }
         }
         function onLoad() {
@@ -360,11 +406,11 @@
                         }
                     }
                     packageRules.sort(function (x, y) { return x.position.localeCompare(y.position); });
-                    document.getElementById("NavAccessRules").innerHTML += createTable(packageRules, p.name + "_AccessRules", ["#", "Name", "Source", "Destination", "Service", "Action", "Comments"], ["position", "rule.name", "rule.source", "rule.destination", "rule.service", ["rule.action", "rule.inline-layer"], "rule.comments"]);
+                    document.getElementById("NavAccessRules").innerHTML += createTable(packageRules, p.name + "_AccessRules", ["#", "Name", "Source", "Destination", "Service", "Action", "Comments"], ["position", "rule.name", "rule.source", "rule.destination", "rule.service", ["rule.action", "rule.inline-layer"], "rule.comments"], RuleClassName);
                     accessRules += packageRules.length;
                 });
             } else {
-                var objs = getObjectsByType("access-rule");
+                var objs = getObjectsByType("access-rule", "rule-number");
                 if (objs) {
                     var layers = [];
                     objs.forEach(function (o) {
@@ -376,7 +422,7 @@
                         var LayerName = outputObject(l);
                         if (!LayerName) { LayerName = ""; }
                         document.getElementById("NavAccessRules").innerHTML += "<h1>" + LayerName + " Rules</h1>";
-                        document.getElementById("NavAccessRules").innerHTML += createTable(layerRules, l.name + "_AccessRules", ["#", "Name", "Source", "Destination", "Service", "Action", "Comments"], ["rule-number", "name", "source", "destination", "service", ["action", "inline-layer"], "comments"]);
+                        document.getElementById("NavAccessRules").innerHTML += createTable(layerRules, l.name + "_AccessRules", ["#", "Name", "Source", "Destination", "Service", "Action", "Comments"], ["rule-number", "name", "source", "destination", "service", ["action", "inline-layer"], "comments"], RuleClassName);
                         accessRules += layerRules.length;
                     });
                 }
