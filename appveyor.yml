@@ -30,7 +30,7 @@ build:
   verbosity: minimal
 environment:
   Settings_json:
-    secure: uWGtz9MnjC5nswZ+1Z66cp15dWddhDQCkhYBJ2v7ns7a+3jxh/ACp6DEk1ZIm1ngFmejEJzD5M5TxenXCH9YwTIaWKd9E292ryP4+z/cVHiY6RbRq4X2wnt946OQwjbs21jebBxrvrOLV1unNuGZeeUdw5gSE6mLjFwYjQGDw8HReSuxPuNYP/PzD0v+aXFNvL759ihJ9NCYVDCqCvwjAI2FeHN4tn/hIXOrAkX2wz8=
+    secure: uWGtz9MnjC5nswZ+1Z66cp15dWddhDQCkhYBJ2v7ns7a+3jxh/ACp6DEk1ZIm1ngFmejEJzD5M5TxenXCH9YwTIaWKd9E292ryP4+z/cVHiY6RbRq4X2wnt946OQwjbsSR+vLCZPnpDaeeOBtyPOSQGWGUwg7BAXzVLWOIMR7tLjo3SA0KzHP3iFQ+k4JGB9GbnnYtCxsu8Ljo8Ax92v0ev+G773K/l4DcjSnm+aD16TNvKkcbJJbOSEasubbfH1oICm5KJFvGso4QgwXdTL7uV/HaWMnpEFUfJf6jHax9VJwYv4hojpbIEWkPD7h4ueEfpgxxTwiEwEaK+Be8l/lUllLAClmYXDxua9FJyKOUU=
   NuGetToken:
     secure: 8U0FY4Wh+zyJriYPpUsyFXTmoc+upnrqrV3+u5mEkBCttmytqIqk3hQe475ck5aJ
 test_script:

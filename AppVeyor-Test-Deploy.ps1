@@ -1,17 +1,16 @@
-# Debugging
-#    Write-Host "Listing Env Vars for debugging:" -ForegroundColor Yellow
-    # Filter Results to prevent exposing secure vars.
-#    Get-ChildItem -Path "Env:*" | Where-Object { $_.name -notmatch "(NuGetToken|CoverallsToken|cpSettings)"} | Sort-Object -Property Name | Format-Table
-
 # Bump Version
 	Try {
 		$ModFileName = "$env:APPVEYOR_BUILD_FOLDER\psCheckPoint\bin\Release\psCheckPoint.psd1"
         $ModManifest = Get-Content -Path $ModFileName
         $BumpedManifest = $ModManifest -replace "'0.0.0'", "'$Env:APPVEYOR_BUILD_VERSION'"
+
+		$InfoVer = $env:APPVEYOR_REPO_TAG_NAME.TrimStart("v");
+		$Ver = $InfoVer.Split("-")[1];
+		$Pre = '';
+		if ($Ver) { $Pre = "-$($Ver)" }
+		$BumpedManifest = $BumpedManifest -replace "'-pre'", "'$Pre'"
+
         Remove-Item -Path $ModFileName
-        Out-File -FilePath $ModFileName -InputObject $BumpedManifest -NoClobber -Encoding utf8 -Force
-		$ModFileName = "$env:APPVEYOR_BUILD_FOLDER\Pester.Tests\bin\Release\psCheckPoint.psd1"
-		Remove-Item -Path $ModFileName
         Out-File -FilePath $ModFileName -InputObject $BumpedManifest -NoClobber -Encoding utf8 -Force
     }
     Catch {
@@ -34,7 +33,7 @@
 	$source = "$env:APPVEYOR_BUILD_FOLDER\psCheckPoint\bin\Release\"
 	$destination = "$env:APPVEYOR_BUILD_FOLDER\psCheckPoint.zip"
 	If(Test-path $destination) {Remove-item $destination}
-	[io.compression.zipfile]::CreateFromDirectory($Source, $destination) 
+	[io.compression.zipfile]::CreateFromDirectory($Source, $destination)
 
 # Deploy
     Expand-Archive -Path "$env:APPVEYOR_BUILD_FOLDER\psCheckPoint.zip" -DestinationPath 'C:\Users\appveyor\Documents\WindowsPowerShell\Modules\psCheckPoint\' -Verbose
@@ -53,13 +52,8 @@
         Import-PackageProvider NuGet -MinimumVersion '2.8.5.201' -Force
     }
     Try {
-        If ($env:APPVEYOR_REPO_BRANCH -eq 'master') {
-            Write-Host "try to publish module" -ForegroundColor Yellow
-            Publish-Module -Name 'psCheckPoint' -NuGetApiKey $env:NuGetToken -Verbose -Force
-        }
-        Else {
-            Write-Host "Skip publishing to PS Gallery because we are on $($env:APPVEYOR_REPO_BRANCH) branch." -ForegroundColor Yellow
-        }
+        Write-Host "try to publish module" -ForegroundColor Yellow
+        Publish-Module -Name 'psCheckPoint' -NuGetApiKey $env:NuGetToken -Verbose -Force
     }
     Catch {
         $MsgParams = @{
