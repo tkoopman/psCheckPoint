@@ -73,6 +73,7 @@ FormatsToProcess = @(
 	'Views\AddressRange.Format.ps1xml',
 	'Views\Group.Format.ps1xml',
 	'Views\GroupWithExclusion.Format.ps1xml',
+	'Views\HashDetails.Format.ps1xml',
 	'Views\Host.Format.ps1xml',
 	'Views\Network.Format.ps1xml',
 	'Views\Summary.Format.ps1xml',

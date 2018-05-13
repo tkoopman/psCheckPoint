@@ -9,16 +9,6 @@
 		}
 	}
 
-	Context "New-CheckPointHostInterface" {
-		It "Add" -Skip {
-			New-CheckPointHostInterface -Session $Session -Host PesterHost -Name eth0 -Subnet4 192.168.1.2 -MaskLength4 24 | Should BeOfType Koopman.CheckPoint.Host
-		}
-
-		It "Add duplicate" -Skip {
-			{ New-CheckPointHostInterface -Session $Session -Host PesterHost -Name eth0 -Subnet4 192.168.1.2 -MaskLength4 24 -ErrorAction Stop } | Should Throw "Validation failed"
-		}
-	}
-
 	Context "Get-CheckPointHost" {
 		It "Get" {
 			Get-CheckPointHost -Session $Session -Name PesterHost | Should BeOfType Koopman.CheckPoint.Host

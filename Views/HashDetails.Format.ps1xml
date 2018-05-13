@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+  <ViewDefinitions>
+    <View>
+      <Name>Hash Details</Name>
+      <ViewSelectedBy>
+        <TypeName>Koopman.CheckPoint.Common.CertificateValidator+HashDetails</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <PropertyName>Certificate</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Hash</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>
