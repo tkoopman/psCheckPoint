@@ -44,8 +44,6 @@
   <ItemGroup>
     <ViewFiles Include="..\Views\*.ps1xml" />
     <Compile Remove="Objects\Group\CheckPointGroup.cs" />
-    <Compile Remove="Objects\Host\NewCheckPointHostInterface.cs" />
-    <Compile Remove="Objects\Host\RemoveCheckPointHostInterface.cs" />
     <Compile Remove="Objects\Misc\GetCheckPointCommands.cs" />
     <None Remove="Extra\Export\ExportTemplate.html" />
     <EmbeddedResource Include="Extra\Export\ExportTemplate.html">
@@ -62,8 +60,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Objects\Host\NewCheckPointHostInterface.cs" />
-    <None Include="Objects\Host\RemoveCheckPointHostInterface.cs" />
     <None Include="Objects\Misc\GetCheckPointCommands.cs" />
   </ItemGroup>
 

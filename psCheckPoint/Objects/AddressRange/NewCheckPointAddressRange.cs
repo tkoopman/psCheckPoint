@@ -38,6 +38,7 @@ namespace psCheckPoint.Objects.AddressRange
         /// </para>
         /// </summary>
         [Parameter(ParameterSetName = "IPv4 or IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [AllowNull]
         public IPAddress IPAddressFirst { get; set; }
 
         /// <summary>
@@ -47,6 +48,7 @@ namespace psCheckPoint.Objects.AddressRange
         /// </para>
         /// </summary>
         [Parameter(ParameterSetName = "IPv4 or IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [AllowNull]
         public IPAddress IPAddressLast { get; set; }
 
         /// <summary>
@@ -54,6 +56,7 @@ namespace psCheckPoint.Objects.AddressRange
         /// </summary>
         [Parameter(ParameterSetName = "IPv4 and IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Parameter(ParameterSetName = "IPv4", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [AllowNull]
         public IPAddress IPv4AddressFirst { get; set; }
 
         /// <summary>
@@ -61,6 +64,7 @@ namespace psCheckPoint.Objects.AddressRange
         /// </summary>
         [Parameter(ParameterSetName = "IPv4 and IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Parameter(ParameterSetName = "IPv4", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [AllowNull]
         public IPAddress IPv4AddressLast { get; set; }
 
         /// <summary>
@@ -68,6 +72,7 @@ namespace psCheckPoint.Objects.AddressRange
         /// </summary>
         [Parameter(ParameterSetName = "IPv4 and IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Parameter(ParameterSetName = "IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [AllowNull]
         public IPAddress IPv6AddressFirst { get; set; }
 
         /// <summary>
@@ -75,6 +80,7 @@ namespace psCheckPoint.Objects.AddressRange
         /// </summary>
         [Parameter(ParameterSetName = "IPv4 and IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Parameter(ParameterSetName = "IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [AllowNull]
         public IPAddress IPv6AddressLast { get; set; }
 
         #endregion Properties

@@ -39,6 +39,7 @@ namespace psCheckPoint.Objects.MulticastAddressRange
         /// </summary>
         [Parameter(ParameterSetName = "IPv4 or IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Alias("IPAddress")]
+        [AllowNull]
         public IPAddress IPAddressFirst { get; set; }
 
         /// <summary>
@@ -56,6 +57,7 @@ namespace psCheckPoint.Objects.MulticastAddressRange
         [Parameter(ParameterSetName = "IPv4 and IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Parameter(ParameterSetName = "IPv4", Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Alias("IPv4Address")]
+        [AllowNull]
         public IPAddress IPv4AddressFirst { get; set; }
 
         /// <summary>
@@ -71,6 +73,7 @@ namespace psCheckPoint.Objects.MulticastAddressRange
         [Parameter(ParameterSetName = "IPv4 and IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Parameter(ParameterSetName = "IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Alias("IPv6Address")]
+        [AllowNull]
         public IPAddress IPv6AddressFirst { get; set; }
 
         /// <summary>

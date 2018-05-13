@@ -76,6 +76,7 @@ namespace psCheckPoint.Objects.Network
         /// </summary>
         [Parameter(ParameterSetName = "IPv4 or IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Parameter(ParameterSetName = "IPv4 with subnet mask", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [AllowNull]
         public IPAddress Subnet { get; set; }
 
         /// <summary>
@@ -84,6 +85,7 @@ namespace psCheckPoint.Objects.Network
         [Parameter(ParameterSetName = "IPv4 and IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Parameter(ParameterSetName = "IPv4 and IPv6 with subnet mask", Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Parameter(ParameterSetName = "IPv4", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [AllowNull]
         public IPAddress Subnet4 { get; set; }
 
         /// <summary>
@@ -92,6 +94,7 @@ namespace psCheckPoint.Objects.Network
         [Parameter(ParameterSetName = "IPv4 and IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Parameter(ParameterSetName = "IPv4 and IPv6 with subnet mask", Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Parameter(ParameterSetName = "IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [AllowNull]
         public IPAddress Subnet6 { get; set; }
 
         /// <summary>
@@ -99,6 +102,7 @@ namespace psCheckPoint.Objects.Network
         /// </summary>
         [Parameter(ParameterSetName = "IPv4 with subnet mask", Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Parameter(ParameterSetName = "IPv4 and IPv6 with subnet mask", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [AllowNull]
         public IPAddress SubnetMask { get; set; }
 
         #endregion Properties
