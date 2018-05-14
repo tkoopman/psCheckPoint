@@ -355,6 +355,17 @@
                     break;
             }
         }
+        function compareRuleNumbers(a, b) {
+            var c = a.split(".");
+            var d = b.split(".");
+            var i;
+            for (i = 0; i < Math.min(c.length, d.length); i++) {
+                var diff = parseInt(c[i]) - parseInt(d[i]);
+                if (diff !== 0) { return diff; }
+            }
+
+            return c.length - d.length;
+        }
         function onLoad() {
             jsonData = RestoreJsonNetReferences(JSON.parse(document.getElementById('data').innerHTML));
             var accessRules = 0;
@@ -405,7 +416,8 @@
                             });
                         }
                     }
-                    packageRules.sort(function (x, y) { return x.position.localeCompare(y.position); });
+                    packageRules = packageRules.sort(function (x, y) { return compareRuleNumbers(x.position, y.position); }).filter(function (item, pos, ary) { return !pos || item.rule.uid != ary[pos - 1].rule.uid; });
+
                     document.getElementById("NavAccessRules").innerHTML += createTable(packageRules, p.name + "_AccessRules", ["#", "Name", "Source", "Destination", "Service", "Action", "Comments"], ["position", "rule.name", "rule.source", "rule.destination", "rule.service", ["rule.action", "rule.inline-layer"], "rule.comments"], RuleClassName);
                     accessRules += packageRules.length;
                 });
@@ -417,7 +429,7 @@
                         if (layers.indexOf(o.layer) == -1) { layers.push(o.layer); }
                     });
                     layers.forEach(function (l) {
-                        var layerRules = objs.filter(function (o) { return o.layer == l; });
+                        var layerRules = objs.filter(function (o) { return o.layer == l; }).sort(compareRuleNumbers);
 
                         var LayerName = outputObject(l);
                         if (!LayerName) { LayerName = ""; }
