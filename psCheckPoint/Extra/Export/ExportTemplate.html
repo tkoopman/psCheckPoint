@@ -171,11 +171,10 @@
                 function (o) { return o.name == n; }
             );
         }
-        function getObjectsByType(n, sortProperty = "name") {
+        function getObjectsByType(n, sortProperty) {
             var objs = jsonData.objects.filter(
                 function (o) { return o.type == n; }
             );
-
             if (sortProperty) {
                 objs = objs.sort(function (x, y) { return x[sortProperty].localeCompare(y[sortProperty]); });
             }
@@ -441,13 +440,13 @@
             }
 
             // Create object tables
-            document.getElementById("NavAddressRanges").innerHTML += createTable(getObjectsByType("address-range"), "AddressRanges", ["Name", "Range", "Comments"], ["name", ["{ipv4-address-first} - {ipv4-address-last}", "{ipv6-address-first} - {ipv6-address-last}"], "comments"]);
-            document.getElementById("NavGroups").innerHTML += createTable(getObjectsByType("group"), "Groups", ["Name", "Members", "Comments"], ["name", "members", "comments"]);
-            document.getElementById("NavGroupsWithExclusion").innerHTML += createTable(getObjectsByType("group-with-exclusion"), "GroupsWithExclusion", ["Name", "Include", "Except", "Comments"], ["name", "include", "except", "comments"]);
-            document.getElementById("NavHosts").innerHTML += createTable(getObjectsByType("host"), "Hosts", ["Name", "IP", "Comments"], ["name", ["ipv4-address", "ipv6-address"], "comments"]);
-            document.getElementById("NavMulticastAddressRanges").innerHTML += createTable(getObjectsByType("multicast-address-range"), "MulticastAddressRanges", ["Name", "Range", "Comments"], ["name", ["{ipv4-address-first} - {ipv4-address-last}", "{ipv6-address-first} - {ipv6-address-last}"], "comments"]);
-            document.getElementById("NavNetworks").innerHTML += createTable(getObjectsByType("network"), "Networks", ["Name", "Network", "Comments"], ["name", ["{subnet4}/{mask-length4}", "{subnet6}/{mask-length6}"], "comments"]);
-            document.getElementById("NavServiceGroups").innerHTML += createTable(getObjectsByType("service-group"), "ServiceGroups", ["Name", "Members", "Comments"], ["name", "members", "comments"]);
+            document.getElementById("NavAddressRanges").innerHTML += createTable(getObjectsByType("address-range", "name"), "AddressRanges", ["Name", "Range", "Comments"], ["name", ["{ipv4-address-first} - {ipv4-address-last}", "{ipv6-address-first} - {ipv6-address-last}"], "comments"]);
+            document.getElementById("NavGroups").innerHTML += createTable(getObjectsByType("group", "name"), "Groups", ["Name", "Members", "Comments"], ["name", "members", "comments"]);
+            document.getElementById("NavGroupsWithExclusion").innerHTML += createTable(getObjectsByType("group-with-exclusion", "name"), "GroupsWithExclusion", ["Name", "Include", "Except", "Comments"], ["name", "include", "except", "comments"]);
+            document.getElementById("NavHosts").innerHTML += createTable(getObjectsByType("host", "name"), "Hosts", ["Name", "IP", "Comments"], ["name", ["ipv4-address", "ipv6-address"], "comments"]);
+            document.getElementById("NavMulticastAddressRanges").innerHTML += createTable(getObjectsByType("multicast-address-range", "name"), "MulticastAddressRanges", ["Name", "Range", "Comments"], ["name", ["{ipv4-address-first} - {ipv4-address-last}", "{ipv6-address-first} - {ipv6-address-last}"], "comments"]);
+            document.getElementById("NavNetworks").innerHTML += createTable(getObjectsByType("network", "name"), "Networks", ["Name", "Network", "Comments"], ["name", ["{subnet4}/{mask-length4}", "{subnet6}/{mask-length6}"], "comments"]);
+            document.getElementById("NavServiceGroups").innerHTML += createTable(getObjectsByType("service-group", "name"), "ServiceGroups", ["Name", "Members", "Comments"], ["name", "members", "comments"]);
 
             // Update counts in header
             document.getElementById("NumAccessRules").innerHTML = accessRules;
