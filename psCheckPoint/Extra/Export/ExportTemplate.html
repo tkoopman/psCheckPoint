@@ -361,7 +361,7 @@
             }
         }
         function compareRuleNumbers(a, b) {
-            if (a & b) {
+            if (a && b) {
                 var c = a.split(".");
                 var d = b.split(".");
                 var i;
@@ -431,14 +431,14 @@
                     accessRules += packageRules.length;
                 });
             } else {
-                var objs = getObjectsByType("access-rule").sort(function (x, y) { return compareRuleNumbers(x["rule-number"], y["rule-number"]); });
+                var objs = getObjectsByType("access-rule");
                 if (objs) {
                     var layers = [];
                     objs.forEach(function (o) {
                         if (layers.indexOf(o.layer) == -1) { layers.push(o.layer); }
                     });
                     layers.forEach(function (l) {
-                        var layerRules = objs.filter(function (o) { return o.layer == l; }).sort(compareRuleNumbers);
+                        var layerRules = objs.filter(function (o) { return o.layer == l; }).sort(function (x, y) { return compareRuleNumbers(x["rule-number"], y["rule-number"]); });
 
                         var LayerName = outputObject(l);
                         if (!LayerName) { LayerName = ""; }

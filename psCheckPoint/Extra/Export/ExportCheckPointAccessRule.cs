@@ -223,7 +223,7 @@ namespace psCheckPoint.Extra.Export
             {
                 case string str:
                     var whereUsed = await Session.FindWhereUsed(identifier: str, indirect: IndirectWhereUsed.IsPresent, cancellationToken: CancelProcessToken);
-                    await export.AddAsync(str, whereUsed);
+                    await export.AddAsync(str, whereUsed, Depth);
                     break;
 
                 case IObjectSummary objectSummary:
@@ -235,7 +235,7 @@ namespace psCheckPoint.Extra.Export
                     break;
 
                 case AccessRulebasePagingResults ruleBase:
-                    await export.AddAsync(ruleBase);
+                    await export.AddAsync(ruleBase, Depth);
                     break;
 
                 case IEnumerable objs:
@@ -252,7 +252,7 @@ namespace psCheckPoint.Extra.Export
         {
             if (ExcludeByName.Contains(obj.ToString()) || ExcludeByType.Contains(obj.Type)) { return; }
 
-            await export.AddAsync(obj);
+            await export.AddAsync(obj, Depth);
             if (!SkipWhereUsed.IsPresent)
                 switch (obj)
                 {
@@ -272,7 +272,7 @@ namespace psCheckPoint.Extra.Export
                     case ServiceTCP _:
                     case ServiceUDP _:
                         var whereUsed = await Session.FindWhereUsed(identifier: obj.GetIdentifier(), indirect: IndirectWhereUsed.IsPresent, cancellationToken: CancelProcessToken);
-                        await export.AddAsync(obj.GetIdentifier(), whereUsed);
+                        await export.AddAsync(obj.GetIdentifier(), whereUsed, Depth);
                         break;
                 }
         }
