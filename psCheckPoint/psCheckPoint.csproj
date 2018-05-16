@@ -64,7 +64,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CheckPoint.NET" Version="0.3.7" />
+    <PackageReference Include="CheckPoint.NET" Version="0.3.8" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">

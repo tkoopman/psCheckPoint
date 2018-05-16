@@ -176,7 +176,13 @@
                 function (o) { return o.type == n; }
             );
             if (sortProperty) {
-                objs = objs.sort(function (x, y) { return x[sortProperty].localeCompare(y[sortProperty]); });
+                objs = objs.sort(function (x, y) {
+                    if (x[sortProperty] && y[sortProperty]) {
+                        return x[sortProperty].localeCompare(y[sortProperty]);
+                    } else if (x[sortProperty]) { return 1; }
+                    else if (y[sortProperty]) { return -1; }
+                    else { return 0; }
+                });
             }
 
             return objs;
@@ -355,15 +361,19 @@
             }
         }
         function compareRuleNumbers(a, b) {
-            var c = a.split(".");
-            var d = b.split(".");
-            var i;
-            for (i = 0; i < Math.min(c.length, d.length); i++) {
-                var diff = parseInt(c[i]) - parseInt(d[i]);
-                if (diff !== 0) { return diff; }
-            }
+            if (a & b) {
+                var c = a.split(".");
+                var d = b.split(".");
+                var i;
+                for (i = 0; i < Math.min(c.length, d.length); i++) {
+                    var diff = parseInt(c[i]) - parseInt(d[i]);
+                    if (diff !== 0) { return diff; }
+                }
 
-            return c.length - d.length;
+                return c.length - d.length;
+            } else if (a) { return 1; }
+            else if (b) { return -1; }
+            else { return 0; }
         }
         function onLoad() {
             jsonData = RestoreJsonNetReferences(JSON.parse(document.getElementById('data').innerHTML));
@@ -421,7 +431,7 @@
                     accessRules += packageRules.length;
                 });
             } else {
-                var objs = getObjectsByType("access-rule", "rule-number");
+                var objs = getObjectsByType("access-rule").sort(function (x, y) { return compareRuleNumbers(x["rule-number"], y["rule-number"]); });
                 if (objs) {
                     var layers = [];
                     objs.forEach(function (o) {
