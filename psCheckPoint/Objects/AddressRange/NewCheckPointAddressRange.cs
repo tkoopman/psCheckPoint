@@ -7,11 +7,13 @@ namespace psCheckPoint.Objects.AddressRange
 {
     /// <api cmd="add-address-range">New-CheckPointAddressRange</api>
     /// <summary>
-    /// <para type="synopsis">Create new object.</para>
+    /// <para type="synopsis">Create new address range.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code></code>
+    /// <code>
+    /// New-CheckPointAddressRange -Name Range1 -IPAddressFirst 192.168.1.2 -IPAddressLast 192.168.1.5
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "CheckPointAddressRange")]
     [OutputType(typeof(Koopman.CheckPoint.AddressRange))]

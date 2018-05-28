@@ -10,7 +10,7 @@ namespace psCheckPoint.Session
     /// </summary>
     /// <example>
     /// <code>
-    /// Debug-CheckPointSession -FileName debug.txt
+    /// Debug-CheckPointSession -Path debug.txt
     /// </code>
     /// <code>
     /// Debug-CheckPointSession -Disable
@@ -22,25 +22,25 @@ namespace psCheckPoint.Session
         #region Properties
 
         /// <summary>
-        /// Append to existing file.
+        /// <para type="description">Append to existing file.</para>
         /// </summary>
         [Parameter(ParameterSetName = "On")]
         public SwitchParameter Append { get; set; }
 
         /// <summary>
-        /// Disables debugging and closes the current output file.
+        /// <para type="description">Disables debugging and closes the current output file.</para>
         /// </summary>
         [Parameter(ParameterSetName = "Off", Mandatory = true)]
         public SwitchParameter Disable { get; set; }
 
         /// <summary>
-        /// Force overwritting existing file.
+        /// <para type="description">Force overwritting existing file.</para>
         /// </summary>
         [Parameter(ParameterSetName = "On")]
         public SwitchParameter Force { get; set; }
 
         /// <summary>
-        /// <para type="description">The file name to outpout debug loggin to.</para>
+        /// <para type="description">The file name to output debug logging to.</para>
         /// </summary>
         [Parameter(ParameterSetName = "On", Mandatory = true)]
         public string Path { get; set; }

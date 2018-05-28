@@ -17,6 +17,11 @@ namespace psCheckPoint.Objects.AccessRule
     /// rules that match a search criteria.
     /// </para>
     /// </summary>
+    /// <example>
+    /// <code>
+    /// Get-CheckPointAccessRuleBase -AccessLayer Network
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointAccessRuleBase")]
     [OutputType(typeof(Koopman.CheckPoint.Common.AccessRulebasePagingResults))]
     public class GetCheckPointAccessRuleBase : CheckPointCmdletBase

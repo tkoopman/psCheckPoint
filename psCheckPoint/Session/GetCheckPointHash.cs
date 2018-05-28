@@ -9,10 +9,18 @@ using System.Threading.Tasks;
 namespace psCheckPoint.Session
 {
     /// <summary>
+    /// <para type="synopsis">Get server certicate hash that can be used to verify server's certificate.</para>
+    /// <para type="description">
     /// Used to get the certificate hash of a management server or gateway. Hash can then be used in
-    /// other commands using the -CertificateHash parameter on commands like Open-CheckPointSession
+    /// other commands using the CertificateHash parameter on commands like Open-CheckPointSession
     /// and Add-CheckPointIdentity.
+    /// </para>
     /// </summary>
+    /// <example>
+    /// <code>
+    /// Get-CheckPointHash -Server 192.168.1.1
+    /// </code>
+    /// </example>
     /// <seealso cref="System.Management.Automation.PSCmdlet" />
     [Cmdlet(VerbsCommon.Get, "CheckPointHash")]
     public class GetCheckPointHash : PSCmdlet

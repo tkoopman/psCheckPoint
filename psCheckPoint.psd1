@@ -57,16 +57,16 @@ PowerShellVersion = '5.1'
 # ProcessorArchitecture = ''
 
 # Modules that must be imported into the global environment prior to importing this module
-# RequiredModules = @()
+RequiredModules = @()
 
 # Assemblies that must be loaded prior to importing this module
-# RequiredAssemblies = @()
+RequiredAssemblies = @()
 
 # Script files (.ps1) that are run in the caller's environment prior to importing this module.
-# ScriptsToProcess = @()
+ScriptsToProcess = @()
 
 # Type files (.ps1xml) to be loaded when importing this module
-# TypesToProcess = @()
+TypesToProcess = @()
 
 # Format files (.ps1xml) to be loaded when importing this module
 FormatsToProcess = @(
@@ -81,28 +81,121 @@ FormatsToProcess = @(
 )
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-# NestedModules = @()
+NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = '*'
+FunctionsToExport = @()
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-CmdletsToExport = '*'
+CmdletsToExport = @(
+	'Add-CheckPointIdentity',
+	'Close-CheckPointSession',
+	'Debug-CheckPointSession',
+	'Export-CheckPointObjects',
+	'Get-CheckPointAccessLayer',
+	'Get-CheckPointAccessLayers',
+	'Get-CheckPointAccessRule',
+	'Get-CheckPointAccessRuleBase',
+	'Get-CheckPointAddressRange',
+	'Get-CheckPointAddressRanges',
+	'Get-CheckPointApplication',
+	'Get-CheckPointApplicationCategories',
+	'Get-CheckPointApplicationCategory',
+	'Get-CheckPointApplications',
+	'Get-CheckPointFullObject',
+	'Get-CheckPointGroup',
+	'Get-CheckPointGroups',
+	'Get-CheckPointGroupsWithExclusion',
+	'Get-CheckPointGroupWithExclusion',
+	'Get-CheckPointHash',
+	'Get-CheckPointHost',
+	'Get-CheckPointHosts',
+	'Get-CheckPointIdentity',
+	'Get-CheckPointMulticastAddressRange',
+	'Get-CheckPointMulticastAddressRanges',
+	'Get-CheckPointNetwork',
+	'Get-CheckPointNetworks',
+	'Get-CheckPointObject',
+	'Get-CheckPointObjects',
+	'Get-CheckPointSecurityZone',
+	'Get-CheckPointSecurityZones',
+	'Get-CheckPointServiceGroup',
+	'Get-CheckPointServiceGroups',
+	'Get-CheckPointServicesTCP',
+	'Get-CheckPointServicesUDP',
+	'Get-CheckPointServiceTCP',
+	'Get-CheckPointServiceUDP',
+	'Get-CheckPointSession',
+	'Get-CheckPointSessions',
+	'Get-CheckPointSimpleGateway',
+	'Get-CheckPointSimpleGateways',
+	'Get-CheckPointTask',
+	'Get-CheckPointWhereUsed',
+	'Install-CheckPointPolicy',
+	'Invoke-CheckPointGroupSync',
+	'Invoke-CheckPointScript',
+	'New-CheckPointAccessLayer',
+	'New-CheckPointAddressRange',
+	'New-CheckPointApplication',
+	'New-CheckPointApplicationCategory',
+	'New-CheckPointGroup',
+	'New-CheckPointGroupWithExclusion',
+	'New-CheckPointHost',
+	'New-CheckPointMulticastAddressRange',
+	'New-CheckPointNetwork',
+	'New-CheckPointSecurityZone',
+	'New-CheckPointServiceGroup',
+	'New-CheckPointServiceTCP',
+	'New-CheckPointServiceUDP',
+	'Open-CheckPointSession',
+	'Publish-CheckPointSession',
+	'Remove-CheckPointAccessLayer',
+	'Remove-CheckPointAddressRange',
+	'Remove-CheckPointApplication',
+	'Remove-CheckPointApplicationCategory',
+	'Remove-CheckPointGroup',
+	'Remove-CheckPointGroupWithExclusion',
+	'Remove-CheckPointHost',
+	'Remove-CheckPointIdentity',
+	'Remove-CheckPointMulticastAddressRange',
+	'Remove-CheckPointNetwork',
+	'Remove-CheckPointSecurityZone',
+	'Remove-CheckPointServiceGroup',
+	'Remove-CheckPointServiceTCP',
+	'Remove-CheckPointServiceUDP',
+	'Reset-CheckPointSession',
+	'Send-CheckPointKeepAlive',
+	'Set-CheckPointAccessLayer',
+	'Set-CheckPointAddressRange',
+	'Set-CheckPointApplication',
+	'Set-CheckPointApplicationCategory',
+	'Set-CheckPointGroup',
+	'Set-CheckPointGroupWithExclusion',
+	'Set-CheckPointHost',
+	'Set-CheckPointMulticastAddressRange',
+	'Set-CheckPointNetwork',
+	'Set-CheckPointSecurityZone',
+	'Set-CheckPointServiceGroup',
+	'Set-CheckPointServiceTCP',
+	'Set-CheckPointServiceUDP',
+	'Test-CheckPointPolicy',
+	'Wait-CheckPointTask'
+)
 
 # Variables to export from this module
-VariablesToExport = '*'
+VariablesToExport = @()
 
 # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
-AliasesToExport = '*'
+AliasesToExport = @()
 
 # DSC resources to export from this module
-# DscResourcesToExport = @()
+DscResourcesToExport = @()
 
 # List of all modules packaged with this module
-# ModuleList = @()
+ModuleList = @()
 
 # List of all files packaged with this module
-# FileList = @()
+FileList = @()
 
 # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
 PrivateData = @{

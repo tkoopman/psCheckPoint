@@ -5,10 +5,14 @@ namespace psCheckPoint.Objects.AddressRange
 {
     /// <api cmd="show-address-ranges">Get-CheckPointAddressRanges</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve all objects.</para>
+    /// <para type="synopsis">Retrieve all address ranges.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example></example>
+    /// <example>
+    /// <code>
+    /// Get-CheckPointAddressRanges
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointAddressRanges")]
     [OutputType(typeof(Koopman.CheckPoint.Common.NetworkObjectsPagingResults<Koopman.CheckPoint.AddressRange>), ParameterSetName = new string[] { "Limit" })]
     [OutputType(typeof(Koopman.CheckPoint.AddressRange[]), ParameterSetName = new string[] { "All" })]

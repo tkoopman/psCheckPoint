@@ -8,7 +8,13 @@ namespace psCheckPoint.Objects.AccessRule
     /// <api cmd="show-access-rule">Get-CheckPointAccessRule</api>
     /// <summary>
     /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
+    /// <para type="description"></para>
     /// </summary>
+    /// <example>
+    /// <code>
+    /// Get-CheckPointAccessRule -Layer Network -RuleNumber 1
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointAccessRule")]
     [OutputType(typeof(Koopman.CheckPoint.AccessRule))]
     public class GetCheckPointAccessRule : CheckPointCmdletBase

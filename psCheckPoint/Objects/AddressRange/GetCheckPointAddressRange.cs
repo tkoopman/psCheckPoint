@@ -5,10 +5,14 @@ namespace psCheckPoint.Objects.AddressRange
 {
     /// <api cmd="show-address-range">Get-CheckPointAddressRange</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
+    /// <para type="synopsis">Retrieve existing address range using name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example></example>
+    /// <example>
+    /// <code>
+    /// Get-CheckPointAddressRange -Name Range1
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointAddressRange")]
     [OutputType(typeof(Koopman.CheckPoint.AddressRange))]
     public class GetCheckPointAddressRange : GetCheckPointObject

@@ -33,7 +33,7 @@ namespace psCheckPoint.Extra.Export
         #region Enums
 
         /// <summary>
-        /// Export output type
+        /// <para type="description">Export output type</para>
         /// </summary>
         public enum OutputType
         {
@@ -98,7 +98,7 @@ namespace psCheckPoint.Extra.Export
         public string[] ExcludeDetailsByType { get; set; } = { };
 
         /// <summary>
-        /// Force overwritting existing file.
+        /// <para type="description">Force overwritting existing file.</para>
         /// </summary>
         [Parameter]
         public SwitchParameter Force { get; set; }
@@ -125,7 +125,7 @@ namespace psCheckPoint.Extra.Export
         public PSObject Object { get; set; }
 
         /// <summary>
-        /// Weather to output raw Json data or HTML.
+        /// <para type="description">Weather to output raw Json data or HTML.</para>
         /// </summary>
         /// <value>The output type.</value>
         [Parameter]

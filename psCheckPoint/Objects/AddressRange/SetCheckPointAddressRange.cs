@@ -8,11 +8,13 @@ namespace psCheckPoint.Objects.AddressRange
 {
     /// <api cmd="set-address-range">Set-CheckPointAddressRange</api>
     /// <summary>
-    /// <para type="synopsis">Edit existing object using object name or uid.</para>
+    /// <para type="synopsis">Edit existing address range using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code></code>
+    /// <code>
+    /// Set-CheckPointAddressRange -Name Range1 -NewName RangeA -Color Red
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Set, "CheckPointAddressRange", DefaultParameterSetName = "IPv4 and IPv6")]
     [OutputType(typeof(Koopman.CheckPoint.AddressRange))]

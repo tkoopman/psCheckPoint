@@ -5,10 +5,14 @@ namespace psCheckPoint.Objects.AddressRange
 {
     /// <api cmd="delete-address-range">Remove-CheckPointAddressRange</api>
     /// <summary>
-    /// <para type="synopsis">Delete existing object using object name or uid.</para>
+    /// <para type="synopsis">Delete existing address range using name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example></example>
+    /// <example>
+    /// <code>
+    /// Remove-CheckPointAddressRange -Name Range1
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointAddressRange")]
     public class RemoveCheckPointAddressRange : RemoveCheckPointObject
     {

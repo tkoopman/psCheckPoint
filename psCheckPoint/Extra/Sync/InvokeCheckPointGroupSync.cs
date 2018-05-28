@@ -21,6 +21,9 @@ namespace psCheckPoint.Extra.Sync
     /// <para type="synopsis">
     /// Performs a one way sync of external list of group members to a Check Point group.
     /// </para>
+    /// <para type="description">
+    /// Performs a one way sync of external list of group members to a Check Point group.
+    /// </para>
     /// </summary>
     /// <example>
     /// <code>
