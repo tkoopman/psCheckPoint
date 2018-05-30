@@ -129,7 +129,7 @@ ForEach ($ServiceArea in $ServiceAreas) {
 	$GroupName = $GroupPrefix + "_" + $ServiceArea;
 	Write-Verbose "Processing $GroupName";
 
-	$ServiceAreaIPs = $O365IPAddresses | Where-Object {$_.serviceArea -eq "Common" -and $_.ips} | Select-Object -ExpandProperty ips;
+	$ServiceAreaIPs = $O365IPAddresses | Where-Object {$_.serviceArea -eq $ServiceArea -and $_.ips} | Select-Object -ExpandProperty ips;
 	if ($NoIPv4.IsPresent) {
 		$ServiceAreaIPs = $ServiceAreaIPs | Where-Object { $_ -notmatch "\." }
 	}
