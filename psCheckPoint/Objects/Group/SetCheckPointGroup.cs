@@ -7,12 +7,12 @@ namespace psCheckPoint.Objects.Group
 {
     /// <api cmd="set-group">Set-CheckPointGroup</api>
     /// <summary>
-    /// <para type="synopsis">Edit existing object using object name or uid.</para>
+    /// <para type="synopsis">Edit existing group using name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
     /// <code>
-    /// Set-CheckPointGroup -Name Test1 -NewName Test2 -Tags TestTag
+    /// Set-CheckPointGroup -Name MyGroup -MemberAction Add -Members HostD
     /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Set, "CheckPointGroup")]

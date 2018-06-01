@@ -5,12 +5,12 @@ namespace psCheckPoint.Objects.Group
 {
     /// <api cmd="show-group">Get-CheckPointGroup</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
+    /// <para type="synopsis">Retrieve existing group using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
     /// <code>
-    /// $cpGroup = Get-CheckPointGroup -Name Test1
+    /// Get-CheckPointGroup -Name MyGroup
     /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointGroup")]

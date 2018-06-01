@@ -5,10 +5,14 @@ namespace psCheckPoint.Objects.ApplicationCategory
 {
     /// <api cmd="show-application-site-categories">Get-CheckPointApplicationCategories</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve all objects.</para>
+    /// <para type="synopsis">Retrieve all Application Categories.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example></example>
+    /// <example>
+    /// <code>
+    /// Get-CheckPointApplicationCategories
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointApplicationCategories")]
     [OutputType(typeof(Koopman.CheckPoint.Common.NetworkObjectsPagingResults<Koopman.CheckPoint.ApplicationCategory>), ParameterSetName = new string[] { "Limit" })]
     [OutputType(typeof(Koopman.CheckPoint.ApplicationCategory[]), ParameterSetName = new string[] { "All" })]

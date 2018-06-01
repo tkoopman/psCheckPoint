@@ -5,10 +5,14 @@ namespace psCheckPoint.Objects.GroupWithExclusion
 {
     /// <api cmd="delete-group-with-exclusion">Remove-CheckPointGroupWithExclusion</api>
     /// <summary>
-    /// <para type="synopsis">Delete existing object using object name or uid.</para>
+    /// <para type="synopsis">Delete existing Group with Exclusion using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example></example>
+    /// <example>
+    /// <code>
+    /// Remove-CheckPointGroupWithExclusion -Name MyGroupWithExclusion
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointGroupWithExclusion")]
     public class RemoveCheckPointGroupWithExclusion : RemoveCheckPointObject
     {

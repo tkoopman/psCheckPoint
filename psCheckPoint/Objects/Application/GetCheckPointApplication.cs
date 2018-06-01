@@ -5,10 +5,14 @@ namespace psCheckPoint.Objects.Application
 {
     /// <api cmd="show-application-site">Get-CheckPointApplication</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
+    /// <para type="synopsis">Retrieve existing Application Site using name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example></example>
+    /// <example>
+    /// <code>
+    /// Get-CheckPointApplication -Name "Check Point User Center"
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointApplication", DefaultParameterSetName = "By Name or UID")]
     [OutputType(typeof(Koopman.CheckPoint.ApplicationSite))]
     public class GetCheckPointApplication : GetCheckPointObject

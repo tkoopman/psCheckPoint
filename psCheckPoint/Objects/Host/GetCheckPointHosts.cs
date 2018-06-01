@@ -5,7 +5,7 @@ namespace psCheckPoint.Objects.Host
 {
     /// <api cmd="show-hosts">Get-CheckPointHosts</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve all objects.</para>
+    /// <para type="synopsis">Retrieve all Hosts.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>

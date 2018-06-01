@@ -6,11 +6,13 @@ namespace psCheckPoint.Objects.Group
 {
     /// <api cmd="add-group">New-CheckPointGroup</api>
     /// <summary>
-    /// <para type="synopsis">Create new object.</para>
+    /// <para type="synopsis">Create new group.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code></code>
+    /// <code>
+    /// New-CheckPointGroup -Name MyGroup -Members HostA,HostB,HostC
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "CheckPointGroup")]
     [OutputType(typeof(Koopman.CheckPoint.Group))]

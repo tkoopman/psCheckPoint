@@ -8,7 +8,11 @@ namespace psCheckPoint.Objects.Application
     /// <para type="synopsis">Delete existing object using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example></example>
+    /// <example>
+    /// <code>
+    /// Remove-CheckPointApplication -Name MyApp
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointApplication")]
     public class RemoveCheckPointApplication : RemoveCheckPointObject
     {

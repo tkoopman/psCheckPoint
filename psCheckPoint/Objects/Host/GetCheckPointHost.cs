@@ -5,12 +5,12 @@ namespace psCheckPoint.Objects.Host
 {
     /// <api cmd="show-host">Get-CheckPointHost</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
+    /// <para type="synopsis">Retrieve existing host using name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
     /// <code>
-    /// $cpHost = Get-CheckPointHost -Name Test1
+    /// Get-CheckPointHost -Name MyHost
     /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointHost")]

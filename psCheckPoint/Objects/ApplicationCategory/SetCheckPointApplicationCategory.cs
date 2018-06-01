@@ -7,10 +7,14 @@ namespace psCheckPoint.Objects.ApplicationCategory
 {
     /// <api cmd="set-application-site-category">Set-CheckPointApplicationCategory</api>
     /// <summary>
-    /// <para type="synopsis">Edit existing object using object name or uid.</para>
+    /// <para type="synopsis">Edit existing Application Category using name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example></example>
+    /// <example>
+    /// <code>
+    /// Set-CheckPointApplicationCategory -Name MyCategory -Color Red
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Set, "CheckPointApplicationCategory")]
     [OutputType(typeof(Koopman.CheckPoint.ApplicationCategory))]
     public class SetCheckPointApplication : SetCheckPointCmdlet

@@ -7,10 +7,14 @@ namespace psCheckPoint.Objects.Application
 {
     /// <api cmd="set-application-site">Set-CheckPointApplication</api>
     /// <summary>
-    /// <para type="synopsis">Edit existing object using object name or uid.</para>
+    /// <para type="synopsis">Edit existing application using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example></example>
+    /// <example>
+    /// <code>
+    /// Set-CheckPointApplication -Name MyApp -Color Red
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Set, "CheckPointApplication")]
     [OutputType(typeof(Koopman.CheckPoint.ApplicationSite))]
     public class SetCheckPointApplication : SetCheckPointCmdlet

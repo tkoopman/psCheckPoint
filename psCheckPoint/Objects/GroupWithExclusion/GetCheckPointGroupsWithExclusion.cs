@@ -5,10 +5,14 @@ namespace psCheckPoint.Objects.GroupWithExclusion
 {
     /// <api cmd="show-groups-with-exclusion">Get-CheckPointGroupsWithExclusion</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve all objects.</para>
+    /// <para type="synopsis">Retrieve all Groups with Exclusion.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example></example>
+    /// <example>
+    /// <code>
+    /// Get-CheckPointGroupsWithExclusion
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointGroupsWithExclusion")]
     [OutputType(typeof(Koopman.CheckPoint.Common.NetworkObjectsPagingResults<Koopman.CheckPoint.GroupWithExclusion>), ParameterSetName = new string[] { "Limit" })]
     [OutputType(typeof(Koopman.CheckPoint.GroupWithExclusion[]), ParameterSetName = new string[] { "All" })]

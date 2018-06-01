@@ -6,11 +6,13 @@ namespace psCheckPoint.Objects.GroupWithExclusion
 {
     /// <api cmd="add-group-with-exclusion">New-CheckPointGroupWithExclusion</api>
     /// <summary>
-    /// <para type="synopsis">Create new object.</para>
+    /// <para type="synopsis">Create new Group with Exclusion.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code></code>
+    /// <code>
+    /// New-CheckPointGroupWithExclusion -Name MyGroupWithExclusion -Include GroupA -Except GroupB
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "CheckPointGroupWithExclusion")]
     [OutputType(typeof(Koopman.CheckPoint.GroupWithExclusion))]

@@ -5,7 +5,7 @@ namespace psCheckPoint.Objects.Misc
 {
     /// <api cmd="show-task">Get-CheckPointTask</api>
     /// <summary>
-    /// <para type="synopsis"></para>
+    /// <para type="synopsis">Retrieves task details by Task ID</para>
     /// <para type="description"></para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "CheckPointTask")]

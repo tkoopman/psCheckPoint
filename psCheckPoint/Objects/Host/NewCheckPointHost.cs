@@ -12,7 +12,7 @@ namespace psCheckPoint.Objects.Host
     /// </summary>
     /// <example>
     /// <code>
-    /// New-CheckPointHost -Name Test1 -ipAddress 1.2.3.4
+    /// New-CheckPointHost -Name MyHost -IPAddress 1.2.3.4
     /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "CheckPointHost")]

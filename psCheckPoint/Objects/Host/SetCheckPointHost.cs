@@ -8,12 +8,12 @@ namespace psCheckPoint.Objects.Host
 {
     /// <api cmd="set-host">Set-CheckPointHost</api>
     /// <summary>
-    /// <para type="synopsis">Edit existing object using object name or uid.</para>
+    /// <para type="synopsis">Edit existing host using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
     /// <code>
-    /// Set-CheckPointHost -Name Test1 -NewName Test2 -Tags TestTag
+    /// Set-CheckPointHost -Name MyHost -NewName HostA -Tags MyTag
     /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Set, "CheckPointHost")]

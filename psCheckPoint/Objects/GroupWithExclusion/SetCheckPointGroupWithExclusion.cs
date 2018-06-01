@@ -7,10 +7,14 @@ namespace psCheckPoint.Objects.GroupWithExclusion
 {
     /// <api cmd="set-group-with-exclusion">Set-CheckPointGroupWithExclusion</api>
     /// <summary>
-    /// <para type="synopsis">Edit existing object using object name or uid.</para>
+    /// <para type="synopsis">Edit existing Group with Exclusion using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example></example>
+    /// <example>
+    /// <code>
+    /// Set-CheckPointGroupWithExclusion -Name MyGroupWithExclusion -Color Red
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Set, "CheckPointGroupWithExclusion")]
     [OutputType(typeof(Koopman.CheckPoint.GroupWithExclusion))]
     public class SetCheckPointGroupWithExclusion : SetCheckPointCmdlet

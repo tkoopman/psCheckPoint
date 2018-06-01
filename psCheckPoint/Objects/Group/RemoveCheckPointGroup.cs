@@ -5,12 +5,12 @@ namespace psCheckPoint.Objects.Group
 {
     /// <api cmd="delete-group">Remove-CheckPointGroup</api>
     /// <summary>
-    /// <para type="synopsis">Delete existing object using object name or uid.</para>
+    /// <para type="synopsis">Delete existing group using name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
     /// <code>
-    /// Remove-CheckPointGroup -Name Test1 -Verbose
+    /// Remove-CheckPointGroup -Name MyGroup
     /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointGroup")]

@@ -7,11 +7,13 @@ namespace psCheckPoint.Objects.Application
 {
     /// <api cmd="add-application-site">New-CheckPointApplication</api>
     /// <summary>
-    /// <para type="synopsis">Create new object.</para>
+    /// <para type="synopsis">Create new application.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code></code>
+    /// <code>
+    /// New-CheckPointApplication -Name MyApp -PrimaryCategory "Low Risk" -UrlList www.google.com,www.bing.com
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "CheckPointApplication")]
     [OutputType(typeof(Koopman.CheckPoint.ApplicationSite))]

@@ -75,7 +75,7 @@ namespace psCheckPoint.Extra.Sync
         /// <para type="description">Used to ignore warnings or errors.</para>
         /// </summary>
         [Parameter]
-        public Ignore Ignore { get; set; }
+        public Ignore Ignore { get; set; } = Ignore.No;
 
         /// <summary>
         /// <para type="description">

@@ -7,11 +7,13 @@ namespace psCheckPoint.Objects.ApplicationCategory
 {
     /// <api cmd="add-application-site-category">New-CheckPointApplicationCategory</api>
     /// <summary>
-    /// <para type="synopsis">Create new object.</para>
+    /// <para type="synopsis">Create new Application Category.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code></code>
+    /// <code>
+    /// New-CheckPointApplicationCategory -Name MyCategory
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "CheckPointApplicationCategory")]
     [OutputType(typeof(Koopman.CheckPoint.ApplicationCategory))]
