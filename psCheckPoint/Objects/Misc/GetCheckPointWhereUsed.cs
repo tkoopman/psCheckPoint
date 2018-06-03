@@ -47,7 +47,7 @@ namespace psCheckPoint.Objects.Misc
         /// <para type="description">Check Point Object.</para>
         /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "By Object", ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
-        [PSDefaultValue(Value = null)]
+        [DefaultValue(null)]
         public IObjectSummary Object { set => Value = value.UID; }
 
         /// <summary>

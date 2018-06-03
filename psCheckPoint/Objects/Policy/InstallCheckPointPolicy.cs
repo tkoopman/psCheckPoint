@@ -5,9 +5,14 @@ namespace psCheckPoint.Objects.Policy
 {
     /// <api cmd="install-policy">Install-CheckPointPolicy</api>
     /// <summary>
-    /// <para type="synopsis"></para>
+    /// <para type="synopsis">Install policy to gateway(s)</para>
     /// <para type="description"></para>
     /// </summary>
+    /// <example>
+    /// <code>
+    /// Install-CheckPointPolicy -PolicyPackage MyPolicy -Targets MyGateway -Access -ThreatPrevention
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsLifecycle.Install, "CheckPointPolicy")]
     public class InstallCheckPointPolicy : CheckPointCmdletBase
     {

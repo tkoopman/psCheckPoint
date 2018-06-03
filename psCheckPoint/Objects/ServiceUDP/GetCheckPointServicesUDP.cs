@@ -5,10 +5,14 @@ namespace psCheckPoint.Objects.ServiceUDP
 {
     /// <api cmd="show-services-udp">Get-CheckPointServicesUDP</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve all objects.</para>
+    /// <para type="synopsis">Retrieve all UDP objects.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example></example>
+    /// <example>
+    /// <code>
+    /// Get-CheckPointServicesUDP
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointServicesUDP")]
     [OutputType(typeof(Koopman.CheckPoint.Common.NetworkObjectsPagingResults<Koopman.CheckPoint.ServiceUDP>), ParameterSetName = new string[] { "Limit" })]
     [OutputType(typeof(Koopman.CheckPoint.ServiceUDP[]), ParameterSetName = new string[] { "All" })]

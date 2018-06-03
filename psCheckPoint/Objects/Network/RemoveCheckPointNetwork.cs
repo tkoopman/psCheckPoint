@@ -5,12 +5,12 @@ namespace psCheckPoint.Objects.Network
 {
     /// <api cmd="delete-network">Remove-CheckPointNetwork</api>
     /// <summary>
-    /// <para type="synopsis">Delete existing object using object name or uid.</para>
+    /// <para type="synopsis">Delete existing Network using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
     /// <code>
-    /// Remove-CheckPointNetwork -Name Test1 -Verbose
+    /// Remove-CheckPointNetwork -Name MyNetwork
     /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointNetwork")]

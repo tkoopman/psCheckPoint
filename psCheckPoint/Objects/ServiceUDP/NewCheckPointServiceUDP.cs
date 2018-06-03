@@ -7,11 +7,13 @@ namespace psCheckPoint.Objects.ServiceUDP
 {
     /// <api cmd="add-service-udp">New-CheckPointServiceUDP</api>
     /// <summary>
-    /// <para type="synopsis">Create new object.</para>
+    /// <para type="synopsis">Create new UDP object.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code></code>
+    /// <code>
+    /// New-CheckPointServiceUDP -Name MyUDP -Port 12345
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "CheckPointServiceUDP")]
     [OutputType(typeof(Koopman.CheckPoint.ServiceUDP))]

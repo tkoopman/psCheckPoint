@@ -7,11 +7,13 @@ namespace psCheckPoint.Objects.MulticastAddressRange
 {
     /// <api cmd="add-multicast-address-range">New-CheckPointMulticastAddressRange</api>
     /// <summary>
-    /// <para type="synopsis">Create new object.</para>
+    /// <para type="synopsis">Create new Multicast Address Range.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code></code>
+    /// <code>
+    /// New-CheckPointMulticastAddressRange -Name MyMulticastAR -IPAddress 224.5.6.7
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "CheckPointMulticastAddressRange")]
     [OutputType(typeof(Koopman.CheckPoint.MulticastAddressRange))]

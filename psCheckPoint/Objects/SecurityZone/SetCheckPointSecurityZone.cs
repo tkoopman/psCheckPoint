@@ -6,10 +6,14 @@ namespace psCheckPoint.Objects.SecurityZone
 {
     /// <api cmd="set-security-zone">Set-CheckPointSecurityZone</api>
     /// <summary>
-    /// <para type="synopsis">Edit existing object using object name or uid.</para>
+    /// <para type="synopsis">Edit existing Security Zone using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example></example>
+    /// <example>
+    /// <code>
+    /// Set-CheckPointSecurityZone -Name MyZone -Comments "This is my zone"
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Set, "CheckPointSecurityZone")]
     [OutputType(typeof(Koopman.CheckPoint.SecurityZone))]
     public class SetCheckPointSecurityZone : SetCheckPointCmdlet

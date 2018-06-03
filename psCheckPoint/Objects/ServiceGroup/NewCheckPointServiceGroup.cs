@@ -6,11 +6,13 @@ namespace psCheckPoint.Objects.ServiceGroup
 {
     /// <api cmd="add-service-group">New-CheckPointServiceGroup</api>
     /// <summary>
-    /// <para type="synopsis">Create new object.</para>
+    /// <para type="synopsis">Create new Service Group.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code></code>
+    /// <code>
+    /// New-CheckPointServiceGroup -Name MyServices -Members DNS,HTTP,HTTPS
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "CheckPointServiceGroup")]
     [OutputType(typeof(Koopman.CheckPoint.ServiceGroup))]

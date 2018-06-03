@@ -5,7 +5,7 @@ namespace psCheckPoint.Objects.Network
 {
     /// <api cmd="show-networks">Get-CheckPointNetworks</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve all objects.</para>
+    /// <para type="synopsis">Retrieve all Networks.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>

@@ -5,10 +5,14 @@ namespace psCheckPoint.Objects.ServiceUDP
 {
     /// <api cmd="delete-service-udp">Remove-CheckPointServiceUDP</api>
     /// <summary>
-    /// <para type="synopsis">Delete existing object using object name or uid.</para>
+    /// <para type="synopsis">Delete existing UDP object using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example></example>
+    /// <example>
+    /// <code>
+    /// Remove-CheckPointServiceUDP -Name MyUDP
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointServiceUDP")]
     public class RemoveCheckPointServiceUDP : RemoveCheckPointObject
     {

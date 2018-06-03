@@ -7,12 +7,12 @@ namespace psCheckPoint.Objects.Network
 {
     /// <api cmd="add-network">New-CheckPointNetwork</api>
     /// <summary>
-    /// <para type="synopsis">Create new object.</para>
+    /// <para type="synopsis">Create new Network.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
     /// <code>
-    /// New-CheckPointNetwork -Name Test1 ...
+    /// New-CheckPointNetwork -Name MyNetwork -Subnet 192.168.100.0 -MaskLength 24
     /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "CheckPointNetwork")]

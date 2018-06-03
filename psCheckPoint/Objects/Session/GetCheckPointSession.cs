@@ -5,7 +5,7 @@ namespace psCheckPoint.Objects.Session
 {
     /// <api cmd="show-session">Get-CheckPointSession</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
+    /// <para type="synopsis">Retrieve existing Session using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>

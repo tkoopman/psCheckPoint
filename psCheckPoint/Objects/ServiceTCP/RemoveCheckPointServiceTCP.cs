@@ -5,10 +5,14 @@ namespace psCheckPoint.Objects.ServiceTCP
 {
     /// <api cmd="delete-service-tcp">Remove-CheckPointServiceTCP</api>
     /// <summary>
-    /// <para type="synopsis">Delete existing object using object name or uid.</para>
+    /// <para type="synopsis">Delete existing TCP object using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example></example>
+    /// <example>
+    /// <code>
+    /// Remove-CheckPointServiceTCP -Name MyTCP
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointServiceTCP")]
     public class RemoveCheckPointServiceTCP : RemoveCheckPointObject
     {

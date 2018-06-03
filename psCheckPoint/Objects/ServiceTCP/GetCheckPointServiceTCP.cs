@@ -5,10 +5,14 @@ namespace psCheckPoint.Objects.ServiceTCP
 {
     /// <api cmd="show-service-tcp">Get-CheckPointServiceTCP</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
+    /// <para type="synopsis">Retrieve existing TCP object using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example></example>
+    /// <example>
+    /// <code>
+    /// Get-CheckPointServiceTCP -Name MyTCP
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointServiceTCP")]
     [OutputType(typeof(Koopman.CheckPoint.ServiceTCP))]
     public class GetCheckPointServiceTCP : GetCheckPointObject

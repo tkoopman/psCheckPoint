@@ -5,12 +5,12 @@ namespace psCheckPoint.Objects.ServiceGroup
 {
     /// <api cmd="show-service-group">Get-CheckPointServiceGroup</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
+    /// <para type="synopsis">Retrieve existing Service Group using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
     /// <code>
-    /// Get-CheckPointGroup -Name Test1
+    /// Get-CheckPointGroup -Name MyServices
     /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointServiceGroup")]

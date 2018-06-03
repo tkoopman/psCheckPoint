@@ -40,10 +40,11 @@ namespace psCheckPoint.Objects.Misc
         public SwitchParameter All { get; set; }
 
         /// <summary>
+        /// <para type="description">
         /// The level of detail for some of the fields in the response can vary from showing only the
         /// UID value of the object to a fully detailed representation of the object.
+        /// </para>
         /// </summary>
-        /// <value>The details level.</value>
         [Parameter]
         public DetailLevels DetailsLevel { get; set; } = DetailLevels.Standard;
 

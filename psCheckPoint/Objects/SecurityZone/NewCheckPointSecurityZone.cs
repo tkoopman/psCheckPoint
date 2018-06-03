@@ -6,11 +6,13 @@ namespace psCheckPoint.Objects.SecurityZone
 {
     /// <api cmd="add-security-zone">New-CheckPointSecurityZone</api>
     /// <summary>
-    /// <para type="synopsis">Create new object.</para>
+    /// <para type="synopsis">Create new Security Zone.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code></code>
+    /// <code>
+    /// New-CheckPointSecurityZone -Name MyZone
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "CheckPointSecurityZone")]
     [OutputType(typeof(Koopman.CheckPoint.SecurityZone))]

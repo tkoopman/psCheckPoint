@@ -5,10 +5,14 @@ namespace psCheckPoint.Objects.SimpleGateway
 {
     /// <api cmd="show-simple-gateways">Get-CheckPointSimpleGateways</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve all objects.</para>
+    /// <para type="synopsis">Retrieve all Simple Gateways.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example></example>
+    /// <example>
+    /// <code>
+    /// Get-CheckPointSimpleGateways
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointSimpleGateways")]
     [OutputType(typeof(Koopman.CheckPoint.Common.NetworkObjectsPagingResults<Koopman.CheckPoint.SimpleGateway>), ParameterSetName = new string[] { "Limit" })]
     [OutputType(typeof(Koopman.CheckPoint.SimpleGateway[]), ParameterSetName = new string[] { "All" })]

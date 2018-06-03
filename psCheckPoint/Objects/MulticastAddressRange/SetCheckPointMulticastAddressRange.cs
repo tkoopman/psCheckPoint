@@ -8,11 +8,13 @@ namespace psCheckPoint.Objects.MulticastAddressRange
 {
     /// <api cmd="set-multicast-address-range">Set-CheckPointMulticastAddressRange</api>
     /// <summary>
-    /// <para type="synopsis">Edit existing object using object name or uid.</para>
+    /// <para type="synopsis">Edit existing Multicast Address Range using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code></code>
+    /// <code>
+    /// Set-CheckPointMulticastAddressRange -Name MyMulticastAR -Color Red
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Set, "CheckPointMulticastAddressRange", DefaultParameterSetName = "None")]
     [OutputType(typeof(Koopman.CheckPoint.MulticastAddressRange))]

@@ -7,10 +7,14 @@ namespace psCheckPoint.Objects.ServiceUDP
 {
     /// <api cmd="set-service-udp">Set-CheckPointServiceUDP</api>
     /// <summary>
-    /// <para type="synopsis">Edit existing object using object name or uid.</para>
+    /// <para type="synopsis">Edit existing UDP object using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example></example>
+    /// <example>
+    /// <code>
+    /// Set-CheckPointServiceUDP -Name MyUDP -MatchForAny:$false
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Set, "CheckPointServiceUDP")]
     [OutputType(typeof(Koopman.CheckPoint.ServiceUDP))]
     public class SetCheckPointServiceUDP : SetCheckPointCmdlet

@@ -5,12 +5,12 @@ namespace psCheckPoint.Objects.ServiceGroup
 {
     /// <api cmd="delete-service-group">Remove-CheckPointServiceGroup</api>
     /// <summary>
-    /// <para type="synopsis">Delete existing object using object name or uid.</para>
+    /// <para type="synopsis">Delete existing Service Group using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
     /// <code>
-    /// Remove-CheckPointGroup -Name Test1 -Verbose
+    /// Remove-CheckPointGroup -Name MyServices
     /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointServiceGroup")]

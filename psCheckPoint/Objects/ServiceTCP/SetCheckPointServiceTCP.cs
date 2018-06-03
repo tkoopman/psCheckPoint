@@ -7,10 +7,14 @@ namespace psCheckPoint.Objects.ServiceTCP
 {
     /// <api cmd="set-service-tcp">Set-CheckPointServiceTCP</api>
     /// <summary>
-    /// <para type="synopsis">Edit existing object using object name or uid.</para>
+    /// <para type="synopsis">Edit existing TCP object using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example></example>
+    /// <example>
+    /// <code>
+    /// Set-CheckPointServiceTCP -Name MyTCP -MatchForAny:$false
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Set, "CheckPointServiceTCP")]
     [OutputType(typeof(Koopman.CheckPoint.ServiceTCP))]
     public class SetCheckPointServiceTCP : SetCheckPointCmdlet

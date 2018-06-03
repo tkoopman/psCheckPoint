@@ -5,10 +5,14 @@ namespace psCheckPoint.Objects.ServiceTCP
 {
     /// <api cmd="show-services-tcp">Get-CheckPointServicesTCP</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve all objects.</para>
+    /// <para type="synopsis">Retrieve all TCP objects.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example></example>
+    /// <example>
+    /// <code>
+    /// Get-CheckPointServicesTCP
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointServicesTCP")]
     [OutputType(typeof(Koopman.CheckPoint.Common.NetworkObjectsPagingResults<Koopman.CheckPoint.ServiceTCP>), ParameterSetName = new string[] { "Limit" })]
     [OutputType(typeof(Koopman.CheckPoint.ServiceTCP[]), ParameterSetName = new string[] { "All" })]

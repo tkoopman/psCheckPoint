@@ -5,10 +5,14 @@ namespace psCheckPoint.Objects.MulticastAddressRange
 {
     /// <api cmd="show-multicast-address-ranges">Get-CheckPointMulticastAddressRanges</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve all objects.</para>
+    /// <para type="synopsis">Retrieve all Multicast Address Ranges.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example></example>
+    /// <example>
+    /// <code>
+    /// Get-CheckPointMulticastAddressRange -Name MyMulticastAR
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointMulticastAddressRanges")]
     [OutputType(typeof(Koopman.CheckPoint.Common.NetworkObjectsPagingResults<Koopman.CheckPoint.MulticastAddressRange>), ParameterSetName = new string[] { "Limit" })]
     [OutputType(typeof(Koopman.CheckPoint.MulticastAddressRange[]), ParameterSetName = new string[] { "All" })]

@@ -5,10 +5,14 @@ namespace psCheckPoint.Objects.SecurityZone
 {
     /// <api cmd="show-security-zone">Get-CheckPointSecurityZone</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
+    /// <para type="synopsis">Retrieve existing Security Zone using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example></example>
+    /// <example>
+    /// <code>
+    /// Get-CheckPointSecurityZone -Name MyZone
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointSecurityZone")]
     [OutputType(typeof(Koopman.CheckPoint.SecurityZone))]
     public class GetCheckPointSecurityZone : GetCheckPointObject

@@ -7,11 +7,13 @@ namespace psCheckPoint.Objects.ServiceTCP
 {
     /// <api cmd="add-service-tcp">New-CheckPointServiceTCP</api>
     /// <summary>
-    /// <para type="synopsis">Create new object.</para>
+    /// <para type="synopsis">Create new TCP object.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code></code>
+    /// <code>
+    /// New-CheckPointServiceTCP -Name MyTCP -Port 12345
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "CheckPointServiceTCP")]
     [OutputType(typeof(Koopman.CheckPoint.ServiceTCP))]

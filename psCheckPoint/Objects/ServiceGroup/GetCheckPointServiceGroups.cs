@@ -5,11 +5,13 @@ namespace psCheckPoint.Objects.ServiceGroup
 {
     /// <api cmd="show-service-groups">Get-CheckPointServiceGroups</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve all objects.</para>
+    /// <para type="synopsis">Retrieve all Service Groups.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code></code>
+    /// <code>
+    /// Get-CheckPointServiceGroups
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointServiceGroups")]
     [OutputType(typeof(Koopman.CheckPoint.Common.NetworkObjectsPagingResults<Koopman.CheckPoint.ServiceGroup>), ParameterSetName = new string[] { "Limit" })]

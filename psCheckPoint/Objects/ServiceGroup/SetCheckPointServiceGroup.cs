@@ -7,12 +7,12 @@ namespace psCheckPoint.Objects.ServiceGroup
 {
     /// <api cmd="set-service-group">Set-CheckPointServiceGroup</api>
     /// <summary>
-    /// <para type="synopsis">Edit existing object using object name or uid.</para>
+    /// <para type="synopsis">Edit existing Service Group using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
     /// <code>
-    /// Set-CheckPointGroup -Name Test1 -NewName Test2 -Tags TestTag
+    /// Set-CheckPointGroup -Name MyServices -NewName MyServiceGroup
     /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Set, "CheckPointServiceGroup")]

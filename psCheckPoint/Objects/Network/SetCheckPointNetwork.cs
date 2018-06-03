@@ -8,12 +8,12 @@ namespace psCheckPoint.Objects.Network
 {
     /// <api cmd="set-network">Set-CheckPointNetwork</api>
     /// <summary>
-    /// <para type="synopsis">Edit existing object using object name or uid.</para>
+    /// <para type="synopsis">Edit existing Network using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
     /// <code>
-    /// Set-CheckPointNetwork -Name Test1 -NewName Test2 -Tags TestTag
+    /// Set-CheckPointNetwork -Name MyNetwork -NewName MyNetwork2 -Tags MyTag
     /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Set, "CheckPointNetwork")]

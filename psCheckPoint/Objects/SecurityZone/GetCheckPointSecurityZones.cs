@@ -5,10 +5,14 @@ namespace psCheckPoint.Objects.SecurityZone
 {
     /// <api cmd="show-security-zones">Get-CheckPointSecurityZones</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve all objects.</para>
+    /// <para type="synopsis">Retrieve all Security Zones.</para>
     /// <para type="description"></para>
     /// </summary>
-    /// <example></example>
+    /// <example>
+    /// <code>
+    /// Get-CheckPointSecurityZones
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointSecurityZones")]
     [OutputType(typeof(Koopman.CheckPoint.Common.NetworkObjectsPagingResults<Koopman.CheckPoint.SecurityZone>), ParameterSetName = new string[] { "Limit" })]
     [OutputType(typeof(Koopman.CheckPoint.SecurityZone[]), ParameterSetName = new string[] { "All" })]

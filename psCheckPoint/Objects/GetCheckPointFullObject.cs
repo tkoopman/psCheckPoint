@@ -7,8 +7,9 @@ namespace psCheckPoint.Objects
     /// <extra category="Misc.">Get-CheckPointFullObject</extra>
     /// <summary>
     /// <para type="synopsis">Retrieve full object details from object summary.</para>
-    /// <para type="description">Many commands return lists of object summaries.</para>
-    /// <para type="description">Use this to return the full objects for each summary.</para>
+    /// <para type="description">
+    /// Use this to return the full object details if you only got summary currently.
+    /// </para>
     /// </summary>
     /// <example>
     /// <code>

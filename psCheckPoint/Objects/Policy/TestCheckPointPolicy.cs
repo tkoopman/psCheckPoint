@@ -5,9 +5,14 @@ namespace psCheckPoint.Objects.Policy
 {
     /// <api cmd="verify-policy">Test-CheckPointPolicy</api>
     /// <summary>
-    /// <para type="synopsis"></para>
+    /// <para type="synopsis">Verify policy</para>
     /// <para type="description"></para>
     /// </summary>
+    /// <example>
+    /// <code>
+    /// Test-CheckPointPolicy -PolicyPackage MyPolicy
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsDiagnostic.Test, "CheckPointPolicy")]
     public class TestCheckPointPolicy : CheckPointCmdletBase
     {
