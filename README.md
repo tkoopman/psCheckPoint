@@ -14,7 +14,5 @@ psCheckPoint works in both the full desktop verion of PowerShell, as well as Pow
 ## Update
 `Update-Module -Name psCheckPoint`
 
-### psCheckPointIA Deprecated
-NOTE: If you have psCheckPointIA module installed, uninstall before installing or updating to psCheckPoint v0.5.0+ as they have been merged into the one module, and psCheckPointIA is now deprecated. 
-
-`Uninstall-Module psCheckPointIA`
+## Major Update v1.0.0
+With the release of v1.0.0 there has been some major updates from previos versions. Please see [Wiki page](https://github.com/tkoopman/psCheckPoint/wiki/Major-Upcoming-Changes---CheckPoint.NET) for more details.

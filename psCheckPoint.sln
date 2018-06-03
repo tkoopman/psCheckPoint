@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26929.2
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "psCheckPoint", "psCheckPoint\psCheckPoint.csproj", "{4FF88B87-441A-4419-91C7-13041E60D0C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "psCheckPoint", "psCheckPoint\psCheckPoint.csproj", "{4FF88B87-441A-4419-91C7-13041E60D0C0}"
 EndProject
 Project("{F5034706-568F-408A-B7B3-4D38C6DB8A32}") = "Examples", "Examples\Examples.pssproj", "{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}"
 EndProject
@@ -31,9 +31,10 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "docs", "docs\", "{6B33799D-
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pester.Tests", "Pester.Tests\Pester.Tests.csproj", "{B3392EB1-982D-4F6D-9BBE-4A92D229F3DB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "psCheckPoint.Core", "psCheckPoint.Core\psCheckPoint.Core.csproj", "{B462651E-1EDC-4361-8592-8030A2EB93EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pester.Tests", "Pester.Tests\Pester.Tests.csproj", "{B3392EB1-982D-4F6D-9BBE-4A92D229F3DB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4FF88B87-441A-4419-91C7-13041E60D0C0} = {4FF88B87-441A-4419-91C7-13041E60D0C0}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ED43769F-45B6-439A-BF34-00561EB1E7F4}"
 	ProjectSection(SolutionItems) = preProject
@@ -41,7 +42,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		AppVeyor-Test-Deploy.ps1 = AppVeyor-Test-Deploy.ps1
 		appveyor.yml = appveyor.yml
+		psCheckPoint.psd1 = psCheckPoint.psd1
 		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "run", "run", "{F417636E-03DA-44B1-BE14-CA4053C02162}"
+	ProjectSection(SolutionItems) = preProject
+		run\init.ps1 = run\init.ps1
+		run\post-build-netstandard1.6.ps1 = run\post-build-netstandard1.6.ps1
+		run\Settings.json = run\Settings.json
+		run\Settings.json.Example = run\Settings.json.Example
+		run\start-debug.ps1 = run\start-debug.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Views", "Views", "{A738C4E9-3A3A-4826-89D8-425E448FAE15}"
+	ProjectSection(SolutionItems) = preProject
+		Views\AddressRange.Format.ps1xml = Views\AddressRange.Format.ps1xml
+		Views\Group.Format.ps1xml = Views\Group.Format.ps1xml
+		Views\GroupWithExclusion.Format.ps1xml = Views\GroupWithExclusion.Format.ps1xml
+		Views\HashDetails.Format.ps1xml = Views\HashDetails.Format.ps1xml
+		Views\Host.Format.ps1xml = Views\Host.Format.ps1xml
+		Views\Network.Format.ps1xml = Views\Network.Format.ps1xml
+		Views\Summary.Format.ps1xml = Views\Summary.Format.ps1xml
+		Views\SyncAction.Format.ps1xml = Views\SyncAction.Format.ps1xml
 	EndProjectSection
 EndProject
 Global
@@ -70,13 +93,13 @@ Global
 		{B3392EB1-982D-4F6D-9BBE-4A92D229F3DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3392EB1-982D-4F6D-9BBE-4A92D229F3DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3392EB1-982D-4F6D-9BBE-4A92D229F3DB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B462651E-1EDC-4361-8592-8030A2EB93EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B462651E-1EDC-4361-8592-8030A2EB93EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B462651E-1EDC-4361-8592-8030A2EB93EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B462651E-1EDC-4361-8592-8030A2EB93EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F417636E-03DA-44B1-BE14-CA4053C02162} = {ED43769F-45B6-439A-BF34-00561EB1E7F4}
+		{A738C4E9-3A3A-4826-89D8-425E448FAE15} = {ED43769F-45B6-439A-BF34-00561EB1E7F4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CAE61A52-BC45-4E37-9ECA-2E301855288B}

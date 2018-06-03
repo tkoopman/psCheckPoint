@@ -1,29 +1,36 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Management.Automation;
+﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Policy
 {
     /// <api cmd="verify-policy">Test-CheckPointPolicy</api>
     /// <summary>
-    /// <para type="synopsis"></para>
+    /// <para type="synopsis">Verify policy</para>
     /// <para type="description"></para>
     /// </summary>
+    /// <example>
+    /// <code>
+    /// Test-CheckPointPolicy -PolicyPackage MyPolicy
+    /// </code>
+    /// </example>
     [Cmdlet(VerbsDiagnostic.Test, "CheckPointPolicy")]
-    public class TestCheckPointPolicy : CheckPointCmdlet<Dictionary<string, string>>
+    public class TestCheckPointPolicy : CheckPointCmdletBase
     {
-        public override string Command { get { return "verify-policy"; } }
+        #region Properties
 
         /// <summary>
         /// <para type="description">The name of the Policy Package to be installed.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "policy-package")]
         [Parameter(Mandatory = true)]
         public string PolicyPackage { get; private set; }
 
-        protected override void WriteRecordResponse(Dictionary<string, string> result)
-        {
-            WriteObject(result["task-id"]);
-        }
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override async Task ProcessRecordAsync() => WriteObject(await Session.VerifyPolicy(PolicyPackage, cancellationToken: CancelProcessToken));
+
+        #endregion Methods
     }
 }

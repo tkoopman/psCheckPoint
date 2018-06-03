@@ -1,50 +1,38 @@
-﻿using Newtonsoft.Json;
-using System.Management.Automation;
+﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Session
 {
     /// <api cmd="publish">Publish-CheckPointSession</api>
     /// <summary>
-    /// <para type="synopsis">All the changes done by this user will be seen by all users only after publish is called.</para>
+    /// <para type="synopsis">
+    /// All the changes done by this user will be seen by all users only after publish is called.
+    /// </para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Publish-CheckPointSession</code>
+    /// <code>
+    /// Publish-CheckPointSession
+    /// </code>
     /// </example>
     [Cmdlet(VerbsData.Publish, "CheckPointSession")]
-    public class PublishCheckPointSession : CheckPointCmdlet<CheckPointMessage>
+    public class PublishCheckPointSession : CheckPointCmdletBase
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "publish"; } }
+        #region Properties
 
         /// <summary>
         /// <para type="description">Publish none active session</para>
         /// </summary>
         [Parameter(ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ValueFromRemainingArguments = true)]
-        public psCheckPoint.Objects.Session.CheckPointSession PublishSession { get; set; }
+        public Koopman.CheckPoint.SessionInfo PublishSession { get; set; }
 
-        /// <summary>
-        /// <para type="description">Publish none active session UID</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "uid", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        protected string UID { get; set; }
+        #endregion Properties
 
-        internal override string GetJSON()
-        {
-            // Check if we need to pass UID of session to publish
-            // By not sending any UID API will publish current session.
-            if (PublishSession != null)
-            {
-                UID = PublishSession.UID;
-            }
-            return base.GetJSON();
-        }
+        #region Methods
 
-        protected override void WriteRecordResponse(CheckPointMessage result)
-        {
-            WriteVerbose(result.Message);
-        }
+        /// <inheritdoc />
+        protected override async Task ProcessRecordAsync() => await Session.Publish(PublishSession?.UID, cancellationToken: CancelProcessToken);
+
+        #endregion Methods
     }
 }

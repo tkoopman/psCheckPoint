@@ -1,22 +1,27 @@
-version: 0.7.{build}
-skip_tags: true
-skip_commits:
-  message: /!build/  
-only_commits:
-  files:
-  - psCheckPoint/
-  - psCheckPoint.Core/
+version: 0.0.{build}
+skip_non_tags: true
 image: Visual Studio 2017
+init:
+  - ps: |
+      $InfoVer = $env:APPVEYOR_REPO_TAG_NAME.TrimStart("v");
+      $Ver = $InfoVer.Split("-")[0];
+      Set-AppveyorBuildVariable -Name "InfomationalVersion" -Value $InfoVer
+      Set-AppveyorBuildVariable -Name "FileVersion" -Value $Ver
+      Update-AppveyorBuild -Version $InfoVer
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
-  assembly_version: '{version}'
-  assembly_file_version: '{version}'
+  assembly_version: $(FileVersion)
+  assembly_file_version: $(FileVersion)
+  assembly_informational_version: $(InfomationalVersion)
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
-  version: '{version}'
-  package_version: '{version}'
+  version: $(FileVersion)
+  package_version: $(InfomationalVersion)
+  assembly_version: $(FileVersion)
+  file_version: $(FileVersion)
+  informational_version: $(InfomationalVersion)
 configuration: Release
 platform: Any CPU
 before_build:
@@ -24,8 +29,8 @@ before_build:
 build:
   verbosity: minimal
 environment:
-  cpSettings:
-    secure: ze8KkJ0VqpFU6X2o4Y0WUS9Ki2MgwjYWhV58NlJMeyR7iH69pBB4mJv/DnhgwfOCLp+Iefih7rEz61jXfzcnrbPkLzLUWIxZLL1u4HrL7iswBcb9wXd2CqFNgJECIukRiYErehzn4GD4kjgP9PdOo/VrA4gUlgVuix46tVJF4ttRFofX3hUJEACqmk86bu4xF0/i8PFTvzcnZ5pbzrQZoYuFKXKTfym4jQN8yLXl+zxZIhbU47Ths4nBrIY7w7K7qhLzfKlVJaD+c5KcscQh1BVXiLDFmnf2TCgg197zFV8vekSBs9HzhTeeG6xufVTW4Ie39Vq6IU9Y27/JHhbYuZzihxKixsVyzHdhrdZh7fc=
+  Settings_json:
+    secure: uWGtz9MnjC5nswZ+1Z66cp15dWddhDQCkhYBJ2v7ns7a+3jxh/ACp6DEk1ZIm1ngFmejEJzD5M5TxenXCH9YwTIaWKd9E292ryP4+z/cVHiY6RbRq4X2wnt946OQwjbsSR+vLCZPnpDaeeOBtyPOSQGWGUwg7BAXzVLWOIMR7tLjo3SA0KzHP3iFQ+k4JGB9GbnnYtCxsu8Ljo8Ax92v0ev+G773K/l4DcjSnm+aD16TNvKkcbJJbOSEasubbfH1oICm5KJFvGso4QgwXdTL7uV/HaWMnpEFUfJf6jHax9VJwYv4hojpbIEWkPD7h4ueEfpgxxTwiEwEaK+Be8l/lUllLAClmYXDxua9FJyKOUU=
   NuGetToken:
     secure: 8U0FY4Wh+zyJriYPpUsyFXTmoc+upnrqrV3+u5mEkBCttmytqIqk3hQe475ck5aJ
 test_script:

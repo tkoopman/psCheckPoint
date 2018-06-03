@@ -1,37 +1,61 @@
 # New-CheckPointMulticastAddressRange
 
 ## SYNOPSIS
-Create new object.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
+### IPv4 or IPv6
 ```
-New-CheckPointMulticastAddressRange [-IPAddressFirst <String>] [-IPAddressLast <String>]
- [-IPv4AddressFirst <String>] [-IPv4AddressLast <String>] [-IPv6AddressFirst <String>]
- [-IPv6AddressLast <String>] [-Groups <String[]>] [-SetIfExists] -Name <String> [-Tags <String[]>]
- [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors] [-PassThru] [-Color <String>]
- [-Session <CheckPointSession>]
+New-CheckPointMulticastAddressRange [-Groups <String[]>] -IPAddressFirst <IPAddress>
+ [-IPAddressLast <IPAddress>] [-SetIfExists] -Name <String> [-Color <Colors>] [-Comments <String>]
+ [-Ignore <Ignore>] [-PassThru] [-Tags <String[]>] [-Session <Session>]
+```
+
+### IPv4 and IPv6
+```
+New-CheckPointMulticastAddressRange [-Groups <String[]>] -IPv4AddressFirst <IPAddress>
+ [-IPv4AddressLast <IPAddress>] -IPv6AddressFirst <IPAddress> [-IPv6AddressLast <IPAddress>] [-SetIfExists]
+ -Name <String> [-Color <Colors>] [-Comments <String>] [-Ignore <Ignore>] [-PassThru] [-Tags <String[]>]
+ [-Session <Session>]
+```
+
+### IPv4
+```
+New-CheckPointMulticastAddressRange [-Groups <String[]>] -IPv4AddressFirst <IPAddress>
+ [-IPv4AddressLast <IPAddress>] [-SetIfExists] -Name <String> [-Color <Colors>] [-Comments <String>]
+ [-Ignore <Ignore>] [-PassThru] [-Tags <String[]>] [-Session <Session>]
+```
+
+### IPv6
+```
+New-CheckPointMulticastAddressRange [-Groups <String[]>] -IPv6AddressFirst <IPAddress>
+ [-IPv6AddressLast <IPAddress>] [-SetIfExists] -Name <String> [-Color <Colors>] [-Comments <String>]
+ [-Ignore <Ignore>] [-PassThru] [-Tags <String[]>] [-Session <Session>]
 ```
 
 ## DESCRIPTION
+{{Fill in the Description}}
 
 ## EXAMPLES
 
-### ----------  EXAMPLE 1  ----------
+### Example 1
+```
+PS C:\> {{ Add example code here }}
 ```
 
-```
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -Color
-Color of the object.
-Should be one of existing colors.
+{{Fill Color Description}}
 
 ```yaml
-Type: String
+Type: Colors
 Parameter Sets: (All)
 Aliases: Colour
+Accepted values: Aquamarine, Black, Blue, Brown, Burlywood, Coral, CreteBlue, Cyan, DarkBlue, DarkGold, DarkGray, DarkGreen, DarkOrange, DarkSeaGreen, Firebrick, ForestGreen, Gold, Gray, Khaki, LemonChiffon, LightGreen, Magenta, NavyBlue, Olive, Orange, Orchid, Pink, Purple, Red, SeaGreen, Sienna, SkyBlue, SlateBlue, Turquoise, VioletRed, Yellow
 
 Required: False
 Position: Named
@@ -41,7 +65,7 @@ Accept wildcard characters: False
 ```
 
 ### -Comments
-Comments string.
+{{Fill Comments Description}}
 
 ```yaml
 Type: String
@@ -56,7 +80,7 @@ Accept wildcard characters: False
 ```
 
 ### -Groups
-Collection of group identifiers.
+{{Fill Groups Description}}
 
 ```yaml
 Type: String[]
@@ -70,48 +94,31 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -IgnoreErrors
-Apply changes ignoring errors.
-You won't be able to publish such a changes.
-If ignore-warnings flag was omitted - warnings will also be ignored.
+### -Ignore
+{{Fill Ignore Description}}
 
 ```yaml
-Type: SwitchParameter
+Type: Ignore
 Parameter Sets: (All)
 Aliases: 
+Accepted values: No, Warnings, Errors
 
 Required: False
 Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -IgnoreWarnings
-Apply changes ignoring warnings.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -IPAddressFirst
-First IP address in the range.
-If both IPv4 and IPv6 address ranges are required, use the ipv4-address-first and the ipv6-address-first fields instead.
+{{Fill IPAddressFirst Description}}
 
 ```yaml
-Type: String
-Parameter Sets: (All)
+Type: IPAddress
+Parameter Sets: IPv4 or IPv6
 Aliases: IPAddress
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -119,12 +126,11 @@ Accept wildcard characters: False
 ```
 
 ### -IPAddressLast
-Last IP address in the range.
-If both IPv4 and IPv6 address ranges are required, use the ipv4-address-first and the ipv6-address-first fields instead.
+{{Fill IPAddressLast Description}}
 
 ```yaml
-Type: String
-Parameter Sets: (All)
+Type: IPAddress
+Parameter Sets: IPv4 or IPv6
 Aliases: 
 
 Required: False
@@ -135,14 +141,14 @@ Accept wildcard characters: False
 ```
 
 ### -IPv4AddressFirst
-First IPv4 address in the range.
+{{Fill IPv4AddressFirst Description}}
 
 ```yaml
-Type: String
-Parameter Sets: (All)
+Type: IPAddress
+Parameter Sets: IPv4 and IPv6, IPv4
 Aliases: IPv4Address
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -150,11 +156,11 @@ Accept wildcard characters: False
 ```
 
 ### -IPv4AddressLast
-Last IPv4 address in the range.
+{{Fill IPv4AddressLast Description}}
 
 ```yaml
-Type: String
-Parameter Sets: (All)
+Type: IPAddress
+Parameter Sets: IPv4 and IPv6, IPv4
 Aliases: 
 
 Required: False
@@ -165,14 +171,14 @@ Accept wildcard characters: False
 ```
 
 ### -IPv6AddressFirst
-First IPv6 address in the range.
+{{Fill IPv6AddressFirst Description}}
 
 ```yaml
-Type: String
-Parameter Sets: (All)
+Type: IPAddress
+Parameter Sets: IPv4 and IPv6, IPv6
 Aliases: IPv6Address
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -180,11 +186,11 @@ Accept wildcard characters: False
 ```
 
 ### -IPv6AddressLast
-Last IPv6 address in the range.
+{{Fill IPv6AddressLast Description}}
 
 ```yaml
-Type: String
-Parameter Sets: (All)
+Type: IPAddress
+Parameter Sets: IPv4 and IPv6, IPv6
 Aliases: 
 
 Required: False
@@ -195,8 +201,7 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-Object name.
-Should be unique in the domain.
+{{Fill Name Description}}
 
 ```yaml
 Type: String
@@ -211,7 +216,7 @@ Accept wildcard characters: False
 ```
 
 ### -PassThru
-Return the updated object.
+{{Fill PassThru Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -220,16 +225,16 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Session
-Session object from Open-CheckPointSession
+{{Fill Session Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -241,9 +246,7 @@ Accept wildcard characters: False
 ```
 
 ### -SetIfExists
-If another object with the same identifier already exists, it will be updated.
-The command behaviour will be the same as if originally a set command was called.
-Pay attention that original object's fields will be overwritten by the fields provided in the request payload!
+{{Fill SetIfExists Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -252,13 +255,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Tags
-Collection of tag identifiers.
+{{Fill Tags Description}}
 
 ```yaml
 Type: String[]
@@ -274,47 +277,16 @@ Accept wildcard characters: False
 
 ## INPUTS
 
-### System.String
-First IP address in the range.
-If both IPv4 and IPv6 address ranges are required, use the ipv4-address-first and the ipv6-address-first fields instead.
-
-### System.String
-Last IP address in the range.
-If both IPv4 and IPv6 address ranges are required, use the ipv4-address-first and the ipv6-address-first fields instead.
-
-### System.String
-First IPv4 address in the range.
-
-### System.String
-Last IPv4 address in the range.
-
-### System.String
-First IPv6 address in the range.
-
-### System.String
-Last IPv6 address in the range.
-
 ### System.String[]
-Collection of group identifiers.
+System.Net.IPAddress
+System.String
+Koopman.CheckPoint.Colors
 
-### System.String
-Object name.
-Should be unique in the domain.
-
-### System.String[]
-Collection of tag identifiers.
-
-### System.String
-Comments string.
-
-### System.String
-Color of the object.
-Should be one of existing colors.
 
 ## OUTPUTS
 
-### psCheckPoint.Objects.MulticastAddressRange.CheckPointMulticastAddressRange
-Details of a Check Point Multicast Address Range
+### Koopman.CheckPoint.MulticastAddressRange
+
 
 ## NOTES
 

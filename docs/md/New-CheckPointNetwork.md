@@ -1,35 +1,74 @@
 # New-CheckPointNetwork
 
 ## SYNOPSIS
-Create new object.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
+### IPv4 or IPv6
 ```
-New-CheckPointNetwork [-Subnet <String>] [-Subnet4 <String>] [-Subnet6 <String>] [-MaskLength <Int32>]
- [-MaskLength4 <Int32>] [-MaskLength6 <Int32>] [-SubnetMask <String>] [-Broadcast <String>]
- [-Groups <String[]>] [-SetIfExists] -Name <String> [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings]
- [-IgnoreErrors] [-PassThru] [-Color <String>] [-Session <CheckPointSession>]
+New-CheckPointNetwork [-Broadcast <String>] [-Groups <String[]>] -MaskLength <Int32> -Subnet <IPAddress>
+ [-SetIfExists] -Name <String> [-Color <Colors>] [-Comments <String>] [-Ignore <Ignore>] [-PassThru]
+ [-Tags <String[]>] [-Session <Session>]
+```
+
+### IPv4 and IPv6
+```
+New-CheckPointNetwork [-Broadcast <String>] [-Groups <String[]>] -MaskLength4 <Int32> -MaskLength6 <Int32>
+ -Subnet4 <IPAddress> -Subnet6 <IPAddress> [-SetIfExists] -Name <String> [-Color <Colors>] [-Comments <String>]
+ [-Ignore <Ignore>] [-PassThru] [-Tags <String[]>] [-Session <Session>]
+```
+
+### IPv4
+```
+New-CheckPointNetwork [-Broadcast <String>] [-Groups <String[]>] -MaskLength4 <Int32> -Subnet4 <IPAddress>
+ [-SetIfExists] -Name <String> [-Color <Colors>] [-Comments <String>] [-Ignore <Ignore>] [-PassThru]
+ [-Tags <String[]>] [-Session <Session>]
+```
+
+### IPv4 and IPv6 with subnet mask
+```
+New-CheckPointNetwork [-Broadcast <String>] [-Groups <String[]>] -MaskLength6 <Int32> -Subnet4 <IPAddress>
+ -Subnet6 <IPAddress> -SubnetMask <IPAddress> [-SetIfExists] -Name <String> [-Color <Colors>]
+ [-Comments <String>] [-Ignore <Ignore>] [-PassThru] [-Tags <String[]>] [-Session <Session>]
+```
+
+### IPv6
+```
+New-CheckPointNetwork [-Broadcast <String>] [-Groups <String[]>] -MaskLength6 <Int32> -Subnet6 <IPAddress>
+ [-SetIfExists] -Name <String> [-Color <Colors>] [-Comments <String>] [-Ignore <Ignore>] [-PassThru]
+ [-Tags <String[]>] [-Session <Session>]
+```
+
+### IPv4 with subnet mask
+```
+New-CheckPointNetwork [-Broadcast <String>] [-Groups <String[]>] -Subnet <IPAddress> -SubnetMask <IPAddress>
+ [-SetIfExists] -Name <String> [-Color <Colors>] [-Comments <String>] [-Ignore <Ignore>] [-PassThru]
+ [-Tags <String[]>] [-Session <Session>]
 ```
 
 ## DESCRIPTION
+{{Fill in the Description}}
 
 ## EXAMPLES
 
-### ----------  EXAMPLE 1  ----------
+### Example 1
 ```
-New-CheckPointNetwork -Name Test1 ...
+PS C:\> {{ Add example code here }}
 ```
+
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -Broadcast
-Allow broadcast address inclusion.
+{{Fill Broadcast Description}}
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases: 
+Accepted values: disallow, allow
 
 Required: False
 Position: Named
@@ -39,13 +78,13 @@ Accept wildcard characters: False
 ```
 
 ### -Color
-Color of the object.
-Should be one of existing colors.
+{{Fill Color Description}}
 
 ```yaml
-Type: String
+Type: Colors
 Parameter Sets: (All)
 Aliases: Colour
+Accepted values: Aquamarine, Black, Blue, Brown, Burlywood, Coral, CreteBlue, Cyan, DarkBlue, DarkGold, DarkGray, DarkGreen, DarkOrange, DarkSeaGreen, Firebrick, ForestGreen, Gold, Gray, Khaki, LemonChiffon, LightGreen, Magenta, NavyBlue, Olive, Orange, Orchid, Pink, Purple, Red, SeaGreen, Sienna, SkyBlue, SlateBlue, Turquoise, VioletRed, Yellow
 
 Required: False
 Position: Named
@@ -55,7 +94,7 @@ Accept wildcard characters: False
 ```
 
 ### -Comments
-Comments string.
+{{Fill Comments Description}}
 
 ```yaml
 Type: String
@@ -70,7 +109,7 @@ Accept wildcard characters: False
 ```
 
 ### -Groups
-Collection of group identifiers.
+{{Fill Groups Description}}
 
 ```yaml
 Type: String[]
@@ -84,88 +123,69 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -IgnoreErrors
-Apply changes ignoring errors.
-You won't be able to publish such a changes.
-If ignore-warnings flag was omitted - warnings will also be ignored.
+### -Ignore
+{{Fill Ignore Description}}
 
 ```yaml
-Type: SwitchParameter
+Type: Ignore
 Parameter Sets: (All)
 Aliases: 
+Accepted values: No, Warnings, Errors
 
 Required: False
 Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -IgnoreWarnings
-Apply changes ignoring warnings.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -MaskLength
-IPv4 or IPv6 network mask length.
-If both masks are required use mask-length4 and mask-length6 fields explicitly.
-Instead of IPv4 mask length it is possible to specify IPv4 mask itself in subnet-mask field.
+{{Fill MaskLength Description}}
 
 ```yaml
 Type: Int32
-Parameter Sets: (All)
+Parameter Sets: IPv4 or IPv6
 Aliases: 
 
-Required: False
+Required: True
 Position: Named
-Default value: 0
+Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -MaskLength4
-IPv4 network mask length.
+{{Fill MaskLength4 Description}}
 
 ```yaml
 Type: Int32
-Parameter Sets: (All)
+Parameter Sets: IPv4 and IPv6, IPv4
 Aliases: 
 
-Required: False
+Required: True
 Position: Named
-Default value: 0
+Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -MaskLength6
-IPv6 network mask length.
+{{Fill MaskLength6 Description}}
 
 ```yaml
 Type: Int32
-Parameter Sets: (All)
+Parameter Sets: IPv4 and IPv6, IPv4 and IPv6 with subnet mask, IPv6
 Aliases: 
 
-Required: False
+Required: True
 Position: Named
-Default value: 0
+Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -Name
-Object name.
-Should be unique in the domain.
+{{Fill Name Description}}
 
 ```yaml
 Type: String
@@ -180,7 +200,7 @@ Accept wildcard characters: False
 ```
 
 ### -PassThru
-Return the updated object.
+{{Fill PassThru Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -189,16 +209,16 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Session
-Session object from Open-CheckPointSession
+{{Fill Session Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -210,9 +230,7 @@ Accept wildcard characters: False
 ```
 
 ### -SetIfExists
-If another object with the same identifier already exists, it will be updated.
-The command behaviour will be the same as if originally a set command was called.
-Pay attention that original object's fields will be overwritten by the fields provided in the request payload!
+{{Fill SetIfExists Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -221,21 +239,20 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Subnet
-IPv4 or IPv6 network address.
-If both addresses are required use subnet4 and subnet6 fields explicitly.
+{{Fill Subnet Description}}
 
 ```yaml
-Type: String
-Parameter Sets: (All)
+Type: IPAddress
+Parameter Sets: IPv4 or IPv6, IPv4 with subnet mask
 Aliases: 
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -243,14 +260,14 @@ Accept wildcard characters: False
 ```
 
 ### -Subnet4
-IPv4 network address.
+{{Fill Subnet4 Description}}
 
 ```yaml
-Type: String
-Parameter Sets: (All)
+Type: IPAddress
+Parameter Sets: IPv4 and IPv6, IPv4, IPv4 and IPv6 with subnet mask
 Aliases: 
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -258,14 +275,14 @@ Accept wildcard characters: False
 ```
 
 ### -Subnet6
-IPv6 network address.
+{{Fill Subnet6 Description}}
 
 ```yaml
-Type: String
-Parameter Sets: (All)
+Type: IPAddress
+Parameter Sets: IPv4 and IPv6, IPv4 and IPv6 with subnet mask, IPv6
 Aliases: 
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -273,14 +290,14 @@ Accept wildcard characters: False
 ```
 
 ### -SubnetMask
-IPv4 network address.
+{{Fill SubnetMask Description}}
 
 ```yaml
-Type: String
-Parameter Sets: (All)
+Type: IPAddress
+Parameter Sets: IPv4 and IPv6 with subnet mask, IPv4 with subnet mask
 Aliases: 
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -288,7 +305,7 @@ Accept wildcard characters: False
 ```
 
 ### -Tags
-Collection of tag identifiers.
+{{Fill Tags Description}}
 
 ```yaml
 Type: String[]
@@ -305,53 +322,16 @@ Accept wildcard characters: False
 ## INPUTS
 
 ### System.String
-IPv4 or IPv6 network address.
-If both addresses are required use subnet4 and subnet6 fields explicitly.
+System.String[]
+System.Int32
+System.Net.IPAddress
+Koopman.CheckPoint.Colors
 
-### System.String
-IPv4 network address.
-
-### System.String
-IPv6 network address.
-
-### System.Int32
-IPv4 or IPv6 network mask length.
-If both masks are required use mask-length4 and mask-length6 fields explicitly.
-Instead of IPv4 mask length it is possible to specify IPv4 mask itself in subnet-mask field.
-
-### System.Int32
-IPv4 network mask length.
-
-### System.Int32
-IPv6 network mask length.
-
-### System.String
-IPv4 network address.
-
-### System.String
-Allow broadcast address inclusion.
-
-### System.String[]
-Collection of group identifiers.
-
-### System.String
-Object name.
-Should be unique in the domain.
-
-### System.String[]
-Collection of tag identifiers.
-
-### System.String
-Comments string.
-
-### System.String
-Color of the object.
-Should be one of existing colors.
 
 ## OUTPUTS
 
-### psCheckPoint.Objects.Network.CheckPointNetwork
-Details of a Check Point Network
+### Koopman.CheckPoint.Network
+
 
 ## NOTES
 

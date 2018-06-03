@@ -1,39 +1,33 @@
 # Open-CheckPointSession
 
 ## SYNOPSIS
-Log in to the server with user name and password.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
 ```
-Open-CheckPointSession [-ManagementServer] <String> [-ManagementPort <Int32>] [-Credentials] <PSCredential>
- [-ReadOnly] [-ContinueLastSession] [-Domain <String>] [-EnterLastPublishedSession] [-SessionComments <String>]
- [-SessionDescription <String>] [-SessionName <String>] [-SessionTimeout <Int32>] [-NoCertificateValidation]
- [-NoCompression] [-PassThru]
+Open-CheckPointSession [-ContinueLastSession] [-Credentials] <PSCredential> [-Domain <String>]
+ [-EnterLastPublishedSession] [-ManagementPort <Int32>] [-ManagementServer] <String> [-NoCertificateValidation]
+ [-PassThru] [-ReadOnly] [-SessionComments <String>] [-SessionDescription <String>] [-SessionName <String>]
+ [-SessionTimeout <Int32>]
 ```
 
 ## DESCRIPTION
+{{Fill in the Description}}
 
 ## EXAMPLES
 
-### ----------  EXAMPLE 1  ----------
+### Example 1
 ```
-Open-CheckPointSession -ManagementServer 192.168.1.1
+PS C:\> {{ Add example code here }}
 ```
 
-### ----------  EXAMPLE 2  ----------
-```
-$Session = Open-CheckPointSession -ManagementServer 192.168.1.1 -PassThru
-```
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -ContinueLastSession
-The new session would continue where the last session was stopped.
-
-This option is available when the administrator has only one session that can be continued.
-
-If there is more than one session, see 'switch-session' API.
+{{Fill ContinueLastSession Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -42,14 +36,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Credentials
-PSCredential containing User name and Password.
-If not provided you will be prompted.
+{{Fill Credentials Description}}
 
 ```yaml
 Type: PSCredential
@@ -64,8 +57,7 @@ Accept wildcard characters: False
 ```
 
 ### -Domain
-Use domain to login to specific domain.
-Domain can be identified by name or UID.
+{{Fill Domain Description}}
 
 ```yaml
 Type: String
@@ -80,8 +72,7 @@ Accept wildcard characters: False
 ```
 
 ### -EnterLastPublishedSession
-Login to the last published session.
-Such login is done with the Read Only permissions.
+{{Fill EnterLastPublishedSession Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -90,14 +81,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -ManagementPort
-Port Web API running on.
-Default: 443
+{{Fill ManagementPort Description}}
 
 ```yaml
 Type: Int32
@@ -106,13 +96,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: 443
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -ManagementServer
-IP or Hostname of the Check point Management Server
+{{Fill ManagementServer Description}}
 
 ```yaml
 Type: String
@@ -127,7 +117,7 @@ Accept wildcard characters: False
 ```
 
 ### -NoCertificateValidation
-Do NOT verify server's certificate.
+{{Fill NoCertificateValidation Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -136,28 +126,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -NoCompression
-Do not enable HTTP compression.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -PassThru
-Return the session and do not store it for automatic use.
+{{Fill PassThru Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -166,14 +141,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -ReadOnly
-Login with Read Only permissions.
-This parameter is not considered in case continue-last-session is true.
+{{Fill ReadOnly Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -182,13 +156,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -SessionComments
-Session comments.
+{{Fill SessionComments Description}}
 
 ```yaml
 Type: String
@@ -203,7 +177,7 @@ Accept wildcard characters: False
 ```
 
 ### -SessionDescription
-Session description.
+{{Fill SessionDescription Description}}
 
 ```yaml
 Type: String
@@ -218,7 +192,7 @@ Accept wildcard characters: False
 ```
 
 ### -SessionName
-Session unique name.
+{{Fill SessionName Description}}
 
 ```yaml
 Type: String
@@ -233,8 +207,7 @@ Accept wildcard characters: False
 ```
 
 ### -SessionTimeout
-Session expiration timeout in seconds.
-Default 600 seconds.
+{{Fill SessionTimeout Description}}
 
 ```yaml
 Type: Int32
@@ -243,17 +216,20 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: 0
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ## INPUTS
 
+### None
+
+
 ## OUTPUTS
 
-### psCheckPoint.Session.CheckPointSession
-Used across other Check Point Web API Calls
+### Koopman.CheckPoint.Session
+
 
 ## NOTES
 

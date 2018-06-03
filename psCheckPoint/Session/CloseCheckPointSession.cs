@@ -1,4 +1,6 @@
-﻿using System.Management.Automation;
+﻿using System;
+using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Session
 {
@@ -9,39 +11,43 @@ namespace psCheckPoint.Session
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Close-CheckPointSession</code>
+    /// <code>
+    /// Close-CheckPointSession
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Close, "CheckPointSession")]
-    public class CloseCheckPointSession : CheckPointCmdlet<CheckPointMessage>
+    public class CloseCheckPointSession : CheckPointCmdletBase
     {
+        #region Properties
+
         /// <summary>
-        /// <para type="description">The session will be continued next time your open SmartConsole. In case 'uid' is not provided, use current session. In order for the session to pass successfully to SmartConsole, make sure you don't have any other active GUI sessions.</para>
+        /// <para type="description">
+        /// The session will be continued next time your open SmartConsole. In case 'uid' is not
+        /// provided, use current session. In order for the session to pass successfully to
+        /// SmartConsole, make sure you don't have any other active GUI sessions.
+        /// </para>
         /// </summary>
         [Parameter]
         public SwitchParameter ContinueSessionInSmartconsole { get; set; }
 
-        private bool IsPSSession = false;
+        #endregion Properties
 
-        protected override void BeginProcessing()
+        #region Methods
+
+        /// <inheritdoc />
+        protected override async Task ProcessRecordAsync()
         {
-            IsPSSession = (Session == null);
-            base.BeginProcessing();
+            if (ContinueSessionInSmartconsole.IsPresent)
+                await Session.ContinueSessionInSmartconsole(cancellationToken: CancelProcessToken);
+            else
+                await Session.Logout(cancellationToken: CancelProcessToken);
+
+            ((IDisposable)Session).Dispose();
+
+            if (IsPSSession)
+                SessionState.PSVariable.Remove("CheckPointSession");
         }
 
-        protected override void EndProcessing()
-        {
-            Session.Dispose();
-            if (IsPSSession) { SessionState.PSVariable.Remove("CheckPointSession"); }
-        }
-
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return (ContinueSessionInSmartconsole.IsPresent) ? "continue-session-in-smartconsole" : "logout"; } }
-
-        protected override void WriteRecordResponse(CheckPointMessage result)
-        {
-            WriteVerbose(result.Message);
-        }
+        #endregion Methods
     }
 }

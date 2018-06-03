@@ -4,7 +4,7 @@
 		$s = $sessions | where {$_.UID -eq $Session.UID}
 
 		It "Confirm Get-CheckPointSessions returns current session" {
-			$s | Should BeOfType psCheckPoint.Objects.Session.CheckPointSession
+			$s | Should BeOfType Koopman.CheckPoint.SessionInfo
 		}
 
 		It "Confirm Application" {
@@ -12,7 +12,7 @@
 		}
 
 		It "Confirm Connection Mode" {
-			$s.ConnectionMode | Should be "read write"
+			$s.ConnectionMode | Should be "ReadWrite"
 		}
 
 		It "Confirm Description" {
@@ -24,7 +24,7 @@
 		$s = Get-CheckPointSession -Session $Session
 
 		It "Confirm Get-CheckPointSessions returns current session" {
-			$s | Should BeOfType psCheckPoint.Objects.Session.CheckPointSession
+			$s | Should BeOfType Koopman.CheckPoint.SessionInfo
 		}
 
 		It "Confirm Application" {
@@ -32,7 +32,7 @@
 		}
 
 		It "Confirm Connection Mode" {
-			$s.ConnectionMode | Should be "read write"
+			$s.ConnectionMode | Should be "ReadWrite"
 		}
 
 		It "Confirm Description" {
@@ -43,12 +43,12 @@
 	Context "PS Session Variable" {
 		$secpasswd = ConvertTo-SecureString $Settings.Management.Password -AsPlainText -Force
 		$mycreds = New-Object System.Management.Automation.PSCredential ($Settings.Management.User, $secpasswd)
-		Open-CheckPointSession -NoCertificateValidation -ManagementServer $Settings.Management.Server -Credentials $mycreds -SessionName Pester -SessionDescription "psCheckPoint Pester Testing - Session"
+		Open-CheckPointSession -ManagementServer $Settings.Management.Server -Credentials $mycreds -CertificateHash $Settings.Management.Hash -SessionName Pester -SessionDescription "psCheckPoint Pester Testing - Session"
 
 		$s = Get-CheckPointSession
 
 		It "Confirm Get-CheckPointSessions returns current session" {
-			$s | Should BeOfType psCheckPoint.Objects.Session.CheckPointSession
+			$s | Should BeOfType Koopman.CheckPoint.SessionInfo
 		}
 
 		It "Confirm Application" {
@@ -56,7 +56,7 @@
 		}
 
 		It "Confirm Connection Mode" {
-			$s.ConnectionMode | Should be "read write"
+			$s.ConnectionMode | Should be "ReadWrite"
 		}
 
 		It "Confirm Description" {

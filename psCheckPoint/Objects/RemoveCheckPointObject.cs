@@ -1,54 +1,61 @@
-﻿using Newtonsoft.Json;
-using System.ComponentModel;
+﻿using Koopman.CheckPoint;
+using System.Collections;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects
 {
     /// <summary>
     /// <para type="description">Base class for Remove-CheckPoint*ObjectName* classes</para>
     /// </summary>
-    public abstract class RemoveCheckPointObject : CheckPointCmdlet<CheckPointMessage>
+    public abstract class RemoveCheckPointObject : CheckPointCmdletBase
     {
-        /// <summary>
-        /// <para type="description">Object unique identifier.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "uid", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(Mandatory = true, ParameterSetName = "By UID", ValueFromPipelineByPropertyName = true)]
-        public string UID { get; set; }
+        #region Properties
 
         /// <summary>
-        /// <para type="description">Object name.</para>
+        /// <para type="description">Apply changes ignoring warnings or errors.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "name", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(Position = 1, Mandatory = true, ParameterSetName = "By Name", ValueFromPipelineByPropertyName = true, ValueFromPipeline = true)]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// <para type="description">The level of detail for some of the fields in the response can vary from showing only the UID value of the object to a fully detailed representation of the object.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "details-level", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [DefaultValue("standard")]
-        protected string DetailsLevel { get; set; } = "standard";
-
-        /// <summary>
-        /// <para type="description">Apply changes ignoring warnings.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ignore-warnings", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [JsonConverter(typeof(SwitchJsonConverter))]
         [Parameter]
-        public SwitchParameter IgnoreWarnings { get; set; }
+        public Koopman.CheckPoint.Ignore Ignore { get; set; } = Koopman.CheckPoint.Ignore.No;
 
         /// <summary>
-        /// <para type="description">Apply changes ignoring errors. You won't be able to publish such a changes. If ignore-warnings flag was omitted - warnings will also be ignored.</para>
+        /// Gets the type of object being deleted.
         /// </summary>
-        [JsonProperty(PropertyName = "ignore-errors", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [JsonConverter(typeof(SwitchJsonConverter))]
-        [Parameter]
-        public SwitchParameter IgnoreErrors { get; set; }
+        protected abstract string InputName { get; }
 
-        protected override void WriteRecordResponse(CheckPointMessage result)
+        /// <summary>
+        /// <para type="description">Object to delete.</para>
+        /// </summary>
+        protected PSObject Object { get; set; }
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override Task ProcessRecordAsync() => ProcessObject(Object);
+
+        /// <summary>
+        /// Removes the specified object.
+        /// </summary>
+        /// <param name="value">The name or UID of the object to remove.</param>
+        protected abstract Task Remove(string value);
+
+        private async Task ProcessObject(object obj)
         {
-            WriteVerbose(result.Message);
+            CancelProcessToken.ThrowIfCancellationRequested();
+            if (obj is string str) await Remove(str);
+            else if (obj is IObjectSummary o) await Remove(o.GetIdentifier());
+            else if (obj is PSObject pso) await ProcessObject(pso.BaseObject);
+            else if (obj is IEnumerable enumerable)
+            {
+                foreach (object eo in enumerable)
+                    await ProcessObject(eo);
+            }
+            else
+                throw new PSArgumentException($"Invalid type: {obj.GetType()}", InputName);
         }
+
+        #endregion Methods
     }
 }

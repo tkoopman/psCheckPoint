@@ -1,94 +1,136 @@
-﻿using Newtonsoft.Json;
+﻿using System.Linq;
 using System.Management.Automation;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.MulticastAddressRange
 {
     /// <api cmd="add-multicast-address-range">New-CheckPointMulticastAddressRange</api>
     /// <summary>
-    /// <para type="synopsis">Create new object.</para>
+    /// <para type="synopsis">Create new Multicast Address Range.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code></code>
+    /// <code>
+    /// New-CheckPointMulticastAddressRange -Name MyMulticastAR -IPAddress 224.5.6.7
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "CheckPointMulticastAddressRange")]
-    [OutputType(typeof(CheckPointMulticastAddressRange))]
-    public class NewCheckPointMulticastAddressRange : NewCheckPointObject<CheckPointMulticastAddressRange>
+    [OutputType(typeof(Koopman.CheckPoint.MulticastAddressRange))]
+    public class NewCheckPointMulticastAddressRange : NewCheckPointObject
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "add-multicast-address-range"; } }
+        #region Fields
 
-        /// <summary>
-        /// <para type="description">First IP address in the range. If both IPv4 and IPv6 address ranges are required, use the ipv4-address-first and the ipv6-address-first fields instead.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ip-address-first", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        [Alias("IPAddress")]
-        public string IPAddressFirst { get; set; }
+        private string[] _groups;
 
-        /// <summary>
-        /// <para type="description">Last IP address in the range. If both IPv4 and IPv6 address ranges are required, use the ipv4-address-first and the ipv6-address-first fields instead.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ip-address-last", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string IPAddressLast { get; set; }
+        #endregion Fields
 
-        /// <summary>
-        /// <para type="description">First IPv4 address in the range.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ipv4-address-first", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        [Alias("IPv4Address")]
-        public string IPv4AddressFirst { get; set; }
-
-        /// <summary>
-        /// <para type="description">Last IPv4 address in the range.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ipv4-address-last", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string IPv4AddressLast { get; set; }
-
-        /// <summary>
-        /// <para type="description">First IPv6 address in the range.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ipv6-address-first", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        [Alias("IPv6Address")]
-        public string IPv6AddressFirst { get; set; }
-
-        /// <summary>
-        /// <para type="description">Last IPv6 address in the range.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ipv6-address-last", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string IPv6AddressLast { get; set; }
+        #region Properties
 
         /// <summary>
         /// <para type="description">Collection of group identifiers.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "groups", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Groups
-        {
-            get { return _groups; }
-            set { _groups = CreateArray(value); }
-        }
-
-        private string[] _groups;
+        public string[] Groups { get => _groups; set => _groups = CreateArray(value); }
 
         /// <summary>
-        /// Provides a record-by-record processing functionality for the cmdlet.
+        /// <para type="description">
+        /// First IP address in the range. If both IPv4 and IPv6 address ranges are required, use the
+        /// ipv4-address-first and the ipv6-address-first fields instead.
+        /// </para>
         /// </summary>
-        protected override void ProcessRecord()
+        [Parameter(ParameterSetName = "IPv4 or IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [Alias("IPAddress")]
+        [AllowNull]
+        public IPAddress IPAddressFirst { get; set; }
+
+        /// <summary>
+        /// <para type="description">
+        /// Last IP address in the range. If both IPv4 and IPv6 address ranges are required, use the
+        /// ipv4-address-first and the ipv6-address-first fields instead.
+        /// </para>
+        /// </summary>
+        [Parameter(ParameterSetName = "IPv4 or IPv6", ValueFromPipelineByPropertyName = true)]
+        public IPAddress IPAddressLast { get; set; }
+
+        /// <summary>
+        /// <para type="description">First IPv4 address in the range.</para>
+        /// </summary>
+        [Parameter(ParameterSetName = "IPv4 and IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [Parameter(ParameterSetName = "IPv4", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [Alias("IPv4Address")]
+        [AllowNull]
+        public IPAddress IPv4AddressFirst { get; set; }
+
+        /// <summary>
+        /// <para type="description">Last IPv4 address in the range.</para>
+        /// </summary>
+        [Parameter(ParameterSetName = "IPv4 and IPv6", ValueFromPipelineByPropertyName = true)]
+        [Parameter(ParameterSetName = "IPv4", ValueFromPipelineByPropertyName = true)]
+        public IPAddress IPv4AddressLast { get; set; }
+
+        /// <summary>
+        /// <para type="description">First IPv6 address in the range.</para>
+        /// </summary>
+        [Parameter(ParameterSetName = "IPv4 and IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [Parameter(ParameterSetName = "IPv6", Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [Alias("IPv6Address")]
+        [AllowNull]
+        public IPAddress IPv6AddressFirst { get; set; }
+
+        /// <summary>
+        /// <para type="description">Last IPv6 address in the range.</para>
+        /// </summary>
+        [Parameter(ParameterSetName = "IPv4 and IPv6", ValueFromPipelineByPropertyName = true)]
+        [Parameter(ParameterSetName = "IPv6", ValueFromPipelineByPropertyName = true)]
+        public IPAddress IPv6AddressLast { get; set; }
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override async Task ProcessRecordAsync()
         {
+            if (ParameterSetName.StartsWith("IPv4 or IPv6"))
+            {
+                if (IPAddressFirst.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                {
+                    IPv6AddressFirst = IPAddressFirst;
+                    IPv6AddressLast = IPAddressLast;
+                }
+                else
+                {
+                    IPv4AddressFirst = IPAddressFirst;
+                    IPv4AddressLast = IPAddressLast;
+                }
+            }
+
             // Allow specifying a Single Address Multicast Address Range by only entering a single address
-            if (IPAddressFirst != null && IPAddressLast == null) { IPAddressLast = IPAddressFirst; }
             if (IPv4AddressFirst != null && IPv4AddressLast == null) { IPv4AddressLast = IPv4AddressFirst; }
             if (IPv6AddressFirst != null && IPv6AddressLast == null) { IPv6AddressLast = IPv6AddressFirst; }
 
-            base.ProcessRecord();
+            var addressRange = new Koopman.CheckPoint.MulticastAddressRange(Session, SetIfExists.IsPresent)
+            {
+                Name = Name,
+                Color = Color,
+                Comments = Comments,
+                IPv4AddressFirst = IPv4AddressFirst,
+                IPv4AddressLast = IPv4AddressLast,
+                IPv6AddressFirst = IPv6AddressFirst,
+                IPv6AddressLast = IPv6AddressLast
+            };
+
+            foreach (string g in Groups ?? Enumerable.Empty<string>())
+                addressRange.Groups.Add(g);
+            foreach (string t in Tags ?? Enumerable.Empty<string>())
+                addressRange.Tags.Add(t);
+
+            await addressRange.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
+
+            WriteObject(addressRange);
         }
+
+        #endregion Methods
     }
 }

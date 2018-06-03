@@ -1,14 +1,16 @@
 # Test-CheckPointPolicy
 
 ## SYNOPSIS
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
 ```
-Test-CheckPointPolicy -PolicyPackage <String> [-Session <CheckPointSession>]
+Test-CheckPointPolicy -PolicyPackage <String> [-Session <Session>]
 ```
 
 ## DESCRIPTION
+{{Fill in the Description}}
 
 ## EXAMPLES
 
@@ -22,7 +24,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -PolicyPackage
-The name of the Policy Package to be installed.
+{{Fill PolicyPackage Description}}
 
 ```yaml
 Type: String
@@ -37,10 +39,10 @@ Accept wildcard characters: False
 ```
 
 ### -Session
-Session object from Open-CheckPointSession
+{{Fill Session Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -53,7 +55,12 @@ Accept wildcard characters: False
 
 ## INPUTS
 
+### None
+
+
 ## OUTPUTS
+
+### System.Object
 
 ## NOTES
 

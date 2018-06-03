@@ -1,22 +1,27 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Host
 {
     /// <api cmd="show-host">Get-CheckPointHost</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
+    /// <para type="synopsis">Retrieve existing host using name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>$cpHost = Get-CheckPointHost -Name Test1</code>
+    /// <code>
+    /// Get-CheckPointHost -Name MyHost
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointHost")]
-    [OutputType(typeof(CheckPointHost))]
-    public class GetCheckPointHost : GetCheckPointObject<CheckPointHost>
+    [OutputType(typeof(Koopman.CheckPoint.Host))]
+    public class GetCheckPointHost : GetCheckPointObject
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "show-host"; } }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override async Task ProcessRecordAsync() => WriteObject(await Session.FindHost(Value, DetailsLevel, cancellationToken: CancelProcessToken));
+
+        #endregion Methods
     }
 }

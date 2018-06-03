@@ -1,7 +1,10 @@
-﻿using System.Diagnostics;
-using System.Linq;
+﻿using Koopman.CheckPoint;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Management.Automation;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Misc
 {
@@ -11,16 +14,27 @@ namespace psCheckPoint.Objects.Misc
     /// <para type="description">Waits for task to complete then returns the completed task details.</para>
     /// </summary>
     /// <example>
-    ///   <code>Install-CheckPointPolicy -PolicyPackage Standard -Targets MyGateway | Wait-CheckPointTask</code>
+    /// <code>
+    /// Install-CheckPointPolicy -PolicyPackage Standard -Targets MyGateway | Wait-CheckPointTask
+    /// </code>
     /// </example>
     [Cmdlet(VerbsLifecycle.Wait, "CheckPointTask")]
-    public class WaitCheckPointTask : GetCheckPointTask
+    public class WaitCheckPointTask : CheckPointCmdletBase
     {
+        #region Properties
+
         /// <summary>
         /// <para type="description">Time in seconds to sleep in-between checking task status</para>
         /// </summary>
         [Parameter]
         public int SleepTime { get; set; } = 5;
+
+        /// <summary>
+        /// <para type="description">Unique identifier of task</para>
+        /// </summary>
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
+        [Alias("TaskID")]
+        public PSObject Task { get; set; }
 
         /// <summary>
         /// <para type="description">Timeout in seconds.</para>
@@ -29,51 +43,50 @@ namespace psCheckPoint.Objects.Misc
         [ValidateRange(1, 3600)]
         public int Timeout { get; set; } = 300;
 
-        private Stopwatch watch;
-        private ProgressRecord progress;
+        #endregion Properties
 
-        protected override void WriteRecordResponse(CheckPointTasks result)
+        #region Methods
+
+        /// <inheritdoc />
+        protected override Task ProcessRecordAsync() => ProcessObject(Task);
+
+        private async Task ProcessObject(object obj)
         {
-            if (watch == null)
+            if (obj is string str) await Wait(str);
+            else if (obj is CheckPointTask t) await Wait(t.TaskID);
+            else if (obj is IReadOnlyDictionary<string, string> ro) await ProcessObject(ro.Values);
+            else if (obj is PSObject pso) await ProcessObject(pso.BaseObject);
+            else if (obj is IEnumerable enumerable)
             {
-                watch = Stopwatch.StartNew();
-            }
-            CheckPointTask task = result.Tasks.First();
-            if (task == null)
-            {
-                throw new System.Exception("Task not found");
-            }
-
-            if (task.ProgressPercentage == 100)
-            {
-                WriteVerbose($"Task {task.ProgressPercentage}% complete. Exiting.");
-                progress.PercentComplete = 100;
-                progress.StatusDescription = task.Comments;
-                progress.RecordType = ProgressRecordType.Completed;
-                WriteProgress(progress);
-                WriteObject(task);
-            }
-            else if (watch.ElapsedMilliseconds >= Timeout * 1000)
-            {
-                WriteVerbose($"Task {task.ProgressPercentage}% complete. Timeout reached, exiting.");
-                progress.PercentComplete = task.ProgressPercentage;
-                progress.StatusDescription = "Wait timeout reached, exiting.";
-                progress.RecordType = ProgressRecordType.Completed;
-                WriteProgress(progress);
-                WriteObject(task);
+                foreach (object eo in enumerable)
+                    await ProcessObject(eo);
             }
             else
-            {
-                WriteVerbose($"Task {task.ProgressPercentage}% complete");
-
-                if (progress == null) { progress = new ProgressRecord(1, task.TaskName, task.Comments); }
-                progress.PercentComplete = task.ProgressPercentage;
-                progress.StatusDescription = task.Comments;
-                WriteProgress(progress);
-
-                Thread.Sleep(SleepTime * 1000);
-                this.ProcessRecord();
-            }
+                throw new PSArgumentException($"Invalid type: {obj.GetType()}", nameof(Task));
         }
+
+        /// <inheritdoc />
+        private async Task Wait(string taskID)
+        {
+            var task = await Session.FindTask(taskID);
+
+            if (task.Status == CheckPointTask.TaskStatus.InProgress)
+            {
+                var progress = new ProgressRecord(1, "Waiting for task to complete", task.TaskName);
+                var cts = new CancellationTokenSource(Timeout * 1000);
+
+                await task.WaitAsync(
+                        delay: SleepTime * 1000,
+                        progress: new Progress<int>(i => { progress.PercentComplete = i; WriteProgress(progress); }),
+                        cancellationToken: CancellationTokenSource.CreateLinkedTokenSource(CancelProcessToken, cts.Token).Token
+                    );
+
+                progress.RecordType = ProgressRecordType.Completed;
+                WriteProgress(progress);
+            }
+            WriteObject(task);
+        }
+
+        #endregion Methods
     }
 }

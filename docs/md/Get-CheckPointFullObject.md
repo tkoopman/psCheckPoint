@@ -1,30 +1,46 @@
 # Get-CheckPointFullObject
 
 ## SYNOPSIS
-Retrieve full object details from object summary.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
 ```
-Get-CheckPointFullObject [-Session <CheckPointSession>] -Object <PSObject>
+Get-CheckPointFullObject [-DetailsLevel <DetailLevels>] -Object <PSObject>
 ```
 
 ## DESCRIPTION
-Many commands return lists of object summaries.
-
-Use this to return the full objects for each summary.
+{{Fill in the Description}}
 
 ## EXAMPLES
 
-### ----------  EXAMPLE 1  ----------
+### Example 1
 ```
-Get-CheckPointGroups | Get-CheckPointFullObject
+PS C:\> {{ Add example code here }}
 ```
+
+{{ Add example description here }}
 
 ## PARAMETERS
 
+### -DetailsLevel
+{{Fill DetailsLevel Description}}
+
+```yaml
+Type: DetailLevels
+Parameter Sets: (All)
+Aliases: 
+Accepted values: UID, Standard, Full
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Object
-Input objects to start export from.
+{{Fill Object Description}}
 
 ```yaml
 Type: PSObject
@@ -38,30 +54,14 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Session
-Session object from Open-CheckPointSession
-
-```yaml
-Type: CheckPointSession
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ## INPUTS
 
 ### System.Management.Automation.PSObject
-Input objects to start export from.
+
 
 ## OUTPUTS
 
-### psCheckPoint.Objects.CheckPointObject
-Base summary details of Check Point Objects
+### System.Object
 
 ## NOTES
 

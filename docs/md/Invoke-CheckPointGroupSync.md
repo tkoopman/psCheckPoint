@@ -1,13 +1,13 @@
 # Invoke-CheckPointGroupSync
 
 ## SYNOPSIS
-Performs a one way sync of external list of group members to a Check Point group.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
 ```
-Invoke-CheckPointGroupSync -Members <Member[]> -Name <String> [-Rename] [-IgnoreWarnings] [-CreateGroup]
- [-Color <String>] [-Comments <String>] [-Tags <String[]>] [-Session <CheckPointSession>]
+Invoke-CheckPointGroupSync [-Color <Colors>] [-Comments <String>] [-CreateGroup] -GroupName <String>
+ [-Ignore <Ignore>] -Input <String[]> -Prefix <String> [-Rename] [-Tags <String[]>] [-Session <Session>]
 ```
 
 ## DESCRIPTION
@@ -15,30 +15,33 @@ Invoke-CheckPointGroupSync -Members <Member[]> -Name <String> [-Rename] [-Ignore
 
 ## EXAMPLES
 
-### ----------  EXAMPLE 1  ----------
+### Example 1
 ```
-{ ... } | New-SyncMember -Prefix "Prefix_" | Invoke-CheckPointGroupSync -Name MyGroup
+PS C:\> {{ Add example code here }}
 ```
+
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -Color
-Color assigned to created objects
+{{Fill Color Description}}
 
 ```yaml
-Type: String
+Type: Colors
 Parameter Sets: (All)
 Aliases: Colour
+Accepted values: Aquamarine, Black, Blue, Brown, Burlywood, Coral, CreteBlue, Cyan, DarkBlue, DarkGold, DarkGray, DarkGreen, DarkOrange, DarkSeaGreen, Firebrick, ForestGreen, Gold, Gray, Khaki, LemonChiffon, LightGreen, Magenta, NavyBlue, Olive, Orange, Orchid, Pink, Purple, Red, SeaGreen, Sienna, SkyBlue, SlateBlue, Turquoise, VioletRed, Yellow
 
 Required: False
 Position: Named
-Default value: Red
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Comments
-Comments for created objects
+{{Fill Comments Description}}
 
 ```yaml
 Type: String
@@ -53,7 +56,7 @@ Accept wildcard characters: False
 ```
 
 ### -CreateGroup
-If group doesn't already exist create it.
+{{Fill CreateGroup Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -62,33 +65,49 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -IgnoreWarnings
-When creating a new object passes IgnoreWarnings switch.
+### -GroupName
+{{Fill GroupName Description}}
 
 ```yaml
-Type: SwitchParameter
+Type: String
+Parameter Sets: (All)
+Aliases: Name
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Ignore
+{{Fill Ignore Description}}
+
+```yaml
+Type: Ignore
 Parameter Sets: (All)
 Aliases: 
+Accepted values: No, Warnings, Errors
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Members
-@{Text=}
+### -Input
+{{Fill Input Description}}
 
 ```yaml
-Type: Member[]
+Type: String[]
 Parameter Sets: (All)
-Aliases: 
+Aliases: Subnets, IPAddresses
 
 Required: True
 Position: Named
@@ -97,8 +116,8 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Name
-Name of group to be synced to list of members
+### -Prefix
+{{Fill Prefix Description}}
 
 ```yaml
 Type: String
@@ -113,7 +132,7 @@ Accept wildcard characters: False
 ```
 
 ### -Rename
-If object already exists but with different name, rename it.
+{{Fill Rename Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -122,16 +141,16 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Session
-Session object from Open-CheckPointSession
+{{Fill Session Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -143,7 +162,7 @@ Accept wildcard characters: False
 ```
 
 ### -Tags
-Tags assigned to created objects
+{{Fill Tags Description}}
 
 ```yaml
 Type: String[]
@@ -159,12 +178,13 @@ Accept wildcard characters: False
 
 ## INPUTS
 
-### psCheckPoint.Extra.Sync.Member[]
+### System.String[]
+
 
 ## OUTPUTS
 
-### psCheckPoint.Extra.Sync.SyncOutput
-Detailed results of group sync actions taken.
+### psCheckPoint.Extra.Sync.InvokeCheckPointGroupSync+SyncOutput
+
 
 ## NOTES
 

@@ -1,36 +1,82 @@
-﻿using Newtonsoft.Json;
+﻿using Koopman.CheckPoint;
+using Koopman.CheckPoint.FastUpdate;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.GroupWithExclusion
 {
     /// <api cmd="set-group-with-exclusion">Set-CheckPointGroupWithExclusion</api>
     /// <summary>
-    /// <para type="synopsis">Edit existing object using object name or uid.</para>
+    /// <para type="synopsis">Edit existing Group with Exclusion using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
+    /// <code>
+    /// Set-CheckPointGroupWithExclusion -Name MyGroupWithExclusion -Color Red
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Set, "CheckPointGroupWithExclusion")]
-    [OutputType(typeof(CheckPointGroupWithExclusion))]
-    public class SetCheckPointHostWithExclusion : SetCheckPointObject<CheckPointGroupWithExclusion>
+    [OutputType(typeof(Koopman.CheckPoint.GroupWithExclusion))]
+    public class SetCheckPointGroupWithExclusion : SetCheckPointCmdlet
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "set-group-with-exclusion"; } }
-
-        /// <summary>
-        /// <para type="description">Object to include.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "include", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string Include { get; set; }
+        #region Properties
 
         /// <summary>
         /// <para type="description">Object to exclude.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "except", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public string Except { get; set; }
+
+        /// <summary>
+        /// <para type="description">Network object, name or UID.</para>
+        /// </summary>
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
+        [Alias("Name", "UID")]
+        public PSObject GroupWithExclusion { get => Object; set => Object = value; }
+
+        /// <summary>
+        /// <para type="description">Object to include.</para>
+        /// </summary>
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        public string Include { get; set; }
+
+        /// <inheritdoc />
+        protected override string InputName => nameof(GroupWithExclusion);
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override async Task Set(string value)
+        {
+            var o = Session.UpdateGroupWithExclusion(value);
+            UpdateProperties(o);
+            await o.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
+            WriteObject(o);
+        }
+
+        /// <inheritdoc />
+        protected override bool UpdateProperty(IObjectSummary obj, string name, object value)
+        {
+            if (base.UpdateProperty(obj, name, value)) return true;
+
+            var o = (Koopman.CheckPoint.GroupWithExclusion)obj;
+            switch (name)
+            {
+                case nameof(Include):
+                    o.SetInclude(Include);
+                    return true;
+
+                case nameof(Except):
+                    o.SetExcept(Except);
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        #endregion Methods
     }
 }

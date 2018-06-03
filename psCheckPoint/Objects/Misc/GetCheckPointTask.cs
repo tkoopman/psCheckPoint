@@ -1,39 +1,32 @@
-﻿using Newtonsoft.Json;
-using System.ComponentModel;
-using System.Management.Automation;
+﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Misc
 {
     /// <api cmd="show-task">Get-CheckPointTask</api>
     /// <summary>
-    /// <para type="synopsis"></para>
+    /// <para type="synopsis">Retrieves task details by Task ID</para>
     /// <para type="description"></para>
     /// </summary>
     [Cmdlet(VerbsCommon.Get, "CheckPointTask")]
-    public class GetCheckPointTask : CheckPointCmdlet<CheckPointTasks>
+    [OutputType(typeof(Koopman.CheckPoint.CheckPointTask))]
+    public class GetCheckPointTask : CheckPointCmdletBase
     {
-        public override string Command { get { return "show-task"; } }
+        #region Properties
 
         /// <summary>
         /// <para type="description">Unique identifier of task</para>
         /// </summary>
-        [JsonProperty(PropertyName = "task-id")]
         [Parameter(Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         public string TaskID { get; set; }
 
-        /// <summary>
-        /// <para type="description">The level of detail for some of the fields in the response can vary from showing only the UID value of the object to a fully detailed representation of the object.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "details-level", DefaultValueHandling = DefaultValueHandling.Include)]
-        [DefaultValue("standard")]
-        protected string DetailsLevel { get; set; } = "full";
+        #endregion Properties
 
-        protected override void WriteRecordResponse(CheckPointTasks result)
-        {
-            foreach (CheckPointTask task in result)
-            {
-                WriteObject(task);
-            }
-        }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override async Task ProcessRecordAsync() => WriteObject(await Session.FindTask(TaskID, cancellationToken: CancelProcessToken));
+
+        #endregion Methods
     }
 }

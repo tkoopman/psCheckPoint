@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Application
 {
@@ -8,10 +9,32 @@ namespace psCheckPoint.Objects.Application
     /// <para type="description"></para>
     /// </summary>
     /// <example>
+    /// <code>
+    /// Remove-CheckPointApplication -Name MyApp
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointApplication")]
     public class RemoveCheckPointApplication : RemoveCheckPointObject
     {
-        public override string Command { get { return "delete-application-site"; } }
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Application Site object, name or UID.</para>
+        /// </summary>
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
+        [Alias("Name", "UID")]
+        public PSObject ApplicationSite { get => Object; set => Object = value; }
+
+        /// <inheritdoc />
+        protected override string InputName => nameof(ApplicationSite);
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override Task Remove(string value) => Session.DeleteApplicationSite(value, Ignore, cancellationToken: CancelProcessToken);
+
+        #endregion Methods
     }
 }

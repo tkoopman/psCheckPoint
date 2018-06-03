@@ -1,12 +1,5 @@
-using Newtonsoft.Json;
-using psCheckPoint.Objects;
-using psCheckPoint.Session;
 using System;
-using System.Collections;
 using System.Management.Automation;
-using System.Net.Http;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace psCheckPoint
 {
@@ -15,45 +8,53 @@ namespace psCheckPoint
     /// </summary>
     public enum MembershipActions
     {
-        /// <summary>Replace existing membership with new items</summary>
+        /// <summary>
+        /// Replace existing membership with new items
+        /// </summary>
         Replace,
 
-        /// <summary>Add new items to existing membership</summary>
+        /// <summary>
+        /// Add new items to existing membership
+        /// </summary>
         Add,
 
-        /// <summary>Remove items from existing membership</summary>
+        /// <summary>
+        /// Remove items from existing membership
+        /// </summary>
         Remove
     };
 
     /// <summary>
     /// <para type="description">Base class for other Cmdlets that call a Web-API</para>
     /// </summary>
-    [JsonObject(MemberSerialization.OptIn)]
-    public abstract class CheckPointCmdletBase : PSCmdlet
+    public abstract class CheckPointCmdletBase : PSCmdletAsync
     {
+        #region Properties
+
+        /// <summary>
+        /// Gets a value indicating whether this instance's session is sourced from the PowerShell
+        /// session state or manually supplied by the Cmdlet.
+        /// </summary>
+        /// <value><c>true</c> if this instance is from session state; otherwise, <c>false</c>.</value>
+        public bool IsPSSession { get; private set; } = false;
+
         /// <summary>
         /// <para type="description">Session object from Open-CheckPointSession</para>
         /// </summary>
         [Parameter()]
-        public CheckPointSession Session { get; set; }
+        public Koopman.CheckPoint.Session Session { get; set; }
 
-        protected override void BeginProcessing()
-        {
-            if (Session == null)
-            {
-                Session = SessionState.PSVariable.GetValue("CheckPointSession") as CheckPointSession;
-                if (Session == null)
-                {
-                    throw new PSArgumentNullException("Session");
-                }
-            }
-        }
+        #endregion Properties
+
+        #region Methods
 
         /// <summary>
         /// <para type="description">Used by Cmdlet parameters that accept arrays</para>
-        /// <para type="description">Allows arrays to also be accepted in CSV format with either a , (comma) or ; (semicolon) separator.</para>
+        /// <para type="description">
+        /// Allows arrays to also be accepted in CSV format with either a , (comma) or ; (semicolon) separator.
+        /// </para>
         /// </summary>
-        protected static string[] CreateArray(String[] values)
+        protected static string[] CreateArray(string[] values)
         {
             if (values == null)
             {
@@ -71,74 +72,20 @@ namespace psCheckPoint
             }
         }
 
-        /// <summary>
-        /// <para type="description">Used OnSerializing Events in Set methods to control how set will process groups based on action.</para>
-        /// </summary>
-        protected static dynamic ProcessGroupAction(MembershipActions action, String[] values)
+        /// <inheritdoc />
+        protected sealed override void BeginProcessing()
         {
-            if (values != null && values.Length > 0)
+            if (Session == null)
             {
-                switch (action)
-                {
-                    case MembershipActions.Add:
-                        {
-                            Hashtable r = new Hashtable
-                            {
-                                ["add"] = CreateArray(values)
-                            };
-                            return r;
-                        }
-                    case MembershipActions.Remove:
-                        {
-                            Hashtable r = new Hashtable
-                            {
-                                ["remove"] = CreateArray(values)
-                            };
-                            return r;
-                        }
-                    default:
-                        {
-                            return CreateArray(values);
-                        }
-                }
+                IsPSSession = true;
+                Session = SessionState.PSVariable.GetValue("CheckPointSession") as Koopman.CheckPoint.Session;
+                if (Session == null)
+                    throw new PSArgumentNullException("Session");
             }
-            else { return null; }
+
+            base.BeginProcessing();
         }
 
-        protected static bool IsUID(string input)
-        {
-            return Regex.IsMatch(input, @"^\w{8}-\w{4}-\w{4}-\w{4}-\w{12}$");
-        }
-
-        protected static void SetInputIdentifier(PSObject input, string type, out string uid, out string name)
-        {
-            uid = null;
-            name = null;
-
-            if (input.BaseObject is CheckPointObject)
-            {
-                if ((input.BaseObject as CheckPointObject).Type != type)
-                {
-                    throw new PSInvalidCastException("Input is of invalid type.");
-                }
-                uid = (input.BaseObject as CheckPointObject).UID;
-            }
-            else if (input.BaseObject is string)
-            {
-                string str = (input.BaseObject as string);
-                if (IsUID(str))
-                {
-                    uid = str;
-                }
-                else
-                {
-                    name = str;
-                }
-            }
-            else
-            {
-                throw new PSInvalidCastException("Input is of invalid type.");
-            }
-        }
+        #endregion Methods
     }
 }

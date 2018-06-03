@@ -1,33 +1,36 @@
 # Get-CheckPointNetworks
 
 ## SYNOPSIS
-Retrieve all objects.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
-### Limit
-```
-Get-CheckPointNetworks [-Limit <Int32>] [-Offset <Int32>] [-Session <CheckPointSession>]
-```
-
 ### All
 ```
-Get-CheckPointNetworks [-Limit <Int32>] [-All] [-Session <CheckPointSession>]
+Get-CheckPointNetworks [-All] [-DetailsLevel <DetailLevels>] [-Limit <Int32>] [-Session <Session>]
+```
+
+### Limit
+```
+Get-CheckPointNetworks [-DetailsLevel <DetailLevels>] [-Limit <Int32>] [-Offset <Int32>] [-Session <Session>]
 ```
 
 ## DESCRIPTION
+{{Fill in the Description}}
 
 ## EXAMPLES
 
-### ----------  EXAMPLE 1  ----------
+### Example 1
 ```
-Get-CheckPointNetworks
+PS C:\> {{ Add example code here }}
 ```
+
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -All
-Get All Records
+{{Fill All Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -36,13 +39,29 @@ Aliases:
 
 Required: True
 Position: Named
-Default value: False
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DetailsLevel
+{{Fill DetailsLevel Description}}
+
+```yaml
+Type: DetailLevels
+Parameter Sets: (All)
+Aliases: 
+Accepted values: UID, Standard, Full
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Limit
-No more than that many results will be returned.
+{{Fill Limit Description}}
 
 ```yaml
 Type: Int32
@@ -51,13 +70,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: 50
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Offset
-Skip that many results before beginning to return them.
+{{Fill Offset Description}}
 
 ```yaml
 Type: Int32
@@ -66,16 +85,16 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: 0
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Session
-Session object from Open-CheckPointSession
+{{Fill Session Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -88,10 +107,14 @@ Accept wildcard characters: False
 
 ## INPUTS
 
+### None
+
+
 ## OUTPUTS
 
-### psCheckPoint.Objects.CheckPointObjects
-Result from commands that return multiple objects.
+### Koopman.CheckPoint.Common.NetworkObjectsPagingResults`1[[Koopman.CheckPoint.Network, CheckPoint.NET, Version=0.3.0.0, Culture=neutral, PublicKeyToken=null]]
+Koopman.CheckPoint.Network[]
+
 
 ## NOTES
 

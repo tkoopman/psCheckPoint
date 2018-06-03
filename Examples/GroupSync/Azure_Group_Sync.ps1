@@ -5,24 +5,27 @@ One way sync of Microsoft Azure networks into Check Point groups.
 
 .DESCRIPTION
 This script will create/update Check Point groups for each Microsoft Azure Region, with the list of networks Microsoft publish.
-By default this will create over 3000 objects first time it is run, which you may have problems publishing. 
+By default this will create over 3000 objects first time it is run, which you may have problems publishing.
 Use -RegionsLike to create initial groups in batches. Once created should be no problems syncing them all at once.
 
 .PARAMETER ManagementServer
 IP or Hostname of the Check point Management Server
 
-.PARAMETER ManagementPort
-Port Web API running on.
-
 .PARAMETER Credentials
 PSCredential containing User name and Password. If not provided you will be prompted.
+
+.PARAMETER CertificateHash
+The server's SSL certificate hash
+
+.PARAMETER ManagementPort
+Port Web API running on.
 
 .PARAMETER Publish
 If any changes made publish them automatically. By default session will just be closed pending you to manually open session in SmartConsole and publish the changes.
 Publish will only happen if no errors during sync.
 
-.PARAMETER IgnoreWarnings
-When creating new Check Point objects pass the IgnoreWarnings switch. This is required if your Check Point database already contains duplicate addresses with different names.
+.PARAMETER Ignore
+Weather Check Point warnings or errors should be ignored.
 
 .PARAMETER Rename
 If existing object not found by name, first search by IP/Subnet and if matching object found rename it and add to group.
@@ -48,11 +51,14 @@ Only process regions which match this string. Uses -match
 .PARAMETER PrintRegions
 Will output list of regions only.
 
+.PARAMETER CertificateValidation
+Which certificate validation method(s) to use.
+
 .EXAMPLE
 ./Azure_Group_Sync.ps1 -Rename -Verbose
 
 .NOTES
-Requires psCheckPoint v0.7.9+.
+Requires psCheckPoint v1.0.0+.
 Microsoft's list only includes IPv4 networks.
 
 .LINK
@@ -66,14 +72,17 @@ https://www.microsoft.com/en-au/download/details.aspx?id=41653
 param(
 	[Parameter(Mandatory = $true, ParameterSetName='Standard')]
     [string]$ManagementServer,
-	[Parameter(ParameterSetName='Standard')]
-    [int]$ManagementPort = 443,
 	[Parameter(Mandatory = $true, ParameterSetName='Standard')]
 	[PSCredential]$Credentials,
 	[Parameter(ParameterSetName='Standard')]
+	[string]$CertificateHash,
+	[Parameter(ParameterSetName='Standard')]
+    [int]$ManagementPort = 443,
+	[Parameter(ParameterSetName='Standard')]
 	[switch]$Publish,
 	[Parameter(ParameterSetName='Standard')]
-	[switch]$IgnoreWarnings,
+	[ValidateSet("No", "Warnings", "Errors")]
+	[string]$Ignore = "No",
 	[Parameter(ParameterSetName='Standard')]
 	[switch]$Rename,
 	[Parameter(ParameterSetName='Standard')]
@@ -89,9 +98,10 @@ param(
 	[Parameter(ParameterSetName='Standard')]
 	[string]$RegionsMatch = "",
 	[Parameter(Mandatory = $true, ParameterSetName='Print Regions')]
-	[switch]$PrintRegions
+	[switch]$PrintRegions,
+	[ValidateSet("All", "Auto", "CertificatePinning", "None", "ValidCertificate")]
+	[string]$CertificateValidation = "Auto"
 )
-
 # Download code from https://gallery.technet.microsoft.com/scriptcenter/Adds-Azure-Datacenter-IP-dbeebe0c
 # Download Microsoft Azure IP Ranges and Names into Object
 $downloadUri = "https://www.microsoft.com/en-in/download/confirmation.aspx?id=41653";
@@ -116,7 +126,7 @@ $Errors = 0;
 
 # Login to Check Point API to get Session ID
 Write-Verbose " *** Log in to Check Point Smart Center API *** ";
-$Session = Open-CheckPointSession -SessionName $CommentPrefix -SessionComments "$CommentPrefix Group Sync" -ManagementServer $ManagementServer -ManagementPort $ManagementPort -Credentials $Credentials -NoCertificateValidation -PassThru;
+$Session = Open-CheckPointSession -SessionName $CommentPrefix -SessionComments "$CommentPrefix Group Sync" -ManagementServer $ManagementServer -ManagementPort $ManagementPort -Credentials $Credentials -CertificateValidation $CertificateValidation -CertificateHash $CertificateHash -PassThru;
 if (-not $Session) {
 	# Failed login
 	exit;
@@ -130,8 +140,8 @@ ForEach($region in $regions) {
 	$GroupName = $GroupPrefix + "_" + $region.Name;
 	Write-Verbose "Processing $GroupName";
 
-	$region.IpRange.Subnet | New-SyncMember -Prefix "${HostPrefix}_" |
-		Invoke-CheckPointGroupSync -Session $Session -Name $GroupName -Rename:$Rename.IsPresent -IgnoreWarnings:$IgnoreWarnings.IsPresent -Color $Color -Comments $Comments -Tags $Tag -CreateGroup |
+	$region.IpRange.Subnet |
+		Invoke-CheckPointGroupSync -Session $Session -GroupName $GroupName -Prefix "${HostPrefix}_" -Rename:$Rename.IsPresent -Ignore $Ignore -Color $Color -Comments $Comments -Tags $Tag -CreateGroup |
 		Tee-Object -Variable output;
 	if (($output | Where-Object {$_.Actions -ne 0 -and -not $_.Error} | Measure-Object).Count -ne 0) {
 		# Updates made

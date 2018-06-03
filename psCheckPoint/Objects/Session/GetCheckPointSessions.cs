@@ -1,38 +1,57 @@
-﻿using Newtonsoft.Json;
-using System.Management.Automation;
+﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Session
 {
     /// <api cmd="show-sessions">Get-CheckPointSessions</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve all objects.</para>
+    /// <para type="synopsis">Retrieve all Sessions.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
+    /// <code>
+    /// Get-CheckPointSessions
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointSessions")]
-    [OutputType(typeof(CheckPointSessions))]
-    public class GetCheckPointSessions : GetCheckPointObjectsBase<CheckPointSessions>
+    [OutputType(typeof(Koopman.CheckPoint.Common.NetworkObjectsPagingResults<Koopman.CheckPoint.SessionInfo>), ParameterSetName = new string[] { "Limit" })]
+    [OutputType(typeof(Koopman.CheckPoint.SessionInfo[]), ParameterSetName = new string[] { "All" })]
+    public class GetCheckPointSessions : GetCheckPointObjects
     {
-        /// <summary>
-        /// Default constructor the changes GetCheckPointObjects.DetailsLevel default setting
-        /// </summary>
-        public GetCheckPointSessions()
-        {
-            DetailsLevel = "full";
-        }
-
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "show-sessions"; } }
+        #region Properties
 
         /// <summary>
         /// <para type="description">Show a list of published sessions.</para>
         /// </summary>
-        [JsonProperty(PropertyName = "view-published-sessions", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [JsonConverter(typeof(SwitchJsonConverter))]
         [Parameter]
         public SwitchParameter ViewPublishedSessions { get; set; }
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override async Task ProcessRecordAsync()
+        {
+            if (ParameterSetName == "Limit")
+            {
+                WriteObject(
+                    await Session.FindSessions(
+                            viewPublishedSessions: ViewPublishedSessions.IsPresent,
+                            limit: Limit,
+                            offset: Offset,
+                            cancellationToken: CancelProcessToken), false);
+            }
+            else
+            {
+                WriteObject(
+                    await Session.FindAllSessions(
+                            viewPublishedSessions: ViewPublishedSessions.IsPresent,
+                            limit: Limit,
+                            cancellationToken: CancelProcessToken), true);
+            }
+        }
+
+        #endregion Methods
     }
 }

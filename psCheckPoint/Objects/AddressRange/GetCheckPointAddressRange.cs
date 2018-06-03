@@ -1,21 +1,27 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.AddressRange
 {
     /// <api cmd="show-address-range">Get-CheckPointAddressRange</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
+    /// <para type="synopsis">Retrieve existing address range using name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
+    /// <code>
+    /// Get-CheckPointAddressRange -Name Range1
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointAddressRange")]
-    [OutputType(typeof(CheckPointAddressRange))]
-    public class GetCheckPointAddressRange : GetCheckPointObject<CheckPointAddressRange>
+    [OutputType(typeof(Koopman.CheckPoint.AddressRange))]
+    public class GetCheckPointAddressRange : GetCheckPointObject
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "show-address-range"; } }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override async Task ProcessRecordAsync() => WriteObject(await Session.FindAddressRange(Value, DetailsLevel, cancellationToken: CancelProcessToken));
+
+        #endregion Methods
     }
 }

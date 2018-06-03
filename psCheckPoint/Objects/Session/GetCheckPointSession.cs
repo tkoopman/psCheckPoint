@@ -1,40 +1,39 @@
-﻿using Newtonsoft.Json;
-using System.Management.Automation;
+﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Session
 {
     /// <api cmd="show-session">Get-CheckPointSession</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve existing object using object name or uid.</para>
+    /// <para type="synopsis">Retrieve existing Session using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    /// <code>Get-CheckPointSession</code>
+    /// <code>
+    /// Get-CheckPointSession
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointSession")]
-    [OutputType(typeof(CheckPointSession))]
-    public class GetCheckPointSession : CheckPointCmdlet<CheckPointSession>
+    [OutputType(typeof(Koopman.CheckPoint.SessionInfo))]
+    public class GetCheckPointSession : CheckPointCmdletBase
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "show-session"; } }
+        #region Properties
 
         /// <summary>
-        /// <para type="description">Session unique identifier. If not provided the current logged in session UID will be used.</para>
+        /// <para type="description">
+        /// Session unique identifier. If not provided the current logged in session UID will be used.
+        /// </para>
         /// </summary>
-        [JsonProperty(PropertyName = "uid", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [Parameter(ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
         public string UID { get; set; }
 
-        protected override void BeginProcessing()
-        {
-            base.BeginProcessing();
+        #endregion Properties
 
-            if (UID == null)
-            {
-                UID = Session.UID;
-            }
-        }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override async Task ProcessRecordAsync() => WriteObject(await Session.FindSession(UID, cancellationToken: CancelProcessToken));
+
+        #endregion Methods
     }
 }

@@ -1,22 +1,43 @@
-﻿using System.Management.Automation;
+﻿using System.Linq;
+using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.SecurityZone
 {
     /// <api cmd="add-security-zone">New-CheckPointSecurityZone</api>
     /// <summary>
-    /// <para type="synopsis">Create new object.</para>
+    /// <para type="synopsis">Create new Security Zone.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code></code>
+    /// <code>
+    /// New-CheckPointSecurityZone -Name MyZone
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.New, "CheckPointSecurityZone")]
-    [OutputType(typeof(CheckPointSecurityZone))]
-    public class NewCheckPointSecurityZone : NewCheckPointObject<CheckPointSecurityZone>
+    [OutputType(typeof(Koopman.CheckPoint.SecurityZone))]
+    public class NewCheckPointSecurityZone : NewCheckPointObject
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "add-security-zone"; } }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override async Task ProcessRecordAsync()
+        {
+            var zone = new Koopman.CheckPoint.SecurityZone(Session, SetIfExists.IsPresent)
+            {
+                Name = Name,
+                Color = Color,
+                Comments = Comments
+            };
+
+            foreach (string t in Tags ?? Enumerable.Empty<string>())
+                zone.Tags.Add(t);
+
+            await zone.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
+
+            WriteObject(zone);
+        }
+
+        #endregion Methods
     }
 }

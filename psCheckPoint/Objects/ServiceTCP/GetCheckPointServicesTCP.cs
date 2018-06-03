@@ -1,22 +1,47 @@
-﻿using psCheckPoint.Objects.Service;
-using System.Management.Automation;
+﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.ServiceTCP
 {
     /// <api cmd="show-services-tcp">Get-CheckPointServicesTCP</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve all objects.</para>
+    /// <para type="synopsis">Retrieve all TCP objects.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
+    /// <code>
+    /// Get-CheckPointServicesTCP
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointServicesTCP")]
-    [OutputType(typeof(CheckPointServices))]
-    public class GetCheckPointServicesTCP : GetCheckPointObjectsBase<CheckPointServices>
+    [OutputType(typeof(Koopman.CheckPoint.Common.NetworkObjectsPagingResults<Koopman.CheckPoint.ServiceTCP>), ParameterSetName = new string[] { "Limit" })]
+    [OutputType(typeof(Koopman.CheckPoint.ServiceTCP[]), ParameterSetName = new string[] { "All" })]
+    public class GetCheckPointServicesTCP : GetCheckPointObjects
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "show-services-tcp"; } }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override async Task ProcessRecordAsync()
+        {
+            if (ParameterSetName == "Limit")
+            {
+                WriteObject(
+                    await Session.FindServicesTCP(
+                            limit: Limit,
+                            offset: Offset,
+                            detailLevel: DetailsLevel,
+                            cancellationToken: CancelProcessToken), false);
+            }
+            else
+            {
+                WriteObject(
+                    await Session.FindAllServicesTCP(
+                            limit: Limit,
+                            detailLevel: DetailsLevel,
+                            cancellationToken: CancelProcessToken), true);
+            }
+        }
+
+        #endregion Methods
     }
 }

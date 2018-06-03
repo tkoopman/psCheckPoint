@@ -1,45 +1,39 @@
 # Set-CheckPointHost
 
 ## SYNOPSIS
-Edit existing object using object name or uid.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
-### By UID
 ```
-Set-CheckPointHost [-IPAddress <String>] [-IPv4Address <String>] [-IPv6Address <String>]
- [-GroupAction <MembershipActions>] [-Groups <String[]>] -UID <String> [-NewName <String>]
- [-TagAction <MembershipActions>] [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors]
- [-PassThru] [-Color <String>] [-Session <CheckPointSession>]
-```
-
-### By Name
-```
-Set-CheckPointHost [-IPAddress <String>] [-IPv4Address <String>] [-IPv6Address <String>]
- [-GroupAction <MembershipActions>] [-Groups <String[]>] [-Name] <String> [-NewName <String>]
- [-TagAction <MembershipActions>] [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings] [-IgnoreErrors]
- [-PassThru] [-Color <String>] [-Session <CheckPointSession>]
+Set-CheckPointHost [-GroupAction <MembershipActions>] [-Groups <String[]>] -Host <PSObject>
+ [-IPAddress <IPAddress>] [-IPv4Address <IPAddress>] [-IPv6Address <IPAddress>] [-NewName <String>]
+ [-TagAction <MembershipActions>] [-Color <Colors>] [-Comments <String>] [-Ignore <Ignore>] [-PassThru]
+ [-Tags <String[]>] [-Session <Session>]
 ```
 
 ## DESCRIPTION
+{{Fill in the Description}}
 
 ## EXAMPLES
 
-### ----------  EXAMPLE 1  ----------
+### Example 1
 ```
-Set-CheckPointHost -Name Test1 -NewName Test2 -Tags TestTag
+PS C:\> {{ Add example code here }}
 ```
+
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -Color
-Color of the object.
-Should be one of existing colors.
+{{Fill Color Description}}
 
 ```yaml
-Type: String
+Type: Colors
 Parameter Sets: (All)
 Aliases: Colour
+Accepted values: Aquamarine, Black, Blue, Brown, Burlywood, Coral, CreteBlue, Cyan, DarkBlue, DarkGold, DarkGray, DarkGreen, DarkOrange, DarkSeaGreen, Firebrick, ForestGreen, Gold, Gray, Khaki, LemonChiffon, LightGreen, Magenta, NavyBlue, Olive, Orange, Orchid, Pink, Purple, Red, SeaGreen, Sienna, SkyBlue, SlateBlue, Turquoise, VioletRed, Yellow
 
 Required: False
 Position: Named
@@ -49,7 +43,7 @@ Accept wildcard characters: False
 ```
 
 ### -Comments
-Comments string.
+{{Fill Comments Description}}
 
 ```yaml
 Type: String
@@ -64,9 +58,7 @@ Accept wildcard characters: False
 ```
 
 ### -GroupAction
-Action to take with groups.
-
-Possible values: Replace, Add, Remove
+{{Fill GroupAction Description}}
 
 ```yaml
 Type: MembershipActions
@@ -76,15 +68,13 @@ Accepted values: Replace, Add, Remove
 
 Required: False
 Position: Named
-Default value: Replace
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Groups
-Collection of group identifiers.
-
-Groups listed will be either Added, Removed or replace the current list of group membership based on GroupAction parameter.
+{{Fill Groups Description}}
 
 ```yaml
 Type: String[]
@@ -98,44 +88,42 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -IgnoreErrors
-Apply changes ignoring errors.
-You won't be able to publish such a changes.
-If ignore-warnings flag was omitted - warnings will also be ignored.
+### -Host
+{{Fill Host Description}}
 
 ```yaml
-Type: SwitchParameter
+Type: PSObject
 Parameter Sets: (All)
-Aliases: 
+Aliases: Name, UID
 
-Required: False
+Required: True
 Position: Named
-Default value: False
-Accept pipeline input: False
+Default value: None
+Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 
-### -IgnoreWarnings
-Apply changes ignoring warnings.
+### -Ignore
+{{Fill Ignore Description}}
 
 ```yaml
-Type: SwitchParameter
+Type: Ignore
 Parameter Sets: (All)
 Aliases: 
+Accepted values: No, Warnings, Errors
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -IPAddress
-IPv4 or IPv6 address.
-If both addresses are required use ipv4-address and ipv6-address fields explicitly.
+{{Fill IPAddress Description}}
 
 ```yaml
-Type: String
+Type: IPAddress
 Parameter Sets: (All)
 Aliases: 
 
@@ -147,10 +135,10 @@ Accept wildcard characters: False
 ```
 
 ### -IPv4Address
-IPv4 address.
+{{Fill IPv4Address Description}}
 
 ```yaml
-Type: String
+Type: IPAddress
 Parameter Sets: (All)
 Aliases: 
 
@@ -162,10 +150,10 @@ Accept wildcard characters: False
 ```
 
 ### -IPv6Address
-IPv6 address.
+{{Fill IPv6Address Description}}
 
 ```yaml
-Type: String
+Type: IPAddress
 Parameter Sets: (All)
 Aliases: 
 
@@ -176,23 +164,8 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -Name
-Object name.
-
-```yaml
-Type: String
-Parameter Sets: By Name
-Aliases: 
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: True (ByPropertyName, ByValue)
-Accept wildcard characters: False
-```
-
 ### -NewName
-New name of the object.
+{{Fill NewName Description}}
 
 ```yaml
 Type: String
@@ -207,7 +180,7 @@ Accept wildcard characters: False
 ```
 
 ### -PassThru
-Return the updated object.
+{{Fill PassThru Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -216,16 +189,16 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Session
-Session object from Open-CheckPointSession
+{{Fill Session Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -237,9 +210,7 @@ Accept wildcard characters: False
 ```
 
 ### -TagAction
-Action to take with tags.
-
-Possible values: Replace, Add, Remove
+{{Fill TagAction Description}}
 
 ```yaml
 Type: MembershipActions
@@ -249,13 +220,13 @@ Accepted values: Replace, Add, Remove
 
 Required: False
 Position: Named
-Default value: Replace
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Tags
-Collection of tag identifiers.
+{{Fill Tags Description}}
 
 ```yaml
 Type: String[]
@@ -269,61 +240,19 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -UID
-Object unique identifier.
-
-```yaml
-Type: String
-Parameter Sets: By UID
-Aliases: 
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
 ## INPUTS
 
-### System.String
-IPv4 or IPv6 address.
-If both addresses are required use ipv4-address and ipv6-address fields explicitly.
-
-### System.String
-IPv4 address.
-
-### System.String
-IPv6 address.
-
 ### System.String[]
-Collection of group identifiers.
+System.Management.Automation.PSObject
+System.Net.IPAddress
+System.String
+Koopman.CheckPoint.Colors
 
-Groups listed will be either Added, Removed or replace the current list of group membership based on GroupAction parameter.
-
-### System.String
-Object unique identifier.
-
-### System.String
-Object name.
-
-### System.String
-New name of the object.
-
-### System.String[]
-Collection of tag identifiers.
-
-### System.String
-Comments string.
-
-### System.String
-Color of the object.
-Should be one of existing colors.
 
 ## OUTPUTS
 
-### psCheckPoint.Objects.Host.CheckPointHost
-Details of a Check Point Host
+### Koopman.CheckPoint.Host
+
 
 ## NOTES
 

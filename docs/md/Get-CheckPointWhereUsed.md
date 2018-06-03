@@ -1,73 +1,54 @@
 # Get-CheckPointWhereUsed
 
 ## SYNOPSIS
-Searches for usage of the target object in other objects and rules.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
 ### By Object (Default)
 ```
-Get-CheckPointWhereUsed -Object <CheckPointObject> [-Indirect] [-IndirectMaxDepth <Int32>]
- [-Session <CheckPointSession>]
+Get-CheckPointWhereUsed [-DetailsLevel <DetailLevels>] [-Indirect] [-IndirectMaxDepth <Int32>]
+ -Object <IObjectSummary> [-Session <Session>]
 ```
 
-### By UID
+### By Name or UID
 ```
-Get-CheckPointWhereUsed -UID <String> [-ByUID] [-Indirect] [-IndirectMaxDepth <Int32>]
- [-Session <CheckPointSession>]
-```
-
-### By Name
-```
-Get-CheckPointWhereUsed -Name <String> [-ByName] [-Indirect] [-IndirectMaxDepth <Int32>]
- [-Session <CheckPointSession>]
+Get-CheckPointWhereUsed [-DetailsLevel <DetailLevels>] [-Indirect] [-IndirectMaxDepth <Int32>]
+ [-Value] <String> [-Session <Session>]
 ```
 
 ## DESCRIPTION
+{{Fill in the Description}}
 
 ## EXAMPLES
 
-### ----------  EXAMPLE 1  ----------
+### Example 1
 ```
-Get-CheckPointWhereUsed -Name http
+PS C:\> {{ Add example code here }}
 ```
+
+{{ Add example description here }}
 
 ## PARAMETERS
 
-### -ByName
-Force by name.
-Used if pipelining in list of names.
+### -DetailsLevel
+{{Fill DetailsLevel Description}}
 
 ```yaml
-Type: SwitchParameter
-Parameter Sets: By Name
+Type: DetailLevels
+Parameter Sets: (All)
 Aliases: 
+Accepted values: UID, Standard, Full
 
 Required: False
 Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ByUID
-Force by UID.
-Used if pipelining in list of UIDs.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: By UID
-Aliases: 
-
-Required: False
-Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Indirect
-Search for indirect usage.
+{{Fill Indirect Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -76,13 +57,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -IndirectMaxDepth
-Maximum nesting level during indirect usage search.
+{{Fill IndirectMaxDepth Description}}
 
 ```yaml
 Type: Int32
@@ -91,31 +72,16 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: 5
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Name
-Object name.
-
-```yaml
-Type: String
-Parameter Sets: By Name
-Aliases: 
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName, ByValue)
-Accept wildcard characters: False
-```
-
 ### -Object
-Check Point Object.
+{{Fill Object Description}}
 
 ```yaml
-Type: CheckPointObject
+Type: IObjectSummary
 Parameter Sets: By Object
 Aliases: 
 
@@ -127,10 +93,10 @@ Accept wildcard characters: False
 ```
 
 ### -Session
-Session object from Open-CheckPointSession
+{{Fill Session Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -141,16 +107,16 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -UID
-Object unique identifier.
+### -Value
+{{Fill Value Description}}
 
 ```yaml
 Type: String
-Parameter Sets: By UID
-Aliases: 
+Parameter Sets: By Name or UID
+Aliases: Name, UID
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
@@ -158,19 +124,14 @@ Accept wildcard characters: False
 
 ## INPUTS
 
-### System.String
-Object unique identifier.
+### Koopman.CheckPoint.IObjectSummary
+System.String
 
-### System.String
-Object name.
-
-### psCheckPoint.Objects.CheckPointObject
-Check Point Object.
 
 ## OUTPUTS
 
-### psCheckPoint.Objects.Misc.CheckPointWhereUsed
-Summary of Where Used results
+### Koopman.CheckPoint.Common.WhereUsed
+
 
 ## NOTES
 

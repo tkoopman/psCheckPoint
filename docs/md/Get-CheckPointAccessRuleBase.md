@@ -1,27 +1,17 @@
 # Get-CheckPointAccessRuleBase
 
 ## SYNOPSIS
-Shows the entire Access Rules layer.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
-### By UID
 ```
-Get-CheckPointAccessRuleBase -UID <String> [-Filter <String>] [-Session <CheckPointSession>]
-```
-
-### By Name
-```
-Get-CheckPointAccessRuleBase [-Name] <String> [-Filter <String>] [-Session <CheckPointSession>]
+Get-CheckPointAccessRuleBase -AccessLayer <PSObject> [-DetailsLevel <DetailLevels>] [-Filter <String>]
+ [-Limit <Int32>] [-Offset <Int32>] [-Session <Session>]
 ```
 
 ## DESCRIPTION
-Shows the entire Access Rules layer.
-This layer is divided into sections.
-An Access Rule may be within a section, or independent of a section (in which case it is said to be under the "global" section).
-The reply features a list of objects.
-Each object may be a section of the layer, with all its rules in, or a rule itself, for the case of rules which are under the global section.
-An optional "filter" field may be added in order to filter out only those rules that match a search criteria.
+{{Fill in the Description}}
 
 ## EXAMPLES
 
@@ -34,10 +24,39 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
+### -AccessLayer
+{{Fill AccessLayer Description}}
+
+```yaml
+Type: PSObject
+Parameter Sets: (All)
+Aliases: Name, UID, Layer
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName, ByValue)
+Accept wildcard characters: False
+```
+
+### -DetailsLevel
+{{Fill DetailsLevel Description}}
+
+```yaml
+Type: DetailLevels
+Parameter Sets: (All)
+Aliases: 
+Accepted values: UID, Standard, Full
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Filter
-Search expression to filter the rulebase.
-The provided text should be exactly the same as it would be given in Smart Console.
-The logical operators in the expression ('AND', 'OR') should be provided in capital letters.
+{{Fill Filter Description}}
 
 ```yaml
 Type: String
@@ -51,26 +70,41 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Name
-Object name.
+### -Limit
+{{Fill Limit Description}}
 
 ```yaml
-Type: String
-Parameter Sets: By Name
+Type: Int32
+Parameter Sets: (All)
 Aliases: 
 
-Required: True
-Position: 2
+Required: False
+Position: Named
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Offset
+{{Fill Offset Description}}
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Session
-Session object from Open-CheckPointSession
+{{Fill Session Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -78,36 +112,18 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -UID
-Object unique identifier.
-
-```yaml
-Type: String
-Parameter Sets: By UID
-Aliases: 
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ## INPUTS
 
-### System.String
-Object unique identifier.
+### System.Management.Automation.PSObject
 
-### System.String
-Object name.
 
 ## OUTPUTS
 
-### psCheckPoint.Objects.AccessRule.CheckPointAccessRule
-Details of a Check Point Access Rule
+### Koopman.CheckPoint.Common.AccessRulebasePagingResults
+
 
 ## NOTES
 

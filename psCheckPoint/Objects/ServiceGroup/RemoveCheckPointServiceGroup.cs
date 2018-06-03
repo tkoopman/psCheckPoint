@@ -1,21 +1,40 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.ServiceGroup
 {
     /// <api cmd="delete-service-group">Remove-CheckPointServiceGroup</api>
     /// <summary>
-    /// <para type="synopsis">Delete existing object using object name or uid.</para>
+    /// <para type="synopsis">Delete existing Service Group using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Remove-CheckPointGroup -Name Test1 -Verbose</code>
+    /// <code>
+    /// Remove-CheckPointGroup -Name MyServices
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointServiceGroup")]
     public class RemoveCheckPointServiceGroup : RemoveCheckPointObject
     {
+        #region Properties
+
         /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
+        /// <para type="description">Network object, name or UID.</para>
         /// </summary>
-        public override string Command { get { return "delete-service-group"; } }
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
+        [Alias("Name", "UID")]
+        public PSObject ServiceGroup { get => Object; set => Object = value; }
+
+        /// <inheritdoc />
+        protected override string InputName => nameof(ServiceGroup);
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override Task Remove(string value) => Session.DeleteServiceGroup(value, Ignore, cancellationToken: CancelProcessToken);
+
+        #endregion Methods
     }
 }

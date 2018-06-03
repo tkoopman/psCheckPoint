@@ -1,14 +1,16 @@
 # Get-CheckPointTask
 
 ## SYNOPSIS
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
 ```
-Get-CheckPointTask -TaskID <String> [-Session <CheckPointSession>]
+Get-CheckPointTask -TaskID <String> [-Session <Session>]
 ```
 
 ## DESCRIPTION
+{{Fill in the Description}}
 
 ## EXAMPLES
 
@@ -22,10 +24,10 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -Session
-Session object from Open-CheckPointSession
+{{Fill Session Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -37,7 +39,7 @@ Accept wildcard characters: False
 ```
 
 ### -TaskID
-Unique identifier of task
+{{Fill TaskID Description}}
 
 ```yaml
 Type: String
@@ -54,9 +56,12 @@ Accept wildcard characters: False
 ## INPUTS
 
 ### System.String
-Unique identifier of task
+
 
 ## OUTPUTS
+
+### Koopman.CheckPoint.CheckPointTask
+
 
 ## NOTES
 

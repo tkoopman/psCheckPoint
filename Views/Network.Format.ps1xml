@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+  <ViewDefinitions>
+    <View>
+      <Name>Network</Name>
+      <ViewSelectedBy>
+        <TypeName>Koopman.CheckPoint.Network</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Name</Label>
+            <Width>40</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Subnet4</Label>
+            <Width>15</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Prefix</Label>
+            <Width>6</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Subnet6</Label>
+            <Width>30</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Prefix</Label>
+            <Width>6</Width>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Subnet4</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>if ($_.MaskLength4 -ge 0) { $_.MaskLength4 }</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Subnet6</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>if ($_.MaskLength6 -ge 0) { $_.MaskLength6 }</ScriptBlock>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>Network List</Name>
+      <ViewSelectedBy>
+        <TypeName>Koopman.CheckPoint.Network</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <PropertyName>Name</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Subnet4</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>MaskLength4</Label>
+                <ScriptBlock>if ($_.MaskLength4 -ge 0) { $_.MaskLength4 }</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <PropertyName>SubnetMask</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Subnet6</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>MaskLength6</Label>
+                <ScriptBlock>if ($_.MaskLength6 -ge 0) { $_.MaskLength6 }</ScriptBlock>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>

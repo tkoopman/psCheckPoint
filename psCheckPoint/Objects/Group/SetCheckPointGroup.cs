@@ -1,44 +1,39 @@
-﻿using Newtonsoft.Json;
+﻿using Koopman.CheckPoint;
+using Koopman.CheckPoint.FastUpdate;
 using System.Management.Automation;
-using System.Runtime.Serialization;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Group
 {
     /// <api cmd="set-group">Set-CheckPointGroup</api>
     /// <summary>
-    /// <para type="synopsis">Edit existing object using object name or uid.</para>
+    /// <para type="synopsis">Edit existing group using name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Set-CheckPointGroup -Name Test1 -NewName Test2 -Tags TestTag</code>
+    /// <code>
+    /// Set-CheckPointGroup -Name MyGroup -MemberAction Add -Members HostD
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Set, "CheckPointGroup")]
-    [OutputType(typeof(CheckPointGroup))]
-    public class SetCheckPointGroup : SetCheckPointObject<CheckPointGroup>
+    [OutputType(typeof(Koopman.CheckPoint.Group))]
+    public class SetCheckPointGroup : SetCheckPointCmdlet
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "set-group"; } }
+        #region Fields
 
-        [JsonProperty(PropertyName = "members", NullValueHandling = NullValueHandling.Ignore)]
-        private dynamic _members;
+        private string[] _groups;
+        private string[] _members;
 
-        /// <summary>
-        /// <para type="description">Action to take with members.</para>
-        /// </summary>
-        [Parameter]
-        public MembershipActions MemberAction { get; set; } = MembershipActions.Replace;
+        #endregion Fields
+
+        #region Properties
 
         /// <summary>
-        /// <para type="description">Collection of Network objects identified by the name or UID.</para>
-        /// <para type="description">Members listed will be either Added, Removed or replace the current list of members based on MemberAction parameter.</para>
+        /// <para type="description">Group object, name or UID.</para>
         /// </summary>
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Members { get; set; }
-
-        [JsonProperty(PropertyName = "groups", NullValueHandling = NullValueHandling.Ignore)]
-        private dynamic _groups;
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
+        [Alias("Name", "UID")]
+        public PSObject Group { get => Object; set => Object = value; }
 
         /// <summary>
         /// <para type="description">Action to take with groups.</para>
@@ -48,19 +43,77 @@ namespace psCheckPoint.Objects.Group
 
         /// <summary>
         /// <para type="description">Collection of group identifiers.</para>
-        /// <para type="description">Groups listed will be either Added, Removed or replace the current list of group membership based on GroupAction parameter.</para>
+        /// <para type="description">
+        /// Groups listed will be either Added, Removed or replace the current list of group
+        /// membership based on GroupAction parameter.
+        /// </para>
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Groups { get; set; }
+        public string[] Groups { get => _groups; set => _groups = CreateArray(value); }
 
         /// <summary>
-        /// <para type="description">Called when object is being serialized. Used for processing Group Actions.</para>
+        /// <para type="description">Action to take with members.</para>
         /// </summary>
-        protected override void OnSerializing()
+        [Parameter]
+        public MembershipActions MemberAction { get; set; } = MembershipActions.Replace;
+
+        /// <summary>
+        /// <para type="description">Collection of Network objects identified by the name or UID.</para>
+        /// <para type="description">
+        /// Members listed will be either Added, Removed or replace the current list of members based
+        /// on MemberAction parameter.
+        /// </para>
+        /// </summary>
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        public string[] Members { get => _members; set => _members = CreateArray(value); }
+
+        /// <inheritdoc />
+        protected override string InputName => nameof(Group);
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override async Task Set(string value)
         {
-            base.OnSerializing();
-            _groups = ProcessGroupAction(GroupAction, Groups);
-            _members = ProcessGroupAction(MemberAction, Members);
+            var o = Session.UpdateGroup(value);
+            UpdateProperties(o);
+            await o.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
+            WriteObject(o);
         }
+
+        /// <inheritdoc />
+        protected override bool UpdateProperty(IObjectSummary obj, string name, object value)
+        {
+            if (base.UpdateProperty(obj, name, value)) return true;
+
+            var o = (Koopman.CheckPoint.Group)obj;
+            switch (name)
+            {
+                case nameof(GroupAction):
+                    if (GroupAction == MembershipActions.Replace && Groups == null)
+                        o.Groups.Clear();
+                    return true;
+
+                case nameof(Groups):
+                    o.Groups.Add(GroupAction, Groups);
+                    return true;
+
+                case nameof(MemberAction):
+                    if (MemberAction == MembershipActions.Replace && Members == null)
+                        o.Members.Clear();
+                    return true;
+
+                case nameof(Members):
+                    o.Members.Add(MemberAction, Members);
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        #endregion Methods
     }
 }

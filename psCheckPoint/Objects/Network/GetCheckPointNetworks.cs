@@ -1,22 +1,47 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Network
 {
     /// <api cmd="show-networks">Get-CheckPointNetworks</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve all objects.</para>
+    /// <para type="synopsis">Retrieve all Networks.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Get-CheckPointNetworks</code>
+    /// <code>
+    /// Get-CheckPointNetworks
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointNetworks")]
-    [OutputType(typeof(CheckPointObjects))]
+    [OutputType(typeof(Koopman.CheckPoint.Common.NetworkObjectsPagingResults<Koopman.CheckPoint.Network>), ParameterSetName = new string[] { "Limit" })]
+    [OutputType(typeof(Koopman.CheckPoint.Network[]), ParameterSetName = new string[] { "All" })]
     public class GetCheckPointNetworks : GetCheckPointObjects
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "show-networks"; } }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override async Task ProcessRecordAsync()
+        {
+            if (ParameterSetName == "Limit")
+            {
+                WriteObject(
+                    await Session.FindNetworks(
+                            limit: Limit,
+                            offset: Offset,
+                            detailLevel: DetailsLevel,
+                            cancellationToken: CancelProcessToken), false);
+            }
+            else
+            {
+                WriteObject(
+                    await Session.FindAllNetworks(
+                            limit: Limit,
+                            detailLevel: DetailsLevel,
+                            cancellationToken: CancelProcessToken), true);
+            }
+        }
+
+        #endregion Methods
     }
 }

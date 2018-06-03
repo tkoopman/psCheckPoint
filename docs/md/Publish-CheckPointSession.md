@@ -1,30 +1,33 @@
 # Publish-CheckPointSession
 
 ## SYNOPSIS
-All the changes done by this user will be seen by all users only after publish is called.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
 ```
-Publish-CheckPointSession [-PublishSession <CheckPointSession>] [-Session <CheckPointSession>]
+Publish-CheckPointSession [-PublishSession <SessionInfo>] [-Session <Session>]
 ```
 
 ## DESCRIPTION
+{{Fill in the Description}}
 
 ## EXAMPLES
 
-### ----------  EXAMPLE 1  ----------
+### Example 1
 ```
-Publish-CheckPointSession
+PS C:\> {{ Add example code here }}
 ```
+
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -PublishSession
-Publish none active session
+{{Fill PublishSession Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: SessionInfo
 Parameter Sets: (All)
 Aliases: 
 
@@ -36,10 +39,10 @@ Accept wildcard characters: False
 ```
 
 ### -Session
-Session object from Open-CheckPointSession
+{{Fill Session Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -52,10 +55,12 @@ Accept wildcard characters: False
 
 ## INPUTS
 
-### psCheckPoint.Objects.Session.CheckPointSession
-Publish none active session
+### Koopman.CheckPoint.SessionInfo
+
 
 ## OUTPUTS
+
+### System.Object
 
 ## NOTES
 

@@ -1,31 +1,34 @@
 # New-CheckPointServiceUDP
 
 ## SYNOPSIS
-Create new object.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
 ```
-New-CheckPointServiceUDP [-AcceptReplies] [-KeepConnectionsOpenAfterPolicyInstallation]
+New-CheckPointServiceUDP [-AcceptReplies] [-Groups <String[]>] [-KeepConnectionsOpenAfterPolicyInstallation]
  [-MatchByProtocolSignature] [-MatchForAny] [-OverrideDefaultSettings] [-Port <String>] [-Protocol <String>]
  [-SessionTimeout <Int32>] [-SourcePort <String>] [-SyncConnectionsOnCluster] [-UseDefaultSessionTimeout]
- [-Groups <String[]>] [-SetIfExists] -Name <String> [-Tags <String[]>] [-Comments <String>] [-IgnoreWarnings]
- [-IgnoreErrors] [-PassThru] [-Color <String>] [-Session <CheckPointSession>]
+ [-SetIfExists] -Name <String> [-Color <Colors>] [-Comments <String>] [-Ignore <Ignore>] [-PassThru]
+ [-Tags <String[]>] [-Session <Session>]
 ```
 
 ## DESCRIPTION
+{{Fill in the Description}}
 
 ## EXAMPLES
 
-### ----------  EXAMPLE 1  ----------
+### Example 1
+```
+PS C:\> {{ Add example code here }}
 ```
 
-```
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -AcceptReplies
-N/A
+{{Fill AcceptReplies Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -34,19 +37,19 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Color
-Color of the object.
-Should be one of existing colors.
+{{Fill Color Description}}
 
 ```yaml
-Type: String
+Type: Colors
 Parameter Sets: (All)
 Aliases: Colour
+Accepted values: Aquamarine, Black, Blue, Brown, Burlywood, Coral, CreteBlue, Cyan, DarkBlue, DarkGold, DarkGray, DarkGreen, DarkOrange, DarkSeaGreen, Firebrick, ForestGreen, Gold, Gray, Khaki, LemonChiffon, LightGreen, Magenta, NavyBlue, Olive, Orange, Orchid, Pink, Purple, Red, SeaGreen, Sienna, SkyBlue, SlateBlue, Turquoise, VioletRed, Yellow
 
 Required: False
 Position: Named
@@ -56,7 +59,7 @@ Accept wildcard characters: False
 ```
 
 ### -Comments
-Comments string.
+{{Fill Comments Description}}
 
 ```yaml
 Type: String
@@ -71,7 +74,7 @@ Accept wildcard characters: False
 ```
 
 ### -Groups
-Collection of group identifiers.
+{{Fill Groups Description}}
 
 ```yaml
 Type: String[]
@@ -85,42 +88,24 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -IgnoreErrors
-Apply changes ignoring errors.
-You won't be able to publish such a changes.
-If ignore-warnings flag was omitted - warnings will also be ignored.
+### -Ignore
+{{Fill Ignore Description}}
 
 ```yaml
-Type: SwitchParameter
+Type: Ignore
 Parameter Sets: (All)
 Aliases: 
+Accepted values: No, Warnings, Errors
 
 Required: False
 Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -IgnoreWarnings
-Apply changes ignoring warnings.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -KeepConnectionsOpenAfterPolicyInstallation
-Keep connections open after policy has been installed even if they are not allowed under the new policy.
-This overrides the settings in the Connection Persistence page.
-If you change this property, the change will not affect open connections, but only future connections.
+{{Fill KeepConnectionsOpenAfterPolicyInstallation Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -129,15 +114,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -MatchByProtocolSignature
-A value of true enables matching by the selected protocol's signature - the signature identifies the protocol as genuine.
-Select this option to limit the port to the specified protocol.
-If the selected protocol does not support matching by signature, this field cannot be set to true.
+{{Fill MatchByProtocolSignature Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -146,13 +129,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -MatchForAny
-Indicates whether this service is used when 'Any' is set as the rule's service and there are several service objects with the same source port and protocol.
+{{Fill MatchForAny Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -161,14 +144,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Name
-Object name.
-Should be unique in the domain.
+{{Fill Name Description}}
 
 ```yaml
 Type: String
@@ -183,7 +165,7 @@ Accept wildcard characters: False
 ```
 
 ### -OverrideDefaultSettings
-Indicates whether this service is a Data Domain service which has been overridden.
+{{Fill OverrideDefaultSettings Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -192,13 +174,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -PassThru
-Return the updated object.
+{{Fill PassThru Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -207,14 +189,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Port
-The number of the port used to provide this service.
-To specify a port range, place a hyphen between the lowest and highest port numbers, for example 44-55.
+{{Fill Port Description}}
 
 ```yaml
 Type: String
@@ -229,8 +210,7 @@ Accept wildcard characters: False
 ```
 
 ### -Protocol
-Select the protocol type associated with the service, and by implication, the management server (if any) that enforces Content Security and Authentication for the service.
-Selecting a Protocol Type invokes the specific protocol handlers for each protocol type, thus enabling higher level of security by parsing the protocol, and higher level of connectivity by tracking dynamic actions (such as opening of ports).
+{{Fill Protocol Description}}
 
 ```yaml
 Type: String
@@ -245,10 +225,10 @@ Accept wildcard characters: False
 ```
 
 ### -Session
-Session object from Open-CheckPointSession
+{{Fill Session Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -260,7 +240,7 @@ Accept wildcard characters: False
 ```
 
 ### -SessionTimeout
-Time (in seconds) before the session times out.
+{{Fill SessionTimeout Description}}
 
 ```yaml
 Type: Int32
@@ -269,15 +249,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: 0
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -SetIfExists
-If another object with the same identifier already exists, it will be updated.
-The command behaviour will be the same as if originally a set command was called.
-Pay attention that original object's fields will be overwritten by the fields provided in the request payload!
+{{Fill SetIfExists Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -286,15 +264,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -SourcePort
-Port number for the client side service.
-If specified, only those Source port Numbers will be Accepted, Dropped, or Rejected during packet inspection.
-Otherwise, the source port is not inspected.
+{{Fill SourcePort Description}}
 
 ```yaml
 Type: String
@@ -309,7 +285,7 @@ Accept wildcard characters: False
 ```
 
 ### -SyncConnectionsOnCluster
-Enables state-synchronised High Availability or Load Sharing on a ClusterXL or OPSEC-certified cluster.
+{{Fill SyncConnectionsOnCluster Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -318,13 +294,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Tags
-Collection of tag identifiers.
+{{Fill Tags Description}}
 
 ```yaml
 Type: String[]
@@ -339,7 +315,7 @@ Accept wildcard characters: False
 ```
 
 ### -UseDefaultSessionTimeout
-Use default virtual session timeout.
+{{Fill UseDefaultSessionTimeout Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -348,7 +324,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -356,26 +332,14 @@ Accept wildcard characters: False
 ## INPUTS
 
 ### System.String[]
-Collection of group identifiers.
+System.String
+Koopman.CheckPoint.Colors
 
-### System.String
-Object name.
-Should be unique in the domain.
-
-### System.String[]
-Collection of tag identifiers.
-
-### System.String
-Comments string.
-
-### System.String
-Color of the object.
-Should be one of existing colors.
 
 ## OUTPUTS
 
-### psCheckPoint.Objects.ServiceUDP.CheckPointServiceUDP
-Details of a Check Point UDP Service
+### Koopman.CheckPoint.ServiceUDP
+
 
 ## NOTES
 

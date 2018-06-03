@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Session
 {
@@ -8,19 +9,18 @@ namespace psCheckPoint.Session
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Send-CheckPointKeepAlive</code>
+    /// <code>
+    /// Send-CheckPointKeepAlive
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommunications.Send, "CheckPointKeepAlive")]
-    public class SendCheckPointKeepAlive : CheckPointCmdlet<CheckPointMessage>
+    public class SendCheckPointKeepAlive : CheckPointCmdletBase
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "keepalive"; } }
+        #region Methods
 
-        protected override void WriteRecordResponse(CheckPointMessage result)
-        {
-            WriteVerbose(result.Message);
-        }
+        /// <inheritdoc />
+        protected override Task ProcessRecordAsync() => Session.SendKeepAlive(cancellationToken: CancelProcessToken);
+
+        #endregion Methods
     }
 }

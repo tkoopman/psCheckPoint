@@ -1,0 +1,14 @@
+﻿{
+  "Management": {
+    "Server": "192.168.1.1",
+    "User": "admin",
+    "Password": "password",
+    "Name": "mgmt",
+    "Hash": ""
+  },
+  "IAGateway": {
+    "Server": "192.168.1.1",
+    "SharedSecret": "password",
+    "Hash": ""
+  }
+}

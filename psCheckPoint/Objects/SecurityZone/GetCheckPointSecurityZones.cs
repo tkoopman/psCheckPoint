@@ -1,21 +1,47 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.SecurityZone
 {
     /// <api cmd="show-security-zones">Get-CheckPointSecurityZones</api>
     /// <summary>
-    /// <para type="synopsis">Retrieve all objects.</para>
+    /// <para type="synopsis">Retrieve all Security Zones.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
+    /// <code>
+    /// Get-CheckPointSecurityZones
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Get, "CheckPointSecurityZones")]
-    [OutputType(typeof(CheckPointObjects))]
+    [OutputType(typeof(Koopman.CheckPoint.Common.NetworkObjectsPagingResults<Koopman.CheckPoint.SecurityZone>), ParameterSetName = new string[] { "Limit" })]
+    [OutputType(typeof(Koopman.CheckPoint.SecurityZone[]), ParameterSetName = new string[] { "All" })]
     public class GetCheckPointSecurityZones : GetCheckPointObjects
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "show-security-zones"; } }
+        #region Methods
+
+        /// <inheritdoc />
+        protected override async Task ProcessRecordAsync()
+        {
+            if (ParameterSetName == "Limit")
+            {
+                WriteObject(
+                    await Session.FindSecurityZones(
+                            limit: Limit,
+                            offset: Offset,
+                            detailLevel: DetailsLevel,
+                            cancellationToken: CancelProcessToken), false);
+            }
+            else
+            {
+                WriteObject(
+                    await Session.FindAllSecurityZones(
+                            limit: Limit,
+                            detailLevel: DetailsLevel,
+                            cancellationToken: CancelProcessToken), true);
+            }
+        }
+
+        #endregion Methods
     }
 }

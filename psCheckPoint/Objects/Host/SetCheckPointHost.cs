@@ -1,53 +1,32 @@
-﻿using Newtonsoft.Json;
+﻿using Koopman.CheckPoint;
+using Koopman.CheckPoint.FastUpdate;
 using System.Management.Automation;
-using System.Runtime.Serialization;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.Host
 {
     /// <api cmd="set-host">Set-CheckPointHost</api>
     /// <summary>
-    /// <para type="synopsis">Edit existing object using object name or uid.</para>
+    /// <para type="synopsis">Edit existing host using object name or uid.</para>
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Set-CheckPointHost -Name Test1 -NewName Test2 -Tags TestTag</code>
+    /// <code>
+    /// Set-CheckPointHost -Name MyHost -NewName HostA -Tags MyTag
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Set, "CheckPointHost")]
-    [OutputType(typeof(CheckPointHost))]
-    public class SetCheckPointHost : SetCheckPointObject<CheckPointHost>
+    [OutputType(typeof(Koopman.CheckPoint.Host))]
+    public class SetCheckPointHost : SetCheckPointCmdlet
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "set-host"; } }
+        #region Fields
 
-        /// <summary>
-        /// <para type="description">IPv4 or IPv6 address. If both addresses are required use ipv4-address and ipv6-address fields explicitly.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ip-address", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string IPAddress { get; set; }
+        private string[] _groups;
 
-        /// <summary>
-        /// <para type="description">IPv4 address.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ipv4-address", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string IPv4Address { get; set; }
+        #endregion Fields
 
-        /// <summary>
-        /// <para type="description">IPv6 address.</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "ipv6-address", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string IPv6Address { get; set; }
-
-        //TODO interfaces
-        //TODO nat-settings
-        //TODO host-servers
-
-        [JsonProperty(PropertyName = "groups", NullValueHandling = NullValueHandling.Ignore)]
-        private dynamic _groups;
+        #region Properties
 
         /// <summary>
         /// <para type="description">Action to take with groups.</para>
@@ -57,18 +36,87 @@ namespace psCheckPoint.Objects.Host
 
         /// <summary>
         /// <para type="description">Collection of group identifiers.</para>
-        /// <para type="description">Groups listed will be either Added, Removed or replace the current list of group membership based on GroupAction parameter.</para>
+        /// <para type="description">
+        /// Groups listed will be either Added, Removed or replace the current list of group
+        /// membership based on GroupAction parameter.
+        /// </para>
         /// </summary>
         [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string[] Groups { get; set; }
+        public string[] Groups { get => _groups; set => _groups = CreateArray(value); }
 
         /// <summary>
-        /// <para type="description">Called when object is being serialized. Used for processing Group Actions.</para>
+        /// <para type="description">Host object, name or UID.</para>
         /// </summary>
-        protected override void OnSerializing()
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
+        [Alias("Name", "UID")]
+        public new PSObject Host { get => Object; set => Object = value; }
+
+        /// <summary>
+        /// <para type="description">
+        /// IPv4 or IPv6 address. If both addresses are required use ipv4-address and ipv6-address
+        /// fields explicitly.
+        /// </para>
+        /// </summary>
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        public IPAddress IPAddress { get; set; }
+
+        /// <summary>
+        /// <para type="description">IPv4 address.</para>
+        /// </summary>
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        public IPAddress IPv4Address { get; set; }
+
+        /// <summary>
+        /// <para type="description">IPv6 address.</para>
+        /// </summary>
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        public IPAddress IPv6Address { get; set; }
+
+        /// <inheritdoc />
+        protected override string InputName => nameof(Host);
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override async Task Set(string value)
         {
-            base.OnSerializing();
-            _groups = ProcessGroupAction(GroupAction, Groups);
+            var o = Session.UpdateHost(value);
+            UpdateProperties(o);
+            await o.AcceptChanges(Ignore, cancellationToken: CancelProcessToken);
+            WriteObject(o);
+        }
+
+        /// <inheritdoc />
+        protected override bool UpdateProperty(IObjectSummary obj, string name, object value)
+        {
+            if (base.UpdateProperty(obj, name, value)) return true;
+
+            var o = (Koopman.CheckPoint.Host)obj;
+            switch (name)
+            {
+                case nameof(IPAddress):
+                    if (IPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                        o.IPv6Address = IPAddress;
+                    else
+                        o.IPv4Address = IPAddress;
+                    return true;
+
+                case nameof(GroupAction):
+                    if (GroupAction == MembershipActions.Replace && Groups == null)
+                        o.Groups.Clear();
+                    return true;
+
+                case nameof(Groups):
+                    o.Groups.Add(GroupAction, Groups);
+                    return true;
+
+                default:
+                    return false;
+            }
         }
     }
+
+    #endregion Methods
 }

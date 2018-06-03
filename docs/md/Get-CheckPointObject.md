@@ -1,30 +1,49 @@
 # Get-CheckPointObject
 
 ## SYNOPSIS
-Get object by UID.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
 ```
-Get-CheckPointObject -UID <String> [-Session <CheckPointSession>]
+Get-CheckPointObject [-DetailsLevel <DetailLevels>] -UID <String> [-Session <Session>]
 ```
 
 ## DESCRIPTION
+{{Fill in the Description}}
 
 ## EXAMPLES
 
-### ----------  EXAMPLE 1  ----------
+### Example 1
 ```
-Get-CheckPointObject -UID "12345678-1234-1234-1234-123456789abc" | Get-CheckPointFullObject
+PS C:\> {{ Add example code here }}
 ```
+
+{{ Add example description here }}
 
 ## PARAMETERS
 
-### -Session
-Session object from Open-CheckPointSession
+### -DetailsLevel
+{{Fill DetailsLevel Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: DetailLevels
+Parameter Sets: (All)
+Aliases: 
+Accepted values: UID, Standard, Full
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Session
+{{Fill Session Description}}
+
+```yaml
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -36,7 +55,7 @@ Accept wildcard characters: False
 ```
 
 ### -UID
-Object unique identifier.
+{{Fill UID Description}}
 
 ```yaml
 Type: String
@@ -53,12 +72,12 @@ Accept wildcard characters: False
 ## INPUTS
 
 ### System.String
-Object unique identifier.
+
 
 ## OUTPUTS
 
-### psCheckPoint.Objects.CheckPointObject
-Base summary details of Check Point Objects
+### Koopman.CheckPoint.IObjectSummary
+
 
 ## NOTES
 

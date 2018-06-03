@@ -1,83 +1,64 @@
 # Remove-CheckPointNetwork
 
 ## SYNOPSIS
-Delete existing object using object name or uid.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
-### By UID
 ```
-Remove-CheckPointNetwork -UID <String> [-IgnoreWarnings] [-IgnoreErrors] [-Session <CheckPointSession>]
-```
-
-### By Name
-```
-Remove-CheckPointNetwork [-Name] <String> [-IgnoreWarnings] [-IgnoreErrors] [-Session <CheckPointSession>]
+Remove-CheckPointNetwork -Network <PSObject> [-Ignore <Ignore>] [-Session <Session>]
 ```
 
 ## DESCRIPTION
+{{Fill in the Description}}
 
 ## EXAMPLES
 
-### ----------  EXAMPLE 1  ----------
+### Example 1
 ```
-Remove-CheckPointNetwork -Name Test1 -Verbose
+PS C:\> {{ Add example code here }}
 ```
+
+{{ Add example description here }}
 
 ## PARAMETERS
 
-### -IgnoreErrors
-Apply changes ignoring errors.
-You won't be able to publish such a changes.
-If ignore-warnings flag was omitted - warnings will also be ignored.
+### -Ignore
+{{Fill Ignore Description}}
 
 ```yaml
-Type: SwitchParameter
+Type: Ignore
 Parameter Sets: (All)
 Aliases: 
+Accepted values: No, Warnings, Errors
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -IgnoreWarnings
-Apply changes ignoring warnings.
+### -Network
+{{Fill Network Description}}
 
 ```yaml
-Type: SwitchParameter
+Type: PSObject
 Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Name
-Object name.
-
-```yaml
-Type: String
-Parameter Sets: By Name
-Aliases: 
+Aliases: Name, UID
 
 Required: True
-Position: 1
+Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 
 ### -Session
-Session object from Open-CheckPointSession
+{{Fill Session Description}}
 
 ```yaml
-Type: CheckPointSession
+Type: Session
 Parameter Sets: (All)
 Aliases: 
 
@@ -88,30 +69,14 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -UID
-Object unique identifier.
-
-```yaml
-Type: String
-Parameter Sets: By UID
-Aliases: 
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
 ## INPUTS
 
-### System.String
-Object unique identifier.
+### System.Management.Automation.PSObject
 
-### System.String
-Object name.
 
 ## OUTPUTS
+
+### System.Object
 
 ## NOTES
 

@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using Koopman.CheckPoint;
+using System.Collections;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Session
 {
@@ -9,42 +11,44 @@ namespace psCheckPoint.Session
     /// <para type="description"></para>
     /// </summary>
     /// <example>
-    ///   <code>Reset-CheckPointSession</code>
+    /// <code>
+    /// Reset-CheckPointSession
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Reset, "CheckPointSession")]
-    public class ResetCheckPointSession : CheckPointCmdlet<CheckPointMessage>
+    public class ResetCheckPointSession : CheckPointCmdletBase
     {
-        /// <summary>
-        /// <para type="description">Check Point Web-API command that should be called.</para>
-        /// </summary>
-        public override string Command { get { return "discard"; } }
+        #region Properties
 
         /// <summary>
         /// <para type="description">Reset none active session</para>
         /// </summary>
         [Parameter(ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ValueFromRemainingArguments = true)]
-        public psCheckPoint.Objects.Session.CheckPointSession ResetSession { get; set; }
+        public PSObject ResetSession { get; set; }
 
-        /// <summary>
-        /// <para type="description">Reset none active session UID</para>
-        /// </summary>
-        [JsonProperty(PropertyName = "uid", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        protected string UID { get; set; }
+        #endregion Properties
 
-        internal override string GetJSON()
+        #region Methods
+
+        /// <inheritdoc />
+        protected override Task ProcessRecordAsync() => ProcessObject(ResetSession);
+
+        private async Task ProcessObject(object obj)
         {
-            // Check if we need to pass UID of session to reset
-            // By not sending any UID API will reset current session.
-            if (ResetSession != null)
+            CancelProcessToken.ThrowIfCancellationRequested();
+            if (obj == null) await Session.Discard();
+            else if (obj is string str) await Session.Discard(str, cancellationToken: CancelProcessToken);
+            else if (obj is SessionInfo o) await Session.Discard(o.UID, cancellationToken: CancelProcessToken);
+            else if (obj is PSObject pso) await ProcessObject(pso.BaseObject);
+            else if (obj is IEnumerable enumerable)
             {
-                UID = ResetSession.UID;
+                foreach (object eo in enumerable)
+                    await ProcessObject(eo);
             }
-            return base.GetJSON();
+            else
+                throw new PSArgumentException($"Invalid type: {obj.GetType()}", nameof(ResetSession));
         }
 
-        protected override void WriteRecordResponse(CheckPointMessage result)
-        {
-            WriteVerbose(result.Message);
-        }
+        #endregion Methods
     }
 }

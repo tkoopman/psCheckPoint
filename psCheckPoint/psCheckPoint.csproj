@@ -1,267 +1,80 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4FF88B87-441A-4419-91C7-13041E60D0C0}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFrameworks>net45;netstandard1.6</TargetFrameworks>
     <RootNamespace>psCheckPoint</RootNamespace>
-    <AssemblyName>psCheckPoint</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <Version>1.0.0.0</Version>
+    <Authors>Tim Koopman</Authors>
+    <Company />
+    <Description>PowerShell Commands for Check Point R80 Web-API</Description>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/tkoopman/psCheckPoint/</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/tkoopman/psCheckPoint/master/LICENSE</PackageLicenseUrl>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <PackageVersion>1.0.0.0</PackageVersion>
+    <InformationalVersion>1.0.0.0</InformationalVersion>
+    <BuildInParallel>false</BuildInParallel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NETFULL</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\psCheckPoint.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\psCheckPoint.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
+    <DocumentationFile>bin\Debug\net45\psCheckPoint.xml</DocumentationFile>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.PowerShell.5.ReferenceAssemblies.1.1.0\lib\net4\System.Management.Automation.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="CheckPointCmdletBase.cs" />
-    <Compile Include="Extra\Sync\InvokeCheckPointGroupSync.cs" />
-    <Compile Include="Extra\Sync\Member.cs" />
-    <Compile Include="Extra\Sync\NewSyncMember.cs" />
-    <Compile Include="Objects\ApplicationCategory\CheckPointApplicationCategory.cs" />
-    <Compile Include="Objects\ApplicationCategory\GetCheckPointApplicationCategory.cs" />
-    <Compile Include="Objects\ApplicationCategory\GetCheckPointApplicationCategories.cs" />
-    <Compile Include="Objects\ApplicationCategory\NewCheckPointApplicationCategory.cs" />
-    <Compile Include="Objects\ApplicationCategory\RemoveCheckPointApplicationCategory.cs" />
-    <Compile Include="Objects\ApplicationCategory\SetCheckPointApplicationCategory.cs" />
-    <Compile Include="Objects\Host\RemoveCheckPointHostInterface.cs" />
-    <Compile Include="Objects\Host\NewCheckPointHostInterface.cs" />
-    <Compile Include="Objects\ICheckPointObjects.cs" />
-    <Compile Include="Objects\Misc\GetCheckPointObject.cs" />
-    <Compile Include="Objects\Misc\WaitCheckPointTask.cs" />
-    <Compile Include="IA\AddCheckPointIdentity.cs" />
-    <Compile Include="IA\Batch.cs" />
-    <Compile Include="IA\CheckPointIACmdlet.cs" />
-    <Compile Include="IA\GetCheckPointIdentity.cs" />
-    <Compile Include="IA\RemoveCheckPointIdentity.cs" />
-    <Compile Include="IA\Responses.cs" />
-    <Compile Include="IA\SwitchJsonConverter.cs" />
-    <Compile Include="Objects\AccessLayer\CheckPointAccessLayer.cs" />
-    <Compile Include="Objects\AccessLayer\CheckPointAccessLayers.cs" />
-    <Compile Include="Objects\AccessLayer\GetCheckPointAccessLayer.cs" />
-    <Compile Include="Objects\AccessLayer\GetCheckPointAccessLayers.cs" />
-    <Compile Include="Objects\AccessLayer\NewCheckPointAccessLayer.cs" />
-    <Compile Include="Objects\AccessLayer\RemoveCheckPointAccessLayer.cs" />
-    <Compile Include="Objects\AccessLayer\SetCheckPointAccessLayer.cs" />
-    <Compile Include="Objects\AccessRule\CheckPointAccessRuleBase.cs" />
-    <Compile Include="Objects\AccessRule\CheckPointAccessRuleSummary.cs" />
-    <Compile Include="Objects\AccessRule\CheckPointAccessRule.cs" />
-    <Compile Include="Objects\AccessRule\GetCheckPointAccessRuleBase.cs" />
-    <Compile Include="Objects\AccessRule\GetCheckPointAccessRule.cs" />
-    <Compile Include="CheckPointCmdlet.cs" />
-    <Compile Include="CheckPointMessage.cs" />
-    <Compile Include="CheckPointError.cs" />
-    <Compile Include="CheckPointColorCmdlet.cs" />
-    <Compile Include="Extra\Export\CheckPointExportSet.cs" />
-    <Compile Include="Extra\Export\ConvertToCheckPointHtml.cs" />
-    <Compile Include="Extra\Export\ExportCheckPointAccessRule.cs" />
-    <Compile Include="NewCheckPointCmdlet.cs" />
-    <Compile Include="Objects\CheckPointObjectsBase.cs" />
-    <Compile Include="Objects\GetCheckPointFullObject.cs" />
-    <Compile Include="Objects\ICheckPointObjectSummary.cs" />
-    <Compile Include="Objects\Misc\CheckPointTask.cs" />
-    <Compile Include="Objects\Misc\CheckPointWhereUsed.cs" />
-    <Compile Include="Objects\Misc\GetCheckPointCommands.cs" />
-    <Compile Include="Objects\Misc\GetCheckPointObjects.cs" />
-    <Compile Include="Objects\Misc\GetCheckPointTask.cs" />
-    <Compile Include="Objects\Misc\GetCheckPointWhereUsed.cs" />
-    <Compile Include="Objects\Misc\InvokeCheckPointScript.cs" />
-    <Compile Include="Objects\Policy\TestCheckPointPolicy.cs" />
-    <Compile Include="Objects\Policy\InstallCheckPointPolicy.cs" />
-    <Compile Include="Objects\ServiceGroup\CheckPointServiceGroup.cs" />
-    <Compile Include="Objects\ServiceGroup\GetCheckPointServiceGroup.cs" />
-    <Compile Include="Objects\ServiceGroup\GetCheckPointServiceGroups.cs" />
-    <Compile Include="Objects\ServiceGroup\NewCheckPointServiceGroup.cs" />
-    <Compile Include="Objects\ServiceGroup\RemoveCheckPointServiceGroup.cs" />
-    <Compile Include="Objects\ServiceGroup\SetCheckPointServiceGroup.cs" />
-    <Compile Include="Objects\GroupWithExclusion\CheckPointGroupWithExclusion.cs" />
-    <Compile Include="Objects\GroupWithExclusion\GetCheckPointGroupWithExclusion.cs" />
-    <Compile Include="Objects\GroupWithExclusion\GetCheckPointGroupsWithExclusion.cs" />
-    <Compile Include="Objects\GroupWithExclusion\NewCheckPointGroupWithExclusion.cs" />
-    <Compile Include="Objects\GroupWithExclusion\RemoveCheckPointGroupWithExclusion.cs" />
-    <Compile Include="Objects\GroupWithExclusion\SetCheckPointGroupWithExclusion.cs" />
-    <Compile Include="Objects\MulticastAddressRange\CheckPointMulticastAddressRange.cs" />
-    <Compile Include="Objects\MulticastAddressRange\GetCheckPointMulticastAddressRange.cs" />
-    <Compile Include="Objects\MulticastAddressRange\GetCheckPointMulticastAddressRanges.cs" />
-    <Compile Include="Objects\MulticastAddressRange\NewCheckPointMulticastAddressRange.cs" />
-    <Compile Include="Objects\MulticastAddressRange\RemoveCheckPointMulticastAddressRange.cs" />
-    <Compile Include="Objects\MulticastAddressRange\SetCheckPointMulticastAddressRange.cs" />
-    <Compile Include="Objects\AddressRange\CheckPointAddressRange.cs" />
-    <Compile Include="Objects\AddressRange\GetCheckPointAddressRange.cs" />
-    <Compile Include="Objects\AddressRange\GetCheckPointAddressRanges.cs" />
-    <Compile Include="Objects\AddressRange\NewCheckPointAddressRange.cs" />
-    <Compile Include="Objects\AddressRange\RemoveCheckPointAddressRange.cs" />
-    <Compile Include="Objects\AddressRange\SetCheckPointAddressRange.cs" />
-    <Compile Include="Objects\CheckPointDomain.cs" />
-    <Compile Include="Objects\CheckPointMetaInfo.cs" />
-    <Compile Include="Objects\CheckPointObjectFull.cs" />
-    <Compile Include="Objects\CheckPointObject.cs" />
-    <Compile Include="Objects\CheckPointObjects.cs" />
-    <Compile Include="Objects\CheckPointTime.cs" />
-    <Compile Include="Objects\Group\CheckPointGroup.cs" />
-    <Compile Include="Objects\Group\GetCheckPointGroup.cs" />
-    <Compile Include="Objects\Group\GetCheckPointGroups.cs" />
-    <Compile Include="Objects\Group\NewCheckPointGroup.cs" />
-    <Compile Include="Objects\Group\RemoveCheckPointGroup.cs" />
-    <Compile Include="Objects\Group\SetCheckPointGroup.cs" />
-    <Compile Include="Objects\Host\SetCheckPointHost.cs" />
-    <Compile Include="Objects\Network\CheckPointNetwork.cs" />
-    <Compile Include="Objects\Network\GetCheckPointNetwork.cs" />
-    <Compile Include="Objects\Network\GetCheckPointNetworks.cs" />
-    <Compile Include="Objects\Network\NewCheckPointNetwork.cs" />
-    <Compile Include="Objects\Network\RemoveCheckPointNetwork.cs" />
-    <Compile Include="Objects\ServiceUDP\CheckPointServiceUDP.cs" />
-    <Compile Include="Objects\ServiceUDP\GetCheckPointServicesUDP.cs" />
-    <Compile Include="Objects\ServiceUDP\GetCheckPointServiceUDP.cs" />
-    <Compile Include="Objects\ServiceUDP\NewCheckPointServiceUDP.cs" />
-    <Compile Include="Objects\ServiceUDP\RemoveCheckPointServiceUDP.cs" />
-    <Compile Include="Objects\ServiceUDP\SetCheckPointServiceUDP.cs" />
-    <Compile Include="Objects\Service\CheckPointServices.cs" />
-    <Compile Include="Objects\Service\CheckPointService.cs" />
-    <Compile Include="Objects\Service\CheckPointServiceBase.cs" />
-    <Compile Include="Objects\Service\NewCheckPointService.cs" />
-    <Compile Include="Objects\Service\SetCheckPointService.cs" />
-    <Compile Include="Objects\Session\CheckPointSessions.cs" />
-    <Compile Include="Objects\SetCheckPointObject.cs" />
-    <Compile Include="Objects\Host\RemoveCheckPointHost.cs" />
-    <Compile Include="Objects\RemoveCheckPointObject.cs" />
-    <Compile Include="Objects\GetCheckPointObjects.cs" />
-    <Compile Include="Objects\GetCheckPointObject.cs" />
-    <Compile Include="Objects\Host\CheckPointHost.cs" />
-    <Compile Include="Objects\Host\GetCheckPointHosts.cs" />
-    <Compile Include="Objects\Host\GetCheckPointHost.cs" />
-    <Compile Include="Objects\Host\NewCheckPointHost.cs" />
-    <Compile Include="Objects\NewCheckPointObject.cs" />
-    <None Include="Views\CheckPointServiceUDP.Format.ps1xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Views\CheckPointServiceTCP.Format.ps1xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Views\CheckPointService.Format.ps1xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Views\CheckPointHost.Format.ps1xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Views\CheckPointObjects.Format.ps1xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Views\CheckPointObject.Format.ps1xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Views\SyncAction.Format.ps1xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Objects\TEMPLATE\CheckPoint_.cs" />
-    <None Include="Objects\TEMPLATE\GetCheckPoint_.cs" />
-    <None Include="Objects\TEMPLATE\GetCheckPoint_s.cs" />
-    <None Include="Objects\TEMPLATE\RemoveCheckPoint_.cs" />
-    <None Include="Objects\TEMPLATE\NewCheckPoint_.cs" />
-    <None Include="Objects\TEMPLATE\SetCheckPoint_.cs" />
-    <Compile Include="Objects\SecurityZone\CheckPointSecurityZone.cs" />
-    <Compile Include="Objects\SecurityZone\GetCheckPointSecurityZone.cs" />
-    <Compile Include="Objects\SecurityZone\GetCheckPointSecurityZones.cs" />
-    <Compile Include="Objects\SecurityZone\NewCheckPointSecurityZone.cs" />
-    <Compile Include="Objects\SecurityZone\RemoveCheckPointSecurityZone.cs" />
-    <Compile Include="Objects\SecurityZone\SetCheckPointSecurityZone.cs" />
-    <Compile Include="Objects\Session\CheckPointSession.cs" />
-    <Compile Include="Objects\Session\GetCheckPointSession.cs" />
-    <Compile Include="Objects\Session\GetCheckPointSessions.cs" />
-    <Compile Include="Objects\ServiceTCP\CheckPointServiceTCP.cs" />
-    <Compile Include="Objects\ServiceTCP\GetCheckPointServiceTCP.cs" />
-    <Compile Include="Objects\ServiceTCP\GetCheckPointServicesTCP.cs" />
-    <Compile Include="Objects\ServiceTCP\NewCheckPointServiceTCP.cs" />
-    <Compile Include="Objects\ServiceTCP\RemoveCheckPointServiceTCP.cs" />
-    <Compile Include="Objects\ServiceTCP\SetCheckPointServiceTCP.cs" />
-    <Compile Include="Objects\Application\CheckPointApplication.cs" />
-    <Compile Include="Objects\Application\GetCheckPointApplication.cs" />
-    <Compile Include="Objects\Application\GetCheckPointApplications.cs" />
-    <Compile Include="Objects\Application\NewCheckPointApplication.cs" />
-    <Compile Include="Objects\Application\RemoveCheckPointApplication.cs" />
-    <Compile Include="Objects\Application\SetCheckPointApplication.cs" />
-    <Compile Include="Objects\SimpleGateway\CheckPointSimpleGateway.cs" />
-    <Compile Include="Objects\SimpleGateway\GetCheckPointSimpleGateway.cs" />
-    <Compile Include="Objects\SimpleGateway\GetCheckPointSimpleGateways.cs" />
-    <Compile Include="Session\CheckPointSession.cs" />
-    <Compile Include="Session\SendCheckPointKeepAlive.cs" />
-    <Compile Include="Session\PublishCheckPointSession.cs" />
-    <Compile Include="Session\ResetCheckPointSession.cs" />
-    <Compile Include="Session\CloseCheckPointSession.cs" />
-    <Compile Include="Session\OpenCheckPointSession.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SwitchJsonConverter.cs" />
-    <Compile Include="Objects\Network\SetCheckPointNetwork.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="psCheckPoint.psd1">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Extra\Export\ExportTemplate.html" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>copy $(TargetDir)\psCheckPoint.dll-Help.xml $(TargetDir)\psCheckPoint.Core.dll-Help.xml</PostBuildEvent>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard1.6|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard1.6\psCheckPoint.xml</DocumentationFile>
   </PropertyGroup>
-  <Import Project="..\packages\XmlDoc2CmdletDoc.0.2.9\build\XmlDoc2CmdletDoc.targets" Condition="Exists('..\packages\XmlDoc2CmdletDoc.0.2.9\build\XmlDoc2CmdletDoc.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\XmlDoc2CmdletDoc.0.2.9\build\XmlDoc2CmdletDoc.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\XmlDoc2CmdletDoc.0.2.9\build\XmlDoc2CmdletDoc.targets'))" />
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|AnyCPU'">
+    <DocumentationFile>bin\Release\net45\psCheckPoint.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard1.6|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard1.6\psCheckPoint.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ViewFiles Include="..\Views\*.ps1xml" />
+    <Compile Remove="Objects\Group\CheckPointGroup.cs" />
+    <None Remove="Extra\Export\ExportTemplate.html" />
+    <EmbeddedResource Include="Extra\Export\ExportTemplate.html">
+      <CustomToolNamespace>psCheckPoint.Extra.Export</CustomToolNamespace>
+    </EmbeddedResource>
+    <ContentWithTargetPath Include="@(ViewFiles)">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>..\Views\%(FileName)%(Extension)</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="..\psCheckPoint.psd1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>..\psCheckPoint.psd1</TargetPath>
+    </ContentWithTargetPath>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CheckPoint.NET" Version="0.3.8" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">
+    <PackageReference Include="Microsoft.PowerShell.NanoServer.NetCore.Library">
+      <Version>1.0.0</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
+    <Reference Include="System.Management" />
+    <PackageReference Include="System.Management.Automation.dll" Version="10.0.10586" />
+    <PackageReference Include="XmlDoc2CmdletDoc" Version="0.2.10" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)' == 'netstandard1.6'">
+    <Exec Command="%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy RemoteSigned -Command &quot;$(SolutionDir)\run\post-build-netstandard1.6.ps1 -TargetDir '$(TargetDir)' -SolutionDir '$(SolutionDir)'&quot;" />
   </Target>
 </Project>

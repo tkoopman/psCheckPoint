@@ -1,0 +1,24 @@
+{
+  "profiles": {
+    "Pester.Tests_net45": {
+      "commandName": "Executable",
+      "executablePath": "$(SystemRoot)\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "commandLineArgs": "-NoExit -NoLogo -ExecutionPolicy RemoteSigned -command \". $env:APPVEYOR_BUILD_FOLDER\\Pester.Tests\\Invoke-Tests.ps1\"",
+      "workingDirectory": "$(ProjectDir)\\bin\\$(ConfigurationName)",
+      "environmentVariables": {
+        "APPVEYOR_BUILD_FOLDER": "$(SolutionDir)",
+        "Configuration": "$(ConfigurationName)"
+      }
+    },
+    "Pester.Tests_netstandard1.6": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Program Files\\PowerShell\\6.0.2\\pwsh.exe",
+      "commandLineArgs": "-NoExit -NoLogo -ExecutionPolicy RemoteSigned -command \". $env:APPVEYOR_BUILD_FOLDER\\Pester.Tests\\Invoke-Tests.ps1\"",
+      "workingDirectory": "$(ProjectDir)\\bin\\$(ConfigurationName)",
+      "environmentVariables": {
+        "APPVEYOR_BUILD_FOLDER": "$(SolutionDir)",
+        "Configuration": "$(ConfigurationName)"
+      }
+    }
+  }
+}

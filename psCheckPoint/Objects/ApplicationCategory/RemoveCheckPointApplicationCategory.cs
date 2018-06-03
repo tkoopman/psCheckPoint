@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace psCheckPoint.Objects.ApplicationCategory
 {
@@ -8,10 +9,32 @@ namespace psCheckPoint.Objects.ApplicationCategory
     /// <para type="description"></para>
     /// </summary>
     /// <example>
+    /// <code>
+    /// Remove-CheckPointApplicationCategory -Name MyCategory
+    /// </code>
     /// </example>
     [Cmdlet(VerbsCommon.Remove, "CheckPointApplicationCategory")]
     public class RemoveCheckPointApplicationCategory : RemoveCheckPointObject
     {
-        public override string Command { get { return "delete-application-site-category"; } }
+        #region Properties
+
+        /// <summary>
+        /// <para type="description">Application Category object, name or UID.</para>
+        /// </summary>
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ValueFromRemainingArguments = true)]
+        [Alias("Name", "UID")]
+        public PSObject ApplicationCategory { get => Object; set => Object = value; }
+
+        /// <inheritdoc />
+        protected override string InputName => nameof(ApplicationCategory);
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <inheritdoc />
+        protected override Task Remove(string value) => Session.DeleteApplicationCategory(value, Ignore, cancellationToken: CancelProcessToken);
+
+        #endregion Methods
     }
 }
