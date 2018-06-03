@@ -112,7 +112,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### Koopman.CheckPoint.Common.NetworkObjectsPagingResults`1[[Koopman.CheckPoint.Host, CheckPoint.NET, Version=0.3.0.0, Culture=neutral, PublicKeyToken=null]]
+### Koopman.CheckPoint.Common.NetworkObjectsPagingResults`1[[Koopman.CheckPoint.Host, CheckPoint.NET, Version=0.3.8.0, Culture=neutral, PublicKeyToken=null]]
 Koopman.CheckPoint.Host[]
 
 

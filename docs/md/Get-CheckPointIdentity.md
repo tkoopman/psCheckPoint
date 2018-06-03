@@ -1,20 +1,13 @@
-# Get-CheckPointSessions
+# Get-CheckPointIdentity
 
 ## SYNOPSIS
 {{Fill in the Synopsis}}
 
 ## SYNTAX
 
-### All
 ```
-Get-CheckPointSessions [-ViewPublishedSessions] [-All] [-DetailsLevel <DetailLevels>] [-Limit <Int32>]
- [-Session <Session>]
-```
-
-### Limit
-```
-Get-CheckPointSessions [-ViewPublishedSessions] [-DetailsLevel <DetailLevels>] [-Limit <Int32>]
- [-Offset <Int32>] [-Session <Session>]
+Get-CheckPointIdentity -IPAddress <String> [-BatchSize <Int32>] [-CertificateHash <String>]
+ [-CertificateValidation <CertificateValidation>] -Gateway <String> -SharedSecret <String>
 ```
 
 ## DESCRIPTION
@@ -31,12 +24,58 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -All
-{{Fill All Description}}
+### -BatchSize
+{{Fill BatchSize Description}}
 
 ```yaml
-Type: SwitchParameter
-Parameter Sets: All
+Type: Int32
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CertificateHash
+{{Fill CertificateHash Description}}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CertificateValidation
+{{Fill CertificateValidation Description}}
+
+```yaml
+Type: CertificateValidation
+Parameter Sets: (All)
+Aliases: 
+Accepted values: None, ValidCertificate, CertificatePinning, All, Auto
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Gateway
+{{Fill Gateway Description}}
+
+```yaml
+Type: String
+Parameter Sets: (All)
 Aliases: 
 
 Required: True
@@ -46,76 +85,30 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -DetailsLevel
-{{Fill DetailsLevel Description}}
+### -IPAddress
+{{Fill IPAddress Description}}
 
 ```yaml
-Type: DetailLevels
-Parameter Sets: (All)
-Aliases: 
-Accepted values: UID, Standard, Full
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Limit
-{{Fill Limit Description}}
-
-```yaml
-Type: Int32
+Type: String
 Parameter Sets: (All)
 Aliases: 
 
-Required: False
+Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 
-### -Offset
-{{Fill Offset Description}}
+### -SharedSecret
+{{Fill SharedSecret Description}}
 
 ```yaml
-Type: Int32
-Parameter Sets: Limit
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Session
-{{Fill Session Description}}
-
-```yaml
-Type: Session
+Type: String
 Parameter Sets: (All)
 Aliases: 
 
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ViewPublishedSessions
-{{Fill ViewPublishedSessions Description}}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -124,13 +117,12 @@ Accept wildcard characters: False
 
 ## INPUTS
 
-### None
+### System.String
 
 
 ## OUTPUTS
 
-### Koopman.CheckPoint.Common.NetworkObjectsPagingResults`1[[Koopman.CheckPoint.SessionInfo, CheckPoint.NET, Version=0.3.8.0, Culture=neutral, PublicKeyToken=null]]
-Koopman.CheckPoint.SessionInfo[]
+### Koopman.CheckPoint.IA.ShowIdentityResponse
 
 
 ## NOTES
