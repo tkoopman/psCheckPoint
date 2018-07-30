@@ -52,6 +52,9 @@ Tag set when creating objects.
 .PARAMETER CertificateValidation
 Which certificate validation method(s) to use.
 
+.PARAMETER Instance
+Specifies the instance to return the endpoints for.
+
 .EXAMPLE
 ./Office365_Group_Sync.ps1 -NoIPv6 -Rename -Verbose
 
@@ -85,7 +88,9 @@ param(
 	[string]$CommentPrefix = "Microsoft Office365",
 	[string]$Tag = "Microsoft_Office365",
 	[ValidateSet("All", "Auto", "CertificatePinning", "None", "ValidCertificate")]
-	[string]$CertificateValidation = "Auto"
+	[string]$CertificateValidation = "Auto",
+	[ValidateSet("Worldwide", "China", "Germany", "USGovDoD", "USGovGCCHigh")]
+	[string]$Instance = "Worldwide"
 )
 # path where client ID will be stored
 $datapath = $Env:TEMP + "\MS_O365_ClientRequestId.txt";
@@ -105,9 +110,9 @@ else {
 Write-Verbose "Client ID: $clientRequestId";
 
 # Download Microsoft Cloud IP Ranges and Names into Object
-$Version = Invoke-RestMethod https://endpoints.office.com/version/O365Worldwide?ClientRequestId=$clientRequestId;
+$Version = Invoke-RestMethod https://endpoints.office.com/version/$($Instance)?ClientRequestId=$clientRequestId;
 Write-Verbose "Version: $($Version.latest)";
-$O365IPAddresses = Invoke-RestMethod https://endpoints.office.com/endpoints/O365Worldwide?ClientRequestId=$clientRequestId;
+$O365IPAddresses = Invoke-RestMethod https://endpoints.office.com/endpoints/$($Instance)?ClientRequestId=$clientRequestId;
 
 # Set variables
 $Updated = ([datetime]::parseexact($Version.latest.Substring(0, 8),"yyyyMMdd",[System.Globalization.CultureInfo]::InvariantCulture)).ToShortDateString();
