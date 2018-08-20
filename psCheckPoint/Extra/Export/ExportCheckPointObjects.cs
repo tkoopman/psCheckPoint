@@ -218,8 +218,7 @@ namespace psCheckPoint.Extra.Export
             switch (obj)
             {
                 case string str:
-                    var whereUsed = await Session.FindWhereUsed(identifier: str, indirect: IndirectWhereUsed.IsPresent, cancellationToken: CancelProcessToken);
-                    await export.AddAsync(str, whereUsed, Depth);
+                    await Process(str);
                     break;
 
                 case IObjectSummary objectSummary:
@@ -242,6 +241,37 @@ namespace psCheckPoint.Extra.Export
                 default:
                     throw new CmdletInvocationException($"Invalid input object type: {obj.GetType()}");
             }
+        }
+
+        private async Task Process(string str)
+        {
+            WhereUsed whereUsed = null;
+            try
+            {
+                whereUsed = await Session.FindWhereUsed(identifier: str, indirect: IndirectWhereUsed.IsPresent, cancellationToken: CancelProcessToken);
+            }
+            catch (TaskCanceledException)
+            {
+                if (CancelProcessToken.IsCancellationRequested)
+                    return;
+
+                if (IndirectWhereUsed.IsPresent)
+                {
+                    WriteWarning($"Timeout while performing indirect where-used on {str}. Performing non-indirect where-used.");
+                    try
+                    {
+                        whereUsed = await Session.FindWhereUsed(identifier: str, indirect: false, cancellationToken: CancelProcessToken);
+                    }
+                    catch (TaskCanceledException)
+                    {
+                    }
+                }
+            }
+
+            if (whereUsed == null)
+                WriteWarning($"Timeout while performing where-used on {str}. Skipping this object.");
+            else
+                await export.AddAsync(str, whereUsed, Depth);
         }
 
         private async Task Process(IObjectSummary obj)
@@ -267,33 +297,7 @@ namespace psCheckPoint.Extra.Export
                     case ServiceSCTP _:
                     case ServiceTCP _:
                     case ServiceUDP _:
-                        WhereUsed whereUsed = null;
-                        try
-                        {
-                            whereUsed = await Session.FindWhereUsed(identifier: obj.GetIdentifier(), indirect: IndirectWhereUsed.IsPresent, cancellationToken: CancelProcessToken);
-                        }
-                        catch (TaskCanceledException)
-                        {
-                            if (CancelProcessToken.IsCancellationRequested)
-                                return;
-
-                            if (IndirectWhereUsed.IsPresent)
-                            {
-                                WriteWarning($"Timeout while performing indirect where-used on {obj.GetIdentifier()}. Performing non-indirect where-used.");
-                                try
-                                {
-                                    whereUsed = await Session.FindWhereUsed(identifier: obj.GetIdentifier(), indirect: false, cancellationToken: CancelProcessToken);
-                                }
-                                catch (TaskCanceledException)
-                                {
-                                }
-                            }
-                        }
-
-                        if (whereUsed == null)
-                            WriteWarning($"Timeout while performing where-used on {obj.GetIdentifier()}. Skipping this object.");
-                        else
-                            await export.AddAsync(obj.GetIdentifier(), whereUsed, Depth);
+                        await Process(obj.GetIdentifier());
                         break;
                 }
         }
