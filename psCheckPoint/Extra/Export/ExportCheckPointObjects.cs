@@ -75,9 +75,6 @@ namespace psCheckPoint.Extra.Export
         /// <para type="description">Enter types of objects to exclude from export</para>
         /// </summary>
         [Parameter]
-        [ValidateSet("object", "host", "network", "group", "address-range", "multicast-address-range", "group-with-exclusion", "simple-gateway", "security-zone", "time", "time-group", "access-role", "dynamic-object", "trusted-client", "tag", "dns-domain", "opsec-application",
-            "service-tcp", "service-udp", "service-icmp", "service-icmp6", "service-sctp", "service-other", "service-group",
-            IgnoreCase = false)]
         public string[] ExcludeByType { get; set; } = { };
 
         /// <summary>
@@ -94,7 +91,6 @@ namespace psCheckPoint.Extra.Export
         /// </para>
         /// </summary>
         [Parameter]
-        [ValidateSet("group", "group-with-exclusion", "service-group", IgnoreCase = false)]
         public string[] ExcludeDetailsByType { get; set; } = { };
 
         /// <summary>
@@ -271,8 +267,33 @@ namespace psCheckPoint.Extra.Export
                     case ServiceSCTP _:
                     case ServiceTCP _:
                     case ServiceUDP _:
-                        var whereUsed = await Session.FindWhereUsed(identifier: obj.GetIdentifier(), indirect: IndirectWhereUsed.IsPresent, cancellationToken: CancelProcessToken);
-                        await export.AddAsync(obj.GetIdentifier(), whereUsed, Depth);
+                        WhereUsed whereUsed = null;
+                        try
+                        {
+                            whereUsed = await Session.FindWhereUsed(identifier: obj.GetIdentifier(), indirect: IndirectWhereUsed.IsPresent, cancellationToken: CancelProcessToken);
+                        }
+                        catch (TaskCanceledException)
+                        {
+                            if (CancelProcessToken.IsCancellationRequested)
+                                return;
+
+                            if (IndirectWhereUsed.IsPresent)
+                            {
+                                WriteWarning($"Timeout while performing indirect where-used on {obj.GetIdentifier()}. Performing non-indirect where-used.");
+                                try
+                                {
+                                    whereUsed = await Session.FindWhereUsed(identifier: obj.GetIdentifier(), indirect: false, cancellationToken: CancelProcessToken);
+                                }
+                                catch (TaskCanceledException)
+                                {
+                                }
+                            }
+                        }
+
+                        if (whereUsed == null)
+                            WriteWarning($"Timeout while performing where-used on {obj.GetIdentifier()}. Skipping this object.");
+                        else
+                            await export.AddAsync(obj.GetIdentifier(), whereUsed, Depth);
                         break;
                 }
         }
