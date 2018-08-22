@@ -26,7 +26,7 @@ namespace psCheckPoint.Extra.Export
     /// Export-CheckPointObjects $InputObject1 $InputObject2 ... $InputObjectX
     /// </code>
     /// </example>
-    [Cmdlet(VerbsData.Export, "CheckPointObjects")]
+    [Cmdlet(VerbsData.Export, "CheckPointObjects", DefaultParameterSetName = "Where Used")]
     [OutputType(typeof(string))]
     public class ExportCheckPointObjects : CheckPointCmdletBase
     {
@@ -57,6 +57,15 @@ namespace psCheckPoint.Extra.Export
         #endregion Fields
 
         #region Properties
+
+        /// <summary>
+        /// <para type="description">
+        /// When passing Check Point objects as input perform a custom indirect where used instead of
+        /// the standard direct only.
+        /// </para>
+        /// </summary>
+        [Parameter(ParameterSetName = "Custom Indirect", Mandatory = true)]
+        public SwitchParameter CustomIndirectWhereUsed { get; set; }
 
         /// <summary>
         /// <para type="description">Max depth to look for objects used by input objects</para>
@@ -107,11 +116,19 @@ namespace psCheckPoint.Extra.Export
 
         /// <summary>
         /// <para type="description">
+        /// Which object types should be followed. If not specified only group types will be followed.
+        /// </para>
+        /// </summary>
+        [Parameter(ParameterSetName = "Custom Indirect")]
+        public ObjectType[] IndirectTypes { get; set; }
+
+        /// <summary>
+        /// <para type="description">
         /// When passing Check Point objects as input perform a indirect where used instead of the
         /// standard direct only.
         /// </para>
         /// </summary>
-        [Parameter]
+        [Parameter(ParameterSetName = "Indirect", Mandatory = true)]
         public SwitchParameter IndirectWhereUsed { get; set; }
 
         /// <summary>
@@ -139,7 +156,7 @@ namespace psCheckPoint.Extra.Export
         /// ignore this and still run a Where Used.
         /// </para>
         /// </summary>
-        [Parameter]
+        [Parameter(ParameterSetName = "Skip Where Used", Mandatory = true)]
         public SwitchParameter SkipWhereUsed { get; set; }
 
         /// <summary>
@@ -248,7 +265,10 @@ namespace psCheckPoint.Extra.Export
             WhereUsed whereUsed = null;
             try
             {
-                whereUsed = await Session.FindWhereUsed(identifier: str, indirect: IndirectWhereUsed.IsPresent, cancellationToken: CancelProcessToken);
+                if (CustomIndirectWhereUsed.IsPresent)
+                    whereUsed = await Session.FindWhereUsedCustom(identifier: str, indirect: true, indirectTypes: IndirectTypes, cancellationToken: CancelProcessToken);
+                else
+                    whereUsed = await Session.FindWhereUsed(identifier: str, indirect: IndirectWhereUsed.IsPresent, cancellationToken: CancelProcessToken);
             }
             catch (TaskCanceledException)
             {
