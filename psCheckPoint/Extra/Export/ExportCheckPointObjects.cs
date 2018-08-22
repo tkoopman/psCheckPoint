@@ -26,7 +26,7 @@ namespace psCheckPoint.Extra.Export
     /// Export-CheckPointObjects $InputObject1 $InputObject2 ... $InputObjectX
     /// </code>
     /// </example>
-    [Cmdlet(VerbsData.Export, "CheckPointObjects")]
+    [Cmdlet(VerbsData.Export, "CheckPointObjects", DefaultParameterSetName = "Where Used")]
     [OutputType(typeof(string))]
     public class ExportCheckPointObjects : CheckPointCmdletBase
     {
@@ -59,6 +59,15 @@ namespace psCheckPoint.Extra.Export
         #region Properties
 
         /// <summary>
+        /// <para type="description">
+        /// When passing Check Point objects as input perform a custom indirect where used instead of
+        /// the standard direct only.
+        /// </para>
+        /// </summary>
+        [Parameter(ParameterSetName = "Custom Indirect", Mandatory = true)]
+        public SwitchParameter CustomIndirectWhereUsed { get; set; }
+
+        /// <summary>
         /// <para type="description">Max depth to look for objects used by input objects</para>
         /// </summary>
         [Parameter]
@@ -75,9 +84,6 @@ namespace psCheckPoint.Extra.Export
         /// <para type="description">Enter types of objects to exclude from export</para>
         /// </summary>
         [Parameter]
-        [ValidateSet("object", "host", "network", "group", "address-range", "multicast-address-range", "group-with-exclusion", "simple-gateway", "security-zone", "time", "time-group", "access-role", "dynamic-object", "trusted-client", "tag", "dns-domain", "opsec-application",
-            "service-tcp", "service-udp", "service-icmp", "service-icmp6", "service-sctp", "service-other", "service-group",
-            IgnoreCase = false)]
         public string[] ExcludeByType { get; set; } = { };
 
         /// <summary>
@@ -94,7 +100,6 @@ namespace psCheckPoint.Extra.Export
         /// </para>
         /// </summary>
         [Parameter]
-        [ValidateSet("group", "group-with-exclusion", "service-group", IgnoreCase = false)]
         public string[] ExcludeDetailsByType { get; set; } = { };
 
         /// <summary>
@@ -111,11 +116,19 @@ namespace psCheckPoint.Extra.Export
 
         /// <summary>
         /// <para type="description">
+        /// Which object types should be followed. If not specified only group types will be followed.
+        /// </para>
+        /// </summary>
+        [Parameter(ParameterSetName = "Custom Indirect")]
+        public ObjectType[] IndirectTypes { get; set; }
+
+        /// <summary>
+        /// <para type="description">
         /// When passing Check Point objects as input perform a indirect where used instead of the
         /// standard direct only.
         /// </para>
         /// </summary>
-        [Parameter]
+        [Parameter(ParameterSetName = "Indirect", Mandatory = true)]
         public SwitchParameter IndirectWhereUsed { get; set; }
 
         /// <summary>
@@ -143,7 +156,7 @@ namespace psCheckPoint.Extra.Export
         /// ignore this and still run a Where Used.
         /// </para>
         /// </summary>
-        [Parameter]
+        [Parameter(ParameterSetName = "Skip Where Used", Mandatory = true)]
         public SwitchParameter SkipWhereUsed { get; set; }
 
         /// <summary>
@@ -222,8 +235,7 @@ namespace psCheckPoint.Extra.Export
             switch (obj)
             {
                 case string str:
-                    var whereUsed = await Session.FindWhereUsed(identifier: str, indirect: IndirectWhereUsed.IsPresent, cancellationToken: CancelProcessToken);
-                    await export.AddAsync(str, whereUsed, Depth);
+                    await Process(str);
                     break;
 
                 case IObjectSummary objectSummary:
@@ -246,6 +258,40 @@ namespace psCheckPoint.Extra.Export
                 default:
                     throw new CmdletInvocationException($"Invalid input object type: {obj.GetType()}");
             }
+        }
+
+        private async Task Process(string str)
+        {
+            WhereUsed whereUsed = null;
+            try
+            {
+                if (CustomIndirectWhereUsed.IsPresent)
+                    whereUsed = await Session.FindWhereUsedCustom(identifier: str, indirect: true, indirectTypes: IndirectTypes, cancellationToken: CancelProcessToken);
+                else
+                    whereUsed = await Session.FindWhereUsed(identifier: str, indirect: IndirectWhereUsed.IsPresent, cancellationToken: CancelProcessToken);
+            }
+            catch (TaskCanceledException)
+            {
+                if (CancelProcessToken.IsCancellationRequested)
+                    return;
+
+                if (IndirectWhereUsed.IsPresent)
+                {
+                    WriteWarning($"Timeout while performing indirect where-used on {str}. Performing non-indirect where-used.");
+                    try
+                    {
+                        whereUsed = await Session.FindWhereUsed(identifier: str, indirect: false, cancellationToken: CancelProcessToken);
+                    }
+                    catch (TaskCanceledException)
+                    {
+                    }
+                }
+            }
+
+            if (whereUsed == null)
+                WriteWarning($"Timeout while performing where-used on {str}. Skipping this object.");
+            else
+                await export.AddAsync(str, whereUsed, Depth);
         }
 
         private async Task Process(IObjectSummary obj)
@@ -271,8 +317,7 @@ namespace psCheckPoint.Extra.Export
                     case ServiceSCTP _:
                     case ServiceTCP _:
                     case ServiceUDP _:
-                        var whereUsed = await Session.FindWhereUsed(identifier: obj.GetIdentifier(), indirect: IndirectWhereUsed.IsPresent, cancellationToken: CancelProcessToken);
-                        await export.AddAsync(obj.GetIdentifier(), whereUsed, Depth);
+                        await Process(obj.GetIdentifier());
                         break;
                 }
         }

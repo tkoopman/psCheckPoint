@@ -1,6 +1,7 @@
 ﻿using Koopman.CheckPoint;
 using System;
 using System.Management.Automation;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace psCheckPoint.Session
@@ -71,6 +72,13 @@ namespace psCheckPoint.Session
         /// </summary>
         [Parameter]
         public SwitchParameter EnterLastPublishedSession { get; set; }
+
+        /// <summary>
+        /// <para type="description">HTTP Request timeout in seconds. Default 100 seconds.</para>
+        /// <para type="description">Use -1 for infinate</para>
+        /// </summary>
+        [Parameter]
+        public int HttpTimeout { get; set; } = 100;
 
         /// <summary>
         /// <para type="description">Port Web API running on. Default: 443</para>
@@ -150,7 +158,8 @@ namespace psCheckPoint.Session
                     timeout: SessionTimeout,
                     continueLastSession: ContinueLastSession.IsPresent,
                     enterLastPublishedSession: EnterLastPublishedSession.IsPresent,
-                    cancellationToken: CancelProcessToken
+                    cancellationToken: CancelProcessToken,
+                    httpTimeout: (HttpTimeout < 0) ? Timeout.InfiniteTimeSpan : new TimeSpan(0, 0, HttpTimeout)
                     );
                 if (PassThru.IsPresent)
                     WriteObject(session);

@@ -131,6 +131,7 @@ CmdletsToExport = @(
 	'Get-CheckPointSimpleGateways',
 	'Get-CheckPointTask',
 	'Get-CheckPointWhereUsed',
+	'Get-CheckPointWhereUsedCustom',
 	'Install-CheckPointPolicy',
 	'Invoke-CheckPointGroupSync',
 	'Invoke-CheckPointScript',
