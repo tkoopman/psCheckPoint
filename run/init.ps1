@@ -9,8 +9,5 @@ if ($env:Settings_json) {
 	Set-Variable -Scope Global -Name Settings -Description "psCheckPoint Pester Settings" -Option readonly -Value $(Get-Content -ErrorAction Stop "$SolutionDir\run\Settings.json" | ConvertFrom-Json);
 }
 
-$secpasswd = ConvertTo-SecureString $Settings.Management.Password -AsPlainText -Force;
-Set-Variable -Scope Global -Name CPLogin -Description "psCheckPoint Login Credentials" -Option readonly -Value $(New-Object System.Management.Automation.PSCredential ($Settings.Management.User, $secpasswd));
-
 Write-Host -ForegroundColor Yellow "Import-Module $SolutionDir\psCheckPoint\bin\$ConfigurationName\psCheckPoint.psd1 -Force";
 Import-Module $SolutionDir\psCheckPoint\bin\$ConfigurationName\psCheckPoint.psd1 -Force;

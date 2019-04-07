@@ -41,9 +41,9 @@
 	}
 
 	Context "PS Session Variable" {
-		$secpasswd = ConvertTo-SecureString $Settings.Management.Password -AsPlainText -Force
-		$mycreds = New-Object System.Management.Automation.PSCredential ($Settings.Management.User, $secpasswd)
-		Open-CheckPointSession -ManagementServer $Settings.Management.Server -Credentials $mycreds -CertificateHash $Settings.Management.Hash -SessionName Pester -SessionDescription "psCheckPoint Pester Testing - Session"
+		$secpasswd = ConvertTo-SecureString $Settings.($CPVersion).Management.Password -AsPlainText -Force
+		$mycreds = New-Object System.Management.Automation.PSCredential ($Settings.($CPVersion).Management.User, $secpasswd)
+		Open-CheckPointSession -ManagementServer $Settings.($CPVersion).Management.Server -Credentials $mycreds -CertificateHash $Settings.($CPVersion).Management.Hash -SessionName Pester -SessionDescription "psCheckPoint Pester Testing - Session"
 
 		$s = Get-CheckPointSession
 
