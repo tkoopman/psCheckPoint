@@ -1,5 +1,6 @@
 . $env:APPVEYOR_BUILD_FOLDER\run\init.ps1;
-Set-Variable -Scope Global -Name CPVersion -Description "psCheckPoint Test Run Version" -Option readonly -Value "R80.20";
+Set-Variable -Scope Global -Name CPVersion -Description "psCheckPoint Test Run Version" -Option readonly -Value $Settings.Versions[0];
+Write-Output "Starting session with version $CPVersion";
 
 $secpasswd = ConvertTo-SecureString $Settings.($CPVersion).Management.Password -AsPlainText -Force;
 Set-Variable -Scope Global -Name CPLogin -Description "psCheckPoint Login Credentials" -Option readonly -Value $(New-Object System.Management.Automation.PSCredential ($Settings.($CPVersion).Management.User, $secpasswd));

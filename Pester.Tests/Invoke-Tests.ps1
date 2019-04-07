@@ -11,8 +11,9 @@ Write-Host -ForegroundColor Yellow "Import-Module $PesterDir\Pester.psd1";
 Import-Module $PesterDir\Pester.psd1;
 
 cd $SolutionDir\Pester.Tests\;
-foreach ($v in @( "R80.20", "R80.10" )) {
-	Set-Variable -Scope Global -Name CPVersion -Description "psCheckPoint Test Run Version" -Option readonly -Value $v;
+foreach ($version in $Settings.Versions) {
+	Set-Variable -Scope Global -Name CPVersion -Description "psCheckPoint Test Run Version" -Option readonly -Value $version;
+	Write-Output "Starting tests on version $CPVersion";
 
 	$secpasswd = ConvertTo-SecureString $Settings.($CPVersion).Management.Password -AsPlainText -Force;
 	Set-Variable -Scope Global -Name CPLogin -Description "psCheckPoint Login Credentials" -Option readonly -Value $(New-Object System.Management.Automation.PSCredential ($Settings.($CPVersion).Management.User, $secpasswd));
