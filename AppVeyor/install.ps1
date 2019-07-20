@@ -17,7 +17,6 @@ Start-Process -Wait -FilePath .\openvpn-install-2.4.7-I603.exe -ArgumentList "/S
 $Settings = Get-Content $env:APPVEYOR_BUILD_FOLDER\run\Settings.json | ConvertFrom-Json
 $TestIP = $Settings.($Settings.Versions[0]).Management.Server
 
-$blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 # Start VPN
 $p = Start-Process -FilePath C:\OpenVPN\bin\openvpn.exe -ArgumentList "--config AppVeyor.ovpn --log AppVeyor.log --connect-retry-max 5" -WorkingDirectory C:\OpenVPN\config\ -PassThru
 # Wait for it to connect
