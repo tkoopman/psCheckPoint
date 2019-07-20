@@ -2,7 +2,7 @@ version: 0.0.{build}
 skip_non_tags: true
 image: Visual Studio 2017
 init:
-  - ps: $env:APPVEYOR_BUILD_FOLDER\AppVeyor\init.ps1
+- ps: $env:APPVEYOR_BUILD_FOLDER\AppVeyor\init.ps1
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
