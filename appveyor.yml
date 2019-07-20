@@ -2,7 +2,7 @@ version: 0.0.{build}
 skip_non_tags: true
 image: Visual Studio 2017
 init:
-- ps: $env:APPVEYOR_BUILD_FOLDER\AppVeyor\init.ps1
+- ps: .${env:APPVEYOR_BUILD_FOLDER}\AppVeyor\init.ps1
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
@@ -31,6 +31,6 @@ environment:
   NuGetToken:
     secure: 8U0FY4Wh+zyJriYPpUsyFXTmoc+upnrqrV3+u5mEkBCttmytqIqk3hQe475ck5aJ
 test_script:
-- ps: $env:APPVEYOR_BUILD_FOLDER\AppVeyor\test_script.ps1
+- ps: .${env:APPVEYOR_BUILD_FOLDER}\AppVeyor\test_script.ps1
 artifacts:
 - path: psCheckPoint.zip
