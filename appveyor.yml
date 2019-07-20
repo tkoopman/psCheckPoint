@@ -8,7 +8,6 @@ init:
     Set-AppveyorBuildVariable -Name "InfomationalVersion" -Value $InfoVer
     Set-AppveyorBuildVariable -Name "FileVersion" -Value $Ver
     Update-AppveyorBuild -Version $InfoVer
-    iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 install:
 - ps: .${env:APPVEYOR_BUILD_FOLDER}\AppVeyor\install.ps1
 assembly_info:
@@ -44,3 +43,5 @@ test_script:
 - ps: .${env:APPVEYOR_BUILD_FOLDER}\AppVeyor\test_script.ps1
 artifacts:
 - path: psCheckPoint.zip
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
