@@ -2,7 +2,14 @@ version: 0.0.{build}
 skip_non_tags: true
 image: Visual Studio 2017
 init:
-- ps: .${env:APPVEYOR_BUILD_FOLDER}\AppVeyor\init.ps1
+- ps: |
+  $InfoVer = $env:APPVEYOR_REPO_TAG_NAME.TrimStart("v");
+  $Ver = $InfoVer.Split("-")[0];
+  Set-AppveyorBuildVariable -Name "InfomationalVersion" -Value $InfoVer
+  Set-AppveyorBuildVariable -Name "FileVersion" -Value $Ver
+  Update-AppveyorBuild -Version $InfoVer
+install:
+- ps: .${env:APPVEYOR_BUILD_FOLDER}\AppVeyor\install.ps1
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'

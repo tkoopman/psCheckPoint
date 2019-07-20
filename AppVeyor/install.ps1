@@ -1,12 +1,6 @@
 cd $env:Temp
 iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
 
-$InfoVer = $env:APPVEYOR_REPO_TAG_NAME.TrimStart("v");
-$Ver = $InfoVer.Split("-")[0];
-Set-AppveyorBuildVariable -Name "InfomationalVersion" -Value $InfoVer
-Set-AppveyorBuildVariable -Name "FileVersion" -Value $Ver
-Update-AppveyorBuild -Version $InfoVer
-
 # Open VPN Connection to Test Environment
 (New-Object Net.WebClient).DownloadFile("https://swupdate.openvpn.org/community/releases/openvpn-install-2.4.7-I603.exe", "openvpn-install-2.4.7-I603.exe")
 
