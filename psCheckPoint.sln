@@ -40,7 +40,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
-		AppVeyor-Test-Deploy.ps1 = AppVeyor-Test-Deploy.ps1
+		AppVeyor-init.ps1 = AppVeyor-init.ps1
 		appveyor.yml = appveyor.yml
 		psCheckPoint.psd1 = psCheckPoint.psd1
 		README.md = README.md
@@ -65,6 +65,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Views", "Views", "{A738C4E9
 		Views\Network.Format.ps1xml = Views\Network.Format.ps1xml
 		Views\Summary.Format.ps1xml = Views\Summary.Format.ps1xml
 		Views\SyncAction.Format.ps1xml = Views\SyncAction.Format.ps1xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AppVeyor", "AppVeyor", "{097D3CE4-6B3F-41C5-ACC5-D600754DF91E}"
+	ProjectSection(SolutionItems) = preProject
+		AppVeyor\AppVeyor.auth.enc = AppVeyor\AppVeyor.auth.enc
+		AppVeyor\AppVeyor.ovpn.enc = AppVeyor\AppVeyor.ovpn.enc
+		AppVeyor\init.ps1 = AppVeyor\init.ps1
+		AppVeyor\OpenVPN_Install.cer = AppVeyor\OpenVPN_Install.cer
+		AppVeyor\Settings.json.enc = AppVeyor\Settings.json.enc
+		AppVeyor\test_script.ps1 = AppVeyor\test_script.ps1
 	EndProjectSection
 EndProject
 Global
@@ -100,6 +110,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{F417636E-03DA-44B1-BE14-CA4053C02162} = {ED43769F-45B6-439A-BF34-00561EB1E7F4}
 		{A738C4E9-3A3A-4826-89D8-425E448FAE15} = {ED43769F-45B6-439A-BF34-00561EB1E7F4}
+		{097D3CE4-6B3F-41C5-ACC5-D600754DF91E} = {ED43769F-45B6-439A-BF34-00561EB1E7F4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CAE61A52-BC45-4E37-9ECA-2E301855288B}
