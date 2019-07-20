@@ -2,7 +2,7 @@ cd $env:Temp
 iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
 
 # Open VPN Connection to Test Environment
-(New-Object Net.WebClient).DownloadFile("https://swupdate.openvpn.org/community/releases/openvpn-install-2.4.7-I603.exe", "openvpn-install-2.4.7-I603.exe")
+(New-Object Net.WebClient).DownloadFile("https://swupdate.openvpn.org/community/releases/openvpn-install-2.4.7-I603.exe", "${env:Temp}\openvpn-install-2.4.7-I603.exe")
 
 # Trust OpenVPN Cert so TAP Driver will silently install
 certutil -addstore -f "TrustedPublisher" "$env:APPVEYOR_BUILD_FOLDER\AppVeyor\OpenVPN_Install.cer"
@@ -21,4 +21,4 @@ $TestIP = $Settings.($Settings.Versions[0]).Management.Server
 $p = Start-Process -FilePath C:\OpenVPN\bin\openvpn.exe -ArgumentList "--config AppVeyor.ovpn --log AppVeyor.log --connect-retry-max 5" -WorkingDirectory C:\OpenVPN\config\ -PassThru
 # Wait for it to connect
 do { $ping = Test-Connection -ComputerName $TestIP -Count 1 -Quiet -TimeToLive 2 }until($ping -or $p.HasExited)
-if (-not $ping) { throw "Unable to establish VPN" }
+if (-not $ping) { throw "Unable to establish VPN" } else {Write-Host "VPN Established"}
