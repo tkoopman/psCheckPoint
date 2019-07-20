@@ -8,6 +8,7 @@ init:
     Set-AppveyorBuildVariable -Name "InfomationalVersion" -Value $InfoVer
     Set-AppveyorBuildVariable -Name "FileVersion" -Value $Ver
     Update-AppveyorBuild -Version $InfoVer
+    iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 install:
 - ps: .${env:APPVEYOR_BUILD_FOLDER}\AppVeyor\install.ps1
 assembly_info:
@@ -37,6 +38,8 @@ environment:
     secure: psHf9gzh1NdoPBovCWs+VzQL9AILX7vy+tD73K6gjkMFHHxeFSGU0iChiPAMRqwH
   NuGetToken:
     secure: 8U0FY4Wh+zyJriYPpUsyFXTmoc+upnrqrV3+u5mEkBCttmytqIqk3hQe475ck5aJ
+  APPVEYOR_RDP_PASSWORD:
+    secure: ffiKvwUIVY4Ps169F1N1Uw==
 test_script:
 - ps: .${env:APPVEYOR_BUILD_FOLDER}\AppVeyor\test_script.ps1
 artifacts:
