@@ -22,3 +22,5 @@ $p = Start-Process -FilePath C:\OpenVPN\bin\openvpn.exe -ArgumentList "--config 
 # Wait for it to connect
 do { $ping = Test-Connection -ComputerName $TestIP -Count 1 -Quiet -TimeToLive 2 }until($ping -or $p.HasExited)
 if (-not $ping) { throw "Unable to establish VPN" } else {Write-Host "VPN Established"}
+
+cd $env:APPVEYOR_BUILD_FOLDER
