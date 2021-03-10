@@ -20,6 +20,12 @@ The server's SSL certificate hash
 .PARAMETER ManagementPort
 Port Web API running on.
 
+.PARAMETER NoIPv4
+Do not include IPv4 addresses.
+
+.PARAMETER NoIPv6
+Do not include IPv6 addresses.
+
 .PARAMETER Publish
 If any changes made publish them automatically. By default session will just be closed pending you to manually open session in SmartConsole and publish the changes.
 Publish will only happen if no errors during sync.
@@ -79,6 +85,8 @@ param(
 	[Parameter(ParameterSetName='Standard')]
     [int]$ManagementPort = 443,
 	[Parameter(ParameterSetName='Standard')]
+	[switch]$NoIPv4,
+	[switch]$NoIPv6,
 	[switch]$Publish,
 	[Parameter(ParameterSetName='Standard')]
 	[ValidateSet("No", "Warnings", "Errors")]
@@ -136,7 +144,15 @@ ForEach($region in $response.values) {
 	$GroupName = $GroupPrefix + "_" + $region.name;
 	Write-Verbose "Processing $GroupName";
 
-	$region.properties.addressPrefixes | Select-String -not ':' |
+	$IPs = $region.properties.addressPrefixes
+	if ($NoIPv4.IsPresent) {
+		$IPs = $IPs | Where-Object { $_ -notmatch "\." }
+	}
+	if ($NoIPv6.IsPresent) {
+		$IPs = $IPs | Where-Object { $_ -notmatch ":" }
+	}
+
+	$IPs |
 		Invoke-CheckPointGroupSync -Session $Session -GroupName $GroupName -Prefix "${HostPrefix}_" -Rename:$Rename.IsPresent -Ignore $Ignore -Color $Color -Comments $Comments -Tags $Tag -CreateGroup |
 		Tee-Object -Variable output;
 	if (($output | Where-Object {$_.Actions -ne 0 -and -not $_.Error} | Measure-Object).Count -ne 0) {
