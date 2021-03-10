@@ -6,10 +6,10 @@ Cloud examples below are good for either:
 * For when you cannot use Application Control / URL Filtering but need to create IP base firewall rules
 
 ## Office365_Group_Sync.ps1
-This script will create/sync all Office 365 product groups with the XML source, Microsoft maintains.
+This script will create/sync all Office 365 product groups with the lists Microsoft maintains.
 
 ## Azure_Group_Sync.ps1
-This script will create/sync all region groups with the XML source, Microsoft maintains.
+This script will create/sync all region groups with the lists Microsoft maintains.
 
 ## AWS_Group_Sync.ps1
 This script will create/sync all region groups with the output of Get-AWSPublicIpAddressRange from Amazon AWS Powershell toolkit.
