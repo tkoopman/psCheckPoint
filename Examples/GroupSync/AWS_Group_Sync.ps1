@@ -52,6 +52,9 @@ Tag set when creating objects.
 .PARAMETER CertificateValidation
 Which certificate validation method(s) to use.
 
+.PARAMETER Domain
+Specifies the Check Point MDS Domain to connect to.
+
 .EXAMPLE
 ./AWS_Group_Sync.ps1 -NoIPv6 -Rename -Verbose
 
@@ -86,7 +89,8 @@ param(
 	[string]$CommentPrefix = "AWS",
 	[string]$Tag = "AWS",
 	[ValidateSet("All", "Auto", "CertificatePinning", "None", "ValidCertificate")]
-	[string]$CertificateValidation = "Auto"
+	[string]$CertificateValidation = "Auto",
+	[string]$Domain = ""
 )
 $AWSPIAR = Get-AWSPublicIpAddressRange | Where-Object { ($_.IpAddressFormat -eq "Ipv4" -and -not $NoIPv4.IsPresent) -or ($_.IpAddressFormat -eq "Ipv6" -and -not $NoIPv6.IsPresent) };
 $Services = $AWSPIAR | Select-Object -ExpandProperty Service -Unique | Sort-Object;
@@ -99,7 +103,7 @@ $Errors = 0;
 
 # Login to Check Point API to get Session ID
 Write-Verbose " *** Log in to Check Point Smart Center API *** ";
-$Session = Open-CheckPointSession -SessionName $CommentPrefix -SessionComments "$CommentPrefix Group Sync" -ManagementServer $ManagementServer -ManagementPort $ManagementPort -Credentials $Credentials -CertificateValidation $CertificateValidation -CertificateHash $CertificateHash -PassThru;
+$Session = Open-CheckPointSession -SessionName $CommentPrefix -SessionComments "$CommentPrefix Group Sync" -ManagementServer $ManagementServer -ManagementPort $ManagementPort -Domain $Domain -Credentials $Credentials -CertificateValidation $CertificateValidation -CertificateHash $CertificateHash -PassThru;
 if (-not $Session) {
 	# Failed login
 	exit;
