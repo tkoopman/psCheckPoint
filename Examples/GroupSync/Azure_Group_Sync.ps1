@@ -60,6 +60,9 @@ Will output list of regions only.
 .PARAMETER CertificateValidation
 Which certificate validation method(s) to use.
 
+.PARAMETER Domain
+Specifies the Check Point MDS Domain to connect to.
+
 .EXAMPLE
 ./Azure_Group_Sync.ps1 -Rename -Verbose
 
@@ -108,7 +111,8 @@ param(
 	[Parameter(Mandatory = $true, ParameterSetName='Print Regions')]
 	[switch]$PrintRegions,
 	[ValidateSet("All", "Auto", "CertificatePinning", "None", "ValidCertificate")]
-	[string]$CertificateValidation = "Auto"
+	[string]$CertificateValidation = "Auto",
+	[string]$Domain = ""
 )
 # Download code from https://gallery.technet.microsoft.com/scriptcenter/Adds-Azure-Datacenter-IP-dbeebe0c
 # Download Microsoft Azure IP Ranges and Names into Object
@@ -130,7 +134,7 @@ $Errors = 0;
 
 # Login to Check Point API to get Session ID
 Write-Verbose " *** Log in to Check Point Smart Center API *** ";
-$Session = Open-CheckPointSession -SessionName $CommentPrefix -SessionComments "$CommentPrefix Group Sync" -ManagementServer $ManagementServer -ManagementPort $ManagementPort -Credentials $Credentials -CertificateValidation $CertificateValidation -CertificateHash $CertificateHash -PassThru;
+$Session = Open-CheckPointSession -SessionName $CommentPrefix -SessionComments "$CommentPrefix Group Sync" -ManagementServer $ManagementServer -ManagementPort $ManagementPort -Domain $Domain -Credentials $Credentials -CertificateValidation $CertificateValidation -CertificateHash $CertificateHash -PassThru;
 if (-not $Session) {
 	# Failed login
 	exit;
