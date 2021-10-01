@@ -20,12 +20,6 @@ The server's SSL certificate hash
 .PARAMETER ManagementPort
 Port Web API running on.
 
-.PARAMETER NoIPv4
-Do not include IPv4 addresses.
-
-.PARAMETER NoIPv6
-Do not include IPv6 addresses.
-
 .PARAMETER Publish
 If any changes made publish them automatically. By default session will just be closed pending you to manually open session in SmartConsole and publish the changes.
 Publish will only happen if no errors during sync.
@@ -60,6 +54,9 @@ Will output list of regions only.
 .PARAMETER CertificateValidation
 Which certificate validation method(s) to use.
 
+.PARAMETER Domain
+Specifies the Check Point MDS Domain to connect to.
+
 .EXAMPLE
 ./Azure_Group_Sync.ps1 -Rename -Verbose
 
@@ -71,7 +68,7 @@ Microsoft's list only includes IPv4 networks.
 https://github.com/tkoopman/psCheckPoint
 
 .LINK
-https://www.microsoft.com/en-au/download/details.aspx?id=56519
+https://www.microsoft.com/en-au/download/details.aspx?id=41653
 
 #>
 [CmdletBinding(DefaultParameterSetName='Standard')]
@@ -85,8 +82,6 @@ param(
 	[Parameter(ParameterSetName='Standard')]
     [int]$ManagementPort = 443,
 	[Parameter(ParameterSetName='Standard')]
-	[switch]$NoIPv4,
-	[switch]$NoIPv6,
 	[switch]$Publish,
 	[Parameter(ParameterSetName='Standard')]
 	[ValidateSet("No", "Warnings", "Errors")]
@@ -108,51 +103,48 @@ param(
 	[Parameter(Mandatory = $true, ParameterSetName='Print Regions')]
 	[switch]$PrintRegions,
 	[ValidateSet("All", "Auto", "CertificatePinning", "None", "ValidCertificate")]
-	[string]$CertificateValidation = "Auto"
+	[string]$CertificateValidation = "Auto",
+	[string]$Domain = ""
 )
 # Download code from https://gallery.technet.microsoft.com/scriptcenter/Adds-Azure-Datacenter-IP-dbeebe0c
 # Download Microsoft Azure IP Ranges and Names into Object
-$downloadUri = "https://www.microsoft.com/en-in/download/confirmation.aspx?id=56519";
+$downloadUri = "https://www.microsoft.com/en-in/download/confirmation.aspx?id=41653";
 $downloadPage = Invoke-WebRequest -Uri $downloadUri;
-$jsonFileUri = ($downloadPage.RawContent.Split('"') -like "https://*.json*")[0];
-$responseDate = Invoke-WebRequest -Uri $jsonFileUri;
-$response = Invoke-RestMethod -Uri $jsonFileUri;
+$xmlFileUri = ($downloadPage.RawContent.Split('"') -like "https://*PublicIps*")[0];
+$response = Invoke-WebRequest -Uri $xmlFileUri;
+
+# Get list of regions & public IP ranges
+[xml]$xmlResponse = [System.Text.Encoding]::UTF8.GetString($response.Content);
+$regions = $xmlResponse.AzurePublicIpAddresses.Region;
+
 if ($PrintRegions.IsPresent) {
-	$response.values.name | Sort-Object;
+	$regions.Name | Sort-Object;
 	exit;
 }
 
 # Set variables
-$Updated = [datetime]::parseexact($responseDate.Headers.'Last-Modified',"r", [System.Globalization.CultureInfo]::InvariantCulture).ToShortDateString();
+$Updated = [datetime]::parseexact($response.Headers.'Last-Modified',"r", [System.Globalization.CultureInfo]::InvariantCulture).ToShortDateString();
 $Comments = "$CommentPrefix added $Updated";
 $GroupComments = "$CommentPrefix updated $Updated";
 $Errors = 0;
 
 # Login to Check Point API to get Session ID
 Write-Verbose " *** Log in to Check Point Smart Center API *** ";
-$Session = Open-CheckPointSession -SessionName $CommentPrefix -SessionComments "$CommentPrefix Group Sync" -ManagementServer $ManagementServer -ManagementPort $ManagementPort -Credentials $Credentials -CertificateValidation $CertificateValidation -CertificateHash $CertificateHash -PassThru;
+$Session = Open-CheckPointSession -SessionName $CommentPrefix -SessionComments "$CommentPrefix Group Sync" -ManagementServer $ManagementServer -ManagementPort $ManagementPort -Domain $Domain -Credentials $Credentials -CertificateValidation $CertificateValidation -CertificateHash $CertificateHash -PassThru;
 if (-not $Session) {
 	# Failed login
 	exit;
 }
 
-ForEach($region in $response.values) {
-	if ($region.name -notmatch $RegionsMatch) {
+ForEach($region in $regions) {
+	if ($region.Name -notmatch $RegionsMatch) {
 		Continue;
 	}
 
-	$GroupName = $GroupPrefix + "_" + $region.name;
+	$GroupName = $GroupPrefix + "_" + $region.Name;
 	Write-Verbose "Processing $GroupName";
 
-	$IPs = $region.properties.addressPrefixes
-	if ($NoIPv4.IsPresent) {
-		$IPs = $IPs | Where-Object { $_ -notmatch "\." }
-	}
-	if ($NoIPv6.IsPresent) {
-		$IPs = $IPs | Where-Object { $_ -notmatch ":" }
-	}
-
-	$IPs |
+	$region.IpRange.Subnet |
 		Invoke-CheckPointGroupSync -Session $Session -GroupName $GroupName -Prefix "${HostPrefix}_" -Rename:$Rename.IsPresent -Ignore $Ignore -Color $Color -Comments $Comments -Tags $Tag -CreateGroup |
 		Tee-Object -Variable output;
 	if (($output | Where-Object {$_.Actions -ne 0 -and -not $_.Error} | Measure-Object).Count -ne 0) {
