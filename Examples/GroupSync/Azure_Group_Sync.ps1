@@ -89,7 +89,9 @@ param(
     [int]$ManagementPort = 443,
 	[Parameter(ParameterSetName='Standard')]
 	[switch]$NoIPv4,
+	[Parameter(ParameterSetName='Standard')]
 	[switch]$NoIPv6,
+	[Parameter(ParameterSetName='Standard')]
 	[switch]$Publish,
 	[Parameter(ParameterSetName='Standard')]
 	[ValidateSet("No", "Warnings", "Errors")]
@@ -112,6 +114,7 @@ param(
 	[switch]$PrintRegions,
 	[ValidateSet("All", "Auto", "CertificatePinning", "None", "ValidCertificate")]
 	[string]$CertificateValidation = "Auto",
+	[Parameter(ParameterSetName='Standard')]
 	[string]$Domain = ""
 )
 # Download code from https://gallery.technet.microsoft.com/scriptcenter/Adds-Azure-Datacenter-IP-dbeebe0c
@@ -134,7 +137,7 @@ $Errors = 0;
 
 # Login to Check Point API to get Session ID
 Write-Verbose " *** Log in to Check Point Smart Center API *** ";
-$Session = Open-CheckPointSession -SessionName $CommentPrefix -SessionComments "$CommentPrefix Group Sync" -ManagementServer $ManagementServer -ManagementPort $ManagementPort -Domain $Domain -Credentials $Credentials -CertificateValidation $CertificateValidation -CertificateHash $CertificateHash -PassThru;
+$Session = Open-CheckPointSession -SessionName "$CommentPrefix" -SessionComments "$CommentPrefix Group Sync" -ManagementServer $ManagementServer -ManagementPort $ManagementPort -Domain $Domain -Credentials $Credentials -CertificateValidation $CertificateValidation -CertificateHash $CertificateHash -PassThru;
 if (-not $Session) {
 	# Failed login
 	exit;
