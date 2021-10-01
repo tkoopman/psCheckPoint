@@ -20,6 +20,12 @@ The server's SSL certificate hash
 .PARAMETER ManagementPort
 Port Web API running on.
 
+.PARAMETER NoIPv4
+Do not include IPv4 addresses.
+
+.PARAMETER NoIPv6
+Do not include IPv6 addresses.
+
 .PARAMETER Publish
 If any changes made publish them automatically. By default session will just be closed pending you to manually open session in SmartConsole and publish the changes.
 Publish will only happen if no errors during sync.
@@ -68,7 +74,7 @@ Microsoft's list only includes IPv4 networks.
 https://github.com/tkoopman/psCheckPoint
 
 .LINK
-https://www.microsoft.com/en-au/download/details.aspx?id=41653
+https://www.microsoft.com/en-au/download/details.aspx?id=56519
 
 #>
 [CmdletBinding(DefaultParameterSetName='Standard')]
@@ -82,6 +88,8 @@ param(
 	[Parameter(ParameterSetName='Standard')]
     [int]$ManagementPort = 443,
 	[Parameter(ParameterSetName='Standard')]
+	[switch]$NoIPv4,
+	[switch]$NoIPv6,
 	[switch]$Publish,
 	[Parameter(ParameterSetName='Standard')]
 	[ValidateSet("No", "Warnings", "Errors")]
@@ -108,22 +116,18 @@ param(
 )
 # Download code from https://gallery.technet.microsoft.com/scriptcenter/Adds-Azure-Datacenter-IP-dbeebe0c
 # Download Microsoft Azure IP Ranges and Names into Object
-$downloadUri = "https://www.microsoft.com/en-in/download/confirmation.aspx?id=41653";
+$downloadUri = "https://www.microsoft.com/en-in/download/confirmation.aspx?id=56519";
 $downloadPage = Invoke-WebRequest -Uri $downloadUri;
-$xmlFileUri = ($downloadPage.RawContent.Split('"') -like "https://*PublicIps*")[0];
-$response = Invoke-WebRequest -Uri $xmlFileUri;
-
-# Get list of regions & public IP ranges
-[xml]$xmlResponse = [System.Text.Encoding]::UTF8.GetString($response.Content);
-$regions = $xmlResponse.AzurePublicIpAddresses.Region;
-
+$jsonFileUri = ($downloadPage.RawContent.Split('"') -like "https://*.json*")[0];
+$responseDate = Invoke-WebRequest -Uri $jsonFileUri;
+$response = Invoke-RestMethod -Uri $jsonFileUri;
 if ($PrintRegions.IsPresent) {
-	$regions.Name | Sort-Object;
+	$response.values.name | Sort-Object;
 	exit;
 }
 
 # Set variables
-$Updated = [datetime]::parseexact($response.Headers.'Last-Modified',"r", [System.Globalization.CultureInfo]::InvariantCulture).ToShortDateString();
+$Updated = [datetime]::parseexact($responseDate.Headers.'Last-Modified',"r", [System.Globalization.CultureInfo]::InvariantCulture).ToShortDateString();
 $Comments = "$CommentPrefix added $Updated";
 $GroupComments = "$CommentPrefix updated $Updated";
 $Errors = 0;
@@ -136,15 +140,23 @@ if (-not $Session) {
 	exit;
 }
 
-ForEach($region in $regions) {
-	if ($region.Name -notmatch $RegionsMatch) {
+ForEach($region in $response.values) {
+	if ($region.name -notmatch $RegionsMatch) {
 		Continue;
 	}
 
-	$GroupName = $GroupPrefix + "_" + $region.Name;
+	$GroupName = $GroupPrefix + "_" + $region.name;
 	Write-Verbose "Processing $GroupName";
 
-	$region.IpRange.Subnet |
+	$IPs = $region.properties.addressPrefixes
+	if ($NoIPv4.IsPresent) {
+		$IPs = $IPs | Where-Object { $_ -notmatch "\." }
+	}
+	if ($NoIPv6.IsPresent) {
+		$IPs = $IPs | Where-Object { $_ -notmatch ":" }
+	}
+
+	$IPs |
 		Invoke-CheckPointGroupSync -Session $Session -GroupName $GroupName -Prefix "${HostPrefix}_" -Rename:$Rename.IsPresent -Ignore $Ignore -Color $Color -Comments $Comments -Tags $Tag -CreateGroup |
 		Tee-Object -Variable output;
 	if (($output | Where-Object {$_.Actions -ne 0 -and -not $_.Error} | Measure-Object).Count -ne 0) {
