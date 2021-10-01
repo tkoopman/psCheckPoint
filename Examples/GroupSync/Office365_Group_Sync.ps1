@@ -55,6 +55,9 @@ Which certificate validation method(s) to use.
 .PARAMETER Instance
 Specifies the instance to return the endpoints for.
 
+.PARAMETER Domain
+Specifies the Check Point MDS Domain to connect to.
+
 .EXAMPLE
 ./Office365_Group_Sync.ps1 -NoIPv6 -Rename -Verbose
 
@@ -90,7 +93,8 @@ param(
 	[ValidateSet("All", "Auto", "CertificatePinning", "None", "ValidCertificate")]
 	[string]$CertificateValidation = "Auto",
 	[ValidateSet("Worldwide", "China", "Germany", "USGovDoD", "USGovGCCHigh")]
-	[string]$Instance = "Worldwide"
+	[string]$Instance = "Worldwide",
+	[string]$Domain = ""
 )
 # path where client ID will be stored
 $datapath = $Env:TEMP + "\MS_O365_ClientRequestId.txt";
@@ -122,7 +126,7 @@ $Errors = 0;
 
 # Login to Check Point API to get Session ID
 Write-Verbose " *** Log in to Check Point Smart Center API *** ";
-$Session = Open-CheckPointSession -SessionName $CommentPrefix -SessionComments "$CommentPrefix Group Sync" -ManagementServer $ManagementServer -ManagementPort $ManagementPort -Credentials $Credentials -CertificateValidation $CertificateValidation -CertificateHash $CertificateHash -PassThru;
+$Session = Open-CheckPointSession -SessionName $CommentPrefix -SessionComments "$CommentPrefix Group Sync" -ManagementServer $ManagementServer -ManagementPort $ManagementPort -Domain $Domain -Credentials $Credentials -CertificateValidation $CertificateValidation -CertificateHash $CertificateHash -PassThru;
 if (-not $Session) {
 	# Failed login
 	exit;
