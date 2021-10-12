@@ -55,6 +55,12 @@ Which certificate validation method(s) to use.
 .PARAMETER Domain
 Specifies the Check Point MDS Domain to connect to.
 
+.PARAMETER Region
+If set, contains one or more region identifiers (e.g. "us-east-1", "global") to filter the output to. This parameter can be used in conjunction with the ServiceKey parameter to filter by region and service key.
+
+.PARAMETER ServiceKey
+If set, contains one or more service keys to filter the output to. This parameter can be used in conjunction with the Region parameter to filter by region and service key.
+
 .EXAMPLE
 ./AWS_Group_Sync.ps1 -NoIPv6 -Rename -Verbose
 
@@ -71,29 +77,61 @@ https://aws.amazon.com/documentation/powershell/
 #>
 [CmdletBinding()]
 param(
-	[Parameter(Mandatory = $true)]
+	[Parameter(Mandatory = $true, ParameterSetName='Standard')]
     [string]$ManagementServer,
-	[Parameter(Mandatory = $true)]
+	[Parameter(Mandatory = $true, ParameterSetName='Standard')]
 	[PSCredential]$Credentials,
+	[Parameter(ParameterSetName='Standard')]
 	[string]$CertificateHash,
+	[Parameter(ParameterSetName='Standard')]
     [int]$ManagementPort = 443,
+	[Parameter(ParameterSetName='Standard')]
 	[switch]$NoIPv4,
+	[Parameter(ParameterSetName='Standard')]
 	[switch]$NoIPv6,
+	[Parameter(ParameterSetName='Standard')]
 	[switch]$Publish,
+	[Parameter(ParameterSetName='Standard')]
 	[ValidateSet("No", "Warnings", "Errors")]
 	[string]$Ignore = "No",
+	[Parameter(ParameterSetName='Standard')]
 	[switch]$Rename,
+	[Parameter(ParameterSetName='Standard')]
 	[string]$Color = "red",
+	[Parameter(ParameterSetName='Standard')]
 	[string]$Prefix = "AWS",
+	[Parameter(ParameterSetName='Standard')]
 	[string]$GroupPrefix = "AWS",
+	[Parameter(ParameterSetName='Standard')]
 	[string]$CommentPrefix = "AWS",
+	[Parameter(ParameterSetName='Standard')]
 	[string]$Tag = "AWS",
+	[Parameter(ParameterSetName='Standard')]
 	[ValidateSet("All", "Auto", "CertificatePinning", "None", "ValidCertificate")]
 	[string]$CertificateValidation = "Auto",
-	[string]$Domain = ""
+	[Parameter(ParameterSetName='Standard')]
+	[string]$Domain = "",
+	[string[]]$Region = $null,
+	[string[]]$ServiceKey = $null,
+	[Parameter(Mandatory = $true, ParameterSetName='Print Service Regions')]
+	[switch]$PrintServiceRegions
 )
-$AWSPIAR = Get-AWSPublicIpAddressRange | Where-Object { ($_.IpAddressFormat -eq "Ipv4" -and -not $NoIPv4.IsPresent) -or ($_.IpAddressFormat -eq "Ipv6" -and -not $NoIPv6.IsPresent) };
+$AWSPIAR = Get-AWSPublicIpAddressRange -Region $Region -ServiceKey $ServiceKey | Where-Object { ($_.IpAddressFormat -eq "Ipv4" -and -not $NoIPv4.IsPresent) -or ($_.IpAddressFormat -eq "Ipv6" -and -not $NoIPv6.IsPresent) };
 $Services = $AWSPIAR | Select-Object -ExpandProperty Service -Unique | Sort-Object;
+
+if ($PrintServiceRegions.IsPresent) {
+    ForEach($Service in $Services) {
+		$Regions = $AWSPIAR | Where-Object {$_.Service -eq $Service} | Select-Object -ExpandProperty Region -Unique | Sort-Object;
+		ForEach($Region in $Regions) {
+			[PSCustomObject]@{
+				Service = $Service
+				Region = $Region[0]
+			}
+		}
+	}
+
+	exit;
+}
 
 # Set variables
 $Updated = (Get-AWSPublicIpAddressRange -OutputPublicationDate).ToShortDateString();
