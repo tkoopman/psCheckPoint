@@ -108,10 +108,10 @@ param(
 	[string]$CommentPrefix = "Microsoft Azure",
 	[Parameter(ParameterSetName='Standard')]
 	[string]$Tag = "Microsoft_Azure",
-	[Parameter(ParameterSetName='Standard')]
 	[string]$RegionsMatch = "",
 	[Parameter(Mandatory = $true, ParameterSetName='Print Regions')]
 	[switch]$PrintRegions,
+	[Parameter(ParameterSetName='Standard')]
 	[ValidateSet("All", "Auto", "CertificatePinning", "None", "ValidCertificate")]
 	[string]$CertificateValidation = "Auto",
 	[Parameter(ParameterSetName='Standard')]
@@ -125,7 +125,8 @@ $jsonFileUri = ($downloadPage.RawContent.Split('"') -like "https://*.json*")[0];
 $responseDate = Invoke-WebRequest -Uri $jsonFileUri;
 $response = Invoke-RestMethod -Uri $jsonFileUri;
 if ($PrintRegions.IsPresent) {
-	$response.values.name | Sort-Object;
+    $response.values.name | Where-Object {$_ -match $RegionsMatch} | Sort-Object
+
 	exit;
 }
 
@@ -158,7 +159,7 @@ ForEach($region in $response.values) {
 	if ($NoIPv6.IsPresent) {
 		$IPs = $IPs | Where-Object { $_ -notmatch ":" }
 	}
-
+    
 	$IPs |
 		Invoke-CheckPointGroupSync -Session $Session -GroupName $GroupName -Prefix "${HostPrefix}_" -Rename:$Rename.IsPresent -Ignore $Ignore -Color $Color -Comments $Comments -Tags $Tag -CreateGroup |
 		Tee-Object -Variable output;
