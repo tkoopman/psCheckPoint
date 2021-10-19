@@ -122,10 +122,10 @@ $Services = $AWSPIAR | Select-Object -ExpandProperty Service -Unique | Sort-Obje
 if ($PrintServiceRegions.IsPresent) {
     ForEach($Service in $Services) {
 		$Regions = $AWSPIAR | Where-Object {$_.Service -eq $Service} | Select-Object -ExpandProperty Region -Unique | Sort-Object;
-		ForEach($Region in $Regions) {
+		ForEach($R in $Regions) {
 			[PSCustomObject]@{
 				Service = $Service
-				Region = $Region[0]
+				Region = $R
 			}
 		}
 	}
@@ -149,16 +149,16 @@ if (-not $Session) {
 
 ForEach($Service in $Services) {
 	$Regions = $AWSPIAR | Where-Object {$_.Service -eq $Service} | Select-Object -ExpandProperty Region -Unique | Sort-Object;
-	ForEach($Region in $Regions) {
+	ForEach($R in $Regions) {
 		if ($Service -eq "AMAZON") {
-			$GroupName = $GroupPrefix + "_" + $Region;
+			$GroupName = $GroupPrefix + "_" + $R;
 		} else {
-			$GroupName = $GroupPrefix + "_" + $Service + "_" + $Region;
+			$GroupName = $GroupPrefix + "_" + $Service + "_" + $R;
 		}
 
 		Write-Verbose "Processing $GroupName";
 
-		$AWSPIAR | Where-Object {$_.Service -eq $Service -and $_.Region -eq $Region} |
+		$AWSPIAR | Where-Object {$_.Service -eq $Service -and $_.Region -eq $R} |
 			Select-Object -ExpandProperty IpPrefix |
 			Invoke-CheckPointGroupSync -Session $Session -GroupName $GroupName -Prefix "${Prefix}_" -Rename:$Rename.IsPresent -Color $Color -Comments $Comments -Tags $Tag -CreateGroup -Ignore $Ignore |
 			Tee-Object -Variable output;
@@ -166,7 +166,7 @@ ForEach($Service in $Services) {
 		if (($output | Where-Object {$_.Actions -ne 0 -and -not $_.Error} | Measure-Object).Count -ne 0) {
 			# Updates made
 			Write-Verbose "Updating $GroupName group's comment";
-			$Desc = (Get-AWSRegion -SystemName $Region).Name;
+			$Desc = (Get-AWSRegion -SystemName $R).Name;
 			$Group = Set-CheckPointGroup -Session $Session -Name $GroupName -Comments "$CommentPrefix $Desc $GroupComments" -Verbose:$false -PassThru;
 		}
 		$Errors = $Errors + ($output | Where-Object {$_.Error} | Measure-Object).Count;
